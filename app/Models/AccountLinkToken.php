@@ -15,6 +15,11 @@ class AccountLinkToken extends Model
         'used_at',
     ];
 
+    protected $casts = [
+        'expires_at' => 'datetime',
+        'used_at' => 'datetime',
+    ];
+
     public function player(): BelongsTo
     {
         return $this->belongsTo(Player::class, 'player_uuid', 'uuid');

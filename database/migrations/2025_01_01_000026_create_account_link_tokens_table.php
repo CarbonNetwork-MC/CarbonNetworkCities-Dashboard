@@ -15,12 +15,13 @@ return new class extends Migration
             $table->id();
             $table->char('player_uuid', 36);
             $table->foreign('player_uuid')->references('uuid')->on('players')->onDelete('cascade');
-            $table->char('user_uuid', 36);
-            $table->foreign('user_uuid')->references('uuid')->on('users')->onDelete('cascade');
             $table->string('token', 64)->unique();
             $table->timestamp('expires_at');
             $table->timestamp('used_at')->nullable();
             $table->timestamps();
+
+            $table->index('player_uuid');
+            $table->index('expires_at');
         });
     }
 

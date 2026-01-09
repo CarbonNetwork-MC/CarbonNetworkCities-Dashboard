@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
+use App\Livewire\Dashboard;
 use App\Livewire\Onboarding\Onboarding;
 
 // ! Guest Routes
@@ -20,11 +21,17 @@ Route::middleware('guest')->group(function() {
         ->name('register.post');
 });
 
+// ! Onboarding Routes
+Route::middleware(['auth', 'redirect.onboarded'])->group(function() {
+    // ? Onboarding
+    Route::get('/onboarding', Onboarding::class)->name('onboarding.render');
+});
+
 // ! Authenticated Routes
-Route::middleware(['auth'])->group(function() {
+Route::middleware(['auth', 'onboarding'])->group(function() {
     // ? Logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // ? Onboarding
-    Route::get('/onboarding', Onboarding::class)->name('onboarding.render');
+    // ? Dashboard
+    Route::get('/dashboard', Dashboard::class)->name('dashboard.render');
 });

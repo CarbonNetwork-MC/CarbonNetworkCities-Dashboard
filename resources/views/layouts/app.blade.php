@@ -19,7 +19,7 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/3.1.2/flowbite.min.css"  rel="stylesheet" />
-        @vite(['resources/css/app.css'])
+        @vite(['resources/css/app.css', 'resources/css/fonts.css'])
 
         <!-- Flaticon -->
         <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-straight/css/uicons-solid-straight.css'>
@@ -49,7 +49,7 @@
         <div class="min-h-screen bg-gray-200 dark:bg-gray-900 flex overflow-hidden">
             <!-- Sidebar -->
             <div class="h-screen">
-                @livewire('components.sidebar')
+                {{-- @livewire('components.sidebar') --}}
             </div>
 
             <!-- Main Content -->

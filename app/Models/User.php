@@ -56,11 +56,11 @@ class User extends Authenticatable
 
     public function player(): HasOne
     {
-        return $this->hasOne(AccountLink::class, 'user_id', 'id');
+        return $this->hasOne(AccountLink::class, 'user_uuid', 'uuid');
     }
 
     public function tokens(): HasOne
     {
-        return $this->hasOne(AccountLinkToken::class, 'user_id', 'id');
+        return $this->hasOne(AccountLinkToken::class, 'user_uuid', 'uuid');
     }
 }
