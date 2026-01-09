@@ -36,7 +36,7 @@
                     <ol class="mt-4 list-decimal list-inside font-rw-regular text-gray-700">
                         <li class="">{{ __('onboarding.steps_1') }}</li>
                         <li class="">{{ __('onboarding.steps_2') }}</li>
-                        <li class="">{{ __('onboarding.steps_3') }}</li>
+                        <li class="">{!! __('onboarding.steps_3') !!}</li>
                         <li class="">{{ __('onboarding.steps_4') }}</li>
                     </ol>
                 </div>

@@ -23,7 +23,7 @@ return [
     // Step 1 Instructions
     'steps_1' => 'Login to the Carbon Network Server',
     'steps_2' => 'Join the Cities gamemode.',
-    'steps_3' => 'Run the command /<command>, and copy the code provided.',
+    'steps_3' => 'Run the command <b>/account link</b>, and copy the code provided.',
     'steps_4' => 'Enter the code in the next step to verify your account.',
 
     // Step 2 Instructions
