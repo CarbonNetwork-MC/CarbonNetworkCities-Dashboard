@@ -54,6 +54,10 @@ class AuthController extends Controller
      */
     public function register(Request $request): RedirectResponse
     {
+        if (config('app.allow_registration') === false) {
+            abort(404);
+        }
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
