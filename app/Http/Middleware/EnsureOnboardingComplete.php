@@ -17,6 +17,10 @@ class EnsureOnboardingComplete
     {
         $user = $request->user();
 
+        if ($user && !$user->player) {
+            $user->update(['onboarding_status' => 1, 'onboarding_step' => 1]);
+        }
+
         if ($user && $user->onboarding_status) {
             if (!$request->routeIs('onboarding.*')) {
                 return redirect()->route('onboarding.render');
