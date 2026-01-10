@@ -30,6 +30,7 @@ class User extends Authenticatable
         'password',
         'onboarding_status',
         'onboarding_step',
+        'selected_language',
     ];
 
     /**

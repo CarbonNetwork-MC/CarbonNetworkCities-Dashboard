@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Language;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -64,6 +65,8 @@ class AuthController extends Controller
             'password' => ['required', 'confirmed', Password::defaults()],
         ]);
 
+        $defaultLanguage = Language::where('name', 'English')->first();
+
         $user = User::create([
             'uuid' => Str::uuid(),
             'name' => $validated['name'],
@@ -71,6 +74,7 @@ class AuthController extends Controller
             'password' => Hash::make($validated['password']),
             'onboarding_status' => true,
             'onboarding_step' => 1,
+            'selected_language' => $defaultLanguage?->id,
         ]);
 
         Auth::login($user);
