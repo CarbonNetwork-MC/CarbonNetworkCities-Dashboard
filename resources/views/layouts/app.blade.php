@@ -49,7 +49,7 @@
         <div class="min-h-screen bg-gray-200 dark:bg-gray-900 flex overflow-hidden">
             <!-- Sidebar -->
             <div class="h-screen">
-                {{-- @livewire('components.sidebar') --}}
+                @livewire('components.sidebar')
             </div>
 
             <!-- Main Content -->
