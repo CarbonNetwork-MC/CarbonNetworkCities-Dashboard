@@ -25,4 +25,17 @@ return [
     // Permissions - Buttons
     'permissions_create_button' => 'Create New Permission',
 
+    // User - Titles
+    'users_overview_title' => 'Users Overview',
+    'users_modal_edit_title' => 'Edit User',
+    'users_modal_delete_title' => 'Delete User',
+
+    // Users - Messages
+    'users_modal_delete_confirmation' => 'Are you sure you want to delete the user <b>:name</b>? This action cannot be undone.',
+    'users_no_users' => 'No users found.',
+
+    // Users - Labels
+    'users_modal_name_label' => 'Name',
+    'users_modal_selected_language_label' => 'Selected Language',
+    'users_modal_language_select_placeholder' => 'Select Language',
 ];

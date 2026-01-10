@@ -5,7 +5,8 @@
             <button wire:click="$toggle('createPermissionModal')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer">
                 {{ __('admin.permissions_create_button') }}
             </button>
-            <input type="text" wire:model.live="searchPermission" placeholder="{{ __('general.search_placeholder') }}" class="ml-4 px-3 py-2 border rounded" />
+            <input x-ref="search" type="text" wire:model.live="searchPermission" placeholder="{{ __('general.search_placeholder') }}" class="ml-4 px-3 py-2 border rounded" />
+            <div @keyup.window.slash.prevent="$refs.search.focus()"></div>
         </div>
     </div>
 

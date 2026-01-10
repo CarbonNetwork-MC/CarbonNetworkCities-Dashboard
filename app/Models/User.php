@@ -3,12 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasOneThrough;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use App\Models\Language;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class User extends Authenticatable
 {
@@ -30,6 +31,7 @@ class User extends Authenticatable
         'password',
         'onboarding_status',
         'onboarding_step',
+        'selected_language',
     ];
 
     /**
@@ -68,5 +70,10 @@ class User extends Authenticatable
     public function playerHead()
     {
         return 'https://cravatar.eu/avatar/' . $this->player->uuid . '/64.png';
+    }
+
+    public function selectedLanguage(): HasOne
+    {
+        return $this->hasOne(Language::class, 'id', 'selected_language');
     }
 }

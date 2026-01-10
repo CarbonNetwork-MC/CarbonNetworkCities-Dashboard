@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Livewire\Dashboard;
 use App\Livewire\Onboarding\Onboarding;
 use App\Livewire\Admin\Permissions\Overview as PermissionOverview;
+use App\Livewire\Admin\Users\Overview as UserOverview;
 
 // ! Guest Routes
 Route::middleware('guest')->group(function() {
@@ -41,4 +42,7 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
 Route::middleware(['auth', 'onboarding'])->prefix('admin')->group(function() {
     // ? Permissions
     Route::get('/permissions', PermissionOverview::class)->name('admin.permissions.render');
+    
+    // ? Users
+    Route::get('/users', UserOverview::class)->name('admin.users.render');
 });
