@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\Language;
 use Livewire\WithPagination;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Redirect;
 
 class Overview extends Component
 {
@@ -44,6 +45,9 @@ class Overview extends Component
             if ($this->selectedUser->accountLink()) {
                 $this->selectedUser->accountLink()->delete();
             }
+        } else {
+            return Redirect::route('admin.users.render')
+                ->error('User not found.');
         }
 
         $this->reset([
@@ -51,11 +55,18 @@ class Overview extends Component
             'unlinkModal',
         ]);
 
-        $this->resetPage();
+        return Redirect::route('admin.users.render')
+            ->success('User account unlinked successfully.');
     }
 
     public function editUser($id) {
         $this->selectedUser = User::find($id);
+
+        if (!$this->selectedUser) {
+            return Redirect::route('admin.users.render')
+                ->error('User not found.');
+        }
+
         $this->userName = $this->selectedUser->name;
         $this->userEmail = $this->selectedUser->email;
         $this->selectedLanguage = $this->selectedUser->selected_language;
@@ -91,6 +102,9 @@ class Overview extends Component
                 'email' => $this->userEmail,
                 'selected_language' => $this->selectedLanguage,
             ]);
+        } else {
+            return Redirect::route('admin.users.render')
+                ->error('User not found.');
         }
 
         $this->reset([
@@ -101,7 +115,8 @@ class Overview extends Component
             'editUserModal',
         ]);
 
-        $this->resetPage();
+        return Redirect::route('admin.users.render')
+            ->success('User updated successfully.');
     }
 
     public function removeUser($id) {
@@ -112,6 +127,9 @@ class Overview extends Component
     public function destroyUser() {
         if ($this->selectedUser) {
             User::where('uuid', $this->selectedUser->uuid)->delete();
+        } else {
+            return Redirect::route('admin.users.render')
+                ->error('User not found.');
         }
 
         $this->reset([
@@ -119,7 +137,8 @@ class Overview extends Component
             'deleteUserModal',
         ]);
 
-        $this->resetPage();
+        return Redirect::route('admin.users.render')
+            ->success('User deleted successfully.');
     }
 
     public function render()
