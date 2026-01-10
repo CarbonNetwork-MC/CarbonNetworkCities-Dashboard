@@ -76,4 +76,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Language::class, 'id', 'selected_language');
     }
+
+    public function accountLink(): HasOne
+    {
+        return $this->hasOne(AccountLink::class, 'user_uuid', 'uuid');
+    }
 }

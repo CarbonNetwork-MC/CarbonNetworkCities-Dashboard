@@ -28,6 +28,9 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->created_at->format('Y-m-d') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->updated_at->format('Y-m-d') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            @if ($user->accountLink)
+                                <span wire:click="unlinkAccount('{{ $user->uuid }}')" class="text-indigo-600 hover:text-indigo-900 cursor-pointer">Unlink</span>
+                            @endif
                             <span wire:click="editUser('{{ $user->uuid }}')" class="text-indigo-600 hover:text-indigo-900 ml-4 cursor-pointer">Edit</span>
                             <span wire:click="removeUser('{{ $user->uuid }}')" class="text-red-600 hover:text-red-900 ml-4 cursor-pointer">Delete</span>
                         </td>
@@ -45,6 +48,22 @@
             </x-slot>
         </x-table-striped>
     </div>
+
+    {{-- Unlink Account Modal --}}
+    <x-modal wire:model="unlinkModal">
+        <x-slot name="title">{{ __('admin.users_modal_unlink_title') }}</x-slot>
+        <x-slot name="content">
+            <p>{{ __('admin.users_modal_unlink_confirmation') }}</p>
+        </x-slot>
+        <x-slot name="footer">
+            <button type="button" @click="$dispatch('close')" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 cursor-pointer">
+                {{ __('general.cancel_button') }}
+            </button>
+            <button type="button" wire:click="unlink" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer">
+                {{ __('admin.users_unlink_button') }}
+            </button>
+        </x-slot>
+    </x-modal>
 
     {{-- Edit User Modal --}}
     <x-modal wire:model="editUserModal">

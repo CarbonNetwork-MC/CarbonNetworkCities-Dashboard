@@ -20,11 +20,38 @@ class Overview extends Component
     public $createUserModal = false;
     public $editUserModal = false;
     public $deleteUserModal = false;
+    public $unlinkModal = false;
 
     public $selectedUser = null;
 
     public function mount() {
         // 
+    }
+
+    // ? User Methods
+    public function unlinkAccount($id) {
+        $this->selectedUser = User::find($id);
+        $this->unlinkModal = true;
+    }
+
+    public function unlink() {
+        if ($this->selectedUser) {
+            $this->selectedUser->update([
+                'onboarding_status' => 1,
+                'onboarding_step' => 1,
+            ]);
+
+            if ($this->selectedUser->accountLink()) {
+                $this->selectedUser->accountLink()->delete();
+            }
+        }
+
+        $this->reset([
+            'selectedUser',
+            'unlinkModal',
+        ]);
+
+        $this->resetPage();
     }
 
     public function editUser($id) {
