@@ -6,5 +6,6 @@ export default {
     './resources/**/*.blade.php',
     './resources/**/*.js',
     './resources/**/*.vue',
+    './vendor/masmerise/livewire-toaster/resources/views/*.blade.php',
   ],
 } satisfies Config

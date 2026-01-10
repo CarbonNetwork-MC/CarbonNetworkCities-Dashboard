@@ -8,6 +8,7 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 @source "../node_modules/flowbite";
+@source '../../vendor/masmerise/livewire-toaster/resources/views/*.blade.php';
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';

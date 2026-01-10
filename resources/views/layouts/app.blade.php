@@ -38,10 +38,6 @@
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-        <!-- Toastr -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
         <!-- Styles -->
         @livewireStyles
     </head>
@@ -65,9 +61,11 @@
                 </main>
             </div>
         </div>
+        
+        <!-- Toast -->
+        <x-toaster-hub />
 
         @livewireScripts
-
         <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     </body>
 </html>
