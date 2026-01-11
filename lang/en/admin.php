@@ -13,13 +13,12 @@ return [
     'titles' => [
         // Permissions
         'permissions_overview' => 'Permissions Overview',
-        'permission_modal_create' => 'Create New Permission',
-        'permission_modal_edit' => 'Edit Permission',
-        'permission_modal_delete' => 'Delete Permission',
+        'permission_delete' => 'Delete Permission',
 
         // Roles
         'roles_overview' => 'Roles Overview',
-        'edit_role' => 'Edit Role',
+        'role_edit' => 'Edit Role',
+        'role_delete' => 'Delete Role',
         'selected_permissions' => 'Selected Permissions',
     ],
 
@@ -75,6 +74,9 @@ return [
 
     // Placeholders
     'placeholders' => [
+        // Permissions
+        'permission_name' => 'manage_users',
+
         // Roles
         'role_name' => 'Moderator'
     ]

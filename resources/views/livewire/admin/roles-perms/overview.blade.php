@@ -66,7 +66,7 @@
             <h1 class="text-xl font-semibold dark:text-white mb-4">{{ __('admin.titles.permissions_overview') }}</h1>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar :id="'searchPermission'" wire:model.live="searchPermission" />
-                <x-buttons.primary-button size="sm" wire:click="$toggle('createPermissionModal')">
+                <x-buttons.primary-button size="sm" href="{{ route('admin.roles-perms.permission.new') }}">
                     {{ __('admin.buttons.permission_create') }}
                 </x-buttons.primary-button>
             </div>
@@ -85,7 +85,7 @@
                         <tr class="odd:bg-white even:bg-gray-100 dark:odd:bg-gray-600 dark:even:bg-gray-700 border-b border-default">
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $permission->name }}</td>
                             <td class="px-6 py-4 flex justify-end gap-x-4 whitespace-nowrap text-right text-sm font-medium">
-                                <x-tables.primary-action wire:click="editPermission('{{ $permission->uuid }}')">{{ __('general.buttons.edit') }}</x-tables.primary-action>
+                                <x-tables.primary-action href="{{ route('admin.roles-perms.permission.edit', ['uuid' => $permission->uuid]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removePermission('{{ $permission->uuid }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
                             </td>
                         </tr>
@@ -104,53 +104,9 @@
         </div>
     </x-containers.main>
 
-    {{-- Create Permission Modal --}}
-    {{-- <x-modal wire:model="createPermissionModal">
-        <x-slot name="title">{{ __('admin.permissions_modal_create_title') }}</x-slot>
-        <x-slot name="content">
-            <div class="space-y-4">
-                <div>
-                    <label for="permission-name" class="block text-sm font-medium text-gray-700">{{ __('admin.permissions_name_label') }}</label>
-                    <input type="text" id="permission-name" wire:model="permissionName" class="mt-1 block w-1/2 border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
-                    @error('permissionName') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
-                </div>
-            </div>
-        </x-slot>
-        <x-slot name="footer">
-            <button type="button" @click="$dispatch('close')" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 cursor-pointer">
-                {{ __('general.buttons.cancel') }}
-            </button>
-            <button type="button" wire:click="savePermission" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer">
-                {{ __('general.buttons.save') }}
-            </button>
-        </x-slot>
-    </x-modal> --}}
-
-    {{-- Edit Permission Modal --}}
-    {{-- <x-modal wire:model="editPermissionModal">
-        <x-slot name="title">{{ __('admin.permissions_modal_edit_title') }}</x-slot>
-        <x-slot name="content">
-            <div class="space-y-4">
-                <div>
-                    <label for="edit-permission-name" class="block text-sm font-medium text-gray-700">{{ __('admin.permissions_modal_name_label') }}</label>
-                    <input type="text" id="edit-permission-name" wire:model="permissionName" class="mt-1 block w-1/2 border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
-                    @error('permissionName') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
-                </div>
-            </div>
-        </x-slot>
-        <x-slot name="footer">
-            <button type="button" @click="$dispatch('close')" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 cursor-pointer">
-                {{ __('general.buttons.cancel') }}
-            </button>
-            <button type="button" wire:click="updatePermission" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer">
-                {{ __('general.buttons.save') }}
-            </button>
-        </x-slot>
-    </x-modal> --}}
-
     {{-- Delete Permission Modal --}}
     <x-modals.modal wire:model="deletePermissionModal">
-        <x-slot name="title">{{ __('admin.titles.permission_modal_delete') }}</x-slot>
+        <x-slot name="title">{{ __('admin.titles.permission_delete') }}</x-slot>
         <x-slot name="content">
             <p>{!! __('admin.messages.permissions_modal_delete_confirmation', ['name' => $selectedPermission ? $selectedPermission->name : '']) !!}</p>
         </x-slot>
@@ -159,6 +115,22 @@
                 {{ __('general.buttons.cancel') }}
             </button>
             <button type="button" wire:click="destroyPermission" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer">
+                {{ __('general.buttons.delete') }}
+            </button>
+        </x-slot>
+    </x-modals.modal>
+
+    {{-- Delete Role Modal --}}
+    <x-modals.modal wire:model="deleteRoleModal">
+        <x-slot name="title">{{ __('admin.titles.role_delete') }}</x-slot>
+        <x-slot name="content">
+            <p>{!! __('admin.messages.roles_modal_delete_confirmation', ['name' => $selectedRole ? $selectedRole->name : '']) !!}</p>
+        </x-slot>
+        <x-slot name="footer">
+            <button type="button" @click="$dispatch('close')" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 cursor-pointer">
+                {{ __('general.buttons.cancel') }}
+            </button>
+            <button type="button" wire:click="destroyRole" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer">
                 {{ __('general.buttons.delete') }}
             </button>
         </x-slot>

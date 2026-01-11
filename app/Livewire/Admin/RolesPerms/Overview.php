@@ -4,7 +4,6 @@ namespace App\Livewire\Admin\RolesPerms;
 
 use App\Models\Permission;
 use App\Models\Role;
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
@@ -13,73 +12,18 @@ class Overview extends Component
 {
     use WithPagination;
 
-    public $user;
-
     public $searchPermission = '';
     public $searchRole = '';
-    public $permissionName = '';
 
-    public $createPermissionModal = false;
-    public $editPermissionModal = false;
     public $deletePermissionModal = false;
     public $deleteRoleModal = false;
 
     public $selectedPermission = null;
-
-    public function mount() {
-        $this->user = auth()->user();
-    }
+    public $selectedRole = null;
 
     // ? Permission Methods
-    public function savePermission() {
-        $this->validate([
-            'permissionName' => ['required', 'string', 'max:255', 'unique:panel_permissions,name']
-        ]);
-
-        Permission::create([
-            'name' => $this->permissionName,
-        ]);
-
-        $this->permissionName = '';
-        $this->createPermissionModal = false;
-
-        Toaster::success(__('admin.toast.permission_created'));
-    }
-
-    public function editPermission($id) {
-        $this->selectedPermission = Permission::find($id);
-        $this->permissionName = $this->selectedPermission->name;
-        $this->editPermissionModal = true;
-    }
-
-    public function updatePermission() {
-        $this->validate([
-            'permissionName' => [
-                'required',
-                'string',
-                'max:255',
-                Rule::unique('panel_permissions', 'name')
-                    ->ignore($this->selectedPermission?->uuid, 'uuid'),
-            ]
-        ]);
-
-        if ($this->selectedPermission) {
-            $this->selectedPermission->update([
-                'name' => $this->permissionName,
-            ]);
-        }
-
-        $this->reset([
-            'permissionName',
-            'selectedPermission',
-            'editPermissionModal',
-        ]);
-
-        Toaster::success(__('admin.toast.permission_updated'));
-    }
-
-    public function removePermission($id) {
-        $this->selectedPermission = Permission::find($id);
+    public function removePermission($uuid) {
+        $this->selectedPermission = Permission::find($uuid);
         $this->deletePermissionModal = true;
     }
 
@@ -96,7 +40,24 @@ class Overview extends Component
         Toaster::success(__('admin.toast.permission_deleted'));
     }
 
-    // ? Permission Group Methods
+    // ? Role Methods
+    public function removeRole($uuid) {
+        $this->selectedRole = Role::where('uuid', $uuid)->first();
+        $this->deleteRoleModal = true;
+    }
+
+    public function destroyRole() {
+        if ($this->selectedRole) {
+            Role::where('uuid', $this->selectedRole->uuid)->delete();
+        }
+
+        $this->reset([
+            'selectedRole',
+            'deleteRoleModal',
+        ]);
+
+        Toaster::success(__('admin.toast.role_deleted'));
+    }
 
     public function render()
     {

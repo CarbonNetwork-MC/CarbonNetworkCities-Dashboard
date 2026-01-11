@@ -13,14 +13,14 @@
             ],
             [
                 'url'   => route('admin.roles-perms.role.edit', ['uuid' => $role->uuid]),
-                'label' => __('admin.titles.edit_role'),
+                'label' => __('admin.titles.role_edit'),
             ]
         ]" />
     </x-slot>
 
     <x-containers.main>
         <h1 class="text-xl font-semibold dark:text-white mb-4">
-            {{ __('admin.titles.edit_role') }}
+            {{ __('admin.titles.role_edit') }}
         </h1>
 
         <div class="mt-6">
