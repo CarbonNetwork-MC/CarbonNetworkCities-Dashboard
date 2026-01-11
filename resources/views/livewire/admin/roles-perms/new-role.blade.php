@@ -19,7 +19,7 @@
     </x-slot>
 
     <x-containers.main>
-        <h1 class="text-2xl font-semibold dark:text-white mb-4">
+        <h1 class="text-xl font-semibold dark:text-white mb-4">
             {{ __('admin.buttons.role_create') }}
         </h1>
 

@@ -19,6 +19,8 @@ return [
 
         // Roles
         'roles_overview' => 'Roles Overview',
+        'edit_role' => 'Edit Role',
+        'selected_permissions' => 'Selected Permissions',
     ],
 
     // Labels
@@ -33,11 +35,14 @@ return [
 
     // Buttons
     'buttons' => [
+        'assign' => 'Assign',
+
         // Permissions
         'permission_create' => 'Create Permission',
 
         // Roles
         'role_create' => 'Create Role',
+        'assign_permission' => 'Assign Permission',
     ],
 
     // Messages
@@ -48,7 +53,9 @@ return [
 
         // Roles
         'roles_modal_delete_confirmation' => 'Are you sure you want to delete the role <b>:name</b>? This action cannot be undone.',
+        'roles_modal_delete_permission_confirmation' => 'Are you sure you want to remove the permission <b>:permission</b> from the role <b>:role</b>?',
         'roles_no_records' => 'No roles found.',
+        'role_no_permissions_assigned' => 'No permissions assigned to this role.',
     ],
 
     // Toasts
@@ -62,6 +69,8 @@ return [
         'role_created' => 'Role created successfully.',
         'role_updated' => 'Role updated successfully.',
         'role_deleted' => 'Role deleted successfully.',
+        'role_permission_added' => 'Permission added to role successfully.',
+        'role_permission_removed' => 'Permission removed from role successfully.',
     ],
 
     // Placeholders
