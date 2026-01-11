@@ -19,7 +19,7 @@
     >
 
         <!-- Header / Brand + Collapse Toggle (desktop) -->
-        <div class="flex items-center mb-3 border-b border-zinc-200 dark:border-zinc-800 pb-3" :class="isCollapsed ? 'flex-col justify-center' : 'justify-between'">
+        <div class="flex items-center mb-2 border-b border-zinc-200 dark:border-zinc-800 pb-3" :class="isCollapsed ? 'flex-col justify-center' : 'justify-between'">
             <a href="{{ route('dashboard.render') }}" x-show="!isCollapsed" class="flex items-center gap-2">
                 <img src="{{ $user->playerHead() }}" alt="Logo" class="h-8 w-8 object-cover" />
                 <span class="font-semibold text-lg text-zinc-800 dark:text-zinc-100">{{ $user->player->username }}</span>
@@ -76,7 +76,7 @@
                 <div class="mb-2">
                     <a href="{{ route('admin.roles-perms.render') }}" :class="navLinkClass({{ request()->routeIs('admin.roles-perms.*') }})">
                         <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-100 dark:bg-zinc-800" :class="isCollapsed ? 'mb-2 py-2' : 'py-1.5'">
-                            <i class="fi fi-rr-shield-check leading-none text-[16px]"></i>
+                            <i class="fi fi-rr-admin-alt leading-none text-[16px]"></i>
                         </span>
                         <span x-show="!isCollapsed" class="truncate">{{ __('sidebar.admin') }}</span>
                     </a>
