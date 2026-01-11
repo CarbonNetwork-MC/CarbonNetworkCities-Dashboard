@@ -15,9 +15,9 @@
     </x-slot>
 
     {{-- Permissions --}}
-    <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+    <x-containers.main>
         <div class="flex justify-between items-center">
-            <h1 class="text-2xl font-semibold dark:text-white mb-4">{{ __('admin.titles.permissions_overview') }}</h1>
+            <h1 class="text-xl font-semibold dark:text-white mb-4">{{ __('admin.titles.permissions_overview') }}</h1>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar :id="'searchPermission'" wire:model.live="searchPermission" />
                 <x-buttons.primary-button wire:click="$toggle('createPermissionModal')">
@@ -56,14 +56,14 @@
                 </x-slot>
             </x-tables.table-striped>
         </div>
-    </div>
+    </x-containers.main>
 
     {{-- Roles --}}
-    <div class="mt-4 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+    <x-containers.main class="mt-4">
         <div class="flex justify-between">
-            <h1 class="text-2xl font-semibold dark:text-white mb-4">{{ __('admin.titles.roles_overview') }}</h1>
+            <h1 class="text-xl font-semibold dark:text-white mb-4">{{ __('admin.titles.roles_overview') }}</h1>
             <div class="flex items-center gap-x-4">
-                <x-forms.search-bar id="searchRole" wire:model.live="searchRole" />
+                <x-forms.search-bar id="searchRole" wire:model.live="searchRole" class="w-full" />
                 <x-buttons.primary-link href="{{ route('admin.roles-perms.role.new') }}">
                     {{ __('admin.buttons.role_create') }}
                 </x-buttons.primary-link>
@@ -102,7 +102,7 @@
                 </x-slot>
             </x-tables.table-striped>
         </div>
-    </div>
+    </x-containers.main>
 
     {{-- Create Permission Modal --}}
     <x-modal wire:model="createPermissionModal">

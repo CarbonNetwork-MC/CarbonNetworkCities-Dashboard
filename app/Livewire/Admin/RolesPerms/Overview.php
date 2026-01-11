@@ -43,7 +43,7 @@ class Overview extends Component
         $this->permissionName = '';
         $this->createPermissionModal = false;
 
-        Toaster::success(__('admin.toast.permissions_created'));
+        Toaster::success(__('admin.toast.permission_created'));
     }
 
     public function editPermission($id) {
@@ -75,7 +75,7 @@ class Overview extends Component
             'editPermissionModal',
         ]);
 
-        Toaster::success(__('admin.toast.permissions_updated'));
+        Toaster::success(__('admin.toast.permission_updated'));
     }
 
     public function removePermission($id) {
@@ -93,7 +93,7 @@ class Overview extends Component
             'deletePermissionModal',
         ]);
 
-        Toaster::success(__('admin.toast.permissions_deleted'));
+        Toaster::success(__('admin.toast.permission_deleted'));
     }
 
     // ? Permission Group Methods

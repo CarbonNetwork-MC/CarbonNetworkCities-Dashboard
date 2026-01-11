@@ -19,7 +19,6 @@ return [
 
         // Roles
         'roles_overview' => 'Roles Overview',
-        'role_modal_create' => 'Create New Role',
     ],
 
     // Labels
@@ -55,9 +54,20 @@ return [
     // Toasts
     'toast' => [
         // Permissions
-        'permissions_created' => 'Permission created successfully.',
-        'permissions_updated' => 'Permission updated successfully.',
-        'permissions_deleted' => 'Permission deleted successfully.',
+        'permission_created' => 'Permission created successfully.',
+        'permission_updated' => 'Permission updated successfully.',
+        'permission_deleted' => 'Permission deleted successfully.',
+
+        // Roles
+        'role_created' => 'Role created successfully.',
+        'role_updated' => 'Role updated successfully.',
+        'role_deleted' => 'Role deleted successfully.',
     ],
+
+    // Placeholders
+    'placeholders' => [
+        // Roles
+        'role_name' => 'Moderator'
+    ]
 
 ];

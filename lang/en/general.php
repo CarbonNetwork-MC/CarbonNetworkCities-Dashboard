@@ -30,4 +30,9 @@ return [
         'created_at' => 'Created At',
         'updated_at' => 'Updated At',
     ],
+
+    // Messages
+    'messages' => [
+        'required_fields' => 'Required fields'
+    ]
 ];
