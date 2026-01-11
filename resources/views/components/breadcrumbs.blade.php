@@ -15,8 +15,8 @@
                         <a
                             href="{{ $item['url'] }}"
                             class="inline-flex items-center text-sm font-medium
-                                   {{ $loop->last ? 'text-green-500' : 'text-gray-700 dark:text-gray-400' }}
-                                   hover:text-green-600 dark:hover:text-white"
+                                   {{ $loop->last ? 'text-emerald-500' : 'text-gray-700 dark:text-gray-400' }}
+                                   hover:text-emerald-600 dark:hover:text-white"
                         >
                             @if (!empty($item['icon']))
                                 <i class="{{ $item['icon'] }} {{ $item['label'] ? 'me-2.5' : '' }}"></i>

@@ -5,7 +5,9 @@
         {{ $slot }}
     </a>
 @else
-    <span class="text-red-600 hover:text-red-900 cursor-pointer">
+    <span {{ $attributes->merge([
+        'class' => "text-red-600 hover:text-red-900 cursor-pointer"
+    ]) }}>
         {{ $slot }}
     </span>
 @endif

@@ -1,4 +1,4 @@
-@props(['id' => 'search', 'placeholder' => __('general.search_placeholder')])
+@props(['id' => 'search', 'placeholder' => __('general.placeholders.search')])
 
 <div>
     <label for="{{ $id }}" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">{{ $placeholder }}</label>

@@ -10,7 +10,10 @@ return [
     */
 
     // Placeholders
-    'search_placeholder' => 'Search...',
+    'placeholders' => [
+        'search' => 'Search...',
+        'select_option' => 'Select an option',
+    ],
 
     // Buttons
     'buttons' => [
@@ -20,6 +23,7 @@ return [
         'edit' => 'Edit',
         'update' => 'Update',
         'delete' => 'Delete',
+        'remove' => 'Remove',
         'cancel' => 'Cancel',
         'confirm' => 'Confirm',
         'close' => 'Close',
