@@ -43,7 +43,7 @@
                                 @forelse ($role->permissions as $permission)
                                     <span class="bg-green-100 text-green-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full">{{ $permission->name }}</span>
                                 @empty
-                                    <span class="text-gray-200 italic">{{ __('admin.labels.no_permissions_assigned') }}</span>
+                                    <span class="text-gray-600 dark:text-gray-200 italic">{{ __('admin.labels.no_permissions_assigned') }}</span>
                                 @endforelse
                             </td>
                             <td class="px-6 py-4 flex justify-end gap-x-4 whitespace-nowrap text-right text-sm font-medium">
