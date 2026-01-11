@@ -15,11 +15,23 @@ class Overview extends Component
     public $searchPermission = '';
     public $searchRole = '';
 
+    public $rolesPerPage = 5;
+    public $permissionsPerPage = 10;
+
     public $deletePermissionModal = false;
     public $deleteRoleModal = false;
 
     public $selectedPermission = null;
     public $selectedRole = null;
+
+    // ? Pagination Methods
+    public function updatedRolesPerPage() {
+        $this->resetPage('rolesPage');
+    }
+
+    public function updatedPermissionsPerPage() {
+        $this->resetPage('permissionsPage');
+    }
 
     // ? Permission Methods
     public function removePermission($uuid) {
@@ -64,10 +76,10 @@ class Overview extends Component
         return view('livewire.admin.roles-perms.overview', [
             'permissions' => Permission::where('name', 'like', '%' . $this->searchPermission . '%')
                 ->orderBy('created_at', 'desc')
-                ->paginate(10),
+                ->paginate($this->permissionsPerPage, pageName: 'permissionsPage'),
             'roles' => Role::where('name', 'like', '%' . $this->searchRole . '%')
                 ->orderBy('created_at', 'desc')
-                ->paginate(10),
+                ->paginate($this->rolesPerPage, pageName: 'rolesPage'),
         ]);
     }
 }
