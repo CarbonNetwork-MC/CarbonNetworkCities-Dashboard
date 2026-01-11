@@ -34,85 +34,44 @@
         </div>
 
         <!-- Nav -->
-        <nav class="space-y-2 flex-1 min-h-0">
-            {{-- Dashboard --}}
-            <a href="{{ route('dashboard.render') }}" :class="navLinkClass({{ request()->routeIs('dashboard.render') }})">
-                <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-100 dark:bg-zinc-800" :class="isCollapsed ? 'mb-2 py-2' : 'py-1.5'">
-                    <i class="fi fi-rr-home leading-none text-[16px]"></i>
-                </span>
-                <span x-show="!isCollapsed" class="truncate">Dashboard</span>
-                <span x-show="!isCollapsed" class="ml-auto inline-flex items-center rounded-full bg-green-600/10 text-green-700 dark:text-green-300 px-2 py-0 text-[10px] font-medium">
+        @if (!request()->routeIs('admin.*'))
+            <nav class="space-y-2 flex-1 min-h-0">
+                {{-- Dashboard --}}
+                <a href="{{ route('dashboard.render') }}" :class="navLinkClass({{ request()->routeIs('dashboard.render') }})">
+                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-100 dark:bg-zinc-800" :class="isCollapsed ? 'mb-2 py-2' : 'py-1.5'">
+                        <i class="fi fi-rr-home leading-none text-[16px]"></i>
+                    </span>
+                    <span x-show="!isCollapsed" class="truncate">{{ __('sidebar.dashboard') }}</span>
+                </a>
 
-                </span>
-            </a>
+                {{--  --}}
+            </nav>
+        @endif
 
-            {{-- @foreach ($sidebarItems as $item)
-                @if ($item->children->isEmpty())
-                    <a href="{{ $item->route ? route($item->route) : '' }}" :class="navLinkClass({{ request()->routeIs($item->route) }})">
-                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-100 dark:bg-zinc-800" :class="isCollapsed ? 'mb-2 py-2' : 'py-1.5'">
-                            <i class="fi fi-{{ $item->icon }} leading-none text-[16px]"></i>
-                        </span>
-                        <span x-show="!isCollapsed" class="truncate">{{ $item->label }}</span>
-                        <span x-show="!isCollapsed" class="ml-auto inline-flex items-center rounded-full bg-green-600/10 text-green-700 dark:text-green-300 px-2 py-0 text-[10px] font-medium">
+        @if (request()->routeIs('admin.*'))
+            <nav class="space-y-2 flex-1 min-h-0">
+                {{-- Dashboard --}}
+                <a href="{{ route('dashboard.render') }}" :class="navLinkClass({{ request()->routeIs('dashboard.render') }})">
+                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-100 dark:bg-zinc-800" :class="isCollapsed ? 'mb-2 py-2' : 'py-1.5'">
+                        <i class="fi fi-rr-arrow-small-left leading-none text-[16px]"></i>
+                    </span>
+                    <span x-show="!isCollapsed" class="truncate">{{ __('sidebar.back_to_dashboard') }}</span>
+                </a>
 
-                        </span>
-                    </a>
-                @else
-                    {{-- Parent item --} }
-                    <div>
-                        <button type="button" @click="isCollapsed ? expandFromIcon() : toggleGroup('{{ $item->key }}')" class="w-full items-center gap-3 rounded-xl px-2 text-sm font-medium text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800" :class="!isCollapsed ? 'flex py-2' : ''">
-                            <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-100 dark:bg-zinc-800" :class="isCollapsed ? 'py-2' : 'py-1.5'">
-                                <i class="fi fi-{{ $item->icon }} leading-none text-[16px]"></i>
-                            </span>
-                            <span x-show="!isCollapsed" class="truncate">{{ $item->label }}</span>
-                            <span x-show="!isCollapsed" class="ml-auto h-4 w-4 text-zinc-500 transition-transform">
-                                <i class="fi fi-rr-angle-small-down"></i>
-                            </span>
-                        </button>
-                        {{-- Children --} }
-                        <div x-show="!isCollapsed && isGroupOpen('{{ $item->key }}')" x-collapse class="mt-1">
-                            @foreach ($item->children as $child)
-                                <a href="{{ $child->route ? route($child->route) : '' }}" :class="navSubLinkClass({{ request()->routeIs($child->route) }})">
-                                    <span class="truncate">{{ $child->label }}</span>
-                                </a>
-                            @endforeach
-                        </div>
-                    </div>
-                @endif
-            @endforeach --}}
-        </nav>
+                <hr class="my-2 border-t border-zinc-200 dark:border-zinc-800" />
+
+        @endif
 
         <!-- Footer -->
         <div class="mt-auto">
-            @if ($user->hasRole('Administrator') || $user->hasRole('Super-Administrator'))
+            @if ($user->hasRole('Superadmin') && !request()->routeIs('admin.*'))
                 <div class="mb-2">
-                    <button type="button" @click="isCollapsed ? expandFromIcon() : toggleGroup('admin')" class="w-full items-center gap-3 rounded-xl px-2 text-sm font-medium text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800" :class="!isCollapsed ? 'flex py-2' : ''">
-                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-100 dark:bg-zinc-800" :class="isCollapsed ? 'py-2' : 'py-1.5'">
-                            <i class="fi fi-rr-settings-sliders leading-none text-[16px]"></i>
+                    <a href="" :class="">
+                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-100 dark:bg-zinc-800" :class="isCollapsed ? 'mb-2 py-2' : 'py-1.5'">
+                            <i class="fi fi-rr-shield-check leading-none text-[16px]"></i>
                         </span>
-                        <span x-show="!isCollapsed" class="truncate">Admin</span>
-                        <span x-show="!isCollapsed" class="ml-auto h-4 w-4 text-zinc-500 transition-transform">
-                            <i class="fi fi-rr-angle-small-down"></i>
-                        </span>
-                    </button>
-                    {{-- Children --}}
-                    <div x-show="!isCollapsed && isGroupOpen('admin')" x-collapse class="mt-1">
-                        @if ($editSidebar != null && $user->hasPermissionTo('edit_sidebar'))
-                            <a href="{{ route('admin.sidebar.render') }}" :class="navSubLinkClass({{ request()->routeIs('admin.sidebar.*') }})">
-                                <span class="truncate">Edit Sidebar</span>
-                            </a>
-                        @endif
-                        @if ($managePerms != null && $user->hasPermissionTo('manage_permissions'))
-                            <a href="{{ route('admin.roles-perms.render') }}" :class="navSubLinkClass({{ request()->routeIs('admin.roles-perms.*') }})">
-                                <span class="truncate">Roles & Permissions</span>
-                            </a>
-                        @endif
-                        @if ($manageUsers != null && $user->hasPermissionTo('manage_users'))
-                            <a href="{{ route('admin.users.render') }}" :class="navSubLinkClass({{ request()->routeIs('admin.users.*') }})">
-                                <span class="truncate">Users Table</span>
-                            </a>
-                        @endif
-                    </div>
+                        <span x-show="!isCollapsed" class="truncate">{{ __('sidebar.admin') }}</span>
+                    </a>
                 </div>
             @endif
 
