@@ -17,10 +17,6 @@ class Sidebar extends Component
     public function mount(): void
     {
         $this->user = auth()->user();
-        // $this->sidebarItems = SidebarItem::whereNull('parent_id')
-        //     ->with('children')
-        //     ->orderBy('position')
-        //     ->get();
 
         $this->editSidebar = Permission::where('name', 'edit_sidebar')->first();
         $this->managePerms = Permission::where('name', 'manage_permissions')->first();

@@ -10,11 +10,33 @@ return [
     */
 
     // Placeholders
-    'search_placeholder' => 'Search...',
+    'placeholders' => [
+        'search' => 'Search...',
+        'select_option' => 'Select an option',
+    ],
 
     // Buttons
-    'submit_button' => 'Submit',
-    'cancel_button' => 'Cancel',
-    'save_button' => 'Save',
-    'delete_button' => 'Delete',
+    'buttons' => [
+        'view' => 'View',
+        'create' => 'Create',
+        'save' => 'Save',
+        'edit' => 'Edit',
+        'update' => 'Update',
+        'delete' => 'Delete',
+        'remove' => 'Remove',
+        'cancel' => 'Cancel',
+        'confirm' => 'Confirm',
+        'close' => 'Close',
+    ],
+
+    // Labels
+    'labels' => [
+        'created_at' => 'Created At',
+        'updated_at' => 'Updated At',
+    ],
+
+    // Messages
+    'messages' => [
+        'required_fields' => 'Required fields'
+    ]
 ];
