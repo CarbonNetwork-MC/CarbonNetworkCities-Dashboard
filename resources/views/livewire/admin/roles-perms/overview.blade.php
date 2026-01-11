@@ -39,7 +39,13 @@
                     @forelse($roles as $role)
                         <tr class="odd:bg-white even:bg-gray-100 dark:odd:bg-gray-600 dark:even:bg-gray-700 border-b border-default">
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $role->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $role->permissions()->count() }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                                @forelse ($role->permissions as $permission)
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full">{{ $permission->name }}</span>
+                                @empty
+                                    <span class="text-gray-200 italic">{{ __('admin.labels.no_permissions_assigned') }}</span>
+                                @endforelse
+                            </td>
                             <td class="px-6 py-4 flex justify-end gap-x-4 whitespace-nowrap text-right text-sm font-medium">
                                 <x-tables.primary-action href="{{ route('admin.roles-perms.role.edit', ['uuid' => $role->uuid]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removeRole('{{ $role->uuid }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>

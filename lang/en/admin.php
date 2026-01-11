@@ -30,6 +30,7 @@ return [
         // Roles
         'role_name' => 'Role Name',
         'role_permissions' => 'Permissions',
+        'no_permissions_assigned' => 'No permissions assigned.',
     ],
 
     // Buttons
