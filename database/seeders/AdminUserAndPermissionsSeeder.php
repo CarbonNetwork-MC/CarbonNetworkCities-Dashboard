@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -38,6 +39,11 @@ class AdminUserAndPermissionsSeeder extends Seeder
         // Permissions
         Permission::create(['name' => 'manage_permissions']);
 
+        // Role
+        $superadminRole = Role::create(['name' => 'Superadmin']);
+        $superadminRole->givePermissionTo('manage_permissions');
+
         $user->givePermissionTo('manage_permissions');
+        $user->assignRole('Superadmin');
     }
 }
