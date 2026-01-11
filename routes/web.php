@@ -42,11 +42,13 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
 });
 
 // ! Admin Routes
-Route::middleware(['auth', 'onboarding'])->prefix('admin')->group(function() {
+Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Superadmin')->group(function() {
     // ? Permissions
-    Route::get('/permissions', RolesPermsOverview::class)->name('admin.roles-perms.render');
-    Route::get('/roles/new', NewRole::class)->name('admin.roles-perms.role.new');
-    Route::get('/roles/edit/{uuid}', EditRole::class)->name('admin.roles-perms.role.edit');
-    Route::get('/permissions/new', NewPermission::class)->name('admin.roles-perms.permission.new');
-    Route::get('/permissions/edit/{uuid}', EditPermission::class)->name('admin.roles-perms.permission.edit');
+    Route::middleware('permission:manage_permissions')->group(function() {
+        Route::get('/permissions', RolesPermsOverview::class)->name('admin.roles-perms.render');
+        Route::get('/roles/new', NewRole::class)->name('admin.roles-perms.role.new');
+        Route::get('/roles/edit/{uuid}', EditRole::class)->name('admin.roles-perms.role.edit');
+        Route::get('/permissions/new', NewPermission::class)->name('admin.roles-perms.permission.new');
+        Route::get('/permissions/edit/{uuid}', EditPermission::class)->name('admin.roles-perms.permission.edit');
+    });
 });
