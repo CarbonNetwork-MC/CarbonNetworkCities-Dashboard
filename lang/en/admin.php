@@ -76,7 +76,7 @@ return [
     // Placeholders
     'placeholders' => [
         // Permissions
-        'permission_name' => 'manage_users',
+        'permission_name' => 'permission_name',
 
         // Roles
         'role_name' => 'Moderator'
