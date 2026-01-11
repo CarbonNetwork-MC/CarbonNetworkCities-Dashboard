@@ -32,7 +32,7 @@
         @if($required) required @endif 
         @if($disabled) disabled @endif
         {{ $attributes->class([
-            'bg-gray-100 border border-default-medium text-black text-sm rounded-base focus:ring-brand focus:border-brand block w-full ' . $sizeClasses . ' shadow-xs placeholder:text-body dark:placeholder:text-gray-800'
+            'bg-gray-100 border border-default-medium text-black text-sm rounded-base focus:ring-brand focus:border-brand block w-full ' . $sizeClasses . ' shadow-xs placeholder:text-gray-500 dark:placeholder:text-gray-600'
         ]) }}
     />
 </div>
