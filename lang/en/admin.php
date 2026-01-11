@@ -9,20 +9,55 @@ return [
     |
     */
 
-    // Permissions - Titles
-    'permissions_overview_title' => 'Permissions Overview',
-    'permissions_modal_create_title' => 'Create New Permission',
-    'permissions_modal_edit_title' => 'Edit Permission',
-    'permissions_modal_delete_title' => 'Delete Permission',
+    // Titles
+    'titles' => [
+        // Permissions
+        'permissions_overview' => 'Permissions Overview',
+        'permission_modal_create' => 'Create New Permission',
+        'permission_modal_edit' => 'Edit Permission',
+        'permission_modal_delete' => 'Delete Permission',
 
-    // Permissions - Messages
-    'permissions_modal_delete_confirmation' => 'Are you sure you want to delete the permission <b>:name</b>? This action cannot be undone.',
-    'permissions_no_permissions' => 'No permissions found.',
+        // Roles
+        'roles_overview' => 'Roles Overview',
+        'role_modal_create' => 'Create New Role',
+    ],
 
-    // Permissions - Labels
-    'permissions_modal_name_label' => 'Permission Name',
+    // Labels
+    'labels' => [
+        // Permissions
+        'permission_name' => 'Permission Name',
 
-    // Permissions - Buttons
-    'permissions_create_button' => 'Create New Permission',
+        // Roles
+        'role_name' => 'Role Name',
+        'role_permissions' => 'Permissions',
+    ],
+
+    // Buttons
+    'buttons' => [
+        // Permissions
+        'permission_create' => 'Create Permission',
+
+        // Roles
+        'role_create' => 'Create Role',
+    ],
+
+    // Messages
+    'messages' => [
+        // Permissions
+        'permissions_modal_delete_confirmation' => 'Are you sure you want to delete the permission <b>:name</b>? This action cannot be undone.',
+        'permissions_no_records' => 'No permissions found.',
+
+        // Roles
+        'roles_modal_delete_confirmation' => 'Are you sure you want to delete the role <b>:name</b>? This action cannot be undone.',
+        'roles_no_records' => 'No roles found.',
+    ],
+
+    // Toasts
+    'toast' => [
+        // Permissions
+        'permissions_created' => 'Permission created successfully.',
+        'permissions_updated' => 'Permission updated successfully.',
+        'permissions_deleted' => 'Permission deleted successfully.',
+    ],
 
 ];

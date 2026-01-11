@@ -5,7 +5,9 @@ use App\Http\Controllers\AuthController;
 
 use App\Livewire\Dashboard;
 use App\Livewire\Onboarding\Onboarding;
-use App\Livewire\Admin\Permissions\Overview as PermissionOverview;
+use App\Livewire\Admin\RolesPerms\Overview as RolesPermsOverview;
+use App\Livewire\Admin\RolesPerms\EditRole;
+use App\Livewire\Admin\RolesPerms\NewRole;
 
 // ! Guest Routes
 Route::middleware('guest')->group(function() {
@@ -40,5 +42,7 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
 // ! Admin Routes
 Route::middleware(['auth', 'onboarding'])->prefix('admin')->group(function() {
     // ? Permissions
-    Route::get('/permissions', PermissionOverview::class)->name('admin.permissions.render');
+    Route::get('/permissions', RolesPermsOverview::class)->name('admin.roles-perms.render');
+    Route::get('/roles/new', NewRole::class)->name('admin.roles-perms.role.new');
+    Route::get('/roles/edit/{uuid}', EditRole::class)->name('admin.roles-perms.role.edit');
 });
