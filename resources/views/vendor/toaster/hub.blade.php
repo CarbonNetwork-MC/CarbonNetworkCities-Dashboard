@@ -24,7 +24,7 @@
              @class(['mt-2 relative duration-300 transform transition ease-in-out max-w-xs w-full pointer-events-auto', 'text-center' => $position->is('center')])
              :class="toast.select({ error: 'text-white', info: 'text-black', success: 'text-white', warning: 'text-white' })"
         >
-            <div class="flex items-center w-full max-w-xs p-4 rounded-base shadow-xs border border-default bg-neutral-primary-soft text-body">
+            <div class="flex items-center w-full max-w-xs p-4 rounded-base shadow-xs border border-default bg-gray-100 text-black">
                 <!-- Icon -->
                 <div
                     class="flex-shrink-0"
