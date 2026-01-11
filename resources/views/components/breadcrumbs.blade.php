@@ -6,7 +6,7 @@
             @foreach ($items as $index => $item)
                 @if ($index > 0)
                     <li>
-                        <i class="fi fi-br-angle-small-right"></i>
+                        <i class="fi fi-br-angle-small-right dark:text-white"></i>
                     </li>
                 @endif
 
@@ -19,7 +19,7 @@
                                    hover:text-green-600 dark:hover:text-white"
                         >
                             @if (!empty($item['icon']))
-                                <i class="{{ $item['icon'] }} me-2.5"></i>
+                                <i class="{{ $item['icon'] }} {{ $item['label'] ? 'me-2.5' : '' }}"></i>
                             @endif
                             {{ $item['label'] }}
                         </a>
