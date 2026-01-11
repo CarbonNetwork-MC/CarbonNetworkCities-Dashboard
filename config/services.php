@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'plugin-api' => [
+        'key' => env('PLUGIN_API_KEY'),
+        'url' => env('PLUGIN_API_URL', 'https://api.carbonnetwork.net/v1/cities/')
+    ]
+
 ];
