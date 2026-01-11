@@ -37,49 +37,51 @@
         @if (!request()->routeIs('admin.*'))
             <nav class="space-y-2 flex-1 min-h-0">
                 {{-- Dashboard --}}
-                <a href="{{ route('dashboard.render') }}" :class="navLinkClass({{ request()->routeIs('dashboard.render') }})">
-                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-100 dark:bg-zinc-800" :class="isCollapsed ? 'mb-2 py-2' : 'py-1.5'">
-                        <i class="fi fi-rr-home leading-none text-[16px]"></i>
-                    </span>
-                    <span x-show="!isCollapsed" class="truncate">{{ __('sidebar.dashboard') }}</span>
-                </a>
-
-                {{--  --}}
+                <x-sidebar.nav-item
+                    :href="route('dashboard.render')"
+                    :active="request()->routeIs('dashboard.render')"
+                    icon="fi fi-rr-home"
+                    :label="__('sidebar.dashboard')"
+                />
             </nav>
         @endif
 
-        @if (request()->routeIs('admin.*'))
+        @if (request()->routeIs('admin.*') && $user->hasRole('Superadmin'))
             <nav class="space-y-2 flex-1 min-h-0">
                 {{-- Dashboard --}}
-                <a href="{{ route('dashboard.render') }}" :class="navLinkClass({{ request()->routeIs('dashboard.render') }})">
-                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-100 dark:bg-zinc-800" :class="isCollapsed ? 'mb-2 py-2' : 'py-1.5'">
-                        <i class="fi fi-rr-arrow-small-left leading-none text-[16px]"></i>
-                    </span>
-                    <span x-show="!isCollapsed" class="truncate">{{ __('sidebar.back_to_dashboard') }}</span>
-                </a>
+                <x-sidebar.nav-item
+                    :href="route('dashboard.render')"
+                    :active="false"
+                    icon="fi fi-rr-arrow-small-left"
+                    :label="__('sidebar.back_to_dashboard')"
+                />
 
-                <hr class="my-2 border-t border-zinc-200 dark:border-zinc-800" />
+                <x-sidebar.nav-divider />
 
                 {{-- Roles & Permissions --}}
-                <a href="{{ route('admin.roles-perms.render') }}" :class="navLinkClass({{ request()->routeIs('admin.roles-perms.*') }})">
-                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-100 dark:bg-zinc-800" :class="isCollapsed ? 'mb-2 py-2' : 'py-1.5'">
-                        <i class="fi fi-rr-shield-check leading-none text-[16px]"></i>
-                    </span>
-                    <span x-show="!isCollapsed" class="truncate">{{ __('sidebar.roles_perms') }}</span>
-                </a>
+                @if ($user->hasPermissionTo('manage_permissions'))
+                    <x-sidebar.nav-item
+                        :href="route('admin.roles-perms.render')"
+                        :active="request()->routeIs('admin.roles-perms.*')"
+                        icon="fi fi-rr-shield-check"
+                        :label="__('sidebar.roles_perms')"
+                    />
+                @endif
             </nav>
         @endif
 
         <!-- Footer -->
         <div class="mt-auto">
             @if ($user->hasRole('Superadmin') && !request()->routeIs('admin.*'))
+                <x-sidebar.nav-divider />
+
                 <div class="mb-2">
-                    <a href="{{ route('admin.roles-perms.render') }}" :class="navLinkClass({{ request()->routeIs('admin.roles-perms.*') }})">
-                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-100 dark:bg-zinc-800" :class="isCollapsed ? 'mb-2 py-2' : 'py-1.5'">
-                            <i class="fi fi-rr-admin-alt leading-none text-[16px]"></i>
-                        </span>
-                        <span x-show="!isCollapsed" class="truncate">{{ __('sidebar.admin') }}</span>
-                    </a>
+                    <x-sidebar.nav-item
+                        :href="route('admin.roles-perms.render')"
+                        :active="request()->routeIs('admin.roles-perms.*')"
+                        icon="fi fi-rr-admin-alt"
+                        :label="__('sidebar.admin')"
+                    />
                 </div>
             @endif
 
@@ -87,7 +89,7 @@
                 <div class="relative" x-data="{ open: false }" @keydown.escape.window="open = false">
                     <!-- Profile button -->
                     <button type="button" @click="open = !open" :title="isCollapsed ? '{{ Auth::user()->name ?? 'Account' }}' : null"
-                        class="w-full rounded-xl px-2 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center gap-3"
+                        class="w-full rounded-xl px-2 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center gap-3 cursor-pointer"
                     >
 
                         <!-- Avatar -->
@@ -106,7 +108,7 @@
                         </div>
 
                         <!-- Chevron (hidden when collapsed) -->
-                        <svg x-show="!isCollapsed" :class="{ 'rotate-180': open }" class="ml-auto h-4 w-4 text-zinc-500 transition-transform" viewBox="0 0 20 20"
+                        <svg x-show="!isCollapsed" :class="{ 'rotate-0': open, 'rotate-180': !open }" class="ml-auto h-4 w-4 text-zinc-500 transition-transform" viewBox="0 0 20 20"
                             fill="currentColor" aria-hidden="true"
                         >
                             <path fill-rule="evenodd"
