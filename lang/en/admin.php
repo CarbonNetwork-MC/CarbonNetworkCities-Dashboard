@@ -11,6 +11,9 @@ return [
 
     // Titles
     'titles' => [
+        // Companies
+        'companies_overview' => 'Companies Overview',
+
         // Permissions
         'permissions_overview' => 'Permissions Overview',
         'permission_delete' => 'Delete Permission',
@@ -24,6 +27,16 @@ return [
 
     // Labels
     'labels' => [
+        // Companies
+        'company_name' => 'Name',
+        'company_world_id' => 'World ID',
+        'company_coc_number' => 'COC No.',
+        'company_owner' => 'Owner',
+        'company_bank_accounts' => 'Bank Accounts',
+        'company_employees' => 'Employees',
+        'company_plots' => 'Plots',
+        'company_pin_consoles' => 'PIN Consoles',
+
         // Permissions
         'permission_name' => 'Permission Name',
 
@@ -37,6 +50,9 @@ return [
     'buttons' => [
         'assign' => 'Assign',
 
+        // Companies
+        'company_create' => 'Create Company',
+
         // Permissions
         'permission_create' => 'Create Permission',
 
@@ -47,6 +63,9 @@ return [
 
     // Messages
     'messages' => [
+        // Companies
+        'companies_no_records' => 'No companies found.',
+
         // Permissions
         'permissions_modal_delete_confirmation' => 'Are you sure you want to delete the permission <b>:name</b>? This action cannot be undone.',
         'permissions_no_records' => 'No permissions found.',
@@ -60,6 +79,11 @@ return [
 
     // Toasts
     'toast' => [
+        // Companies
+        'company_created' => 'Company created successfully.',
+        'company_updated' => 'Company updated successfully.',
+        'company_deleted' => 'Company deleted successfully.',
+
         // Permissions
         'permission_created' => 'Permission created successfully.',
         'permission_updated' => 'Permission updated successfully.',

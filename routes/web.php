@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 
 use App\Livewire\Dashboard;
 use App\Livewire\Onboarding\Onboarding;
+use App\Livewire\Admin\Companies\Overview as CompaniesOverview;
 use App\Livewire\Admin\Dashboard\Dashboard as AdminDashboard;
 use App\Livewire\Admin\RolesPerms\EditPermission;
 use App\Livewire\Admin\RolesPerms\NewPermission;
@@ -46,6 +47,11 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
 Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Superadmin')->group(function() {
     // ? Admin Dashboard
     Route::get('/dashboard', AdminDashboard::class)->name('admin.dashboard.render');
+
+    // ? Companies
+    Route::middleware('permission:manage_companies')->group(function() {
+        Route::get('/companies', CompaniesOverview::class)->name('admin.companies.render');
+    });
 
     // ? Permissions
     Route::middleware('permission:manage_permissions')->group(function() {

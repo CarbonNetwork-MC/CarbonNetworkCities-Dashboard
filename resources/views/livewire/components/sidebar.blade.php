@@ -57,6 +57,15 @@
                     :label="__('sidebar.dashboard')"
                 />
 
+                {{-- Companies --}}
+                @if ($user->can('manage_companies'))
+                <x-sidebar.nav-item
+                    :href="route('admin.companies.render')"
+                    :active="request()->routeIs('admin.companies.*')"
+                    icon="fi fi-rr-building"
+                    :label="__('sidebar.companies')"
+                />
+                @endif
 
                 {{-- Roles & Permissions --}}
                 @if ($user->can('manage_permissions'))
