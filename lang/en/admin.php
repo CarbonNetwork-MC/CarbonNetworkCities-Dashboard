@@ -13,6 +13,7 @@ return [
     'titles' => [
         // Companies
         'companies_overview' => 'Companies Overview',
+        'company_delete' => 'Delete Company',
 
         // Permissions
         'permissions_overview' => 'Permissions Overview',
@@ -64,6 +65,7 @@ return [
     // Messages
     'messages' => [
         // Companies
+        'company_delete_confirmation' => 'Are you sure you want to delete the company <b>:name</b>? This action cannot be undone.',
         'companies_no_records' => 'No companies found.',
 
         // Permissions

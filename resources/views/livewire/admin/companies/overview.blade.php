@@ -21,7 +21,7 @@
             <h1 class="text-xl font-semibold dark:text-white mb-4">{{ __('admin.titles.companies_overview') }}</h1>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="search" wire:model.live="search" class="w-full" />
-                <x-buttons.primary-button size="sm" href="">
+                <x-buttons.primary-button size="sm" href="{{ route('admin.companies.new') }}">
                     {{ __('admin.buttons.company_create') }}
                 </x-buttons.primary-button>
             </div>
@@ -71,7 +71,7 @@
                             </td>
                             <td class="px-6 py-4 flex justify-end gap-x-4 whitespace-nowrap text-right text-sm font-medium">
                                 <x-tables.primary-action href="">{{ __('general.buttons.edit') }}</x-tables.primary-action>
-                                <x-tables.danger-action wire:click="removeCompany('{{ $company->uuid }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
+                                <x-tables.danger-action wire:click="removeCompany('{{ $company->id }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
                             </td>
                         </tr>
                     @empty
@@ -99,4 +99,21 @@
             </x-tables.table-striped>
         </div>
     </x-containers.main>
+
+    {{-- Delete Company Modal --}}
+    <x-modals.modal wire:model="deleteCompanyModal" :title="__('admin.titles.company_delete')">
+        <x-slot name="content">
+            <p class="text-gray-700 dark:text-gray-300">
+                {!! __('admin.messages.company_delete_confirmation', ['name' => $selectedCompany->name ?? '']) !!}
+            </p>
+        </x-slot>
+        <x-slot name="footer">
+            <x-buttons.secondary-button wire:click="$set('deleteCompanyModal', false)">
+                {{ __('general.buttons.cancel') }}
+            </x-buttons.secondary-button>
+            <x-buttons.danger-button wire:click="confirmDeleteCompany">
+                {{ __('general.buttons.delete') }}
+            </x-buttons.danger-button>
+        </x-slot>
+    </x-modals.modal>
 </div>
