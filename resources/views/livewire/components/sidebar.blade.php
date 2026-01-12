@@ -227,8 +227,8 @@
                 isGroupOpen(key) { return this.openGroups.has(key); },
             navLinkClass(active) {
                 return [
-                    'group items-center gap-3 rounded-xl px-2 py-2 text-sm text-zinc-700',
-                    active && !this.isCollapsed ? 'bg-green-500/20 dark:text-zinc-300' : 'hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800',
+                    'group items-center gap-3 rounded-xl px-2 py-2 text-sm text-black dark:text-white',
+                    active && !this.isCollapsed ? 'bg-green-500/20' : 'hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800',
                     this.isCollapsed ? '' : 'flex'
                 ].join(' ');
             },
