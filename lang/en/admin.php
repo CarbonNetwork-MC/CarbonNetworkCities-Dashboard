@@ -37,6 +37,7 @@ return [
         'company_employees' => 'Employees',
         'company_plots' => 'Plots',
         'company_pin_consoles' => 'PIN Consoles',
+        'no_owner_assigned' => 'No owner assigned',
 
         // Permissions
         'permission_name' => 'Permission Name',

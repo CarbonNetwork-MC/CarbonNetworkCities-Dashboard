@@ -111,7 +111,7 @@
             <x-buttons.secondary-button wire:click="$set('deleteCompanyModal', false)">
                 {{ __('general.buttons.cancel') }}
             </x-buttons.secondary-button>
-            <x-buttons.danger-button wire:click="confirmDeleteCompany">
+            <x-buttons.danger-button wire:click="destroyCompany">
                 {{ __('general.buttons.delete') }}
             </x-buttons.danger-button>
         </x-slot>
