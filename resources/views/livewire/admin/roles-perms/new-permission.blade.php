@@ -24,7 +24,7 @@
         </h1>
 
         <div class="mt-6">
-            <div class="grid grid-cols-4 gap-x-6">
+            <div class="grid grid-cols-4 gap-x-4">
                 {{-- Permission name --}}
                 <div class="col-span-1">
                     <x-forms.text-input label="{{ __('admin.labels.permission_name') }}" wire:model="permissionName" placeholder="{{ __('admin.placeholders.permission_name') }}" required />

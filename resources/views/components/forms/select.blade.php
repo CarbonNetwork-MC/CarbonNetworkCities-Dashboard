@@ -28,7 +28,7 @@
         @if($required) required @endif
         @if($disabled) disabled @endif
         {{ $attributes->class([
-            'block w-full bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body ' . $sizeClasses
+            'block w-full bg-gray-100 border border-default-medium text-black text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body ' . $sizeClasses
         ]) }}
     >
         {{ $slot }}

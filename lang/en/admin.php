@@ -20,6 +20,8 @@ return [
         'plots' => 'Plots',
         'pin_consoles' => 'PIN Consoles',
 
+        'add_employee' => 'Add Employee',
+
         // Permissions
         'permissions_overview' => 'Permissions Overview',
         'permission_edit' => 'Edit Permission',
@@ -34,6 +36,8 @@ return [
 
     // Labels
     'labels' => [
+        'player_uuid' => 'Player UUID',
+
         // Companies
         'company_name' => 'Name',
         'company_world_id' => 'World ID',
@@ -77,9 +81,9 @@ return [
 
         // Companies
         'company_create' => 'Create Company',
-        'assign_employee' => 'Assign Employee',
+        'add_employee' => 'Add Employee',
         'add_bank_account' => 'Add Bank Account',
-        'assign_plot' => 'Assign Plot',
+        'add_plot' => 'Add Plot',
         'add_pin_console' => 'Add PIN Console',
         'delete_company' => 'Delete Company',
         'remove_employee' => 'Remove Employee',
@@ -139,6 +143,9 @@ return [
 
     // Placeholders
     'placeholders' => [
+        // Companies
+        'select_role' => 'Select Role',
+
         // Permissions
         'permission_name' => 'permission_name',
 

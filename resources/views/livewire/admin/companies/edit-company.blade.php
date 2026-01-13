@@ -74,8 +74,8 @@
             </h1>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchEmployees" wire:model.live="searchEmployees" />
-                <x-buttons.primary-button size="sm" href="">
-                    {{ __('admin.buttons.assign_employee') }}
+                <x-buttons.primary-button size="sm" href="{{ route('admin.companies.add-employee', ['id' => $company->id]) }}">
+                    {{ __('admin.buttons.add_employee') }}
                 </x-buttons.primary-button>
             </div>
         </div>
@@ -209,7 +209,7 @@
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchPlots" wire:model.live="searchPlots" />
                 <x-buttons.primary-button size="sm" wire:click="">
-                    {{ __('admin.buttons.assign_plot') }}
+                    {{ __('admin.buttons.add_plot') }}
                 </x-buttons.primary-button>
             </div>
         </div>
@@ -345,7 +345,7 @@
             <x-buttons.secondary-button wire:click="$set('removeEmployeeModal', false)">
                 {{ __('general.buttons.cancel') }}
             </x-buttons.secondary-button>
-            <x-buttons.danger-button wire:click="removeEmployee">
+            <x-buttons.danger-button wire:click="destroyEmployee">
                 {{ __('general.buttons.remove') }}
             </x-buttons.danger-button>
         </x-slot>
