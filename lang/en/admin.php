@@ -70,6 +70,9 @@ return [
         'role_deleted' => 'Role deleted successfully.',
         'role_permission_added' => 'Permission added to role successfully.',
         'role_permission_removed' => 'Permission removed from role successfully.',
+
+        // API
+        'api_unauthorized_error' => 'Unauthorized access to the API. Please check the API key configuration.',
     ],
 
     // Placeholders

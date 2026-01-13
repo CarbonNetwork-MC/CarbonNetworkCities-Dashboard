@@ -37,6 +37,26 @@ class Overview extends Component
 
     public function unlink() {
         if ($this->selectedUser) {
+            try {
+                $url = config('services.plugin-api.url') . '/invalidate-player/' . $this->selectedUser->player->uuid;
+
+                /** @var \Illuminate\Http\Client\Response $response */
+                $response = Http::withToken(
+                    config('services.plugin-api.key')
+                )->post($url);
+
+                if ($response->status() == 400) {
+                    Toaster::error(__('admin.toast.account_unlink_missing_player_error'));
+                } elseif ($response->status() == 401) {
+                    Toaster::error(__('admin.toast.api_unauthorized_error'));
+                } elseif ($response->failed()) {
+                    Toaster::error(__('admin.toast.account_unlink_api_error'));
+                    return;
+                }
+            } catch (\Exception $e) {
+                Toaster::error(__('admin.toast.account_unlink_api_error'));
+                return;
+            }
             $this->selectedUser->update([
                 'onboarding_status' => 1,
                 'onboarding_step' => 1,
