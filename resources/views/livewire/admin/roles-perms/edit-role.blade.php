@@ -93,6 +93,7 @@
             </div>
         </x-slot>
         <x-slot name="content">
+            {{-- TODO: add mx-auto --}}
             <x-forms.select id="permissionSelect" wire:model="selectedPermission" label="{{ __('admin.labels.role_permissions') }}" required>
                 <option value="">{{ __('general.placeholders.select_option') }}</option>
                 @foreach($assignablePermissions as $permission)
