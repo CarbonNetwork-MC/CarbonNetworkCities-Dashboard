@@ -326,7 +326,7 @@
                             {{ $selectedSlot($selectedOptions[0]) }}
                         @else
                             {{-- Default single select display --}}
-                            <span class="las-flex-1 las-truncate las-text-base las-text-gray-900">{{ $selectedOptions[0]['label'] }}</span>
+                            <span class="las-flex-1 las-truncate las-text-base las-text-gray-900 cursor-pointer">{{ $selectedOptions[0]['label'] }}</span>
                         @endif
                     @else
                         @if ($this->searchable)
