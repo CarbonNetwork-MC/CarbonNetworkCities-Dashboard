@@ -159,7 +159,9 @@
                     @forelse ($bankAccounts as $bankAccount)
                         <x-tables.table-row>
                             <x-tables.table-data>{{ $bankAccount->id }}</x-tables.table-data>
-                            <x-tables.table-data>{{ $bankAccount->balance }}</x-tables.table-data>
+                            <x-tables.table-data>
+                                {{ Number::currency($bankAccount->balance, $bankAccount->currency) }}
+                            </x-tables.table-data>
                             <x-tables.table-data>
                                 @if ($bankAccount->is_main)
                                     <span class="bg-green-100 text-green-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full">{{ __('general.true') }}</span>
