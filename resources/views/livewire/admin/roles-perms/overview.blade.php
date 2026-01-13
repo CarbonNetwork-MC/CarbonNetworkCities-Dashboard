@@ -30,37 +30,48 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.role_name') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.role_permissions') }}</th>
-                        <th></th>
+                        <x-tables.table-header>{{ __('admin.labels.role_name') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.role_permissions') }}</x-tables.table-header>
+                        <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
                 <x-slot name="rows">
                     @forelse($roles as $role)
-                        <tr class="odd:bg-white even:bg-gray-100 dark:odd:bg-gray-600 dark:even:bg-gray-700 border-b border-default">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $role->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                        <x-tables.table-row>
+                            <x-tables.table-data>{{ $role->name }}</x-tables.table-data>
+                            <x-tables.table-data>
                                 @forelse ($role->permissions as $permission)
                                     <span class="bg-green-100 text-green-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full">{{ $permission->name }}</span>
                                 @empty
                                     <span class="text-gray-600 dark:text-gray-200 italic">{{ __('admin.labels.no_permissions_assigned') }}</span>
                                 @endforelse
-                            </td>
-                            <td class="px-6 py-4 flex justify-end gap-x-4 whitespace-nowrap text-right text-sm font-medium">
+                            </x-tables.table-data>
+                            <x-tables.table-actions>
                                 <x-tables.primary-action href="{{ route('admin.roles-perms.role.edit', ['uuid' => $role->uuid]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removeRole('{{ $role->uuid }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
-                            </td>
-                        </tr>
+                            </x-tables.table-actions>
+                        </x-tables.table-row>
                     @empty
                         <tr>
-                            <td colspan="3" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                            <x-tables.empty-state colspan="3">
                                 {{ __('admin.messages.roles_no_records') }}
-                            </td>
+                            </x-tables.empty-state>
                         </tr>
                     @endforelse
                 </x-slot>
                 <x-slot name="pagination">
-                    {{ $roles->links() }}
+                    @if ($roles->hasPages())
+                        <div class="flex items-center gap-x-4 mt-4">
+                            {{ $roles->links() }}
+                            <x-tables.per-page-select wire:model.live="rolesPerPage">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </x-tables.per-page-select>
+                        </div>
+                    @endif
                 </x-slot>
             </x-tables.table-striped>
         </div>
@@ -82,24 +93,24 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.permission_name') }}</th>
-                        <th></th>
+                        <x-tables.table-header>{{ __('admin.labels.permission_name') }}</x-tables.table-header>
+                        <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
                 <x-slot name="rows">
                     @forelse($permissions as $permission)
-                        <tr class="odd:bg-white even:bg-gray-100 dark:odd:bg-gray-600 dark:even:bg-gray-700 border-b border-default">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $permission->name }}</td>
-                            <td class="px-6 py-4 flex justify-end gap-x-4 whitespace-nowrap text-right text-sm font-medium">
+                        <x-tables.table-row>
+                            <x-tables.table-data>{{ $permission->name }}</x-tables.table-data>
+                            <x-tables.table-actions>
                                 <x-tables.primary-action href="{{ route('admin.roles-perms.permission.edit', ['uuid' => $permission->uuid]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removePermission('{{ $permission->uuid }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
-                            </td>
-                        </tr>
+                            </x-tables.table-actions>
+                        </x-tables.table-row>
                     @empty
                         <tr>
-                            <td colspan="2" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                            <x-tables.empty-state colspan="2">
                                 {{ __('admin.messages.permissions_no_records') }}
-                            </td>
+                            </x-tables.empty-state>
                         </tr>
                     @endforelse
                 </x-slot>

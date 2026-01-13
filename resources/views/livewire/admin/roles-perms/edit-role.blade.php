@@ -59,25 +59,25 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.permission_name') }}</th>
-                        <th></th>
+                        <x-tables.table-header>{{ __('admin.labels.permission_name') }}</x-tables.table-header>
+                        <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
                 <x-slot name="rows">
                     @forelse($rolePermissions as $permission)
-                        <tr class="odd:bg-white even:bg-gray-100 dark:odd:bg-gray-600 dark:even:bg-gray-700 border-b border-default">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $permission->name }}</td>
-                            <td class="px-6 py-4 flex justify-end gap-x-4 whitespace-nowrap text-right text-sm font-medium">
+                        <x-tables.table-row>
+                            <x-tables.table-data>{{ $permission->name }}</x-tables.table-data>
+                            <x-tables.table-actions>
                                 <x-tables.danger-action wire:click="removePermission('{{ $permission->uuid }}')">
                                     {{ __('general.buttons.remove') }}
                                 </x-tables.danger-action>
-                            </td>
-                        </tr>
+                            </x-tables.table-actions>
+                        </x-tables.table-row>
                     @empty
                         <tr>
-                            <td colspan="2" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                            <x-tables.empty-state colspan="2">
                                 {{ __('admin.messages.role_no_permissions_assigned') }}
-                            </td>
+                            </x-tables.empty-state>
                         </tr>
                     @endforelse
                 </x-slot>
