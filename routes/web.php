@@ -5,12 +5,13 @@ use App\Http\Controllers\AuthController;
 
 use App\Livewire\Dashboard;
 use App\Livewire\Onboarding\Onboarding;
-use App\Livewire\Admin\Users\Overview as UserOverview;
 use App\Livewire\Admin\RolesPerms\EditPermission;
 use App\Livewire\Admin\RolesPerms\NewPermission;
 use App\Livewire\Admin\RolesPerms\EditRole;
 use App\Livewire\Admin\RolesPerms\NewRole;
 use App\Livewire\Admin\RolesPerms\Overview as RolesPermsOverview;
+use App\Livewire\Admin\Users\EditUser;
+use App\Livewire\Admin\Users\Overview as UserOverview;
 
 // ! Guest Routes
 Route::middleware('guest')->group(function() {
@@ -53,4 +54,5 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->group(function() {
     
     // ? Users
     Route::get('/users', UserOverview::class)->name('admin.users.render'); 
+    Route::get('/users/edit/{uuid}', EditUser::class)->name('admin.users.edit'); 
 });
