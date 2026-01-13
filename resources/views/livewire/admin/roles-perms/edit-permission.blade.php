@@ -32,9 +32,7 @@
             </div>
 
             <div class="flex justify-end items-center gap-x-4">
-                <p class="text-black dark:text-white">
-                    {{ __('general.messages.required_fields') }} <span class="text-red-500">*</span>
-                </p>
+                <x-forms.required-fields />
                 <x-buttons.primary-button wire:click="updatePermission">
                     {{ __('general.buttons.save') }}
                 </x-buttons.primary-button>
