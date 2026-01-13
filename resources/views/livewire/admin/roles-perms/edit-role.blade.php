@@ -81,6 +81,13 @@
                         </tr>
                     @endforelse
                 </x-slot>
+                <x-slot name="pagination">
+                    @if ($rolePermissions->hasPages())
+                        <div class="w-full flex items-center gap-x-4 mt-4">
+                            {{ $rolePermissions->links() }}
+                        </div>
+                    @endif
+                </x-slot>
             </x-tables.table-striped>
         </div>
     </x-containers.main>
