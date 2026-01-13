@@ -54,6 +54,7 @@
                             <x-tables.table-data>{{ $company->plots->count() }}</x-tables.table-data>
                             <x-tables.table-data>{{ $company->pinConsoles->count() }}</x-tables.table-data>
                             <x-tables.table-actions>
+                                <x-tables.primary-action href="{{ route('admin.companies.edit', ['id' => $company->id]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removeCompany('{{ $company->id }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
                             </x-tables.table-actions>
                         </x-tables.table-row>

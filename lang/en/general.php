@@ -9,6 +9,9 @@ return [
     |
     */
 
+    'true' => 'True',
+    'false' => 'False',
+
     // Placeholders
     'placeholders' => [
         'search' => 'Search...',

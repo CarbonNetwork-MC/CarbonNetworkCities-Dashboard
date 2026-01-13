@@ -13,10 +13,16 @@ return [
     'titles' => [
         // Companies
         'companies_overview' => 'Companies Overview',
+        'company_edit' => 'Edit Company',
         'company_delete' => 'Delete Company',
+        'employees' => 'Employees',
+        'bank_accounts' => 'Bank Accounts',
+        'plots' => 'Plots',
+        'pin_consoles' => 'PIN Consoles',
 
         // Permissions
         'permissions_overview' => 'Permissions Overview',
+        'permission_edit' => 'Edit Permission',
         'permission_delete' => 'Delete Permission',
 
         // Roles
@@ -39,6 +45,23 @@ return [
         'company_pin_consoles' => 'PIN Consoles',
         'no_owner_assigned' => 'No owner assigned',
 
+        'employee_name' => 'Employee Name',
+        'employee_role' => 'Role',
+
+        'bank_account_number' => 'Account No.',
+        'bank_account_balance' => 'Balance',
+        'bank_account_is_main' => 'Is Main Account',
+        'bank_account_currency' => 'Currency',
+
+        'plot_name' => 'Plot Name',
+        'plot_id' => 'Plot ID',
+        'plot_location' => 'Location',
+
+        'pin_console_id' => 'PIN Console ID',
+        'pin_console_account' => 'Account',
+        'pin_console_location' => 'Location',
+        'pin_console_is_active' => 'Is Active',
+
         // Permissions
         'permission_name' => 'Permission Name',
 
@@ -54,6 +77,12 @@ return [
 
         // Companies
         'company_create' => 'Create Company',
+        'assign_employee' => 'Assign Employee',
+        'add_bank_account' => 'Add Bank Account',
+        'assign_plot' => 'Assign Plot',
+        'add_pin_console' => 'Add PIN Console',
+        'delete_company' => 'Delete Company',
+        'remove_employee' => 'Remove Employee',
 
         // Permissions
         'permission_create' => 'Create Permission',
@@ -68,6 +97,11 @@ return [
         // Companies
         'company_delete_confirmation' => 'Are you sure you want to delete the company <b>:name</b>? This action cannot be undone.',
         'companies_no_records' => 'No companies found.',
+        'employees_no_records' => 'No employees found for this company.',
+        'bank_accounts_no_records' => 'No bank accounts found for this company.',
+        'plots_no_records' => 'No plots found for this company.',
+        'pin_consoles_no_records' => 'No PIN consoles found for this company.',
+        'company_remove_employee_confirmation' => 'Are you sure you want to remove the employee <b>:name</b> from this company?',
 
         // Permissions
         'permissions_modal_delete_confirmation' => 'Are you sure you want to delete the permission <b>:name</b>? This action cannot be undone.',
@@ -86,6 +120,9 @@ return [
         'company_created' => 'Company created successfully.',
         'company_updated' => 'Company updated successfully.',
         'company_deleted' => 'Company deleted successfully.',
+
+        'company_employee_removed' => 'Employee removed from company successfully.',
+        'company_bank_account_removed' => 'Bank account removed from company successfully.',
 
         // Permissions
         'permission_created' => 'Permission created successfully.',

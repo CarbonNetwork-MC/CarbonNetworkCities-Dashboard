@@ -5,12 +5,13 @@ use App\Http\Controllers\AuthController;
 
 use App\Livewire\Dashboard;
 use App\Livewire\Onboarding\Onboarding;
+use App\Livewire\Admin\Companies\EditCompany;
 use App\Livewire\Admin\Companies\NewCompany;
 use App\Livewire\Admin\Companies\Overview as CompaniesOverview;
 use App\Livewire\Admin\Dashboard\Dashboard as AdminDashboard;
 use App\Livewire\Admin\RolesPerms\EditPermission;
-use App\Livewire\Admin\RolesPerms\NewPermission;
 use App\Livewire\Admin\RolesPerms\EditRole;
+use App\Livewire\Admin\RolesPerms\NewPermission;
 use App\Livewire\Admin\RolesPerms\NewRole;
 use App\Livewire\Admin\RolesPerms\Overview as RolesPermsOverview;
 
@@ -53,6 +54,7 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     Route::middleware('permission:manage_companies')->group(function() {
         Route::get('/companies', CompaniesOverview::class)->name('admin.companies.render');
         Route::get('/companies/new', NewCompany::class)->name('admin.companies.new');
+        Route::get('/companies/edit/{id}', EditCompany::class)->name('admin.companies.edit');
     });
 
     // ? Permissions

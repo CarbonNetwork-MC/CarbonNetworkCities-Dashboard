@@ -32,7 +32,7 @@ class Company extends Model
 
     public function plots(): HasMany
     {
-        return $this->hasMany(Plot::class, 'company_id', 'plot_id');
+        return $this->hasMany(Plot::class, 'company_id', 'id');
     }
 
     public function pinConsoles(): HasMany

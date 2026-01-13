@@ -13,7 +13,7 @@
             ],
             [
                 'url'   => route('admin.roles-perms.permission.edit', ['uuid' => $permission->uuid]),
-                'label' => __('admin.titles.role_edit'),
+                'label' => __('admin.titles.permission_edit'),
             ],
         ]" />
     </x-slot>
