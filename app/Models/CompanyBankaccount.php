@@ -12,6 +12,7 @@ class CompanyBankaccount extends Model
         'company_id',
         'balance',
         'is_main',
+        'currency',
     ];
 
     public function company(): BelongsTo

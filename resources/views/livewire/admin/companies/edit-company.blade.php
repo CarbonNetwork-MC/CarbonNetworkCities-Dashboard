@@ -56,9 +56,7 @@
             </div>
 
             <div class="flex justify-end items-center gap-x-4">
-                <p class="text-black dark:text-white">
-                    {{ __('general.messages.required_fields') }} <span class="text-red-500">*</span>
-                </p>
+                <x-forms.required-fields />
                 <x-buttons.primary-button wire:click="updateCompany">
                     {{ __('general.buttons.save') }}
                 </x-buttons.primary-button>
@@ -138,7 +136,7 @@
             </h1>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchBankAccounts" wire:model.live="searchBankAccounts" />
-                <x-buttons.primary-button size="sm" href="">
+                <x-buttons.primary-button size="sm" href="{{ route('admin.companies.add-bank-account', ['id' => $company->id]) }}">
                     {{ __('admin.buttons.add_bank_account') }}
                 </x-buttons.primary-button>
             </div>
@@ -354,7 +352,26 @@
     </x-modals.modal>
 
     {{-- Remove Bank Account Modal --}}
-
+    <x-modals.modal wire:model="removeBankAccountModal">
+        <x-slot name="title">
+            <div class="w-full flex justify-center">
+                {{ __('admin.buttons.remove_bank_account') }}
+            </div>
+        </x-slot>
+        <x-slot name="content">
+            <p class="text-center text-gray-600 dark:text-gray-300">
+                {!! __('admin.messages.company_remove_bank_account_confirmation', ['id' => $bankAccountToRemove->id ?? '']) !!}
+            </p>
+        </x-slot>
+        <x-slot name="footer">
+            <x-buttons.secondary-button wire:click="$set('removeBankAccountModal', false)">
+                {{ __('general.buttons.cancel') }}
+            </x-buttons.secondary-button>
+            <x-buttons.danger-button wire:click="destroyBankAccount">
+                {{ __('general.buttons.remove') }}
+            </x-buttons.danger-button>
+        </x-slot>
+    </x-modals.modal>
 
     {{-- Remove Plot Modal --}}
 

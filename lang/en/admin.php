@@ -21,6 +21,9 @@ return [
         'pin_consoles' => 'PIN Consoles',
 
         'add_employee' => 'Add Employee',
+        'add_bank_account' => 'Add Bank Account',
+        'add_plot' => 'Add Plot',
+        'add_pin_console' => 'Add PIN Console',
 
         // Permissions
         'permissions_overview' => 'Permissions Overview',
@@ -87,6 +90,9 @@ return [
         'add_pin_console' => 'Add PIN Console',
         'delete_company' => 'Delete Company',
         'remove_employee' => 'Remove Employee',
+        'remove_bank_account' => 'Remove Bank Account',
+        'remove_plot' => 'Remove Plot',
+        'remove_pin_console' => 'Remove PIN Console',
 
         // Permissions
         'permission_create' => 'Create Permission',
@@ -100,12 +106,14 @@ return [
     'messages' => [
         // Companies
         'company_delete_confirmation' => 'Are you sure you want to delete the company <b>:name</b>? This action cannot be undone.',
+        'company_remove_employee_confirmation' => 'Are you sure you want to remove the employee <b>:name</b> from this company?',
+        'company_remove_bank_account_confirmation' => 'Are you sure you want to remove the bank account <b>:id</b> from this company?',
+        
         'companies_no_records' => 'No companies found.',
         'employees_no_records' => 'No employees found for this company.',
         'bank_accounts_no_records' => 'No bank accounts found for this company.',
         'plots_no_records' => 'No plots found for this company.',
         'pin_consoles_no_records' => 'No PIN consoles found for this company.',
-        'company_remove_employee_confirmation' => 'Are you sure you want to remove the employee <b>:name</b> from this company?',
 
         // Permissions
         'permissions_modal_delete_confirmation' => 'Are you sure you want to delete the permission <b>:name</b>? This action cannot be undone.',
@@ -126,6 +134,8 @@ return [
         'company_deleted' => 'Company deleted successfully.',
 
         'company_employee_removed' => 'Employee removed from company successfully.',
+
+        'company_bank_account_added' => 'Bank account added to company successfully.',
         'company_bank_account_removed' => 'Bank account removed from company successfully.',
 
         // Permissions

@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 
 use App\Livewire\Dashboard;
 use App\Livewire\Onboarding\Onboarding;
+use App\Livewire\Admin\Companies\AddBankAccount;
 use App\Livewire\Admin\Companies\AddEmployee;
 use App\Livewire\Admin\Companies\EditCompany;
 use App\Livewire\Admin\Companies\NewCompany;
@@ -57,6 +58,7 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
         Route::get('/companies/new', NewCompany::class)->name('admin.companies.new');
         Route::get('/companies/edit/{id}', EditCompany::class)->name('admin.companies.edit');
         Route::get('/companies/edit/{id}/add-employee', AddEmployee::class)->name('admin.companies.add-employee');
+        Route::get('/companies/edit/{id}/add-bank-account', AddBankAccount::class)->name('admin.companies.add-bank-account');
     });
 
     // ? Permissions
