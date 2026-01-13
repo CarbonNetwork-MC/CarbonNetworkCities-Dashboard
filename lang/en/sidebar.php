@@ -15,5 +15,5 @@ return [
     'admin' => 'Admin',
     'back_to_dashboard' => 'Back to Dashboard',
     'roles_perms' => 'Roles & Permissions',
-
+    'users' => 'Users',
 ];
