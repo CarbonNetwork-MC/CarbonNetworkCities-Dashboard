@@ -21,6 +21,10 @@ return [
         'role_delete' => 'Delete Role',
         'selected_permissions' => 'Selected Permissions',
 
+        // Languages
+        'languages_overview' => 'Languages Overview',
+        'language_delete' => 'Delete Language',
+
         // Users
         'users_overview' => 'Users Overview',
         'users_modal_delete' => 'Delete User',
@@ -41,6 +45,11 @@ return [
         'languages' => 'Languages',
         'selected_language' => 'Selected Language',
         'no_permissions_assigned' => 'No permissions assigned.',
+
+        // Languages
+        'language_name' => 'Language Name',
+        'language_short_code' => 'Short Code',
+        'language_code' => 'Language Code',
     ],
 
     // Buttons
@@ -53,6 +62,10 @@ return [
         // Roles
         'role_create' => 'Create Role',
         'assign_permission' => 'Assign Permission',
+
+        // Languages
+        'language_create' => 'Create Language',
+        'language_edit' => 'Edit Language',
 
         // Users
         'unlink' => 'Unlink',
@@ -70,6 +83,10 @@ return [
         'roles_modal_delete_permission_confirmation' => 'Are you sure you want to remove the permission <b>:permission</b> from the role <b>:role</b>?',
         'roles_no_records' => 'No roles found.',
         'role_no_permissions_assigned' => 'No permissions assigned to this role.',
+
+        // Languages
+        'languages_no_records' => 'No languages found.',
+        'languages_modal_delete_confirmation' => 'Are you sure you want to delete the language <b>:name</b>? This action cannot be undone.',
 
         // Users
         'users_modal_delete_confirmation' => 'Are you sure you want to delete the user <b>:name</b>? This action cannot be undone.',
@@ -90,6 +107,11 @@ return [
         'role_deleted' => 'Role deleted successfully.',
         'role_permission_added' => 'Permission added to role successfully.',
         'role_permission_removed' => 'Permission removed from role successfully.',
+
+        // Languages
+        'language_updated' => 'Language updated successfully.',
+        'language_created' => 'Language created successfully.',
+        'language_deleted' => 'Language deleted successfully.',
 
         // Users
         'account_unlinked' => 'User account unlinked successfully.',

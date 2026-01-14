@@ -1,14 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-
 use App\Livewire\Dashboard;
+use Illuminate\Support\Facades\Route;
+
 use App\Livewire\Onboarding\Onboarding;
-use App\Livewire\Admin\RolesPerms\EditPermission;
-use App\Livewire\Admin\RolesPerms\NewPermission;
-use App\Livewire\Admin\RolesPerms\EditRole;
+use App\Http\Controllers\AuthController;
+use App\Livewire\Admin\Languages\Overview as LanguagesOverview;
+use App\Livewire\Admin\Languages\Edit as EditLanguage;
+use App\Livewire\Admin\Languages\NewLanguage;
 use App\Livewire\Admin\RolesPerms\NewRole;
+use App\Livewire\Admin\RolesPerms\EditRole;
+use App\Livewire\Admin\RolesPerms\NewPermission;
+use App\Livewire\Admin\RolesPerms\EditPermission;
 use App\Livewire\Admin\RolesPerms\Overview as RolesPermsOverview;
 use App\Livewire\Admin\Users\EditUser;
 use App\Livewire\Admin\Users\Overview as UserOverview;
@@ -53,6 +56,11 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
         Route::get('/permissions/new', NewPermission::class)->name('admin.roles-perms.permission.new');
         Route::get('/permissions/edit/{uuid}', EditPermission::class)->name('admin.roles-perms.permission.edit');
     });
+
+    // ? Languages
+    Route::get('/languages', LanguagesOverview::class)->name('admin.languages.render');
+    Route::get('/languages/edit/{id}', EditLanguage::class)->name('admin.languages.edit');
+    Route::get('/languages/new', NewLanguage::class)->name('admin.languages.new');
   
     // ? Users
     Route::get('/users', UserOverview::class)->name('admin.users.render'); 
