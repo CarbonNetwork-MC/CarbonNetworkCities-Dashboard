@@ -84,7 +84,7 @@ return [
     'buttons' => [
         'assign' => 'Assign',
 
-        'companies' => [
+        'company' => [
             'add_bank_account' => 'Add Bank Account',
             'add_employee' => 'Add Employee',
             'add_pin_console' => 'Add PIN Console',
@@ -113,12 +113,14 @@ return [
             'delete_confirmation' => 'Are you sure you want to delete the company <b>:name</b>? This action cannot be undone.',
             'remove_employee_confirmation' => 'Are you sure you want to remove the employee <b>:name</b> from this company?',
             'remove_bank_account_confirmation' => 'Are you sure you want to remove the bank account <b>:id</b> from this company?',
+            'remove_pin_console_confirmation' => 'Are you sure you want to remove the PIN console <b>:id</b> from this company.',
+            'remove_plot_confirmation' => 'Are you sure you want to remove the plot <b>:id</b> from this company?',
             
             'companies_no_records' => 'No companies found.',
             'employees_no_records' => 'No employees found for this company.',
             'bank_accounts_no_records' => 'No bank accounts found for this company.',
-            'plots_no_records' => 'No plots found for this company.',
             'pin_consoles_no_records' => 'No PIN consoles found for this company.',
+            'plots_no_records' => 'No plots found for this company.',
         ],
 
         'permission' => [

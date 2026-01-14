@@ -10,6 +10,9 @@
 
     $wrapperAttributes = $attributes->only(['wrapper:class']);
     $labelAttributes = $attributes->only(['label:class']);
+
+    $model = $attributes->wire('model')->value();
+    $hasError = $model && $errors->has($model);
 @endphp
 
 <div class="{{ $wrapperAttributes->get('wrapper:class') }}">
@@ -32,7 +35,16 @@
         @if($required) required @endif 
         @if($disabled) disabled @endif
         {{ $attributes->class([
-            'bg-gray-100 border border-default-medium text-black text-sm rounded-base focus:ring-brand focus:border-brand block w-full ' . $sizeClasses . ' shadow-xs placeholder:text-gray-500 dark:placeholder:text-gray-600'
+            'block w-full rounded-base text-sm shadow-xs ' . $sizeClasses,
+            'bg-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-600',
+            $hasError
+                ? 'border border-red-500 focus:ring-red-500 focus:border-red-500'
+                : 'border border-default-medium focus:ring-brand focus:border-brand',
         ]) }}
     />
+
+    {{-- Error Message --}}
+    @if ($hasError)
+        <p class="mt-1.5 text-sm text-red-500">{{ $errors->first($model) }}</p>
+    @endif
 </div>

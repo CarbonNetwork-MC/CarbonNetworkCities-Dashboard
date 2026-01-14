@@ -83,7 +83,7 @@
                 <x-slot name="headers">
                     <tr>
                         <x-tables.table-header>
-                            {{ __('admin.labels.company.employe_name') }}
+                            {{ __('admin.labels.company.employee_name') }}
                         </x-tables.table-header>
                         <x-tables.table-header>
                             {{ __('admin.labels.company.employee_role') }}
@@ -374,7 +374,46 @@
     </x-modals.modal>
 
     {{-- Remove Plot Modal --}}
-
+    <x-modals.modal wire:model="removePlotModal">
+        <x-slot name="title">
+            <div class="w-full flex justify-center">
+                {{ __('admin.buttons.company.remove_plot') }}
+            </div>
+        </x-slot>
+        <x-slot name="content">
+            <p class="text-center text-gray-600 dark:text-gray-300">
+                {!! __('admin.messages.company.remove_plot_confirmation', ['id' => $plotToRemove->plot_id ?? '']) !!}
+            </p>
+        </x-slot>
+        <x-slot name="footer">
+            <x-buttons.secondary-button wire:click="$set('removePlotModal', false)">
+                {{ __('general.buttons.cancel') }}
+            </x-buttons.secondary-button>
+            <x-buttons.danger-button wire:click="destroyPlot">
+                {{ __('general.buttons.remove') }}
+            </x-buttons.danger-button>
+        </x-slot>
+    </x-modals.modal>
 
     {{-- Remove Pin Console Modal --}}
+    <x-modals.modal wire:model="removePinConsoleModal">
+        <x-slot name="title">
+            <div class="w-full flex justify-center">
+                {{ __('admin.buttons.company.remove_pin_console') }}
+            </div>
+        </x-slot>
+        <x-slot name="content">
+            <p class="text-center text-gray-600 dark:text-gray-300">
+                {!! __('admin.messages.company.remove_pin_console_confirmation', ['id' => $pinConsoleToRemove->id ?? '']) !!}
+            </p>
+        </x-slot>
+        <x-slot name="footer">
+            <x-buttons.secondary-button wire:click="$set('removePinConsoleModal', false)">
+                {{ __('general.buttons.cancel') }}
+            </x-buttons.secondary-button>
+            <x-buttons.danger-button wire:click="destroyPinConsole">
+                {{ __('general.buttons.remove') }}
+            </x-buttons.danger-button>
+        </x-slot>
+    </x-modals.modal>
 </div>

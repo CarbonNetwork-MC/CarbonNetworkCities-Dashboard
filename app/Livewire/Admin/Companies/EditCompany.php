@@ -129,7 +129,8 @@ class EditCompany extends Component
     public function destroyPlot() {
         if (!$this->plotToRemove) return;
 
-        $this->plotToRemove->delete();
+        $this->plotToRemove->company_id = null;
+        $this->plotToRemove->save();
         $this->removePlotModal = false;
         $this->plotToRemove = null;
 
