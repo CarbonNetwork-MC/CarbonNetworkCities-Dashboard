@@ -34,7 +34,7 @@ class NewCompany extends Component
             'owner_uuid' => $data['selectedPlayer'],
         ]);
 
-        return redirect()->route('admin.companies.render')->success(__('admin.toast.company_created'));
+        return redirect()->route('admin.companies.render')->success(__('admin.toast.company.created'));
     }
 
     public function render()

@@ -40,7 +40,7 @@ class AddBankAccount extends Component
             'currency' => $data['currency'],
         ]);
 
-        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toast.company_bank_account_added'));
+        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toast.company.bank_account_added'));
     }
 
     public function render()

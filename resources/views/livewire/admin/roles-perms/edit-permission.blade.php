@@ -13,7 +13,7 @@
             ],
             [
                 'url'   => route('admin.roles-perms.permission.edit', ['uuid' => $permission->uuid]),
-                'label' => __('admin.titles.permission_edit'),
+                'label' => __('admin.titles.permissions.edit'),
             ],
         ]" />
     </x-slot>
@@ -27,7 +27,7 @@
             <div class="grid grid-cols-4">
                 {{-- Permission name --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.permission_name') }}" wire:model="permissionName" placeholder="{{ __('admin.placeholders.permission_name') }}" required />
+                    <x-forms.text-input label="{{ __('admin.labels.permissions.name') }}" wire:model="permissionName" placeholder="{{ __('admin.placeholders.permissions.permission_name') }}" required />
                 </div>
             </div>
 

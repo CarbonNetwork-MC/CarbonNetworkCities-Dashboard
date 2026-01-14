@@ -85,7 +85,7 @@ class EditCompany extends Component
         $this->company->owner_uuid = $data['selectedPlayer'];
         $this->company->save();
 
-        return redirect()->route('admin.companies.render')->success(__('admin.toast.company_updated'));
+        return redirect()->route('admin.companies.render')->success(__('admin.toast.company.updated'));
     }
 
     // Delete Employee
@@ -101,7 +101,7 @@ class EditCompany extends Component
         $this->removeEmployeeModal = false;
         $this->employeeToRemove = null;
 
-        Toaster::success(__('admin.toast.company_employee_removed'));
+        Toaster::success(__('admin.toast.company.employee_removed'));
     }
 
     // Delete Bank Account
@@ -117,7 +117,7 @@ class EditCompany extends Component
         $this->removeBankAccountModal = false;
         $this->bankAccountToRemove = null;
 
-        Toaster::success(__('admin.toast.company_bank_account_removed'));
+        Toaster::success(__('admin.toast.company.bank_account_removed'));
     }
 
     // Delete Plot (relation)

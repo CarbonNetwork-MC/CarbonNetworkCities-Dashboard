@@ -27,7 +27,7 @@
             <div class="grid grid-cols-4">
                 {{-- Role name --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.role_name') }}" wire:model="roleName" placeholder="{{ __('admin.placeholders.role_name') }}" required />
+                    <x-forms.text-input label="{{ __('admin.labels.role.name') }}" wire:model="roleName" placeholder="{{ __('admin.placeholders.roles.role_name') }}" required />
                 </div>
             </div>
 
@@ -48,7 +48,7 @@
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="search" wire:model.live="search" />
                 <x-buttons.primary-button size="sm" wire:click="$toggle('assignPermissionModal')">
-                    {{ __('admin.buttons.assign_permission') }}
+                    {{ __('admin.buttons.roles.assign_permission') }}
                 </x-buttons.primary-button>
             </div>
         </div>
@@ -57,7 +57,7 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <x-tables.table-header>{{ __('admin.labels.permission_name') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.permissions.name') }}</x-tables.table-header>
                         <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
@@ -74,7 +74,7 @@
                     @empty
                         <tr>
                             <x-tables.empty-state colspan="2">
-                                {{ __('admin.messages.role_no_permissions_assigned') }}
+                                {{ __('admin.messages.permissions.no_permissions_assigned') }}
                             </x-tables.empty-state>
                         </tr>
                     @endforelse
@@ -94,11 +94,11 @@
     <x-modals.modal wire:model="assignPermissionModal">
         <x-slot name="title">
             <div class="w-full flex justify-center">
-                {{ __('admin.buttons.assign_permission') }}
+                {{ __('admin.buttons.roles.assign_permission') }}
             </div>
         </x-slot>
         <x-slot name="content">
-            <x-forms.select id="permissionSelect" wire:model="selectedPermission" label="{{ __('admin.labels.role_permissions') }}" required>
+            <x-forms.select id="permissionSelect" wire:model="selectedPermission" label="{{ __('admin.labels.role.permissions') }}" required>
                 <option value="">{{ __('general.placeholders.select_option') }}</option>
                 @foreach($assignablePermissions as $permission)
                     <option value="{{ $permission->uuid }}">{{ $permission->name }}</option>
@@ -124,7 +124,7 @@
         </x-slot>
         <x-slot name="content">
             <p class="text-center text-body">
-                {!! __('admin.messages.roles_modal_delete_permission_confirmation', ['permission' => $permissionToRemove?->name, 'role' => $role->name]) !!}
+                {!! __('admin.messages.permissions.delete_permission_confirmation', ['permission' => $permissionToRemove?->name, 'role' => $role->name]) !!}
             </p>
         </x-slot>
         <x-slot name="footer">

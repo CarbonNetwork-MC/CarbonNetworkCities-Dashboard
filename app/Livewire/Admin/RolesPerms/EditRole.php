@@ -42,7 +42,7 @@ class EditRole extends Component
         $this->role->name = $data['roleName'];
         $this->role->save();
 
-        return redirect()->route('admin.roles-perms.render')->success(__('admin.toast.role_updated'));
+        return redirect()->route('admin.roles-perms.render')->success(__('admin.toast.roles.updated'));
     }
 
     public function addPermission() {
@@ -64,7 +64,7 @@ class EditRole extends Component
         $this->assignPermissionModal = false;
         $this->selectedPermission = null;
 
-        Toaster::success(__('admin.toast.role_permission_added'));
+        Toaster::success(__('admin.toast.roles.permission_added'));
     }
 
     public function removePermission($uuid) {
@@ -80,7 +80,7 @@ class EditRole extends Component
         $this->removePermissionModal = false;
         $this->permissionToRemove = null;
 
-        Toaster::success(__('admin.toast.role_permission_removed'));
+        Toaster::success(__('admin.toast.roles.permission_removed'));
     }
 
     public function render()

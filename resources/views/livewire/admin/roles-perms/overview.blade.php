@@ -21,7 +21,7 @@
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchRole" wire:model.live="searchRole" class="w-full" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.roles-perms.role.new') }}">
-                    {{ __('admin.buttons.role_create') }}
+                    {{ __('admin.buttons.roles.create') }}
                 </x-buttons.primary-button>
             </div>
         </div>
@@ -30,8 +30,8 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <x-tables.table-header>{{ __('admin.labels.role_name') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.role_permissions') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.role.name') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.role.permissions') }}</x-tables.table-header>
                         <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
@@ -43,7 +43,7 @@
                                 @forelse ($role->permissions as $permission)
                                     <span class="bg-green-100 text-green-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full">{{ $permission->name }}</span>
                                 @empty
-                                    <span class="text-gray-600 dark:text-gray-200 italic">{{ __('admin.labels.no_permissions_assigned') }}</span>
+                                    <span class="text-gray-600 dark:text-gray-200 italic">{{ __('admin.labels.role.no_permissions_assigned') }}</span>
                                 @endforelse
                             </x-tables.table-data>
                             <x-tables.table-actions>
@@ -54,7 +54,7 @@
                     @empty
                         <tr>
                             <x-tables.empty-state colspan="3">
-                                {{ __('admin.messages.roles_no_records') }}
+                                {{ __('admin.messages.permissions.roles_no_records') }}
                             </x-tables.empty-state>
                         </tr>
                     @endforelse
@@ -80,11 +80,11 @@
     {{-- Permissions --}}
     <x-containers.main class="mt-4">
         <div class="flex justify-between items-center">
-            <h1 class="text-xl font-semibold dark:text-white mb-4">{{ __('admin.titles.permissions_overview') }}</h1>
+            <h1 class="text-xl font-semibold dark:text-white mb-4">{{ __('admin.titles.permissions.overview') }}</h1>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar :id="'searchPermission'" wire:model.live="searchPermission" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.roles-perms.permission.new') }}">
-                    {{ __('admin.buttons.permission_create') }}
+                    {{ __('admin.buttons.permissions.create') }}
                 </x-buttons.primary-button>
             </div>
         </div>
@@ -93,7 +93,7 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <x-tables.table-header>{{ __('admin.labels.permission_name') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.permissions.name') }}</x-tables.table-header>
                         <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
@@ -109,7 +109,7 @@
                     @empty
                         <tr>
                             <x-tables.empty-state colspan="2">
-                                {{ __('admin.messages.permissions_no_records') }}
+                                {{ __('admin.messages.permissions.permissions_no_records') }}
                             </x-tables.empty-state>
                         </tr>
                     @endforelse
@@ -134,9 +134,9 @@
 
     {{-- Delete Permission Modal --}}
     <x-modals.modal wire:model="deletePermissionModal">
-        <x-slot name="title">{{ __('admin.titles.permission_delete') }}</x-slot>
+        <x-slot name="title">{{ __('admin.titles.permissions.delete') }}</x-slot>
         <x-slot name="content">
-            <p>{!! __('admin.messages.permissions_modal_delete_confirmation', ['name' => $selectedPermission ? $selectedPermission->name : '']) !!}</p>
+            <p>{!! __('admin.messages.permissions.delete_confirmation', ['name' => $selectedPermission ? $selectedPermission->name : '']) !!}</p>
         </x-slot>
         <x-slot name="footer">
             <button type="button" @click="$dispatch('close')" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 cursor-pointer">
@@ -152,7 +152,7 @@
     <x-modals.modal wire:model="deleteRoleModal">
         <x-slot name="title">{{ __('admin.titles.role_delete') }}</x-slot>
         <x-slot name="content">
-            <p>{!! __('admin.messages.roles_modal_delete_confirmation', ['name' => $selectedRole ? $selectedRole->name : '']) !!}</p>
+            <p>{!! __('admin.messages.permissions.delete_confirmation', ['name' => $selectedRole ? $selectedRole->name : '']) !!}</p>
         </x-slot>
         <x-slot name="footer">
             <button type="button" @click="$dispatch('close')" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 cursor-pointer">
