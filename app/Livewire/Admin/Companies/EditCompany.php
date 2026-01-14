@@ -4,6 +4,8 @@ namespace App\Livewire\Admin\Companies;
 
 use App\Models\Company;
 use App\Models\Player;
+use App\Models\Plot;
+use Illuminate\Support\Facades\Http;
 use Masmerise\Toaster\Toaster;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -126,16 +128,57 @@ class EditCompany extends Component
         $this->removePlotModal = true;
     }
 
-    public function destroyPlot() {
+    public function unlinkPlot() {
         if (!$this->plotToRemove) return;
 
-        $this->plotToRemove->company_id = null;
-        $this->plotToRemove->save();
+        $plot = $this->plotToRemove;
+
+        $companyId = $plot->company_id;
+        $plotId = $plot->plot_id;
+
+        // 1. Optimistic unlink
+        $plot->company_id = null;
+        $plot->save();
+
         $this->removePlotModal = false;
         $this->plotToRemove = null;
 
+        // 2. Send invalidate request to Velocity
+        $response = Http::withToken(config('services.plugin-api.key'))
+            ->post(config('services.plugin-api.url') . "api/invalidate/plot/{$plotId}");
+
+        // Immediate failure (did not accept request)
+        if ($response->status() !== 202) {
+            $this->rollbackPlot($plot, $companyId);
+            Toaster::error(__('admin.toast.company_plot_remove_failed'));
+            return;
+        }
+
+        $requestId = $response->json('requestId');
+
+        // 3. Poll for result (short, bounded wait)
+        $success = $this->waitForInvalidationResult($requestId);
+
+        if (!$success) {
+            $this->rollbackPlot($plot, $companyId);
+            Toaster::error(__('admin.toast.company_plot_remove_failed'));
+            return;
+        }
+
+        // 4. Success
         Toaster::success(__('admin.toast.company_plot_removed'));
     }
+
+    // public function unlinkPlot() {
+    //     if (!$this->plotToRemove) return;
+
+    //     $this->plotToRemove->company_id = null;
+    //     $this->plotToRemove->save();
+    //     $this->removePlotModal = false;
+    //     $this->plotToRemove = null;
+
+    //     Toaster::success(__('admin.toast.company_plot_removed'));
+    // }
 
     // Delete Pin Console (relation)
     public function removePinConsole($id) {
@@ -192,5 +235,49 @@ class EditCompany extends Component
                 })
                 ->paginate($this->pinConsolesPerPage, ['*'], 'pinConsoles'),
         ]);
+    }
+
+    private function waitForInvalidationResult(string $requestId): bool {
+        $statusUrl = config('services.plugin-api.url')
+            . "api/invalidate/status/{$requestId}";
+
+        $timeoutSeconds = 3;
+        $pollIntervalMs = 300;
+
+        $start = microtime(true);
+
+        while ((microtime(true) - $start) < $timeoutSeconds) {
+            $response = Http::withToken(config('services.plugin-api.key'))
+                ->get($statusUrl);
+
+            if ($response->failed()) {
+                return false;
+            }
+
+            $state = $response->json('state');
+            $results = $response->json('responses', []);
+
+            if ($state === 'COMPLETED') {
+                // Success if at least one server reloaded the plot
+                foreach ($results as $server => $status) {
+                    if ($status === 'RELOADED') {
+                        return true;
+                    }
+                }
+
+                // All responded, none succeeded
+                return false;
+            }
+
+            usleep($pollIntervalMs * 1000);
+        }
+
+        // Timeout
+        return false;
+    }
+
+    private function rollbackPlot(Plot $plot, int $companyId): void {
+        $plot->company_id = $companyId;
+        $plot->save();
     }
 }

@@ -233,7 +233,7 @@
                             <x-tables.table-data>{{ $plot->world_id }}</x-tables.table-data>
                             <x-tables.table-data>[{{ $plot->min_x }}, {{ $plot->min_y }}, {{ $plot->min_z }}] - [{{ $plot->max_x }}, {{ $plot->max_y }}, {{ $plot->max_z }}]</x-tables.table-data>
                             <x-tables.table-actions>
-                                <x-tables.danger-action wire:click="removePlot('{{ $plot->uuid }}')">
+                                <x-tables.danger-action wire:click="removePlot('{{ $plot->id }}')">
                                     {{ __('general.buttons.remove') }}
                                 </x-tables.danger-action>
                             </x-tables.table-actions>
@@ -389,7 +389,7 @@
             <x-buttons.secondary-button wire:click="$set('removePlotModal', false)">
                 {{ __('general.buttons.cancel') }}
             </x-buttons.secondary-button>
-            <x-buttons.danger-button wire:click="destroyPlot">
+            <x-buttons.danger-button wire:click="unlinkPlot">
                 {{ __('general.buttons.remove') }}
             </x-buttons.danger-button>
         </x-slot>
