@@ -75,6 +75,14 @@
                     icon="fi fi-tr-language-exchange"
                     :label="__('sidebar.languages')"
                 />
+
+                {{-- Users --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.users.render')"
+                    :active="request()->routeIs('admin.users.*')"
+                    icon="fi fi-rr-users"
+                    :label="__('sidebar.users')"
+                />
             </nav>
         @endif
 
