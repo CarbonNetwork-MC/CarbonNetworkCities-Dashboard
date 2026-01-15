@@ -18,7 +18,7 @@ class NewLanguage extends Component
             'name' => ['required', 'string', 'max:50'],
             'shortCode' => ['required', 'string', 'max:2'],
             'code' => ['required', 'string', 'max:5'],
-            'headdbId' => ['nullable', 'string', 'max:11'],
+            'headdbId' => ['numeric', 'nullable', 'string', 'max:11'],
         ]);
 
         Language::create([
