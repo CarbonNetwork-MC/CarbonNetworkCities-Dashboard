@@ -72,8 +72,16 @@ class EditCompany extends Component
         $this->resetPage('pinConsolesPerPage');
     }
 
-    // Update Company
     public function updateCompany() {
+        // Store the current data for rollback in case of failure
+        $originalData = [
+            'name' => $this->company->name,
+            'coc_number' => $this->company->coc_number,
+            'world_id' => $this->company->world_id,
+            'owner_uuid' => $this->company->owner_uuid,
+        ];
+
+        // 1. Validate input
         $data = $this->validate([
             'companyName'    => ['required', 'string', 'max:255'],
             'cocNumber'      => ['required', 'string', 'max:20'],
@@ -81,13 +89,36 @@ class EditCompany extends Component
             'selectedPlayer' => ['nullable', 'string', 'exists:players,uuid'],
         ]);
 
-        $this->company->name = $data['companyName'];
-        $this->company->world_id = $data['worldId'];
-        $this->company->coc_number = $data['cocNumber'];
-        $this->company->owner_uuid = $data['selectedPlayer'];
+        // 2. Optimistic update
+        $this->company->name = $this->companyName;
+        $this->company->coc_number = $this->cocNumber;
+        $this->company->world_id = $this->worldId;
+        $this->company->owner_uuid = $this->selectedPlayer;
         $this->company->save();
 
-        return redirect()->route('admin.companies.render')->success(__('admin.toast.company.updated'));
+        // 3. Send invalidate request to Velocity
+        $response = Http::withToken(config('services.plugin-api.key'))
+            ->post(config('services.plugin-api.url') . "api/invalidate/company/{$this->company->id}");
+
+        // Immediate failure (request not accepted)
+        if ($response->status() !== 202) {
+            $this->rollbackCompany($originalData);
+            Toaster::error(__('admin.toast.company_update_failed'));
+            return;
+        }
+
+        $requestId = $response->json('requestId');
+
+        // 3. Poll for result
+        $success = $this->waitForInvalidationResult($requestId);
+        if (!$success) {
+            $this->rollbackCompany($originalData);
+            Toaster::error(__('admin.toast.company_update_failed'));
+            return;
+        }
+
+        // 4. Success
+        Toaster::success(__('admin.toast.company.updated'));
     }
 
     // Delete Employee
@@ -168,17 +199,6 @@ class EditCompany extends Component
         // 4. Success
         Toaster::success(__('admin.toast.company_plot_removed'));
     }
-
-    // public function unlinkPlot() {
-    //     if (!$this->plotToRemove) return;
-
-    //     $this->plotToRemove->company_id = null;
-    //     $this->plotToRemove->save();
-    //     $this->removePlotModal = false;
-    //     $this->plotToRemove = null;
-
-    //     Toaster::success(__('admin.toast.company_plot_removed'));
-    // }
 
     // Delete Pin Console (relation)
     public function removePinConsole($id) {
@@ -279,5 +299,13 @@ class EditCompany extends Component
     private function rollbackPlot(Plot $plot, int $companyId): void {
         $plot->company_id = $companyId;
         $plot->save();
+    }
+
+    private function rollbackCompany(array $originalData): void {
+        $this->company->name = $originalData['name'];
+        $this->company->coc_number = $originalData['coc_number'];
+        $this->company->world_id = $originalData['world_id'];
+        $this->company->owner_uuid = $originalData['owner_uuid'];
+        $this->company->save();
     }
 }
