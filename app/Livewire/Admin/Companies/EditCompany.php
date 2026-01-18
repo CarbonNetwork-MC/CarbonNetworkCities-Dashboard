@@ -56,20 +56,22 @@ class EditCompany extends Component
     }
 
     // Search queries
-    public function updatedSearchEmployees() {
-        $this->resetPage('employees');
-    }
+    public function updated($key, $value) {
+        if ($key === 'searchEmployees') {
+            $this->resetPage('employees');
+        }
 
-    public function updatedSearchBankAccounts() {
-        $this->resetPage('accountsPerPage');
-    }
+        if ($key === 'searchBankAccounts') {
+            $this->resetPage('accountsPerPage');
+        }
 
-    public function updatedSearchPlots() {
-        $this->resetPage('plotsPerPage');
-    }
+        if ($key === 'searchPlots') {
+            $this->resetPage('plotsPerPage');
+        }
 
-    public function updatedSearchPinConsoles() {
-        $this->resetPage('pinConsolesPerPage');
+        if ($key === 'searchPinConsoles') {
+            $this->resetPage('pinConsolesPerPage');
+        }
     }
 
     public function updateCompany() {

@@ -25,12 +25,14 @@ class Overview extends Component
     public $selectedRole = null;
 
     // ? Pagination Methods
-    public function updatedRolesPerPage() {
-        $this->resetPage('rolesPage');
-    }
+    public function updated($key, $value) {
+        if ($key === 'searchPermission') {
+            $this->resetPage('permissionsPage');
+        }
 
-    public function updatedPermissionsPerPage() {
-        $this->resetPage('permissionsPage');
+        if ($key === 'searchRole') {
+            $this->resetPage('rolesPage');
+        }
     }
 
     // ? Permission Methods
