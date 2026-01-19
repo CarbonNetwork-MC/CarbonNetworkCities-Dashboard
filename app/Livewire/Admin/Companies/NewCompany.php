@@ -4,6 +4,8 @@ namespace App\Livewire\Admin\Companies;
 
 use App\Models\Company;
 use App\Models\Player;
+use App\Services\PluginAPI\InvalidationService;
+use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 
 class NewCompany extends Component
@@ -27,18 +29,43 @@ class NewCompany extends Component
             'selectedPlayer' => ['nullable', 'string', 'exists:players,uuid'],
         ]);
 
-        Company::create([
+        // 1. Optimistic create
+        $company = Company::create([
             'name'       => $data['companyName'],
             'world_id'   => $data['worldId'],
             'coc_number' => $data['cocNumber'],
             'owner_uuid' => $data['selectedPlayer'],
         ]);
 
+        // 2. Send invalidate request to Velocity
+        $response = Http::withToken(config('services.plugin-api.key'))
+            ->post(config('services.plugin-api.url') . "api/invalidate/company/{$company->id}");
+
+        // Immediate failure (did not accept request)
+        if ($response->status() !== 202) {
+            $company->delete();
+            return redirect()->route('admin.companies.new')->error(__('admin.toast.company.create_failed'));
+        }
+
+        $requestId = $response->json('requestId');
+
+        // 3. Poll for result
+        $success = $this->waitForInvalidationResult($requestId);
+        if (!$success) {
+            $company->delete();
+            return redirect()->route('admin.companies.new')->error(__('admin.toast.company.create_failed'));
+        }
+
+        // 4. Success
         return redirect()->route('admin.companies.render')->success(__('admin.toast.company.created'));
     }
 
     public function render()
     {
         return view('livewire.admin.companies.new-company');
+    }
+
+    private function waitForInvalidationResult(string $requestId): bool {
+        return app(InvalidationService::class)->waitForInvalidationResult($requestId);
     }
 }
