@@ -145,7 +145,10 @@ return [
 
             'bank_account_added' => 'Bank account added to company successfully.',
             'bank_account_removed' => 'Bank account removed from company successfully.',
+            'employee_assigned' => 'Employee assigned to company successfully.',
+            'employee_already_assigned' => 'This employee is already assigned to the company.',
             'employee_removed' => 'Employee removed from company successfully.',
+            'employee_assign_failed' => 'Failed to assign employee to company. Please try again.',
         ],
 
         'permissions' => [

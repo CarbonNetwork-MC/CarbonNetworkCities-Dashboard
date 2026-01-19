@@ -30,7 +30,15 @@
             <div class="grid grid-cols-4 gap-x-4 gap-y-6">
                 {{-- UUID --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.player_uuid') }}" wire:model="playerUuid" required />
+                    {{-- <x-forms.text-input label="{{ __('admin.labels.player_uuid') }}" wire:model="playerUuid" required /> --}}
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2.5">
+                        {{ __('admin.labels.company.owner') }}
+                    </label>
+                    <livewire:async-select
+                        :options="$players->map(fn($player) => ['label' => $player->username, 'value' => $player->uuid])"
+                        wire:model="playerUuid"
+                        :min-search-length="2"
+                    />
                 </div>
 
                 {{-- Role --}}
