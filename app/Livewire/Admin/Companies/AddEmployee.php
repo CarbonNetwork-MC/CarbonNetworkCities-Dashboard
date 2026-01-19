@@ -39,7 +39,7 @@ class AddEmployee extends Component
         ]);
 
         if ($this->company->employees()->where('player_uuid', $data['playerUuid'])->exists()) {
-            return Toaster::error(__('admin.toast.company.employee_already_assigned'));
+            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company.employee_already_assigned'));
         }
 
         // 1. Create Employee
@@ -57,7 +57,7 @@ class AddEmployee extends Component
         if ($response->status() !== 202) {
             // Rollback
             $this->company->employees()->where('player_uuid', $data['playerUuid'])->delete();
-            return Toaster::error(__('admin.toast.company.employee_assign_failed'));
+            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company.employee_assign_failed'));
         }
 
         $requestId = $response->json('requestId');
@@ -67,7 +67,7 @@ class AddEmployee extends Component
         if (!$success) {
             // Rollback
             $this->company->employees()->where('player_uuid', $data['playerUuid'])->delete();
-            return Toaster::error(__('admin.toast.company.employee_assign_failed'));
+            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company.employee_assign_failed'));
         }
 
         // 4. Success
