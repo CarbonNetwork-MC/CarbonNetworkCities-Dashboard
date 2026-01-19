@@ -31,6 +31,7 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
+                        <x-tables.table-header>{{ __('general.labels.id') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.company.name') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.company.world_id') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.company.coc_number') }}</x-tables.table-header>
@@ -38,13 +39,14 @@
                         <x-tables.table-header>{{ __('admin.labels.company.bank_accounts') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.company.employees') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.company.plots') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.pin_conoles') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.company.pin_consoles') }}</x-tables.table-header>
                         <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
                 <x-slot name="rows">
                     @forelse ($companies as $company)
                         <x-tables.table-row>
+                            <x-tables.table-data>{{ $company->id }}</x-tables.table-data>
                             <x-tables.table-data>{{ $company->name }}</x-tables.table-data>
                             <x-tables.table-data>{{ $company->world_id }}</x-tables.table-data>
                             <x-tables.table-data>{{ $company->coc_number }}</x-tables.table-data>

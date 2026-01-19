@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Companies;
 use App\Models\Company;
 use App\Models\Player;
 use App\Models\Plot;
+use App\Services\PluginAPI\InvalidationService;
 use Illuminate\Support\Facades\Http;
 use Masmerise\Toaster\Toaster;
 use Livewire\Component;
@@ -105,7 +106,7 @@ class EditCompany extends Component
         // Immediate failure (request not accepted)
         if ($response->status() !== 202) {
             $this->rollbackCompany($originalData);
-            Toaster::error(__('admin.toast.company_update_failed'));
+            Toaster::error(__('admin.toast.company.update_failed'));
             return;
         }
 
@@ -115,7 +116,7 @@ class EditCompany extends Component
         $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             $this->rollbackCompany($originalData);
-            Toaster::error(__('admin.toast.company_update_failed'));
+            Toaster::error(__('admin.toast.company.update_failed'));
             return;
         }
 
@@ -132,10 +133,36 @@ class EditCompany extends Component
     public function destroyEmployee() {
         if (!$this->employeeToRemove) return;
 
+        // Store the current employee for rollback in case of failure
+        $employee = $this->employeeToRemove;
+
+        // 1. Optimistic delete
         $this->employeeToRemove->delete();
         $this->removeEmployeeModal = false;
         $this->employeeToRemove = null;
 
+        // 2. Send invalidate request to Velocity
+        $response = Http::withToken(config('services.plugin-api.key'))
+            ->post(config('services.plugin-api.url') . "api/invalidate/company/{$this->company->id}");
+
+        // Immediate failure (did not accept request)
+        if ($response->status() !== 202) {
+            $this->rollbackEmployee($employee);
+            Toaster::error(__('admin.toast.company.employee_remove_failed'));
+            return;
+        }
+
+        $requestId = $response->json('requestId');
+
+        // 3. Poll for result
+        $success = $this->waitForInvalidationResult($requestId);
+        if (!$success) {
+            $this->rollbackEmployee($employee);
+            Toaster::error(__('admin.toast.company.employee_remove_failed'));
+            return;
+        }
+
+        // 4. Success
         Toaster::success(__('admin.toast.company.employee_removed'));
     }
 
@@ -148,10 +175,34 @@ class EditCompany extends Component
     public function destroyBankAccount() {
         if (!$this->bankAccountToRemove) return;
 
+        // Store the current bank account for rollback in case of failure
+        $bankAccount = $this->bankAccountToRemove;
+
+        // 1. Optimistic delete
         $this->bankAccountToRemove->delete();
         $this->removeBankAccountModal = false;
         $this->bankAccountToRemove = null;
 
+        // 2. Send invalidate request to Velocity
+        $response = Http::withToken(config('services.plugin-api.key'))
+            ->post(config('services.plugin-api.url') . "api/invalidate/company/{$this->company->id}");
+
+        // Immediate failure (did not accept request)
+        if ($response->status() !== 202) {
+            $this->company->bankAccounts()->save($bankAccount);
+            return Toaster::error(__('admin.toast.company.bank_account_remove_failed'));
+        }
+
+        $requestId = $response->json('requestId');
+        
+        // 3. Poll for result
+        $success = $this->waitForInvalidationResult($requestId);
+        if (!$success) {
+            $this->company->bankAccounts()->save($bankAccount);
+            return Toaster::error(__('admin.toast.company.bank_account_remove_failed'));
+        }
+
+        // 4. Success
         Toaster::success(__('admin.toast.company.bank_account_removed'));
     }
 
@@ -164,6 +215,7 @@ class EditCompany extends Component
     public function unlinkPlot() {
         if (!$this->plotToRemove) return;
 
+        // Store the current plot for rollback in case of failure
         $plot = $this->plotToRemove;
 
         $companyId = $plot->company_id;
@@ -183,7 +235,7 @@ class EditCompany extends Component
         // Immediate failure (did not accept request)
         if ($response->status() !== 202) {
             $this->rollbackPlot($plot, $companyId);
-            Toaster::error(__('admin.toast.company_plot_remove_failed'));
+            Toaster::error(__('admin.toast.company.plot_remove_failed'));
             return;
         }
 
@@ -194,12 +246,12 @@ class EditCompany extends Component
 
         if (!$success) {
             $this->rollbackPlot($plot, $companyId);
-            Toaster::error(__('admin.toast.company_plot_remove_failed'));
+            Toaster::error(__('admin.toast.company.plot_remove_failed'));
             return;
         }
 
         // 4. Success
-        Toaster::success(__('admin.toast.company_plot_removed'));
+        Toaster::success(__('admin.toast.company.plot_removed'));
     }
 
     // Delete Pin Console (relation)
@@ -260,47 +312,7 @@ class EditCompany extends Component
     }
 
     private function waitForInvalidationResult(string $requestId): bool {
-        $statusUrl = config('services.plugin-api.url')
-            . "api/invalidate/status/{$requestId}";
-
-        $timeoutSeconds = 3;
-        $pollIntervalMs = 300;
-
-        $start = microtime(true);
-
-        while ((microtime(true) - $start) < $timeoutSeconds) {
-            $response = Http::withToken(config('services.plugin-api.key'))
-                ->get($statusUrl);
-
-            if ($response->failed()) {
-                return false;
-            }
-
-            $state = $response->json('state');
-            $results = $response->json('responses', []);
-
-            if ($state === 'COMPLETED') {
-                // Success if at least one server reloaded the plot
-                foreach ($results as $server => $status) {
-                    if ($status === 'RELOADED') {
-                        return true;
-                    }
-                }
-
-                // All responded, none succeeded
-                return false;
-            }
-
-            usleep($pollIntervalMs * 1000);
-        }
-
-        // Timeout
-        return false;
-    }
-
-    private function rollbackPlot(Plot $plot, int $companyId): void {
-        $plot->company_id = $companyId;
-        $plot->save();
+        return app(InvalidationService::class)->waitForInvalidationResult($requestId);
     }
 
     private function rollbackCompany(array $originalData): void {
@@ -310,4 +322,14 @@ class EditCompany extends Component
         $this->company->owner_uuid = $originalData['owner_uuid'];
         $this->company->save();
     }
+
+    private function rollbackEmployee($employee): void {
+        $employee->save();
+    }
+
+    private function rollbackPlot(Plot $plot, int $companyId): void {
+        $plot->company_id = $companyId;
+        $plot->save();
+    }
+
 }
