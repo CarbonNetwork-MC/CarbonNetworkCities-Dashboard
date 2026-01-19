@@ -148,7 +148,12 @@ return [
             'employee_assigned' => 'Employee assigned to company successfully.',
             'employee_already_assigned' => 'This employee is already assigned to the company.',
             'employee_removed' => 'Employee removed from company successfully.',
+            'plot_removed' => 'Plot removed from company successfully.',
+
+            'update_failed' => 'Failed to update company. Please try again.',
+            'bank_account_add_failed' => 'Failed to add bank account to company. Please try again.',
             'employee_assign_failed' => 'Failed to assign employee to company. Please try again.',
+            'plot_remove_failed' => 'Failed to remove plot from company. Please try again.',
         ],
 
         'permissions' => [
