@@ -42,7 +42,7 @@ class NewLanguage extends Component
             return Toaster::error(__('admin.toast.reload_languages_api_error'));
         }
 
-        return redirect()->route('admin.languages.render')->success(__('admin.toast.language_created'));
+        return redirect()->route('admin.languages.render')->success(__('admin.toast.languages.create'));
     }
 
     public function render()

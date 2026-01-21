@@ -26,11 +26,11 @@
                         @csrf
                         <div class="mb-5">
                             <label for="email" class="block mb-2 text-sm font-rw-semibold text-white">{{ __('auth.email') }}</label>
-                            <input type="email" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="you@email.com" required autofocus />
+                            <input type="email" id="email" name="email" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-700 dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="you@email.com" required autofocus />
                         </div>
                         <div class="mb-5">
                             <label for="password" class="block mb-2 text-sm font-rw-semibold text-white">{{ __('auth.password') }}</label>
-                            <input type="password" id="password" name="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="password" required autofocus />
+                            <input type="password" id="password" name="password" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-700 dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="password" required autofocus />
                         </div>
                         <div class="flex items-start mb-5">
                             <div class="flex items-center h-5">

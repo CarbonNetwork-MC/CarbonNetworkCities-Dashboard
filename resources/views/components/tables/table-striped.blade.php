@@ -13,7 +13,7 @@
     </div>
 
     @if ($pagination)
-        <div class="mt-4 px-2">
+        <div class="w-full mt-4 px-2">
             {{ $pagination }}
         </div>
     @endif

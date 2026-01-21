@@ -13,21 +13,21 @@
             ],
             [
                 'url'   => route('admin.languages.edit', ['id' => $language->id]),
-                'label' => __('admin.buttons.language_edit'),
+                'label' => __('admin.buttons.language.edit'),
             ]
         ]" />
     </x-slot>
 
     <x-containers.main>
-        <h1 class="text-xl font-semibold dark:text-white mb-4">
-            {{ __('admin.buttons.language_edit') }}
-        </h1>
+        <x-containers.title>
+            {{ __('admin.buttons.language.edit') }}
+        </x-containers.title>
 
         <div class="mt-6">
             <div class="grid grid-cols-4 gap-x-6">
                 {{-- Language name --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.language_name') }}" wire:model="name" required />
+                    <x-forms.text-input label="{{ __('admin.labels.languages.name') }}" wire:model="name" required />
                 </div>
                 {{-- Shortcode --}}
                 <div class="col-span-1">
@@ -47,9 +47,7 @@
             </div>
             
             <div class="flex justify-end items-center gap-x-4 mt-6">
-                <p class="text-black dark:text-white">
-                    {{ __('general.messages.required_fields') }} <span class="text-red-500">*</span>
-                </p>
+                <x-forms.required-fields />
                 <x-buttons.primary-button wire:click="updateLanguage">
                     {{ __('general.buttons.save') }}
                 </x-buttons.primary-button>

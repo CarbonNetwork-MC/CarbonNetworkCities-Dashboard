@@ -9,6 +9,9 @@ return [
     |
     */
 
+    'true' => 'True',
+    'false' => 'False',
+
     // Placeholders
     'placeholders' => [
         'search' => 'Search...',
@@ -17,16 +20,17 @@ return [
 
     // Buttons
     'buttons' => [
-        'view' => 'View',
-        'create' => 'Create',
-        'save' => 'Save',
-        'edit' => 'Edit',
-        'update' => 'Update',
-        'delete' => 'Delete',
-        'remove' => 'Remove',
+        'add' => 'Add',
         'cancel' => 'Cancel',
-        'confirm' => 'Confirm',
         'close' => 'Close',
+        'confirm' => 'Confirm',
+        'create' => 'Create',
+        'delete' => 'Delete',
+        'edit' => 'Edit',
+        'remove' => 'Remove',
+        'save' => 'Save',
+        'update' => 'Update',
+        'view' => 'View',
     ],
 
     // Labels
@@ -35,6 +39,7 @@ return [
         'email' => 'Email',
         'created_at' => 'Created At',
         'updated_at' => 'Updated At',
+        'id' => 'ID',
     ],
 
     // Messages

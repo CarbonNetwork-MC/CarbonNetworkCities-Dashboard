@@ -13,8 +13,11 @@ return [
 
     // Admin
     'admin' => 'Admin',
-    'back_to_dashboard' => 'Back to Dashboard',
+
+    'companies' => 'Companies',
     'roles_perms' => 'Roles & Permissions',
+    'back_to_dashboard' => 'Back to Dashboard',
+
     'languages' => 'Languages',
     'users' => 'Users',
     'itemsmenu' => 'Items Menu',

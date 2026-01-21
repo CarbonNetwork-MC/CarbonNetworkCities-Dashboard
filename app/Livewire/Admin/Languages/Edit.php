@@ -70,7 +70,7 @@ class Edit extends Component
             return Toaster::error(__('admin.toast.reload_languages_api_error'));
         }
 
-        return redirect()->route('admin.languages.render')->success(__('admin.toast.language_updated'));
+        return redirect()->route('admin.languages.render')->success(__('admin.toast.languages.updated'));
     }
 
     public function render()

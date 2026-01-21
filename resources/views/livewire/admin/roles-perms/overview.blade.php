@@ -17,11 +17,11 @@
     {{-- Roles --}}
     <x-containers.main>
         <div class="flex justify-between">
-            <h1 class="text-xl font-semibold dark:text-white mb-4">{{ __('admin.titles.roles_overview') }}</h1>
+            <x-containers.title>{{ __('admin.titles.roles_overview') }}</x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchRole" wire:model.live="searchRole" class="w-full" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.roles-perms.role.new') }}">
-                    {{ __('admin.buttons.role_create') }}
+                    {{ __('admin.buttons.roles.create') }}
                 </x-buttons.primary-button>
             </div>
         </div>
@@ -30,37 +30,48 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.role_name') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.role_permissions') }}</th>
-                        <th></th>
+                        <x-tables.table-header>{{ __('admin.labels.role.name') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.role.permissions') }}</x-tables.table-header>
+                        <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
                 <x-slot name="rows">
                     @forelse($roles as $role)
-                        <tr class="odd:bg-white even:bg-gray-100 dark:odd:bg-gray-600 dark:even:bg-gray-700 border-b border-default">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $role->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                        <x-tables.table-row>
+                            <x-tables.table-data>{{ $role->name }}</x-tables.table-data>
+                            <x-tables.table-data>
                                 @forelse ($role->permissions as $permission)
                                     <span class="bg-green-100 text-green-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full">{{ $permission->name }}</span>
                                 @empty
-                                    <span class="text-gray-600 dark:text-gray-200 italic">{{ __('admin.labels.no_permissions_assigned') }}</span>
+                                    <span class="text-gray-600 dark:text-gray-200 italic">{{ __('admin.labels.role.no_permissions_assigned') }}</span>
                                 @endforelse
-                            </td>
-                            <td class="px-6 py-4 flex justify-end gap-x-4 whitespace-nowrap text-right text-sm font-medium">
+                            </x-tables.table-data>
+                            <x-tables.table-actions>
                                 <x-tables.primary-action href="{{ route('admin.roles-perms.role.edit', ['uuid' => $role->uuid]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removeRole('{{ $role->uuid }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
-                            </td>
-                        </tr>
+                            </x-tables.table-actions>
+                        </x-tables.table-row>
                     @empty
                         <tr>
-                            <td colspan="3" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                                {{ __('admin.messages.roles_no_records') }}
-                            </td>
+                            <x-tables.empty-state colspan="3">
+                                {{ __('admin.messages.permissions.roles_no_records') }}
+                            </x-tables.empty-state>
                         </tr>
                     @endforelse
                 </x-slot>
                 <x-slot name="pagination">
-                    {{ $roles->links() }}
+                    @if ($roles->hasPages())
+                        <div class="flex items-center gap-x-4 mt-4">
+                            {{ $roles->links() }}
+                            <x-tables.per-page-select wire:model.live="rolesPerPage">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </x-tables.per-page-select>
+                        </div>
+                    @endif
                 </x-slot>
             </x-tables.table-striped>
         </div>
@@ -69,11 +80,11 @@
     {{-- Permissions --}}
     <x-containers.main class="mt-4">
         <div class="flex justify-between items-center">
-            <h1 class="text-xl font-semibold dark:text-white mb-4">{{ __('admin.titles.permissions_overview') }}</h1>
+            <x-containers.title>{{ __('admin.titles.permissions.overview') }}</x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar :id="'searchPermission'" wire:model.live="searchPermission" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.roles-perms.permission.new') }}">
-                    {{ __('admin.buttons.permission_create') }}
+                    {{ __('admin.buttons.permissions.create') }}
                 </x-buttons.primary-button>
             </div>
         </div>
@@ -82,24 +93,24 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.permission_name') }}</th>
-                        <th></th>
+                        <x-tables.table-header>{{ __('admin.labels.permissions.name') }}</x-tables.table-header>
+                        <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
                 <x-slot name="rows">
                     @forelse($permissions as $permission)
-                        <tr class="odd:bg-white even:bg-gray-100 dark:odd:bg-gray-600 dark:even:bg-gray-700 border-b border-default">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $permission->name }}</td>
-                            <td class="px-6 py-4 flex justify-end gap-x-4 whitespace-nowrap text-right text-sm font-medium">
+                        <x-tables.table-row>
+                            <x-tables.table-data>{{ $permission->name }}</x-tables.table-data>
+                            <x-tables.table-actions>
                                 <x-tables.primary-action href="{{ route('admin.roles-perms.permission.edit', ['uuid' => $permission->uuid]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removePermission('{{ $permission->uuid }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
-                            </td>
-                        </tr>
+                            </x-tables.table-actions>
+                        </x-tables.table-row>
                     @empty
                         <tr>
-                            <td colspan="2" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                                {{ __('admin.messages.permissions_no_records') }}
-                            </td>
+                            <x-tables.empty-state colspan="2">
+                                {{ __('admin.messages.permissions.permissions_no_records') }}
+                            </x-tables.empty-state>
                         </tr>
                     @endforelse
                 </x-slot>
@@ -108,7 +119,6 @@
                         <div class="flex items-center gap-x-4 mt-4">
                             {{ $permissions->links() }}
                             <x-tables.per-page-select wire:model.live="permissionsPerPage">
-                                <option value="1">1</option>
                                 <option value="5">5</option>
                                 <option value="10">10</option>
                                 <option value="25">25</option>
@@ -124,9 +134,9 @@
 
     {{-- Delete Permission Modal --}}
     <x-modals.modal wire:model="deletePermissionModal">
-        <x-slot name="title">{{ __('admin.titles.permission_delete') }}</x-slot>
+        <x-slot name="title">{{ __('admin.titles.permissions.delete') }}</x-slot>
         <x-slot name="content">
-            <p>{!! __('admin.messages.permissions_modal_delete_confirmation', ['name' => $selectedPermission ? $selectedPermission->name : '']) !!}</p>
+            <p>{!! __('admin.messages.permissions.delete_confirmation', ['name' => $selectedPermission ? $selectedPermission->name : '']) !!}</p>
         </x-slot>
         <x-slot name="footer">
             <button type="button" @click="$dispatch('close')" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 cursor-pointer">
@@ -142,7 +152,7 @@
     <x-modals.modal wire:model="deleteRoleModal">
         <x-slot name="title">{{ __('admin.titles.role_delete') }}</x-slot>
         <x-slot name="content">
-            <p>{!! __('admin.messages.roles_modal_delete_confirmation', ['name' => $selectedRole ? $selectedRole->name : '']) !!}</p>
+            <p>{!! __('admin.messages.permissions.delete_confirmation', ['name' => $selectedRole ? $selectedRole->name : '']) !!}</p>
         </x-slot>
         <x-slot name="footer">
             <button type="button" @click="$dispatch('close')" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 cursor-pointer">

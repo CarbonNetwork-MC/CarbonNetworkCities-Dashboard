@@ -23,7 +23,7 @@ class EditPermission extends Component
         $this->permission->name = $data['permissionName'];
         $this->permission->save();
 
-        return redirect()->route('admin.roles-perms.render')->success(__('admin.toast.permission_updated'));
+        return redirect()->route('admin.roles-perms.render')->success(__('admin.toast.permissions.updated'));
     }
 
     public function render()

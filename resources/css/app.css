@@ -3,11 +3,19 @@
 
 @plugin "flowbite/plugin";
 
+/* Laravel + Livewire */
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../vendor/livewire/**/*.blade.php';
 @source '../../storage/framework/views/*.php';
+
+/* Project */
 @source '../**/*.blade.php';
 @source '../**/*.js';
-@source "../node_modules/flowbite";
+
+/* Flowbite */
+@source '../../node_modules/flowbite/**/*.js';
+
+/* Toaster */
 @source '../../vendor/masmerise/livewire-toaster/resources/views/*.blade.php';
 
 @theme {

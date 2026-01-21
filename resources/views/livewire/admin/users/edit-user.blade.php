@@ -13,15 +13,15 @@
             ],
             [
                 'url'   => route('admin.users.edit', ['uuid' => $user->uuid]),
-                'label' => __('admin.titles.user_edit'),
+                'label' => __('admin.titles.users.edit'),
             ],
         ]" />
     </x-slot>
 
     <x-containers.main>
-        <h1 class="text-xl font-semibold dark:text-white mb-4">
+        <x-containers.title>
             {{ __('general.buttons.edit') }}
-        </h1>
+        </x-containers.title>
 
         <div class="mt-6">
             <div class="grid grid-cols-4">

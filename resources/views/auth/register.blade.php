@@ -26,19 +26,19 @@
                         @csrf
                         <div class="mb-5">
                             <label for="name" class="block mb-2 text-sm font-rw-semibold text-white">{{ __('auth.name') }}</label>
-                            <input type="text" id="name" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Your Name" required autofocus />
+                            <input type="text" id="name" name="name" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-700 dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Your Name" required autofocus />
                         </div>
                         <div class="mb-5">
                             <label for="email" class="block mb-2 text-sm font-rw-semibold text-white">{{ __('auth.email') }}</label>
-                            <input type="email" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="You@example.com" required />
+                            <input type="email" id="email" name="email" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-700 dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="You@example.com" required />
                         </div>
                         <div class="mb-5">
                             <label for="password" class="block mb-2 text-sm font-rw-semibold text-white">{{ __('auth.password') }}</label>
-                            <input type="password" id="password" name="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Password" required />
+                            <input type="password" id="password" name="password" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-700 dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Password" required />
                         </div>
                         <div class="mb-5">
                             <label for="password_confirmation" class="block mb-2 text-sm font-rw-semibold text-white">{{ __('auth.confirm_password') }}</label>
-                            <input type="password" id="password_confirmation" name="password_confirmation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="{{ __('auth.confirm_password_placeholder') }}" required />
+                            <input type="password" id="password_confirmation" name="password_confirmation" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-700 dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="{{ __('auth.confirm_password_placeholder') }}" required />
                         </div>
                         <div class="font-rw-semibold text-white text-sm mb-5">
                             {{ __('auth.already_registered') }}

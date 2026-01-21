@@ -17,11 +17,11 @@
     {{-- Roles --}}
     <x-containers.main>
         <div class="flex justify-between">
-            <h1 class="text-xl font-semibold dark:text-white mb-4">{{ __('admin.titles.languages_overview') }}</h1>
+            <x-containers.title>{{ __('admin.titles.languages.overview') }}</x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchLanguage" wire:model.live="searchLanguage" class="w-full" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.languages.new') }}">
-                    {{ __('admin.buttons.language_create') }}
+                    {{ __('admin.buttons.languages.create') }}
                 </x-buttons.primary-button>
             </div>
         </div>
@@ -30,7 +30,7 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.language_name') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.languages.name') }}</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">Shortcode</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">Code</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">HeadDB ID</th>
@@ -52,7 +52,7 @@
                     @empty
                         <tr>
                             <td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                                {{ __('admin.messages.languages_no_records') }}
+                                {{ __('admin.messages.languages.languages_no_records') }}
                             </td>
                         </tr>
                     @endforelse
@@ -68,7 +68,7 @@
     <x-modals.modal wire:model="deleteLanguageModal">
         <x-slot name="title">{{ __('admin.titles.language_delete') }}</x-slot>
         <x-slot name="content">
-            <p>{!! __('admin.messages.languages_modal_delete_confirmation', ['name' => $selectedLanguage ? $selectedLanguage->name : '']) !!}</p>
+            <p>{!! __('admin.messages.languages.delete_confirmation', ['name' => $selectedLanguage ? $selectedLanguage->name : '']) !!}</p>
         </x-slot>
         <x-slot name="footer">
             <button type="button" @click="$dispatch('close')" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 cursor-pointer">

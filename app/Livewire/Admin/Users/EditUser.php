@@ -54,7 +54,7 @@ class EditUser extends Component
             : null;
         $this->user->save();
 
-        return redirect()->route('admin.users.render')->success(__('admin.toast.user_updated'));
+        return redirect()->route('admin.users.render')->success(__('admin.toast.users.updated'));
     }
 
     public function render()
