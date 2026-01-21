@@ -263,11 +263,35 @@ class EditCompany extends Component
     public function destroyPinConsole() {
         if (!$this->pinConsoleToRemove) return;
 
+        // Store the current pin console for rollback in case of failure
+        $pinConsole = $this->pinConsoleToRemove;
+
+        // 1. Optimistic delete
         $this->pinConsoleToRemove->delete();
         $this->removePinConsoleModal = false;
         $this->pinConsoleToRemove = null;
 
-        Toaster::success(__('admin.toast.company_pin_console_removed'));
+        // 2. Send invalidate request to Velocity
+        $response = Http::withToken(config('services.plugin-api.key'))
+            ->post(config('services.plugin-api.url') . "api/invalidate/pin-console/{$pinConsole->id}");
+
+        // Immediate failure (did not accept request)
+        if ($response->status() !== 202) {
+            $this->rollbackPinConsole($pinConsole);
+            return Toaster::error(__('admin.toast.company.pin_console_remove_failed'));
+        }
+
+        $requestId = $response->json('requestId');
+        
+        // 3. Poll for result
+        $success = $this->waitForInvalidationResult($requestId);
+        if (!$success) {
+            $this->rollbackPinConsole($pinConsole);
+            return Toaster::error(__('admin.toast.company.pin_console_remove_failed'));
+        }
+
+        // 4. Success
+        Toaster::success(__('admin.toast.company.pin_console_removed'));
     }
 
     public function render()
@@ -330,6 +354,10 @@ class EditCompany extends Component
     private function rollbackPlot(Plot $plot, int $companyId): void {
         $plot->company_id = $companyId;
         $plot->save();
+    }
+
+    private function rollbackPinConsole($pinConsole): void {
+        $pinConsole->save();
     }
 
 }

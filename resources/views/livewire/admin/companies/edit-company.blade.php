@@ -308,6 +308,7 @@
                                 @endif
                             </x-tables.table-data>
                             <x-tables.table-actions>
+                                <x-tables.danger-action wire:click="removePinConsole('{{ $pinConsole->id }}')">
                                     {{ __('general.buttons.remove') }}
                                 </x-tables.danger-action>
                             </x-tables.table-actions>

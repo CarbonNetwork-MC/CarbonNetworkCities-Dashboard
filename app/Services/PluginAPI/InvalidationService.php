@@ -29,7 +29,7 @@ class InvalidationService
             if ($state === 'COMPLETED') {
                 // Success if at least one server reloaded the plot
                 foreach ($results as $server => $status) {
-                    if ($status === 'RELOADED') {
+                    if ($status === 'RELOADED' || $status === 'REMOVED') {
                         return true;
                     }
                 }
