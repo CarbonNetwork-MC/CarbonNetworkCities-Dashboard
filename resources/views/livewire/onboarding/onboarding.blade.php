@@ -29,7 +29,7 @@
                 <div class="">
                     <h1 class="text-lg font-rw-bold">
                         {{ __('onboarding.step1_title') }}
-                    </x-containers.title>
+                    </h1>
                     <p class="text-gray-700 font-rw-regular">
                         {{ __('onboarding.step1') }}
                     </p>
@@ -46,7 +46,7 @@
                         {{ __('onboarding.step2') }}
                     </p>
                     <div class="flex justify-center gap-x-4">
-                        <input wire:model="code" type="text" class="mt-4 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        <input wire:model="code" type="text" class="mt-4 px-4 py-2 w-1/2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="{{ __('onboarding.step2_placeholder') }}">
                     </div>
 
