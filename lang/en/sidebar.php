@@ -20,4 +20,5 @@ return [
 
     'languages' => 'Languages',
     'users' => 'Users',
+    'itemsmenu' => 'Items Menu',
 ];

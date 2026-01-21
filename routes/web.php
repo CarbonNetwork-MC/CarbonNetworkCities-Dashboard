@@ -3,6 +3,11 @@
 use App\Http\Controllers\AuthController;
 use App\Livewire\Dashboard;
 use App\Livewire\Onboarding\Onboarding;
+use App\Livewire\Admin\ItemsMenu\EditCategory;
+use App\Livewire\Admin\ItemsMenu\EditItem;
+use App\Livewire\Admin\ItemsMenu\NewCategory;
+use App\Livewire\Admin\ItemsMenu\NewItem;
+use App\Livewire\Admin\ItemsMenu\Overview as ItemsMenuOverview;
 use App\Livewire\Admin\Companies\AddBankAccount;
 use App\Livewire\Admin\Companies\AddEmployee;
 use App\Livewire\Admin\Companies\AddPinConsole;
@@ -85,5 +90,12 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
   
     // ? Users
     Route::get('/users', UserOverview::class)->name('admin.users.render'); 
-    Route::get('/users/edit/{uuid}', EditUser::class)->name('admin.users.edit'); 
+    Route::get('/users/edit/{uuid}', EditUser::class)->name('admin.users.edit');
+
+    // ? Itemsmenu
+    Route::get('/itemsmenu', ItemsMenuOverview::class)->name('admin.itemsmenu.render');
+    Route::get('/categories/new', NewCategory::class)->name('admin.itemsmenu.category.new');
+    Route::get('/categories/edit/{id}', EditCategory::class)->name('admin.itemsmenu.category.edit');
+    Route::get('/items/new', NewItem::class)->name('admin.itemsmenu.item.new');
+    Route::get('/items/edit/{id}', EditItem::class)->name('admin.itemsmenu.item.edit');
 });

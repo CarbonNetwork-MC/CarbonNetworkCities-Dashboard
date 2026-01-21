@@ -2,8 +2,12 @@
 
 namespace App\Livewire\Admin\Languages;
 
-use App\Models\Language;
 use Livewire\Component;
+use App\Models\Language;
+use Masmerise\Toaster\Toaster;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Http;
+use App\Services\PluginAPI\InvalidationService;
 
 class Edit extends Component
 {
@@ -22,10 +26,26 @@ class Edit extends Component
     }
 
     public function updateLanguage() {
+        if (!$this->language) return;
+
+        $language = $this->language;
+
         $data = $this->validate([
-            'name' => ['required', 'string', 'max:50'],
-            'shortCode' => ['required', 'string', 'max:2'],
-            'code' => ['required', 'string', 'max:5'],
+            'name' => [
+                'required', 'string', 'max:50',
+                Rule::unique('languages', 'name')
+                    ->ignore($this->language?->id, 'id'),
+            ],
+            'shortCode' => [
+                'required', 'string', 'max:2',
+                Rule::unique('languages', 'short_code')
+                    ->ignore($this->language?->id, 'id'),
+            ],
+            'code' => [
+                'required', 'string', 'max:5',
+                Rule::unique('languages', 'code')
+                    ->ignore($this->language?->id, 'id'),
+            ],
             'headdbId' => ['numeric', 'nullable', 'string', 'max:11'],
         ]);
 
@@ -35,11 +55,30 @@ class Edit extends Component
         $this->language->headdb_id = $data['headdbId'];
         $this->language->save();
 
+        $response = Http::withToken(config('services.plugin-api.key'))
+            ->post(config('services.plugin-api.url') . "api/reload/languages");
+
+        $requestId = $response->json('requestId');
+            
+        $success = $this->waitForInvalidationResult($requestId);
+        if (!$success) {
+            $this->language->name = $language['name'];
+            $this->language->short_code = $language['shortCode'];
+            $this->language->code = $language['code'];
+            $this->language->headdb_id = $language['headdbId'];
+            $this->language->save();
+            return Toaster::error(__('admin.toast.reload_languages_api_error'));
+        }
+
         return redirect()->route('admin.languages.render')->success(__('admin.toast.languages.updated'));
     }
 
     public function render()
     {
         return view('livewire.admin.languages.edit');
+    }
+
+    private function waitForInvalidationResult(string $requestId): bool {
+        return app(InvalidationService::class)->waitForInvalidationResult($requestId);
     }
 }

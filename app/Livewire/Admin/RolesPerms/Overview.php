@@ -24,7 +24,7 @@ class Overview extends Component
     public $selectedPermission = null;
     public $selectedRole = null;
 
-    // ? Pagination Methods
+    // ? Pagination Method
     public function updated($key, $value) {
         if ($key === 'searchPermission') {
             $this->resetPage('permissionsPage');

@@ -33,8 +33,8 @@
                 <div class="col-span-1">
                     <x-forms.text-input label="Shortcode" wire:model="shortCode" required />
                 </div>
-                
             </div>
+            
             <div class="grid grid-cols-4 gap-x-6 mt-6">
                 {{-- Code --}}
                 <div class="col-span-1">
