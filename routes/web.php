@@ -5,6 +5,11 @@ use Illuminate\Support\Facades\Route;
 
 use App\Livewire\Onboarding\Onboarding;
 use App\Http\Controllers\AuthController;
+use App\Livewire\Admin\ItemsMenu\EditCategory;
+use App\Livewire\Admin\ItemsMenu\EditItem;
+use App\Livewire\Admin\ItemsMenu\NewCategory;
+use App\Livewire\Admin\ItemsMenu\NewItem;
+use App\Livewire\Admin\ItemsMenu\Overview as ItemsMenuOverview;
 use App\Livewire\Admin\Languages\Overview as LanguagesOverview;
 use App\Livewire\Admin\Languages\Edit as EditLanguage;
 use App\Livewire\Admin\Languages\NewLanguage;
@@ -64,5 +69,12 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
   
     // ? Users
     Route::get('/users', UserOverview::class)->name('admin.users.render'); 
-    Route::get('/users/edit/{uuid}', EditUser::class)->name('admin.users.edit'); 
+    Route::get('/users/edit/{uuid}', EditUser::class)->name('admin.users.edit');
+
+    // ? Itemsmenu
+    Route::get('/itemsmenu', ItemsMenuOverview::class)->name('admin.itemsmenu.render');
+    Route::get('/categories/new', NewCategory::class)->name('admin.itemsmenu.category.new');
+    Route::get('/categories/edit/{id}', EditCategory::class)->name('admin.itemsmenu.category.edit');
+    Route::get('/items/new', NewItem::class)->name('admin.itemsmenu.item.new');
+    Route::get('/items/edit/{id}', EditItem::class)->name('admin.itemsmenu.item.edit');
 });

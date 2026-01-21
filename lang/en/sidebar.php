@@ -17,4 +17,5 @@ return [
     'roles_perms' => 'Roles & Permissions',
     'languages' => 'Languages',
     'users' => 'Users',
+    'itemsmenu' => 'Items Menu',
 ];

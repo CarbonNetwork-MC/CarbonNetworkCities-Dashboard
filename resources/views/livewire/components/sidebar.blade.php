@@ -83,6 +83,14 @@
                     icon="fi fi-rr-users"
                     :label="__('sidebar.users')"
                 />
+
+                {{-- Itemsmenu --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.itemsmenu.render')"
+                    :active="request()->routeIs('admin.itemsmenu.*')"
+                    icon="fi fi-br-grid"
+                    :label="__('sidebar.itemsmenu')"
+                />
             </nav>
         @endif
 
