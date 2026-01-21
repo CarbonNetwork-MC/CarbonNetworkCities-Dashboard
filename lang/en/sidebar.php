@@ -18,4 +18,6 @@ return [
     'roles_perms' => 'Roles & Permissions',
     'back_to_dashboard' => 'Back to Dashboard',
 
+    'languages' => 'Languages',
+    'users' => 'Users',
 ];

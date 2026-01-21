@@ -76,6 +76,22 @@
                     :label="__('sidebar.roles_perms')"
                 />
                 @endif
+                
+                {{-- Languages --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.languages.render')"
+                    :active="request()->routeIs('admin.languages.*')"
+                    icon="fi fi-tr-language-exchange"
+                    :label="__('sidebar.languages')"
+                />
+
+                {{-- Users --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.users.render')"
+                    :active="request()->routeIs('admin.users.*')"
+                    icon="fi fi-rr-users"
+                    :label="__('sidebar.users')"
+                />
             </nav>
         @endif
 

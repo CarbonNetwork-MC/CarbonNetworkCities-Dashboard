@@ -10,7 +10,7 @@
     $labelAttributes = $attributes->only(['label:class']);
 @endphp
 
-<div class="max-w-sm mx-auto {{ $wrapperAttributes->get('wrapper:class') }}">
+<div class="max-w-sm {{ $wrapperAttributes->get('wrapper:class') }}">
     {{-- Label --}}
     @if ($label)
         <label
