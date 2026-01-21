@@ -275,7 +275,7 @@
             </h1>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchPinConsoles" wire:model.live="searchPinConsoles" />
-                <x-buttons.primary-button size="sm" wire:click="">
+                <x-buttons.primary-button size="sm" href="{{ route('admin.companies.add-pin-console', ['id' => $company->id]) }}">
                     {{ __('admin.buttons.company.add_pin_console') }}
                 </x-buttons.primary-button>
             </div>
@@ -308,7 +308,6 @@
                                 @endif
                             </x-tables.table-data>
                             <x-tables.table-actions>
-                                <x-tables.danger-action wire:click="removePinConsole('{{ $pinConsole->uuid }}')">
                                     {{ __('general.buttons.remove') }}
                                 </x-tables.danger-action>
                             </x-tables.table-actions>
