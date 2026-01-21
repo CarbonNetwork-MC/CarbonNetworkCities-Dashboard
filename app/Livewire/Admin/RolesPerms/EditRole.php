@@ -5,16 +5,18 @@ namespace App\Livewire\Admin\RolesPerms;
 use App\Models\Role;
 use App\Models\Permission;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 
 class EditRole extends Component
 {
+    use WithPagination;
+
     public $role;
     public $roleName;
-    public $rolePermissions;
-    public $assignablePermissions;
 
     public $search = '';
+    public $permissionsPerPage = 10;
 
     public $selectedPermission = null;
     public $permissionToRemove = null;
@@ -25,8 +27,11 @@ class EditRole extends Component
     public function mount($uuid) {
         $this->role = Role::where('uuid', $uuid)->firstOrFail();
         $this->roleName = $this->role->name;
-        $this->rolePermissions = $this->role->permissions;
-        $this->assignablePermissions = Permission::whereNotIn('uuid', $this->rolePermissions->pluck('uuid')->toArray())->get();
+    }
+
+    public function updatedSearch()
+    {
+        $this->resetPage('permissions');
     }
 
     public function updateRole() {
@@ -37,7 +42,7 @@ class EditRole extends Component
         $this->role->name = $data['roleName'];
         $this->role->save();
 
-        return redirect()->route('admin.roles-perms.render')->success(__('admin.toast.role_updated'));
+        return redirect()->route('admin.roles-perms.render')->success(__('admin.toast.roles.updated'));
     }
 
     public function addPermission() {
@@ -46,16 +51,20 @@ class EditRole extends Component
         ]);
 
         $permission = Permission::where('uuid', $data['selectedPermission'])->first();
-        if ($permission && !$this->rolePermissions->contains('uuid', $permission->uuid)) {
+        if (!$permission) return;
+
+        $alreadyAttached = $this->role->permissions()
+            ->where('permissions.uuid', $permission->uuid)
+            ->exists();
+
+        if (!$alreadyAttached) {
             $this->role->permissions()->attach($permission->uuid);
-            $this->rolePermissions->push($permission);
-            $this->assignablePermissions = Permission::whereNotIn('uuid', $this->rolePermissions->pluck('uuid')->toArray())->get();
         }
 
         $this->assignPermissionModal = false;
         $this->selectedPermission = null;
 
-        Toaster::success(__('admin.toast.role_permission_added'));
+        Toaster::success(__('admin.toast.roles.permission_added'));
     }
 
     public function removePermission($uuid) {
@@ -64,20 +73,26 @@ class EditRole extends Component
     }
 
     public function destroyPermission() {
-        if ($this->permissionToRemove && $this->rolePermissions->contains('uuid', $this->permissionToRemove->uuid)) {
-            $this->role->permissions()->detach($this->permissionToRemove->uuid);
-            $this->rolePermissions = $this->rolePermissions->reject(fn($permission) => $permission->uuid === $this->permissionToRemove->uuid);
-            $this->assignablePermissions = Permission::whereNotIn('uuid', $this->rolePermissions->pluck('uuid')->toArray())->get();
-        }
+        if (!$this->permissionToRemove) return;
+
+        $this->role->permissions()->detach($this->permissionToRemove->uuid);
 
         $this->removePermissionModal = false;
         $this->permissionToRemove = null;
 
-        Toaster::success(__('admin.toast.role_permission_removed'));
+        Toaster::success(__('admin.toast.roles.permission_removed'));
     }
 
     public function render()
     {
-        return view('livewire.admin.roles-perms.edit-role');
+        return view('livewire.admin.roles-perms.edit-role', [
+            'rolePermissions' => $this->role->permissions()->orderBy('name')->paginate($this->permissionsPerPage, ['*'], 'permissions'),
+            'assignablePermissions' => Permission::whereDoesntHave('roles', function ($q) {
+                $q->where('panel_roles.uuid', $this->role->uuid);
+            })
+            ->where('name', 'like', '%' . $this->search . '%')
+            ->orderBy('name')
+            ->get(),
+        ]);
     }
 }

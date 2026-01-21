@@ -25,12 +25,14 @@ class Overview extends Component
     public $selectedRole = null;
 
     // ? Pagination Methods
-    public function updatedRolesPerPage() {
-        $this->resetPage('rolesPage');
-    }
+    public function updated($key, $value) {
+        if ($key === 'searchPermission') {
+            $this->resetPage('permissionsPage');
+        }
 
-    public function updatedPermissionsPerPage() {
-        $this->resetPage('permissionsPage');
+        if ($key === 'searchRole') {
+            $this->resetPage('rolesPage');
+        }
     }
 
     // ? Permission Methods
@@ -49,7 +51,7 @@ class Overview extends Component
             'deletePermissionModal',
         ]);
 
-        Toaster::success(__('admin.toast.permission_deleted'));
+        Toaster::success(__('admin.toast.permissions.deleted'));
     }
 
     // ? Role Methods
@@ -68,7 +70,7 @@ class Overview extends Component
             'deleteRoleModal',
         ]);
 
-        Toaster::success(__('admin.toast.role_deleted'));
+        Toaster::success(__('admin.toast.roles.deleted'));
     }
 
     public function render()

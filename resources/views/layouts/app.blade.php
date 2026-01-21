@@ -39,6 +39,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
         <!-- Styles -->
+        @asyncSelectStyles
         @livewireStyles
     </head>
     <body class="font-sans antialiased overflow-hidden">
@@ -66,6 +67,7 @@
         <x-toaster-hub />
 
         @livewireScripts
+        @stack('scripts')
         <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     </body>
 </html>

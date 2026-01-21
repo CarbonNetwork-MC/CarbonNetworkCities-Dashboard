@@ -46,26 +46,35 @@
             </nav>
         @endif
 
+        <!-- Admin Nav -->
         @if (request()->routeIs('admin.*') && $user->hasRole('Superadmin'))
             <nav class="space-y-2 flex-1 min-h-0">
-                {{-- Dashboard --}}
+                {{-- Admin Dashboard --}}
                 <x-sidebar.nav-item
-                    :href="route('dashboard.render')"
-                    :active="false"
-                    icon="fi fi-rr-arrow-small-left"
-                    :label="__('sidebar.back_to_dashboard')"
+                    :href="route('admin.dashboard.render')"
+                    :active="request()->routeIs('admin.dashboard.*')"
+                    icon="fi fi-rr-home"
+                    :label="__('sidebar.dashboard')"
                 />
 
-                <x-sidebar.nav-divider />
+                {{-- Companies --}}
+                @if ($user->can('manage_companies'))
+                <x-sidebar.nav-item
+                    :href="route('admin.companies.render')"
+                    :active="request()->routeIs('admin.companies.*')"
+                    icon="fi fi-rr-building"
+                    :label="__('sidebar.companies')"
+                />
+                @endif
 
                 {{-- Roles & Permissions --}}
-                @if ($user->hasPermissionTo('manage_permissions'))
-                    <x-sidebar.nav-item
-                        :href="route('admin.roles-perms.render')"
-                        :active="request()->routeIs('admin.roles-perms.*')"
-                        icon="fi fi-rr-shield-check"
-                        :label="__('sidebar.roles_perms')"
-                    />
+                @if ($user->can('manage_permissions'))
+                <x-sidebar.nav-item
+                    :href="route('admin.roles-perms.render')"
+                    :active="request()->routeIs('admin.roles-perms.*')"
+                    icon="fi fi-rr-shield-check"
+                    :label="__('sidebar.roles_perms')"
+                />
                 @endif
                 
                 {{-- Languages --}}
@@ -88,17 +97,27 @@
 
         <!-- Footer -->
         <div class="mt-auto">
-            @if ($user->hasRole('Superadmin') && !request()->routeIs('admin.*'))
-                <x-sidebar.nav-divider />
+            @if ($user->hasRole('Superadmin'))
+            {{-- Admin Section --}}
+            <x-sidebar.nav-divider />
 
-                <div class="mb-2">
-                    <x-sidebar.nav-item
-                        :href="route('admin.roles-perms.render')"
-                        :active="request()->routeIs('admin.roles-perms.*')"
-                        icon="fi fi-rr-admin-alt"
-                        :label="__('sidebar.admin')"
-                    />
-                </div>
+            <div class="mb-2">
+            @if (request()->routeIs('admin.*'))
+                <x-sidebar.nav-item
+                    :href="route('dashboard.render')"
+                    :active="false"
+                    icon="fi fi-rr-arrow-small-left"
+                    :label="__('sidebar.back_to_dashboard')"
+                />
+            @else
+                <x-sidebar.nav-item
+                    :href="route('admin.dashboard.render')"
+                    :active="request()->routeIs('admin.dashboard.*')"
+                    icon="fi fi-rr-admin-alt"
+                    :label="__('sidebar.admin')"
+                />
+            @endif
+            </div>
             @endif
 
             <div class="border-t border-zinc-200 dark:border-zinc-800 pt-3">

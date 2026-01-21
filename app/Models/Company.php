@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Company extends Model
 {
@@ -15,9 +15,9 @@ class Company extends Model
         'owner_uuid',
     ];
 
-    public function owner(): BelongsTo
+    public function owner(): HasOne
     {
-        return $this->belongsTo(Player::class, 'owner_uuid', 'uuid');
+        return $this->hasOne(Player::class, 'uuid', 'owner_uuid');
     }
 
     public function bankAccounts(): HasMany
@@ -32,7 +32,7 @@ class Company extends Model
 
     public function plots(): HasMany
     {
-        return $this->hasMany(Plot::class, 'company_id', 'plot_id');
+        return $this->hasMany(Plot::class, 'company_id', 'id');
     }
 
     public function pinConsoles(): HasMany

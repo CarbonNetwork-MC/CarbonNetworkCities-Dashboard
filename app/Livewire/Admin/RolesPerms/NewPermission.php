@@ -18,7 +18,7 @@ class NewPermission extends Component
             'name' => $data['permissionName'],
         ]);
 
-        return redirect()->route('admin.roles-perms.render')->success(__('admin.toast.permission_created'));
+        return redirect()->route('admin.roles-perms.render')->success(__('admin.toast.permissions.created'));
     }
 
     public function render()
