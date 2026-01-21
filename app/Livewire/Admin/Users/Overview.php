@@ -42,15 +42,15 @@ class Overview extends Component
                 )->post($url);
 
                 if ($response->status() == 400) {
-                    Toaster::error(__('admin.toast.account_unlink_missing_player_error'));
+                    Toaster::error(__('admin.toast.users.account_unlink_missing_player_error'));
                 } elseif ($response->status() == 401) {
-                    Toaster::error(__('admin.toast.api_unauthorized_error'));
+                    Toaster::error(__('admin.toast.api.unauthorized_error'));
                 } elseif ($response->failed()) {
-                    Toaster::error(__('admin.toast.account_unlink_api_error'));
+                    Toaster::error(__('admin.toast.users.account_unlink_api_error'));
                     return;
                 }
             } catch (\Exception $e) {
-                Toaster::error(__('admin.toast.account_unlink_api_error'));
+                Toaster::error(__('admin.toast.users.account_unlink_api_error'));
                 return;
             }
             $this->selectedUser->update([
@@ -72,7 +72,7 @@ class Overview extends Component
             'unlinkModal',
         ]);
 
-        Toaster::success(__('admin.toast.account_unlinked'));
+        Toaster::success(__('admin.toast.users.account_unlinked'));
     }
 
     public function removeUser($id) {
@@ -93,7 +93,7 @@ class Overview extends Component
             'deleteUserModal',
         ]);
 
-        Toaster::success(__('admin.toast.user_deleted'));
+        Toaster::success(__('admin.toast.users.deleted'));
     }
 
     public function render()

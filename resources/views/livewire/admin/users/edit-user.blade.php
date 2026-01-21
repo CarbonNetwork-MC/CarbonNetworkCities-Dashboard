@@ -13,7 +13,7 @@
             ],
             [
                 'url'   => route('admin.users.edit', ['uuid' => $user->uuid]),
-                'label' => __('admin.titles.user_edit'),
+                'label' => __('admin.titles.users.edit'),
             ],
         ]" />
     </x-slot>

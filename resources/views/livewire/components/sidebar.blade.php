@@ -67,6 +67,14 @@
                 />
                 @endif
 
+                {{-- Languages --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.languages.render')"
+                    :active="request()->routeIs('admin.languages.*')"
+                    icon="fi fi-tr-language-exchange"
+                    :label="__('sidebar.languages')"
+                />
+
                 {{-- Roles & Permissions --}}
                 @if ($user->can('manage_permissions'))
                 <x-sidebar.nav-item
@@ -76,14 +84,6 @@
                     :label="__('sidebar.roles_perms')"
                 />
                 @endif
-                
-                {{-- Languages --}}
-                <x-sidebar.nav-item
-                    :href="route('admin.languages.render')"
-                    :active="request()->routeIs('admin.languages.*')"
-                    icon="fi fi-tr-language-exchange"
-                    :label="__('sidebar.languages')"
-                />
 
                 {{-- Users --}}
                 <x-sidebar.nav-item

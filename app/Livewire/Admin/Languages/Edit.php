@@ -35,7 +35,7 @@ class Edit extends Component
         $this->language->headdb_id = $data['headdbId'];
         $this->language->save();
 
-        return redirect()->route('admin.languages.render')->success(__('admin.toast.language_updated'));
+        return redirect()->route('admin.languages.render')->success(__('admin.toast.languages.updated'));
     }
 
     public function render()

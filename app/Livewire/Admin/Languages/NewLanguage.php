@@ -28,7 +28,7 @@ class NewLanguage extends Component
             'headdb_id' => $data['headdbId'],
         ]);
 
-        return redirect()->route('admin.languages.render')->success(__('admin.toast.language_created'));
+        return redirect()->route('admin.languages.render')->success(__('admin.toast.languages.create'));
     }
 
     public function render()
