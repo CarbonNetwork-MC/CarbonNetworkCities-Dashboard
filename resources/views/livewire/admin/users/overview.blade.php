@@ -54,7 +54,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="3" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                            <td colspan="6" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
                                 {{ __('admin.messages.users_no_records') }}
                             </td>
                         </tr>
@@ -75,7 +75,7 @@
         </x-slot>
         <x-slot name="footer">
             <button type="button" @click="$dispatch('close')" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 cursor-pointer">
-                {{ __('general.cancel_button') }}
+                {{ __('general.buttons.cancel') }}
             </button>
             <button type="button" wire:click="unlink" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer">
                 {{ __('admin.buttons.unlink_account') }}
@@ -91,10 +91,10 @@
         </x-slot>
         <x-slot name="footer">
             <button type="button" @click="$dispatch('close')" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 cursor-pointer">
-                {{ __('general.cancel_button') }}
+                {{ __('general.buttons.cancel') }}
             </button>
             <button type="button" wire:click="destroyUser" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer">
-                {{ __('general.delete_button') }}
+                {{ __('general.button.delete') }}
             </button>
         </x-slot>
     </x-modals.modal>

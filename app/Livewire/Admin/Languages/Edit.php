@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Languages;
 
 use App\Models\Language;
 use Livewire\Component;
+use Illuminate\Validation\Rule;
 
 class Edit extends Component
 {
@@ -23,9 +24,21 @@ class Edit extends Component
 
     public function updateLanguage() {
         $data = $this->validate([
-            'name' => ['required', 'string', 'max:50'],
-            'shortCode' => ['required', 'string', 'max:2'],
-            'code' => ['required', 'string', 'max:5'],
+            'name' => [
+                'required', 'string', 'max:50',
+                Rule::unique('languages', 'name')
+                    ->ignore($this->language?->id, 'id'),
+            ],
+            'shortCode' => [
+                'required', 'string', 'max:2',
+                Rule::unique('languages', 'short_code')
+                    ->ignore($this->language?->id, 'id'),
+            ],
+            'code' => [
+                'required', 'string', 'max:5',
+                Rule::unique('languages', 'code')
+                    ->ignore($this->language?->id, 'id'),
+            ],
             'headdbId' => ['numeric', 'nullable', 'string', 'max:11'],
         ]);
 

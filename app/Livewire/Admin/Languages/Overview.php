@@ -17,6 +17,13 @@ class Overview extends Component
 
     public $selectedLanguage = null;
 
+    // ? Pagination Method
+    public function updated($key, $value) {
+        if ($key === 'searchLanguage') {
+            $this->resetPage('page');
+        }
+    }
+
     // ? Language Methods
     public function removeLanguage($id) {
         $this->selectedLanguage = Language::find($id);

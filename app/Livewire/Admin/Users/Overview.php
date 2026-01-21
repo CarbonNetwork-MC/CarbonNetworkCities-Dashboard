@@ -24,6 +24,13 @@ class Overview extends Component
 
     public $selectedUser = null;
 
+    // ? Pagination Method
+    public function updated($key, $value) {
+        if ($key === 'searchUser') {
+            $this->resetPage('page');
+        }
+    }
+
     // ? User Methods
     public function unlinkAccount($id) {
         $this->selectedUser = User::find($id);

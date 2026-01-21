@@ -15,9 +15,9 @@ class NewLanguage extends Component
 
     public function createLanguage() {
         $data = $this->validate([
-            'name' => ['required', 'string', 'max:50'],
-            'shortCode' => ['required', 'string', 'max:2'],
-            'code' => ['required', 'string', 'max:5'],
+            'name' => ['required', 'string', 'max:50', 'unique:languages,name'],
+            'shortCode' => ['required', 'string', 'max:2', 'unique:languages,short_code'],
+            'code' => ['required', 'string', 'max:5', 'unique:languages,code'],
             'headdbId' => ['numeric', 'nullable', 'string', 'max:11'],
         ]);
 
