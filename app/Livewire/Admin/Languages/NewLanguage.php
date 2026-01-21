@@ -2,8 +2,11 @@
 
 namespace App\Livewire\Admin\Languages;
 
-use App\Models\Language;
 use Livewire\Component;
+use App\Models\Language;
+use Masmerise\Toaster\Toaster;
+use Illuminate\Support\Facades\Http;
+use App\Services\PluginAPI\InvalidationService;
 
 class NewLanguage extends Component
 {
@@ -21,12 +24,23 @@ class NewLanguage extends Component
             'headdbId' => ['numeric', 'nullable', 'string', 'max:11'],
         ]);
 
-        Language::create([
+        $newLanguage = Language::create([
             'name' => $data['name'],
             'short_code' => $data['shortCode'],
             'code' => $data['code'],
             'headdb_id' => $data['headdbId'],
         ]);
+
+        $response = Http::withToken(config('services.plugin-api.key'))
+            ->post(config('services.plugin-api.url') . "api/reload/languages");
+
+        $requestId = $response->json('requestId');
+            
+        $success = $this->waitForInvalidationResult($requestId);
+        if (!$success) {
+            $newLanguage->delete();
+            return Toaster::error(__('admin.toast.reload_languages_api_error'));
+        }
 
         return redirect()->route('admin.languages.render')->success(__('admin.toast.language_created'));
     }
@@ -34,5 +48,9 @@ class NewLanguage extends Component
     public function render()
     {
         return view('livewire.admin.languages.new-language');
+    }
+
+    private function waitForInvalidationResult(string $requestId): bool {
+        return app(InvalidationService::class)->waitForInvalidationResult($requestId);
     }
 }

@@ -9,6 +9,7 @@ use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
+use App\Services\PluginAPI\InvalidationService;
 
 class Overview extends Component
 {
@@ -33,45 +34,26 @@ class Overview extends Component
 
     // ? User Methods
     public function unlinkAccount($id) {
-        $this->selectedUser = User::find($id);
+        $this->selectedUser = User::with('player')->find($id);
         $this->unlinkModal = true;
     }
 
     public function unlink() {
-        if ($this->selectedUser) {
+        if (!$this->selectedUser) return;
 
-            try {
-                $url = config('services.plugin-api.url') . '/invalidate-player/' . $this->selectedUser->player->uuid;
+        $selectedUser = $this->selectedUser->load('player', 'accountLink');
 
-                /** @var \Illuminate\Http\Client\Response $response */
-                $response = Http::withToken(
-                    config('services.plugin-api.key')
-                )->post($url);
+        $this->selectedUser->accountLink()->delete();
 
-                if ($response->status() == 400) {
-                    Toaster::error(__('admin.toast.account_unlink_missing_player_error'));
-                } elseif ($response->status() == 401) {
-                    Toaster::error(__('admin.toast.api_unauthorized_error'));
-                } elseif ($response->failed()) {
-                    Toaster::error(__('admin.toast.account_unlink_api_error'));
-                    return;
-                }
-            } catch (\Exception $e) {
-                Toaster::error(__('admin.toast.account_unlink_api_error'));
-                return;
-            }
-            $this->selectedUser->update([
-                'onboarding_status' => 1,
-                'onboarding_step' => 1,
-            ]);
+        $response = Http::withToken(config('services.plugin-api.key'))
+            ->post(config('services.plugin-api.url') . "api/invalidate/player/{$selectedUser->player->uuid}");
 
-            if ($this->selectedUser->accountLink()) {
-                $this->selectedUser->accountLink()->delete();
-            }
-
-        } else {
-            return Redirect::route('admin.users.render')
-                ->error('User not found.');
+        $requestId = $response->json('requestId');
+            
+        $success = $this->waitForInvalidationResult($requestId);
+        if (!$success) {
+            $this->selectedUser->accountLink()->save($selectedUser->accountLink());
+            return Toaster::error(__('admin.toast.account_unlink_api_error'));
         }
 
         $this->reset([
@@ -111,5 +93,9 @@ class Overview extends Component
                 ->paginate(10),
             'languages' => Language::all(),
         ]);
+    }
+
+    private function waitForInvalidationResult(string $requestId): bool {
+        return app(InvalidationService::class)->waitForInvalidationResult($requestId);
     }
 }
