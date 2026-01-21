@@ -19,9 +19,9 @@
     </x-slot>
 
     <x-containers.main>
-        <h1 class="text-xl font-semibold dark:text-white mb-4">
+        <x-containers.title>
             {{ __('admin.titles.role_edit') }}
-        </h1>
+        </x-containers.title>
 
         <div class="mt-6">
             <div class="grid grid-cols-4">
@@ -42,9 +42,9 @@
 
     <x-containers.main class="mt-4">
         <div class="flex justify-between">
-            <h1 class="text-xl font-semibold dark:text-white mb-4">
+            <x-containers.title>
                 {{ __('admin.titles.selected_permissions') }}
-            </h1>
+            </x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="search" wire:model.live="search" />
                 <x-buttons.primary-button size="sm" wire:click="$toggle('assignPermissionModal')">

@@ -46,6 +46,8 @@ return [
             'edit' => 'Edit User',
             'delete' => 'Delete User',
             'overview' => 'Users Overview',
+            'permissions' => 'User Permissions',
+            'roles' => 'User Roles',
             'unlink' => 'Unlink User Account',
         ],
     ],

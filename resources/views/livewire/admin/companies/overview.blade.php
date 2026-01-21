@@ -18,7 +18,7 @@
     {{-- Companies --}}
     <x-containers.main>
         <div class="flex justify-between">
-            <h1 class="text-xl font-semibold dark:text-white mb-4">{{ __('admin.titles.company.overview') }}</h1>
+            <x-containers.title>{{ __('admin.titles.company.overview') }}</x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="search" wire:model.live="search" class="w-full" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.companies.new') }}">

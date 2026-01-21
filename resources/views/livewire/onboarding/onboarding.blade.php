@@ -29,7 +29,7 @@
                 <div class="">
                     <h1 class="text-lg font-rw-bold">
                         {{ __('onboarding.step1_title') }}
-                    </h1>
+                    </x-containers.title>
                     <p class="text-gray-700 font-rw-regular">
                         {{ __('onboarding.step1') }}
                     </p>

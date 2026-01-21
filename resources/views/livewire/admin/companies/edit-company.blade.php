@@ -20,9 +20,9 @@
 
     {{-- Company --}}
     <x-containers.main>
-        <h1 class="text-xl font-semibold dark:text-white mb-4">
+        <x-containers.title>
             {{ __('admin.buttons.company.create') }}
-        </h1>
+        </x-containers.title>
 
         <div class="mt-6">
             <div class="grid grid-cols-4 gap-x-4 gap-y-6">
@@ -67,9 +67,9 @@
     {{-- Employees --}}
     <x-containers.main class="mt-4">
         <div class="flex justify-between">
-            <h1 class="text-xl font-semibold dark:text-white mb-4">
+            <x-containers.title>
                 {{ __('admin.titles.company.employees') }}
-            </h1>
+            </x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchEmployees" wire:model.live="searchEmployees" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.companies.add-employee', ['id' => $company->id]) }}">
@@ -131,9 +131,9 @@
     {{-- Bankaccounts --}}
     <x-containers.main class="mt-4">
         <div class="flex justify-between">
-            <h1 class="text-xl font-semibold dark:text-white mb-4">
+            <x-containers.title>
                 {{ __('admin.titles.company.bank_accounts') }}
-            </h1>
+            </x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchBankAccounts" wire:model.live="searchBankAccounts" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.companies.add-bank-account', ['id' => $company->id]) }}">
@@ -206,9 +206,9 @@
     {{-- Plots --}}
     <x-containers.main class="mt-4">
         <div class="flex justify-between">
-            <h1 class="text-xl font-semibold dark:text-white mb-4">
+            <x-containers.title>
                 {{ __('admin.titles.company.plots') }}
-            </h1>
+            </x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchPlots" wire:model.live="searchPlots" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.companies.add-plot', ['id' => $company->id]) }}">
@@ -270,9 +270,9 @@
     {{-- Pin Consoles --}}
     <x-containers.main class="mt-4">
         <div class="flex justify-between">
-            <h1 class="text-xl font-semibold dark:text-white mb-4">
+            <x-containers.title>
                 {{ __('admin.titles.company.add_pin_console') }}
-            </h1>
+            </x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchPinConsoles" wire:model.live="searchPinConsoles" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.companies.add-pin-console', ['id' => $company->id]) }}">

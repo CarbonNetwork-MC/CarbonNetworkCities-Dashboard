@@ -17,7 +17,7 @@
     {{-- Roles --}}
     <x-containers.main>
         <div class="flex justify-between">
-            <h1 class="text-xl font-semibold dark:text-white mb-4">{{ __('admin.titles.roles_overview') }}</h1>
+            <x-containers.title>{{ __('admin.titles.roles_overview') }}</x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchRole" wire:model.live="searchRole" class="w-full" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.roles-perms.role.new') }}">
@@ -80,7 +80,7 @@
     {{-- Permissions --}}
     <x-containers.main class="mt-4">
         <div class="flex justify-between items-center">
-            <h1 class="text-xl font-semibold dark:text-white mb-4">{{ __('admin.titles.permissions.overview') }}</h1>
+            <x-containers.title>{{ __('admin.titles.permissions.overview') }}</x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar :id="'searchPermission'" wire:model.live="searchPermission" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.roles-perms.permission.new') }}">
