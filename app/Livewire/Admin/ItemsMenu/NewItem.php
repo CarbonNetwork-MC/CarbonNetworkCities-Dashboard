@@ -15,6 +15,19 @@ class NewItem extends Component
     public $name = '';
     public $categoryId = null;
     public $iconMaterial = '';
+    public $displayName = '';
+    public array $lore = [''];
+    public $shelfLife = null;
+    public $expiredPrefix = '';
+
+    public $isFood = false;
+
+    public function updated($key, $value) {
+        if ($key === 'categoryId') {
+            $category = ItemCategory::find($value);
+            $this->isFood = $category && $category->name === 'food';
+        }
+    }
 
     public function createItem() {
         $data = $this->validate([
@@ -22,9 +35,24 @@ class NewItem extends Component
             'name' => ['required', 'string', 'max:100', 'unique:items,name'],
             'categoryId' => ['required', 'integer', 'exists:item_categories,id'],
             'iconMaterial' => ['required', 'string', 'max:50'],
+            'displayName' => ['required', 'string', 'max:50'],
+            'lore' => ['nullable', 'array'],
+            'lore.*' => ['nullable', 'string', 'max:255'],
+            'shelfLife' => ['nullable', 'integer', 'min:0'],
+            'expiredPrefix' => ['nullable', 'string', 'in:' . implode(',', config('items.expired_prefixes'))],
         ]);
 
-        $material = strtoupper($data['iconMaterial']);
+        $material = strtoupper(str_replace(' ', '_', $data['iconMaterial']));
+
+        $itemData = [
+            'lore' => $this->lore,
+            'display_name' => $this->displayName,
+        ];
+
+        if ($this->isFood) {
+            $itemData['shelf_life'] = $this->shelfLife;
+            $itemData['expired_prefix'] = "<green>" . $this->expiredPrefix;
+        }
 
         $newItem = Item::create([
             'internal_id' => $data['internalId'],
@@ -32,6 +60,7 @@ class NewItem extends Component
             'category_id' => $data['categoryId'],
             'material' => $material,
             'user_uuid' => auth()->user()->uuid,
+            'data' => $itemData,
         ]);
 
         $response = Http::withToken(config('services.plugin-api.key'))
@@ -52,7 +81,17 @@ class NewItem extends Component
     {
         return view('livewire.admin.itemsmenu.new-item', [
             'categories' => ItemCategory::all(),
+            'expiredPrefixes' => config('items.expired_prefixes'),
         ]);
+    }
+
+    public function addLoreLine() {
+        $this->lore[] = '';
+    }
+
+    public function removeLoreLine($index) {
+        unset($this->lore[$index]);
+        $this->lore = array_values($this->lore);
     }
 
     private function waitForInvalidationResult(string $requestId): bool {
