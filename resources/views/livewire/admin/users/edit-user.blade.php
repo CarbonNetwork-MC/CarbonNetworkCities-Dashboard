@@ -24,16 +24,24 @@
         </x-containers.title>
 
         <div class="mt-6">
-            <div class="grid grid-cols-4">
+            <div class="grid grid-cols-4 gap-4">
                 <div class="col-span-1">
                     <x-forms.text-input label="{{ __('general.labels.name') }}" wire:model="userName" required class="mb-5"/>
+                </div>
+                <div class="col-span-1">
                     <x-forms.text-input label="{{ __('general.labels.email') }}" wire:model="userEmail" required class="mb-5"/>
-                    <x-forms.select id="languageSelect" wire:model="selectedLanguage" label="{{ __('admin.labels.languages') }}">
-                        <option value="">{{ __('general.placeholders.select_option') }}</option>
-                        @foreach($languages as $language)
-                            <option value="{{ $language->id }}">{{ $language->name }}</option>
-                        @endforeach
-                    </x-forms.select>
+                </div>
+                <div class="col-span-2"></div>
+                <div class="col-span-1">
+                    <x-forms.label for="language" required>
+                        {{ __('admin.labels.users.select_language') }}
+                    </x-forms.label>
+                    <livewire:async-select
+                        id="language"
+                        :options="$languages->map(fn($language) => ['value' => $language->id, 'label' => $language->name])"
+                        wire:model="selectedLanguage"
+                        :min-search-length="2"
+                    />
                 </div>
             </div>
 
