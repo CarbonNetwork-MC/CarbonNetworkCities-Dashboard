@@ -8,11 +8,12 @@ use App\Models\ItemCategory;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Facades\Http;
-use App\Services\PluginAPI\InvalidationService;
+use App\Http\Livewire\Concerns\WithInvalidation;
 
 class Overview extends Component
 {
     use WithPagination;
+    use WithInvalidation;
 
     public $searchCategory = '';
     public $searchItem = '';
@@ -135,9 +136,5 @@ class Overview extends Component
                 ->orderBy('created_at', 'desc')
                 ->paginate($this->itemsPerPage, pageName: 'itemsPage'),
         ]);
-    }
-
-    private function waitForInvalidationResult(string $requestId): bool {
-        return app(InvalidationService::class)->waitForInvalidationResult($requestId);
     }
 }

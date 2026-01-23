@@ -6,10 +6,12 @@ use Livewire\Component;
 use App\Models\ItemCategory;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Http;
-use App\Services\PluginAPI\InvalidationService;
+use App\Http\Livewire\Concerns\WithInvalidation;
 
 class EditCategory extends Component
 {
+    use WithInvalidation;
+
     public $category;
     public $name;
     public $iconMaterial;
@@ -60,9 +62,5 @@ class EditCategory extends Component
     public function render()
     {
         return view('livewire.admin.itemsmenu.edit-category');
-    }
-
-    private function waitForInvalidationResult(string $requestId): bool {
-        return app(InvalidationService::class)->waitForInvalidationResult($requestId);
     }
 }

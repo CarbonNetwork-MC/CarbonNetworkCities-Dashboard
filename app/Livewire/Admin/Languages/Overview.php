@@ -7,11 +7,12 @@ use App\Models\Language;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Facades\Http;
-use App\Services\PluginAPI\InvalidationService;
+use App\Http\Livewire\Concerns\WithInvalidation;
 
 class Overview extends Component
 {
     use WithPagination;
+    use WithInvalidation;
 
     public $searchLanguage = '';
 
@@ -65,9 +66,5 @@ class Overview extends Component
                 ->orWhere('code', 'like', '%' . $this->searchLanguage . '%')
                 ->paginate(10),
         ]);
-    }
-
-    private function waitForInvalidationResult(string $requestId): bool {
-        return app(InvalidationService::class)->waitForInvalidationResult($requestId);
     }
 }

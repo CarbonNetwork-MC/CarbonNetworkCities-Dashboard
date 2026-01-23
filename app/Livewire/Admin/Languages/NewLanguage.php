@@ -6,10 +6,12 @@ use Livewire\Component;
 use App\Models\Language;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Facades\Http;
-use App\Services\PluginAPI\InvalidationService;
+use App\Http\Livewire\Concerns\WithInvalidation;
 
 class NewLanguage extends Component
 {
+    use WithInvalidation;
+
     public $language;
     public $name;
     public $shortCode;
@@ -48,9 +50,5 @@ class NewLanguage extends Component
     public function render()
     {
         return view('livewire.admin.languages.new-language');
-    }
-
-    private function waitForInvalidationResult(string $requestId): bool {
-        return app(InvalidationService::class)->waitForInvalidationResult($requestId);
     }
 }

@@ -2,14 +2,17 @@
 
 namespace App\Livewire\Admin\Companies;
 
-use App\Models\Company;
 use App\Models\Plot;
-use Illuminate\Support\Facades\Http;
+use App\Models\Company;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
+use Illuminate\Support\Facades\Http;
+use App\Http\Livewire\Concerns\WithInvalidation;
 
 class AddPlot extends Component
 {
+    use WithInvalidation;
+    
     public $company;
 
     public $plotId;
@@ -68,45 +71,6 @@ class AddPlot extends Component
     public function render()
     {
         return view('livewire.admin.companies.add-plot');
-    }
-
-    private function waitForInvalidationResult(string $requestId): bool {
-        $statusUrl = config('services.plugin-api.url')
-            . "api/invalidate/status/{$requestId}";
-
-        $timeoutSeconds = 3;
-        $pollIntervalMs = 300;
-
-        $start = microtime(true);
-
-        while ((microtime(true) - $start) < $timeoutSeconds) {
-            $response = Http::withToken(config('services.plugin-api.key'))
-                ->get($statusUrl);
-
-            if ($response->failed()) {
-                return false;
-            }
-
-            $state = $response->json('state');
-            $results = $response->json('responses', []);
-
-            if ($state === 'COMPLETED') {
-                // Success if at least one server reloaded the plot
-                foreach ($results as $server => $status) {
-                    if ($status === 'RELOADED') {
-                        return true;
-                    }
-                }
-
-                // All responded, none succeeded
-                return false;
-            }
-
-            usleep($pollIntervalMs * 1000);
-        }
-
-        // Timeout
-        return false;
     }
 
     private function rollbackPlot(Plot $plot, int $companyId): void {

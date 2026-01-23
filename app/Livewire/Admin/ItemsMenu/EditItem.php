@@ -8,10 +8,12 @@ use App\Models\ItemCategory;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Http;
-use App\Services\PluginAPI\InvalidationService;
+use App\Http\Livewire\Concerns\WithInvalidation;
 
 class EditItem extends Component
 {
+    use WithInvalidation;
+
     public $item;
     public $internalId;
     public $name;
@@ -77,9 +79,5 @@ class EditItem extends Component
     public function render()
     {
         return view('livewire.admin.itemsmenu.edit-item');
-    }
-
-    private function waitForInvalidationResult(string $requestId): bool {
-        return app(InvalidationService::class)->waitForInvalidationResult($requestId);
     }
 }

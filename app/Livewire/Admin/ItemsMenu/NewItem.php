@@ -7,10 +7,12 @@ use Livewire\Component;
 use App\Models\ItemCategory;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Facades\Http;
-use App\Services\PluginAPI\InvalidationService;
+use App\Http\Livewire\Concerns\WithInvalidation;
 
 class NewItem extends Component
 {
+    use WithInvalidation;
+
     public $internalId = '';
     public $name = '';
     public $categoryId = null;
@@ -53,9 +55,5 @@ class NewItem extends Component
         return view('livewire.admin.itemsmenu.new-item', [
             'categories' => ItemCategory::all(),
         ]);
-    }
-
-    private function waitForInvalidationResult(string $requestId): bool {
-        return app(InvalidationService::class)->waitForInvalidationResult($requestId);
     }
 }

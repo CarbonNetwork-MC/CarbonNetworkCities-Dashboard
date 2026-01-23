@@ -2,15 +2,17 @@
 
 namespace App\Livewire\Admin\Companies;
 
-use App\Models\Company;
 use App\Models\Player;
-use App\Services\PluginAPI\InvalidationService;
-use Illuminate\Support\Facades\Http;
+use App\Models\Company;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
+use Illuminate\Support\Facades\Http;
+use App\Http\Livewire\Concerns\WithInvalidation;
 
 class AddEmployee extends Component
 {
+    use WithInvalidation;
+    
     public $company;
 
     public $roles = [
@@ -77,9 +79,5 @@ class AddEmployee extends Component
     public function render()
     {
         return view('livewire.admin.companies.add-employee');
-    }
-
-    private function waitForInvalidationResult(string $requestId): bool {
-        return app(InvalidationService::class)->waitForInvalidationResult($requestId);
     }
 }

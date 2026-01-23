@@ -9,11 +9,12 @@ use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
-use App\Services\PluginAPI\InvalidationService;
+use App\Http\Livewire\Concerns\WithInvalidation;
 
 class Overview extends Component
 {
     use WithPagination;
+    use WithInvalidation;
 
     public $searchUser = '';
     public $userName = '';
@@ -93,9 +94,5 @@ class Overview extends Component
                 ->paginate(10),
             'languages' => Language::all(),
         ]);
-    }
-
-    private function waitForInvalidationResult(string $requestId): bool {
-        return app(InvalidationService::class)->waitForInvalidationResult($requestId);
     }
 }
