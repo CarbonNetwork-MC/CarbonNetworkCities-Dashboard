@@ -4,12 +4,14 @@ namespace App\Livewire\Admin\Companies;
 
 use App\Models\Company;
 use App\Models\Country;
-use App\Services\PluginAPI\InvalidationService;
-use Illuminate\Support\Facades\Http;
 use Livewire\Component;
+use Illuminate\Support\Facades\Http;
+use App\Http\Livewire\Concerns\WithInvalidation;
 
 class AddBankAccount extends Component
 {
+    use WithInvalidation;
+    
     public $company;
 
     public $balance = 0;
@@ -84,9 +86,5 @@ class AddBankAccount extends Component
                 ['is_main' => $originalAccount->is_main]
             );
         }
-    }
-
-    private function waitForInvalidationResult(string $requestId): bool {
-        return app(InvalidationService::class)->waitForInvalidationResult($requestId);
     }
 }

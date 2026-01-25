@@ -4,7 +4,7 @@
         <x-breadcrumbs :items="[
             [
                 'icon' => 'fi fi-rs-house-chimney',
-                'url'  => route('dashboard.render'),
+                'url'  => route('admin.dashboard.render'),
                 'label'=> '',
             ],
             [
@@ -17,7 +17,7 @@
     {{-- Roles --}}
     <x-containers.main>
         <div class="flex justify-between">
-            <x-containers.title>{{ __('admin.titles.roles_overview') }}</x-containers.title>
+            <x-containers.title>{{ __('admin.titles.roles.overview') }}</x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchRole" wire:model.live="searchRole" class="w-full" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.roles-perms.role.new') }}">
@@ -30,8 +30,8 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <x-tables.table-header>{{ __('admin.labels.role.name') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.role.permissions') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.roles.name') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.roles.permissions') }}</x-tables.table-header>
                         <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
@@ -43,7 +43,7 @@
                                 @forelse ($role->permissions as $permission)
                                     <span class="bg-green-100 text-green-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full">{{ $permission->name }}</span>
                                 @empty
-                                    <span class="text-gray-600 dark:text-gray-200 italic">{{ __('admin.labels.role.no_permissions_assigned') }}</span>
+                                    <span class="text-gray-600 dark:text-gray-200 italic">{{ __('admin.labels.roles.no_permissions_assigned') }}</span>
                                 @endforelse
                             </x-tables.table-data>
                             <x-tables.table-actions>

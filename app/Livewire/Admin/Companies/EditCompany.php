@@ -2,18 +2,19 @@
 
 namespace App\Livewire\Admin\Companies;
 
-use App\Models\Company;
-use App\Models\Player;
 use App\Models\Plot;
-use App\Services\PluginAPI\InvalidationService;
-use Illuminate\Support\Facades\Http;
-use Masmerise\Toaster\Toaster;
+use App\Models\Player;
+use App\Models\Company;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Masmerise\Toaster\Toaster;
+use Illuminate\Support\Facades\Http;
+use App\Http\Livewire\Concerns\WithInvalidation;
 
 class EditCompany extends Component
 {
     use WithPagination;
+    use WithInvalidation;
 
     public $company;
     public $companyName;
@@ -333,10 +334,6 @@ class EditCompany extends Component
                 })
                 ->paginate($this->pinConsolesPerPage, ['*'], 'pinConsoles'),
         ]);
-    }
-
-    private function waitForInvalidationResult(string $requestId): bool {
-        return app(InvalidationService::class)->waitForInvalidationResult($requestId);
     }
 
     private function rollbackCompany(array $originalData): void {

@@ -4,7 +4,7 @@
         <x-breadcrumbs :items="[
             [
                 'icon' => 'fi fi-rs-house-chimney',
-                'url'  => route('dashboard.render'),
+                'url'  => route('admin.dashboard.render'),
                 'label'=> '',
             ],
             [
@@ -42,8 +42,8 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->email }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->selectedLanguage->name ?? null }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->created_at->format('Y-m-d') }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->updated_at->format('Y-m-d') }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->created_at->format('Y-m-d H:i:s') }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->updated_at->format('Y-m-d H:i:s') }}</td>
                             <td class="px-6 py-4 flex justify-end gap-x-4 whitespace-nowrap text-right text-sm font-medium">
                                 <x-tables.primary-action href="{{ route('admin.users.edit', ['uuid' => $user->uuid]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 @if ($user->accountLink)

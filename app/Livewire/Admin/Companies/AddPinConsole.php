@@ -4,12 +4,14 @@ namespace App\Livewire\Admin\Companies;
 
 use App\Models\Company;
 use App\Models\Country;
-use App\Services\PluginAPI\InvalidationService;
-use Illuminate\Support\Facades\Http;
 use Livewire\Component;
+use Illuminate\Support\Facades\Http;
+use App\Http\Livewire\Concerns\WithInvalidation;
 
 class AddPinConsole extends Component
 {
+    use WithInvalidation;
+
     public $company;
 
     public $countries;
@@ -81,9 +83,5 @@ class AddPinConsole extends Component
     public function render()
     {
         return view('livewire.admin.companies.add-pin-console');
-    }
-
-    private function waitForInvalidationResult(string $requestId): bool {
-        return app(InvalidationService::class)->waitForInvalidationResult($requestId);
     }
 }

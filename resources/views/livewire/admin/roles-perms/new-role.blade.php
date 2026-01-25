@@ -4,7 +4,7 @@
         <x-breadcrumbs :items="[
             [
                 'icon' => 'fi fi-rs-house-chimney',
-                'url'  => route('dashboard.render'),
+                'url'  => route('admin.dashboard.render'),
                 'label'=> '',
             ],
             [
@@ -27,7 +27,7 @@
             <div class="grid grid-cols-4">
                 {{-- Role name --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.role.name') }}" wire:model="roleName" placeholder="{{ __('admin.placeholders.roles.role_name') }}" required />
+                    <x-forms.text-input label="{{ __('admin.labels.roles.name') }}" wire:model="roleName" placeholder="{{ __('admin.placeholders.roles.role_name') }}" required />
                 </div>
             </div>
 

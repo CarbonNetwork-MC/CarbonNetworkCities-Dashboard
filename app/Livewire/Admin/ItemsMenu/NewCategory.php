@@ -6,10 +6,12 @@ use Livewire\Component;
 use App\Models\ItemCategory;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Facades\Http;
-use App\Services\PluginAPI\InvalidationService;
+use App\Http\Livewire\Concerns\WithInvalidation;
 
 class NewCategory extends Component
 {
+    use WithInvalidation;
+
     public $name = '';
     public $iconMaterial = '';
 
@@ -45,9 +47,5 @@ class NewCategory extends Component
     public function render()
     {
         return view('livewire.admin.itemsmenu.new-category');
-    }
-
-    private function waitForInvalidationResult(string $requestId): bool {
-        return app(InvalidationService::class)->waitForInvalidationResult($requestId);
     }
 }

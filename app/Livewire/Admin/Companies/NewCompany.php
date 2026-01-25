@@ -2,14 +2,16 @@
 
 namespace App\Livewire\Admin\Companies;
 
-use App\Models\Company;
 use App\Models\Player;
-use App\Services\PluginAPI\InvalidationService;
-use Illuminate\Support\Facades\Http;
+use App\Models\Company;
 use Livewire\Component;
+use Illuminate\Support\Facades\Http;
+use App\Http\Livewire\Concerns\WithInvalidation;
 
 class NewCompany extends Component
 {
+    use WithInvalidation;
+    
     public $companyName;
     public $cocNumber;
     public $worldId;
@@ -63,9 +65,5 @@ class NewCompany extends Component
     public function render()
     {
         return view('livewire.admin.companies.new-company');
-    }
-
-    private function waitForInvalidationResult(string $requestId): bool {
-        return app(InvalidationService::class)->waitForInvalidationResult($requestId);
     }
 }
