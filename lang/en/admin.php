@@ -50,6 +50,17 @@ return [
             'roles' => 'User Roles',
             'unlink' => 'Unlink User Account',
         ],
+
+        'itemsmenu' => [
+            'edit_category' => 'Edit Item Category',
+            'edit_item' => 'Edit Item',
+            'create_category' => 'Create Item Category',
+            'create_item' => 'Create Item',
+            'categories_overview' => 'Item Categories Overview',
+            'items_overview' => 'Items Overview',
+            'delete_category' => 'Delete Item Category',
+            'delete_item' => 'Delete Item',
+        ]
     ],
 
     // Labels
@@ -105,6 +116,22 @@ return [
             'select_language' => 'Select Language',
             'selected_language' => 'Selected Language',
         ],
+
+        'itemsmenu' => [
+            'category_name' => 'Category Name',
+            'icon_material' => 'Icon Material',
+            'internal_id' => 'Internal ID',
+            'item_name' => 'Item Name',
+            'category' => 'Category',
+            'display_name' => 'Display Name',
+            'lore_line' => 'Lore Line :number',
+            'shelf_life' => 'Shelf Life (in days)',
+            'expired_prefix' => 'Expired Prefix',
+            'items_amount' => 'Items Amount',
+            'player_username' => 'Player Username',
+            'user_name' => 'User Name',
+            'change_category' => 'Change category of items to',
+        ]
     ],
 
     // Buttons
@@ -144,6 +171,12 @@ return [
             'assign_role' => 'Assign Role',
             'assign_permission' => 'Assign Permission',
         ],
+
+        'itemsmenu' => [
+            'add_lore_line' => 'Add Lore Line',
+            'create_category' => 'Create Category',
+            'create_item' => 'Create Item',
+        ]
     ],
 
     // Messages
@@ -188,6 +221,14 @@ return [
             'unlink_confirmation' => 'Are you sure you want to unlink this user\'s account? This will reset their onboarding status, onboarding step and remove their account link.',
             'users_no_records' => 'No users found.',
         ],
+
+        'itemsmenu' => [
+            'categories_no_records' => 'No item categories found.',
+            'items_no_records' => 'No items found.',
+            'category_delete_confirmation_with_items' => 'Are you sure you want to delete the item category <b>:name</b>? This action cannot be undone. You can choose to move its items to another category below.',
+            'category_delete_confirmation_without_items' => 'Are you sure you want to delete the item category <b>:name</b>? This action cannot be undone.',
+            'item_delete_confirmation' => 'Are you sure you want to delete the item <b>:name</b>? This action cannot be undone.',
+        ]
     ],
 
     // Toasts
@@ -246,6 +287,16 @@ return [
             'role_removed' => 'Role removed from user successfully.',
             'updated' => 'User updated successfully.',
         ],
+
+        'itemsmenu' => [
+            'reload_items_api_error' => 'There was an error reloading items via the API. Changes have been reverted.',
+            'category_updated' => 'Item category updated successfully.',
+            'item_updated' => 'Item updated successfully.',
+            'category_created' => 'Item category created successfully.',
+            'item_created' => 'Item created successfully.',
+            'category_deleted' => 'Item category deleted successfully.',
+            'item_deleted' => 'Item deleted successfully.',
+        ]
     ],
 
     // Placeholders

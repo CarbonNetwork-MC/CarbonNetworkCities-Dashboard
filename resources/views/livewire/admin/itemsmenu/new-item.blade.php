@@ -13,32 +13,32 @@
             ],
             [
                 'url'   => route('admin.itemsmenu.item.new'),
-                'label' => __('admin.buttons.item_create'),
+                'label' => __('admin.titles.itemsmenu.create_item'),
             ]
         ]" />
     </x-slot>
 
     <x-containers.main>
         <h1 class="text-xl font-semibold dark:text-white mb-4">
-            {{ __('admin.buttons.item_create') }}
+            {{ __('admin.titles.itemsmenu.create_item') }}
         </h1>
 
         <div class="mt-6">
             <div class="grid grid-cols-4 gap-x-6">
                 {{-- Internal ID --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.internal_id') }}" wire:model="internalId" required />
+                    <x-forms.text-input label="{{ __('admin.labels.itemsmenu.internal_id') }}" wire:model="internalId" required />
                 </div>
                 {{-- Icon name --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.item_name') }}" wire:model="name" required />
+                    <x-forms.text-input label="{{ __('admin.labels.itemsmenu.item_name') }}" wire:model="name" required />
                 </div>
             </div>
 
             <div class="grid grid-cols-4 gap-x-6 mt-4">
                 {{-- Item name --}}
                 <div class="col-span-1">
-                    <x-forms.select id="categorySelect" wire:model.live="categoryId" label="{{ __('admin.labels.category') }}">
+                    <x-forms.select id="categorySelect" wire:model.live="categoryId" label="{{ __('admin.labels.itemsmenu.category') }}">
                         <option value="">{{ __('general.placeholders.select_option') }}</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -47,28 +47,28 @@
                 </div>
                 {{-- Icon Material --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.icon_material') }}" wire:model="iconMaterial" required />
+                    <x-forms.text-input label="{{ __('admin.labels.itemsmenu.icon_material') }}" wire:model="iconMaterial" required />
                 </div>
             </div>
 
             <div class="grid grid-cols-4 gap-x-6 mt-4">
                 {{-- Display name --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.display_name') }}" wire:model="displayName" required/>
+                    <x-forms.text-input label="{{ __('admin.labels.itemsmenu.display_name') }}" wire:model="displayName" required/>
                 </div>
             </div>
 
             <div class="grid grid-cols-4 gap-x-6 mt-4">
                 {{-- Lore --}}
                 <div class="col-span-2">
-                    <x-forms.label>{{ __('admin.labels.lore') }}</x-forms.label>
+                    <x-forms.label>Lore</x-forms.label>
                 
                     <div class="space-y-2 mt-2">
                         @foreach ($lore as $index => $line)
                             <div class="flex items-center gap-2 w-full">
                                 <x-forms.text-input 
                                     wire:model="lore.{{ $index }}" 
-                                    :label="__('admin.labels.lore_line', ['number' => $index + 1])" 
+                                    :label="__('admin.labels.itemsmenu.lore_line', ['number' => $index + 1])" 
                                     inline
                                 />
 
@@ -86,7 +86,7 @@
                     </div>
 
                     <x-buttons.secondary-button class="mt-2" wire:click="addLoreLine">
-                        + {{ __('admin.buttons.add_lore_line') }}
+                        + {{ __('admin.buttons.itemsmenu.add_lore_line') }}
                     </x-buttons.secondary-button>
                 </div>
             </div>
@@ -97,12 +97,12 @@
                     {{-- Shelf life --}}
                     <div class="col-span-1">
                         {{-- TODO: change to number input --}}
-                        <x-forms.text-input label="{{ __('admin.labels.shelf_life') }}" wire:model="shelfLife" />
+                        <x-forms.text-input label="{{ __('admin.labels.itemsmenu.shelf_life') }}" wire:model="shelfLife" />
                     </div>
 
                     {{-- Expired prefix --}}
                     <div class="col-span-1">
-                        <x-forms.select id="expiredPrefix" wire:model.live="expiredPrefix" label="{{ __('admin.labels.expired_prefix') }}">
+                        <x-forms.select id="expiredPrefix" wire:model.live="expiredPrefix" label="{{ __('admin.labels.itemsmenu.expired_prefix') }}">
                             <option value="">{{ __('general.placeholders.select_option') }}</option>
                             @foreach($expiredPrefixes as $prefix)
                                 <option value="{{ $prefix }}">{{ $prefix }}</option>

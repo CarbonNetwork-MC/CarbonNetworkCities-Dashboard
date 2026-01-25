@@ -13,25 +13,25 @@
             ],
             [
                 'url'   => route('admin.itemsmenu.category.edit', ['id' => $category->id]),
-                'label' => __('admin.buttons.category_edit'),
+                'label' => __('admin.titles.itemsmenu.edit_category'),
             ]
         ]" />
     </x-slot>
 
     <x-containers.main>
         <h1 class="text-xl font-semibold dark:text-white mb-4">
-            {{ __('admin.buttons.category_edit') }}
+            {{ __('admin.titles.itemsmenu.edit_category') }}
         </h1>
 
         <div class="mt-6">
             <div class="grid grid-cols-4 gap-x-6">
                 {{-- Category name --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.category_name') }}" wire:model="name" required />
+                    <x-forms.text-input label="{{ __('admin.labels.itemsmenu.category_name') }}" wire:model="name" required />
                 </div>
                 {{-- Icon Material --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.icon_material') }}" wire:model="iconMaterial" required />
+                    <x-forms.text-input label="{{ __('admin.labels.itemsmenu.icon_material') }}" wire:model="iconMaterial" required />
                 </div>
             </div>
             

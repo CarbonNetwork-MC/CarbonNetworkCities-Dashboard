@@ -102,10 +102,10 @@ class EditItem extends Component
             $this->item->material = $item['material'];
             $this->item->data = $item['data'];
             $this->item->save();
-            return Toaster::error(__('admin.toast.reload_items_api_error'));
+            return Toaster::error(__('admin.toast.itemsmenu.reload_items_api_error'));
         }
 
-        return redirect()->route('admin.itemsmenu.render')->success(__('admin.toast.item_updated'));
+        return redirect()->route('admin.itemsmenu.render')->success(__('admin.toast.itemsmenu.item_updated'));
     }
 
     public function render()
