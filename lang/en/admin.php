@@ -103,6 +103,7 @@ return [
             'no_permissions_assigned' => 'No permissions assigned.',
             'languages' => 'Languages',
             'select_language' => 'Select Language',
+            'selected_language' => 'Selected Language',
         ],
     ],
 
@@ -180,6 +181,10 @@ return [
 
         'users' => [
             'delete_confirmation' => 'Are you sure you want to delete the user <b>:name</b>? This action cannot be undone.',
+            'delete_permission_confirmation' => 'Are you sure you want to remove the permission <b>:permission</b> from this user?',
+            'delete_role_confirmation' => 'Are you sure you want to remove the role <b>:role</b> from this user?',
+            'no_roles_assigned' => 'No roles assigned to this user.',
+            'no_permissions_assigned' => 'No permissions assigned to this user.',
             'unlink_confirmation' => 'Are you sure you want to unlink this user\'s account? This will reset their onboarding status, onboarding step and remove their account link.',
             'users_no_records' => 'No users found.',
         ],
@@ -235,6 +240,10 @@ return [
             'account_unlink_missing_player_error' => 'Missing player UUID.',
             'account_unlinked' => 'User account unlinked successfully.',
             'deleted' => 'User deleted successfully.',
+            'permission_assigned' => 'Permission assigned to user successfully.',
+            'permission_removed' => 'Permission removed from user successfully.',
+            'role_assigned' => 'Role assigned to user successfully.',
+            'role_removed' => 'Role removed from user successfully.',
             'updated' => 'User updated successfully.',
         ],
     ],
