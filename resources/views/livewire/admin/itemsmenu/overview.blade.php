@@ -17,11 +17,11 @@
     {{-- Categories --}}
     <x-containers.main>
         <div class="flex justify-between">
-            <h1 class="text-xl font-semibold dark:text-white mb-4">{{ __('admin.titles.categories_overview') }}</h1>
+            <h1 class="text-xl font-semibold dark:text-white mb-4">{{ __('admin.titles.itemsmenu.categories_overview') }}</h1>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchCategory" wire:model.live="searchCategory" class="w-full" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.itemsmenu.category.new') }}">
-                    {{ __('admin.buttons.category_create') }}
+                    {{ __('admin.buttons.itemsmenu.create_category') }}
                 </x-buttons.primary-button>
             </div>
         </div>
@@ -30,11 +30,11 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.category_name') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.icon_material') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.items_amount') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.player_username') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.user_name') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.category_name') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.icon_material') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.items_amount') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.player_username') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.user_name') }}</th>
                         <th></th>
                     </tr>
                 </x-slot>
@@ -54,7 +54,7 @@
                     @empty
                         <tr>
                             <td colspan="6" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                                {{ __('admin.messages.categories_no_records') }}
+                                {{ __('admin.messages.itemsmenu.categories_no_records') }}
                             </td>
                         </tr>
                     @endforelse
@@ -69,11 +69,11 @@
     {{-- Items --}}
     <x-containers.main class="mt-4">
         <div class="flex justify-between">
-            <h1 class="text-xl font-semibold dark:text-white mb-4">{{ __('admin.titles.items_overview') }}</h1>
+            <h1 class="text-xl font-semibold dark:text-white mb-4">{{ __('admin.titles.itemsmenu.items_overview') }}</h1>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchItem" wire:model.live="searchItem" class="w-full" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.itemsmenu.item.new') }}">
-                    {{ __('admin.buttons.item_create') }}
+                    {{ __('admin.buttons.itemsmenu.create_item') }}
                 </x-buttons.primary-button>
             </div>
         </div>
@@ -82,12 +82,13 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.internal_id') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.item_name') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.icon_material') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.category') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.player_username') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.user_name') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.internal_id') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.item_name') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.icon_material') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.category') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">Data</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.player_username') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.user_name') }}</th>
                         <th></th>
                     </tr>
                 </x-slot>
@@ -98,6 +99,12 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $item->name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $item->material }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $item->category->name }}</td>
+                            <td 
+                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white"
+                                title="{{ $item->data ? json_encode($item->data, JSON_UNESCAPED_UNICODE) : '' }}"
+                            >
+                                {{ $item->data ? Str::limit(json_encode($item->data, JSON_UNESCAPED_UNICODE), 30, '...') : '' }}
+                            </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $item->player->username ?? null }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $item->user->name ?? null }}</td>
                             <td class="px-6 py-4 flex justify-end gap-x-4 whitespace-nowrap text-right text-sm font-medium">
@@ -108,7 +115,7 @@
                     @empty
                         <tr>
                             <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                                {{ __('admin.messages.items_no_records') }}
+                                {{ __('admin.messages.itemsmenu.items_no_records') }}
                             </td>
                         </tr>
                     @endforelse
@@ -122,16 +129,18 @@
 
     {{-- Delete Category Modal --}}
     <x-modals.modal wire:model="deleteCategoryModal">
-        <x-slot name="title">{{ __('admin.titles.category_delete') }}</x-slot>
+        <x-slot name="title">{{ __('admin.titles.itemsmenu.delete_category') }}</x-slot>
         <x-slot name="content">
-            <p class="mb-2">{!! __('admin.messages.categories_modal_delete_confirmation', ['name' => $selectedCategory ? $selectedCategory->name : '']) !!}</p>
-            @if ($selectedCategory && $selectedCategory->items->count() > 0)               
-                <x-forms.select id="categorySelect" wire:model="categoryId" label="{{ __('admin.labels.change_category') }}">
+            @if ($selectedCategory && $selectedCategory->items->count() > 0)
+                <p class="mb-2">{!! __('admin.messages.itemsmenu.category_delete_confirmation_with_items', ['name' => $selectedCategory ? $selectedCategory->name : '']) !!}</p>
+                <x-forms.select id="categorySelect" wire:model="categoryId" label="{{ __('admin.labels.itemsmenu.change_category') }}">
                     <option value="">{{ __('general.placeholders.select_option') }}</option>
                     @foreach($remainingCategories as $category)
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </x-forms.select>
+            @else
+                <p class="mb-2">{!! __('admin.messages.itemsmenu.category_delete_confirmation_without_items', ['name' => $selectedCategory ? $selectedCategory->name : '']) !!}</p>
             @endif
         </x-slot>
         <x-slot name="footer">
@@ -146,9 +155,9 @@
 
     {{-- Delete Item Modal --}}
     <x-modals.modal wire:model="deleteItemModal">
-        <x-slot name="title">{{ __('admin.titles.item_delete') }}</x-slot>
+        <x-slot name="title">{{ __('admin.titles.itemsmenu.delete_item') }}</x-slot>
         <x-slot name="content">
-            <p>{!! __('admin.messages.items_modal_delete_confirmation', ['name' => $selectedItem ? $selectedItem->name : '']) !!}</p>
+            <p>{!! __('admin.messages.itemsmenu.item_delete_confirmation', ['name' => $selectedItem ? $selectedItem->name : '']) !!}</p>
         </x-slot>
         <x-slot name="footer">
             <button type="button" @click="$dispatch('close')" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 cursor-pointer">

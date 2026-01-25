@@ -83,7 +83,7 @@ class Overview extends Component
                 Item::insert($oldItems->toArray());
             }
 
-            return Toaster::error(__('admin.toast.reload_items_api_error'));
+            return Toaster::error(__('admin.toast.itemsmenu.reload_items_api_error'));
         }
 
         $this->reset([
@@ -91,7 +91,7 @@ class Overview extends Component
             'deleteCategoryModal',
         ]);
 
-        Toaster::success(__('admin.toast.category_deleted'));
+        Toaster::success(__('admin.toast.itemsmenu.category_deleted'));
     }
 
     // ? Item Methods
@@ -115,7 +115,7 @@ class Overview extends Component
         $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             Item::create($selectedItem->toArray());
-            return Toaster::error(__('admin.toast.reload_items_api_error'));
+            return Toaster::error(__('admin.toast.itemsmenu.reload_items_api_error'));
         }
 
         $this->reset([
@@ -123,7 +123,7 @@ class Overview extends Component
             'deleteItemModal',
         ]);
 
-        Toaster::success(__('admin.toast.item_deleted'));
+        Toaster::success(__('admin.toast.itemsmenu.item_deleted'));
     }
 
     public function render()
