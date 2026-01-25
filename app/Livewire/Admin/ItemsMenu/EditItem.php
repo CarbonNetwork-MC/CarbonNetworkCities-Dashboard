@@ -96,9 +96,9 @@ class EditItem extends Component
 
         $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
-            $this->item->internal_id = $item['internalId'];
+            $this->item->internal_id = $item['internal_id'];
             $this->item->name = $item['name'];
-            $this->item->category_id = $item['categoryId'];
+            $this->item->category_id = $item['category_id'];
             $this->item->material = $item['material'];
             $this->item->data = $item['data'];
             $this->item->save();
