@@ -3,7 +3,7 @@
         <x-breadcrumbs :items="[
             [
                 'icon' => 'fi fi-rs-house-chimney',
-                'url'  => route('dashboard.render'),
+                'url'  => route('admin.dashboard.render'),
                 'label'=> '',
             ],
             [
