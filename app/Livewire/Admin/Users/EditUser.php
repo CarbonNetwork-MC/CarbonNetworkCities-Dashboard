@@ -23,6 +23,9 @@ class EditUser extends Component
     public $availableRoles;
     public $availablePermissions;
 
+    public $searchRole = '';
+    public $searchPermission = '';
+
     public $selectedRole = null;
     public $selectedPermission = null;
 
@@ -59,6 +62,16 @@ class EditUser extends Component
                 ->where('model_uuid', $this->user->uuid)
                 ->where('model_type', User::class);
         })->get();
+    }
+
+    public function updated($key, $value) {
+        if ($key === 'searchRole') {
+            $this->resetPage('roles');
+        }
+
+        if ($key === 'searchPermission') {
+            $this->resetPage('permissions');
+        }
     }
 
     public function updateUser() {
@@ -157,8 +170,8 @@ class EditUser extends Component
     public function render()
     {
         return view('livewire.admin.users.edit-user', [
-            'userRoles' => $this->user->roles()->paginate($this->rolesPerPage, ['*'], 'roles'),
-            'userPermissions' => $this->user->permissions()->paginate($this->permissionsPerPage, ['*'], 'permissions'),
+            'userRoles' => $this->user->roles()->where('name', 'like', '%' . $this->searchRole . '%')->paginate($this->rolesPerPage, ['*'], 'roles'),
+            'userPermissions' => $this->user->permissions()->where('name', 'like', '%' . $this->searchPermission . '%')->paginate($this->permissionsPerPage, ['*'], 'permissions'),
         ]);
     }
 }
