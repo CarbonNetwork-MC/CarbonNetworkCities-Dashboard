@@ -19,6 +19,8 @@ use App\Livewire\Admin\Dashboard\Dashboard as AdminDashboard;
 use App\Livewire\Admin\Languages\Overview as LanguagesOverview;
 use App\Livewire\Admin\Languages\Edit as EditLanguage;
 use App\Livewire\Admin\Languages\NewLanguage;
+use App\Livewire\Admin\Players\EditPlayer;
+use App\Livewire\Admin\Players\Overview as PlayerOverview;
 use App\Livewire\Admin\RolesPerms\NewRole;
 use App\Livewire\Admin\RolesPerms\EditRole;
 use App\Livewire\Admin\RolesPerms\NewPermission;
@@ -81,6 +83,12 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
         Route::get('/roles/edit/{uuid}', EditRole::class)->name('admin.roles-perms.role.edit');
         Route::get('/permissions/new', NewPermission::class)->name('admin.roles-perms.permission.new');
         Route::get('/permissions/edit/{uuid}', EditPermission::class)->name('admin.roles-perms.permission.edit');
+    });
+
+    // ? Players
+    Route::prefix('players')->group(function() {
+        Route::get('/', PlayerOverview::class)->name('admin.players.render');
+        Route::get('/edit/{uuid}', EditPlayer::class)->name('admin.players.edit');
     });
 
     // ? Languages

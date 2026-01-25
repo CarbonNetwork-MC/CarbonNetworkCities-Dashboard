@@ -13,12 +13,11 @@ return [
 
     // Admin
     'admin' => 'Admin',
-
-    'companies' => 'Companies',
-    'roles_perms' => 'Roles & Permissions',
     'back_to_dashboard' => 'Back to Dashboard',
-
-    'languages' => 'Languages',
-    'users' => 'Users',
+    'companies' => 'Companies',
     'itemsmenu' => 'Items Menu',
+    'languages' => 'Languages',
+    'players' => 'Players',
+    'roles_perms' => 'Roles & Permissions',
+    'users' => 'Users',
 ];

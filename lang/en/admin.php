@@ -35,6 +35,12 @@ return [
             'delete' => 'Delete Permission',
         ],
 
+        'players' => [
+            'overview' => 'Players Overview',
+            'edit' => 'Edit Player',
+            'delete' => 'Delete Player',
+        ],
+
         'roles' => [
             'overview' => 'Roles Overview',
             'edit' => 'Edit Role',
@@ -91,6 +97,17 @@ return [
 
         'permissions' => [
             'name' => 'Permission Name',
+        ],
+
+        'players' => [
+            'uuid' => 'UUID',
+            'username' => 'Username',
+            'level' => 'Level',
+            'nationality' => 'Nationality',
+            'selected_language' => 'Selected Language',
+            'playtime' => 'Playtime',
+            'last_login' => 'Last Login',
+            'last_logout' => 'Last Logout',
         ],
 
         'roles' => [
@@ -170,6 +187,11 @@ return [
         'permissions' => [
             'delete_confirmation' => 'Are you sure you want to delete the permission <b>:name</b>? This action cannot be undone.',
             'permissions_no_records' => 'No permissions found.',
+        ],
+
+        'players' => [
+            'delete_confirmation' => 'Are you sure you want to delete the player <b>:name</b>? This action cannot be undone.',
+            'players_no_records' => 'No players found.',
         ],
 
         'roles' => [

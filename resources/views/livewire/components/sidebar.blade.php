@@ -83,6 +83,14 @@
                     :label="__('sidebar.languages')"
                 />
 
+                {{-- Players --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.players.render')"
+                    :active="request()->routeIs('admin.players.*')"
+                    icon="fi fi-rr-user"
+                    :label="__('sidebar.players')"
+                />
+
                 {{-- Roles & Permissions --}}
                 @if ($user->can('manage_permissions'))
                 <x-sidebar.nav-item
