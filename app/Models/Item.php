@@ -17,6 +17,10 @@ class Item extends Model
         'user_uuid',
     ];
 
+    protected $casts = [
+        'data' => 'array',
+    ];
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(ItemCategory::class, 'category_id', 'id');

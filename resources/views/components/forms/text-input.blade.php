@@ -1,4 +1,4 @@
-@props(['id' => 'text-input', 'label' => '', 'size' => 'md', 'placeholder' => '', 'required' => false, 'disabled' => false])
+@props(['id' => 'text-input', 'label' => '', 'size' => 'md', 'placeholder' => '', 'required' => false, 'disabled' => false, 'inline' => false])
 @php
     $sizeClasses = match($size) {
         'sm' => 'px-2.5 py-2',
@@ -15,19 +15,7 @@
     $hasError = $model && $errors->has($model);
 @endphp
 
-<div class="{{ $wrapperAttributes->get('wrapper:class') }}">
-    {{-- Label --}}
-    @if ($label)
-        <label
-            for="{{ $id }}"
-            class="block mb-2.5 text-sm font-medium text-heading {{ $labelAttributes->get('label:class') }}"
-        >
-            {{ $label }}
-            @if ($required) <span class="text-red-400">*</span> @endif
-        </label>
-    @endif
-
-    {{-- Input --}}
+@if ($inline)
     <input 
         type="text" 
         id="{{ $id }}" 
@@ -35,16 +23,45 @@
         @if($required) required @endif 
         @if($disabled) disabled @endif
         {{ $attributes->class([
-            'block w-full rounded-base text-sm shadow-xs ' . $sizeClasses,
+            'block w-full flex-1 rounded-base text-sm shadow-xs ' . $sizeClasses,
             'bg-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-600',
             $hasError
                 ? 'border border-red-500 focus:ring-red-500 focus:border-red-500'
                 : 'border border-default-medium focus:ring-brand focus:border-brand',
         ]) }}
     />
+@else
+    <div class="{{ $wrapperAttributes->get('wrapper:class') }}">
+        {{-- Label --}}
+        @if ($label)
+            <label
+                for="{{ $id }}"
+                class="block mb-2.5 text-sm font-medium text-heading {{ $labelAttributes->get('label:class') }}"
+            >
+                {{ $label }}
+                @if ($required) <span class="text-red-400">*</span> @endif
+            </label>
+        @endif
 
-    {{-- Error Message --}}
-    @if ($hasError)
-        <p class="mt-1.5 text-sm text-red-500">{{ $errors->first($model) }}</p>
-    @endif
-</div>
+        {{-- Input --}}
+        <input 
+            type="text" 
+            id="{{ $id }}" 
+            placeholder="{{ $placeholder }}" 
+            @if($required) required @endif 
+            @if($disabled) disabled @endif
+            {{ $attributes->class([
+                'block w-full rounded-base text-sm shadow-xs ' . $sizeClasses,
+                'bg-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-600',
+                $hasError
+                    ? 'border border-red-500 focus:ring-red-500 focus:border-red-500'
+                    : 'border border-default-medium focus:ring-brand focus:border-brand',
+            ]) }}
+        />
+
+        {{-- Error Message --}}
+        @if ($hasError)
+            <p class="mt-1.5 text-sm text-red-500">{{ $errors->first($model) }}</p>
+        @endif
+    </div>
+@endif
