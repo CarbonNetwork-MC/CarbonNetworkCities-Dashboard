@@ -4,15 +4,11 @@ namespace App\Livewire\Admin\Companies;
 
 use App\Models\Plot;
 use App\Models\Company;
+use App\Services\PluginAPI\ApiService;
 use Livewire\Component;
-use Masmerise\Toaster\Toaster;
-use Illuminate\Support\Facades\Http;
-use App\Http\Livewire\Concerns\WithInvalidation;
 
 class AddPlot extends Component
-{
-    use WithInvalidation;
-    
+{    
     public $company;
 
     public $plotId;
@@ -21,7 +17,7 @@ class AddPlot extends Component
         $this->company = Company::where('id', $id)->firstOrFail();
     }
 
-    public function addPlot() {
+    public function addPlot(ApiService $apiService) {
         $data = $this->validate([
             'plotId' => ['required', 'string', 'max:255', 'exists:plots,plot_id'],
         ],
@@ -45,20 +41,15 @@ class AddPlot extends Component
         $plot->save();
 
         // 2. Send invalidate request to Velocity
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/invalidate/plot/{$plotId}");
+        [$status, $success] = $apiService->post("api/invalidate/plot/{$plotId}");
 
         // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
+        if ($status !== 202) {
             $this->rollbackPlot($plot, $previousCompanyId);
             return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company_plot_add_failed'));
         }
 
-        $requestId = $response->json('requestId');
-
         // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
-
         if (!$success) {
             $this->rollbackPlot($plot, $previousCompanyId);
             return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company_plot_add_failed'));

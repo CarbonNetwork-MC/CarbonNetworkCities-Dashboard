@@ -4,15 +4,11 @@ namespace App\Livewire\Admin\Companies;
 
 use App\Models\Player;
 use App\Models\Company;
+use App\Services\PluginAPI\ApiService;
 use Livewire\Component;
-use Masmerise\Toaster\Toaster;
-use Illuminate\Support\Facades\Http;
-use App\Http\Livewire\Concerns\WithInvalidation;
 
 class AddEmployee extends Component
-{
-    use WithInvalidation;
-    
+{    
     public $company;
 
     public $roles = [
@@ -34,7 +30,7 @@ class AddEmployee extends Component
         $this->players = Player::whereNotIn('uuid', array_filter(array_merge($employeesUuids, [$ownerUuid])))->get();
     }
 
-    public function addEmployee() {
+    public function addEmployee(ApiService $apiService) {
         $data = $this->validate([
             'playerUuid' => 'required|exists:players,uuid',
             'role' => 'required|in:Employee,Manager',
@@ -52,20 +48,16 @@ class AddEmployee extends Component
         ]);
 
         // 2. Send invalidate request to Velocity
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/invalidate/company/{$this->company->id}");
+        [$status, $success] = $apiService->post("api/invalidate/company/{$this->company->id}");
 
         // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
+        if ($status !== 202) {
             // Rollback
             $this->company->employees()->where('player_uuid', $data['playerUuid'])->delete();
             return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company.employee_assign_failed'));
         }
 
-        $requestId = $response->json('requestId');
-
         // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             // Rollback
             $this->company->employees()->where('player_uuid', $data['playerUuid'])->delete();

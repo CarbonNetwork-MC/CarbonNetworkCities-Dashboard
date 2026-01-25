@@ -5,16 +5,14 @@ namespace App\Livewire\Admin\Companies;
 use App\Models\Plot;
 use App\Models\Player;
 use App\Models\Company;
+use App\Services\PluginAPI\ApiService;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
-use Illuminate\Support\Facades\Http;
-use App\Http\Livewire\Concerns\WithInvalidation;
 
 class EditCompany extends Component
 {
     use WithPagination;
-    use WithInvalidation;
 
     public $company;
     public $companyName;
@@ -76,7 +74,7 @@ class EditCompany extends Component
         }
     }
 
-    public function updateCompany() {
+    public function updateCompany(ApiService $apiService) {
         // Store the current data for rollback in case of failure
         $originalData = [
             'name' => $this->company->name,
@@ -101,20 +99,16 @@ class EditCompany extends Component
         $this->company->save();
 
         // 3. Send invalidate request to Velocity
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/invalidate/company/{$this->company->id}");
+        [$status, $success] = $apiService->post("api/invalidate/company/{$this->company->id}");
 
         // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
+        if ($status !== 202) {
             $this->rollbackCompany($originalData);
             Toaster::error(__('admin.toast.company.update_failed'));
             return;
         }
 
-        $requestId = $response->json('requestId');
-
         // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             $this->rollbackCompany($originalData);
             Toaster::error(__('admin.toast.company.update_failed'));
@@ -131,7 +125,7 @@ class EditCompany extends Component
         $this->removeEmployeeModal = true;
     }
 
-    public function destroyEmployee() {
+    public function destroyEmployee(ApiService $apiService) {
         if (!$this->employeeToRemove) return;
 
         // Store the current employee for rollback in case of failure
@@ -143,20 +137,16 @@ class EditCompany extends Component
         $this->employeeToRemove = null;
 
         // 2. Send invalidate request to Velocity
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/invalidate/company/{$this->company->id}");
+        [$status, $success] = $apiService->post("api/invalidate/company/{$this->company->id}");
 
         // Immediate failure (did not accept request)
-        if ($response->status() !== 202) {
+        if ($status !== 202) {
             $this->rollbackEmployee($employee);
             Toaster::error(__('admin.toast.company.employee_remove_failed'));
             return;
         }
 
-        $requestId = $response->json('requestId');
-
         // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             $this->rollbackEmployee($employee);
             Toaster::error(__('admin.toast.company.employee_remove_failed'));
@@ -173,7 +163,7 @@ class EditCompany extends Component
         $this->removeBankAccountModal = true;
     }
 
-    public function destroyBankAccount() {
+    public function destroyBankAccount(ApiService $apiService) {
         if (!$this->bankAccountToRemove) return;
 
         // Store the current bank account for rollback in case of failure
@@ -185,19 +175,15 @@ class EditCompany extends Component
         $this->bankAccountToRemove = null;
 
         // 2. Send invalidate request to Velocity
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/invalidate/company/{$this->company->id}");
+        [$status, $success] = $apiService->post("api/invalidate/company/{$this->company->id}");
 
         // Immediate failure (did not accept request)
-        if ($response->status() !== 202) {
+        if ($status !== 202) {
             $this->company->bankAccounts()->save($bankAccount);
             return Toaster::error(__('admin.toast.company.bank_account_remove_failed'));
         }
-
-        $requestId = $response->json('requestId');
         
         // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             $this->company->bankAccounts()->save($bankAccount);
             return Toaster::error(__('admin.toast.company.bank_account_remove_failed'));
@@ -213,7 +199,7 @@ class EditCompany extends Component
         $this->removePlotModal = true;
     }
 
-    public function unlinkPlot() {
+    public function unlinkPlot(ApiService $apiService) {
         if (!$this->plotToRemove) return;
 
         // Store the current plot for rollback in case of failure
@@ -230,21 +216,16 @@ class EditCompany extends Component
         $this->plotToRemove = null;
 
         // 2. Send invalidate request to Velocity
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/invalidate/plot/{$plotId}");
+        [$status, $success] = $apiService->post("api/invalidate/plot/{$plotId}");
 
         // Immediate failure (did not accept request)
-        if ($response->status() !== 202) {
+        if ($status !== 202) {
             $this->rollbackPlot($plot, $companyId);
             Toaster::error(__('admin.toast.company.plot_remove_failed'));
             return;
         }
 
-        $requestId = $response->json('requestId');
-
         // 3. Poll for result (short, bounded wait)
-        $success = $this->waitForInvalidationResult($requestId);
-
         if (!$success) {
             $this->rollbackPlot($plot, $companyId);
             Toaster::error(__('admin.toast.company.plot_remove_failed'));
@@ -261,7 +242,7 @@ class EditCompany extends Component
         $this->removePinConsoleModal = true;
     }
 
-    public function destroyPinConsole() {
+    public function destroyPinConsole(ApiService $apiService) {
         if (!$this->pinConsoleToRemove) return;
 
         // Store the current pin console for rollback in case of failure
@@ -273,19 +254,15 @@ class EditCompany extends Component
         $this->pinConsoleToRemove = null;
 
         // 2. Send invalidate request to Velocity
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/invalidate/pin-console/{$pinConsole->id}");
+        [$status, $success] = $apiService->post("api/invalidate/pin-console/{$pinConsole->id}");
 
         // Immediate failure (did not accept request)
-        if ($response->status() !== 202) {
+        if ($status !== 202) {
             $this->rollbackPinConsole($pinConsole);
             return Toaster::error(__('admin.toast.company.pin_console_remove_failed'));
         }
-
-        $requestId = $response->json('requestId');
         
         // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             $this->rollbackPinConsole($pinConsole);
             return Toaster::error(__('admin.toast.company.pin_console_remove_failed'));

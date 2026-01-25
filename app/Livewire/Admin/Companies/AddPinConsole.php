@@ -4,14 +4,11 @@ namespace App\Livewire\Admin\Companies;
 
 use App\Models\Company;
 use App\Models\Country;
+use App\Services\PluginAPI\ApiService;
 use Livewire\Component;
-use Illuminate\Support\Facades\Http;
-use App\Http\Livewire\Concerns\WithInvalidation;
 
 class AddPinConsole extends Component
 {
-    use WithInvalidation;
-
     public $company;
 
     public $countries;
@@ -31,7 +28,7 @@ class AddPinConsole extends Component
         $this->countries = Country::all();
     }
 
-    public function addPinConsole() {
+    public function addPinConsole(ApiService $apiService) {
         $data = $this->validate([
             'companyId' => ['required', 'string', 'max:255'],
             'accountId' => ['required', 'string', 'max:255'],
@@ -58,19 +55,15 @@ class AddPinConsole extends Component
         ]);
 
         // 2. Send invalidate request to Velocity
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/invalidate/pin-console/{$pinConsole->id}");
+        [$status, $success] = $apiService->post("api/invalidate/pin-console/{$pinConsole->id}");
 
         // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
+        if ($status !== 202) {
             $pinConsole->delete();
             return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company.pin_console_add_failed'));
         }
 
-        $requestId = $response->json('requestId');
-
         // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             $pinConsole->delete();
             return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company.pin_console_add_failed'));

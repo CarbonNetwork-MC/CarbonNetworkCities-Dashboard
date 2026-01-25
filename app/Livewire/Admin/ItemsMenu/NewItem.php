@@ -5,14 +5,11 @@ namespace App\Livewire\Admin\ItemsMenu;
 use App\Models\Item;
 use Livewire\Component;
 use App\Models\ItemCategory;
+use App\Services\PluginAPI\ApiService;
 use Masmerise\Toaster\Toaster;
-use Illuminate\Support\Facades\Http;
-use App\Http\Livewire\Concerns\WithInvalidation;
 
 class NewItem extends Component
 {
-    use WithInvalidation;
-
     public $internalId = '';
     public $name = '';
     public $categoryId = null;
@@ -31,7 +28,7 @@ class NewItem extends Component
         }
     }
 
-    public function createItem() {
+    public function createItem(ApiService $apiService) {
         $data = $this->validate([
             'internalId' => ['required', 'string', 'max:100', 'unique:items,internal_id'],
             'name' => ['required', 'string', 'max:100', 'unique:items,name'],
@@ -64,13 +61,9 @@ class NewItem extends Component
             'user_uuid' => auth()->user()->uuid,
             'data' => $itemData,
         ]);
+        
+        [$status, $success] = $apiService->post("api/reload/items");
 
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/reload/items");
-
-        $requestId = $response->json('requestId');
-
-        $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             $newItem->delete();
             return Toaster::error(__('admin.toast.itemsmenu.reload_items_api_error'));

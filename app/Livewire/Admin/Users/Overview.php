@@ -6,14 +6,12 @@ use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
-use Illuminate\Support\Facades\Http;
+use App\Services\PluginAPI\ApiService;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Livewire\Concerns\WithInvalidation;
 
 class Overview extends Component
 {
     use WithPagination;
-    use WithInvalidation;
 
     public $searchUser = '';
     public $userName = '';
@@ -38,19 +36,15 @@ class Overview extends Component
         $this->unlinkModal = true;
     }
 
-    public function unlink() {
+    public function unlink(ApiService $apiService) {
         if (!$this->selectedUser) return;
 
         $selectedUser = $this->selectedUser->load('player', 'accountLink');
 
         $this->selectedUser->accountLink()->delete();
 
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/invalidate/player/{$selectedUser->player->uuid}");
+        [$status, $success] = $apiService->post("api/invalidate/player/{$selectedUser->player->uuid}");
 
-        $requestId = $response->json('requestId');
-            
-        $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             $this->selectedUser->accountLink()->save($selectedUser->accountLink());
             return Toaster::error(__('admin.toast.account_unlink_api_error'));
