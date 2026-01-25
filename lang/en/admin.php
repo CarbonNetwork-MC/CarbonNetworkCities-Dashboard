@@ -126,11 +126,12 @@ return [
             'display_name' => 'Display Name',
             'lore_line' => 'Lore Line :number',
             'shelf_life' => 'Shelf Life (in days)',
-            'expired_prefix' => 'Expired Prefix',
             'items_amount' => 'Items Amount',
             'player_username' => 'Player Username',
             'user_name' => 'User Name',
             'change_category' => 'Change category of items to',
+            'select_category' => 'Select Category',
+            'select_expired_prefix' => 'Select Expired Prefix',
         ]
     ],
 

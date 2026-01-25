@@ -38,12 +38,15 @@
             <div class="grid grid-cols-4 gap-x-6 mt-4">
                 {{-- Item name --}}
                 <div class="col-span-1">
-                    <x-forms.select id="categorySelect" wire:model.live="categoryId" label="{{ __('admin.labels.itemsmenu.category') }}">
-                        <option value="">{{ __('general.placeholders.select_option') }}</option>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
-                    </x-forms.select>
+                    <x-forms.label for="categorySelect" required>
+                        {{ __('admin.labels.itemsmenu.select_category') }}
+                    </x-forms.label>
+                    <livewire:async-select
+                        id="categorySelect"
+                        :options="$categories->map(fn($category) => ['value' => $category->id, 'label' => $category->name])"
+                        wire:model.live="categoryId"
+                        :min-search-length="2"
+                    />
                 </div>
                 {{-- Icon Material --}}
                 <div class="col-span-1">
@@ -102,12 +105,15 @@
 
                     {{-- Expired prefix --}}
                     <div class="col-span-1">
-                        <x-forms.select id="expiredPrefix" wire:model.live="expiredPrefix" label="{{ __('admin.labels.itemsmenu.expired_prefix') }}">
-                            <option value="">{{ __('general.placeholders.select_option') }}</option>
-                            @foreach($expiredPrefixes as $prefix)
-                                <option value="{{ $prefix }}">{{ $prefix }}</option>
-                            @endforeach
-                        </x-forms.select>
+                        <x-forms.label for="expiredPrefix">
+                            {{ __('admin.labels.itemsmenu.select_expired_prefix') }}
+                        </x-forms.label>
+                        <livewire:async-select
+                            id="expiredPrefix"
+                            :options="collect($expiredPrefixes)->map(fn($prefix) => ['value' => $prefix, 'label' => $prefix])"
+                            wire:model="expiredPrefix"
+                            :min-search-length="2"
+                        />
                     </div>
                 @endif
             </div>
