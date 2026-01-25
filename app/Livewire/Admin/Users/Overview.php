@@ -4,7 +4,6 @@ namespace App\Livewire\Admin\Users;
 
 use App\Models\User;
 use Livewire\Component;
-use App\Models\Language;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Facades\Http;
@@ -90,9 +89,8 @@ class Overview extends Component
     {
         return view('livewire.admin.users.overview', [
             'users' => User::where('name', 'like', '%' . $this->searchUser . '%')
-                ->orderBy('created_at', 'desc')
+                ->orderBy('created_at', 'asc')
                 ->paginate(10),
-            'languages' => Language::all(),
         ]);
     }
 }

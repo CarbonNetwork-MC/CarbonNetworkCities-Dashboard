@@ -4,7 +4,7 @@
         <x-breadcrumbs :items="[
             [
                 'icon' => 'fi fi-rs-house-chimney',
-                'url'  => route('dashboard.render'),
+                'url'  => route('admin.dashboard.render'),
                 'label'=> '',
             ],
             [
@@ -13,21 +13,21 @@
             ],
             [
                 'url'   => route('admin.roles-perms.role.edit', ['uuid' => $role->uuid]),
-                'label' => __('admin.titles.role_edit'),
+                'label' => __('admin.titles.roles.edit'),
             ]
         ]" />
     </x-slot>
 
     <x-containers.main>
         <x-containers.title>
-            {{ __('admin.titles.role_edit') }}
+            {{ __('admin.titles.roles.edit') }}
         </x-containers.title>
 
         <div class="mt-6">
             <div class="grid grid-cols-4">
                 {{-- Role name --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.role.name') }}" wire:model="roleName" placeholder="{{ __('admin.placeholders.roles.role_name') }}" required />
+                    <x-forms.text-input label="{{ __('admin.labels.roles.name') }}" wire:model="roleName" placeholder="{{ __('admin.placeholders.roles.role_name') }}" required />
                 </div>
             </div>
 
@@ -43,7 +43,7 @@
     <x-containers.main class="mt-4">
         <div class="flex justify-between">
             <x-containers.title>
-                {{ __('admin.titles.selected_permissions') }}
+                {{ __('admin.titles.roles.selected_permissions') }}
             </x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="search" wire:model.live="search" />
@@ -74,7 +74,7 @@
                     @empty
                         <tr>
                             <x-tables.empty-state colspan="2">
-                                {{ __('admin.messages.permissions.no_permissions_assigned') }}
+                                {{ __('admin.messages.permissions.permissions_no_records') }}
                             </x-tables.empty-state>
                         </tr>
                     @endforelse
@@ -98,7 +98,7 @@
             </div>
         </x-slot>
         <x-slot name="content">
-            <x-forms.select id="permissionSelect" wire:model="selectedPermission" label="{{ __('admin.labels.role.permissions') }}" required>
+            <x-forms.select id="permissionSelect" wire:model="selectedPermission" label="{{ __('admin.labels.roles.permissions') }}" required>
                 <option value="">{{ __('general.placeholders.select_option') }}</option>
                 @foreach($assignablePermissions as $permission)
                     <option value="{{ $permission->uuid }}">{{ $permission->name }}</option>

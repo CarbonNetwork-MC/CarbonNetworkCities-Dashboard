@@ -21,6 +21,7 @@ return [
     // Buttons
     'buttons' => [
         'add' => 'Add',
+        'assign' => 'Assign',
         'cancel' => 'Cancel',
         'close' => 'Close',
         'confirm' => 'Confirm',
