@@ -140,6 +140,8 @@ return [
         'users' => [
             'unlink' => 'Unlink',
             'unlink_account' => 'Unlink Account',
+            'assign_role' => 'Assign Role',
+            'assign_permission' => 'Assign Permission',
         ],
     ],
 
@@ -164,7 +166,7 @@ return [
             'languages_no_records' => 'No languages found.',
         ],
 
-        'permission' => [
+        'permissions' => [
             'delete_confirmation' => 'Are you sure you want to delete the permission <b>:name</b>? This action cannot be undone.',
             'permissions_no_records' => 'No permissions found.',
         ],
