@@ -15,6 +15,7 @@ return [
     'admin' => 'Admin',
 
     'companies' => 'Companies',
+    'countries' => 'Countries',
     'roles_perms' => 'Roles & Permissions',
     'back_to_dashboard' => 'Back to Dashboard',
 

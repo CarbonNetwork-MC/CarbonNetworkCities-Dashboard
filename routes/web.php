@@ -26,6 +26,9 @@ use App\Livewire\Admin\RolesPerms\EditPermission;
 use App\Livewire\Admin\RolesPerms\Overview as RolesPermsOverview;
 use App\Livewire\Admin\Users\EditUser;
 use App\Livewire\Admin\Users\Overview as UserOverview;
+use App\Livewire\Admin\Countries\Overview as CountriesOverview;
+use App\Livewire\Admin\Countries\NewCountry;
+use App\Livewire\Admin\Countries\Edit as EditCountry;
 use Illuminate\Support\Facades\Route;
 
 // ! Guest Routes
@@ -98,4 +101,9 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     Route::get('/categories/edit/{id}', EditCategory::class)->name('admin.itemsmenu.category.edit');
     Route::get('/items/new', NewItem::class)->name('admin.itemsmenu.item.new');
     Route::get('/items/edit/{id}', EditItem::class)->name('admin.itemsmenu.item.edit');
+
+    // ? Countries
+    Route::get('/countries', CountriesOverview::class)->name('admin.countries.render');
+    Route::get('/countries/new', NewCountry::class)->name('admin.countries.new');
+    Route::get('/countries/edit/{id}', EditCountry::class)->name('admin.countries.edit');
 });
