@@ -260,6 +260,7 @@ return [
             'created' => 'Language created successfully.',
             'deleted' => 'Language deleted successfully.',
             'updated' => 'Language updated successfully.',
+            'reload_api_error' => 'There was an error reloading languages via the API. Changes have been reverted.',
         ],
 
         'permissions' => [

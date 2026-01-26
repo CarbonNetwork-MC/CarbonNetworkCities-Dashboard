@@ -42,7 +42,7 @@ class Overview extends Component
 
         if (!$success) {
             Language::create($selectedLanguage->toArray());
-            return Toaster::error(__('admin.toast.reload_languages_api_error'));
+            return Toaster::error(__('admin.toast.languages.reload_api_error'));
         }
 
         $this->reset([
