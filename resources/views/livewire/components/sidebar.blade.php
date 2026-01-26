@@ -67,6 +67,14 @@
                 />
                 @endif
 
+                {{-- Countries --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.countries.render')"
+                    :active="request()->routeIs('admin.countries.*')"
+                    icon="fi fi-rr-flag"
+                    :label="__('sidebar.countries')"
+                />
+
                 {{-- Itemsmenu --}}
                 <x-sidebar.nav-item
                     :href="route('admin.itemsmenu.render')"

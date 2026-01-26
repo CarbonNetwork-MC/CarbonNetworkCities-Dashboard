@@ -60,7 +60,13 @@ return [
             'items_overview' => 'Items Overview',
             'delete_category' => 'Delete Item Category',
             'delete_item' => 'Delete Item',
-        ]
+        ],
+
+        'countries' => [
+            'overview' => 'Countries Overview',
+            'delete' => 'Delete Country',
+            'edit' => 'Edit Country',
+        ],
     ],
 
     // Labels
@@ -132,7 +138,14 @@ return [
             'change_category' => 'Change category of items to',
             'select_category' => 'Select Category',
             'select_expired_prefix' => 'Select Expired Prefix',
-        ]
+        ],
+
+        'countries' => [
+            'name' => 'Country Name',
+            'currency' => 'Currency',
+            'currency_symbol' => 'Currency Symbol',
+            'currency_before_amount' => 'Currency Before Amount',
+        ],
     ],
 
     // Buttons
@@ -177,7 +190,11 @@ return [
             'add_lore_line' => 'Add Lore Line',
             'create_category' => 'Create Category',
             'create_item' => 'Create Item',
-        ]
+        ],
+
+        'countries' => [
+            'create' => 'Create Country',
+        ],
     ],
 
     // Messages
@@ -229,7 +246,12 @@ return [
             'category_delete_confirmation_with_items' => 'Are you sure you want to delete the item category <b>:name</b>? This action cannot be undone. You can choose to move its items to another category below.',
             'category_delete_confirmation_without_items' => 'Are you sure you want to delete the item category <b>:name</b>? This action cannot be undone.',
             'item_delete_confirmation' => 'Are you sure you want to delete the item <b>:name</b>? This action cannot be undone.',
-        ]
+        ],
+        
+        'countries' => [
+            'countries_no_records' => 'No countries found.',
+            'delete_confirmation' => 'Are you sure you want to delete the country <b>:name</b>? This action cannot be undone.',
+        ],
     ],
 
     // Toasts
@@ -298,7 +320,14 @@ return [
             'item_created' => 'Item created successfully.',
             'category_deleted' => 'Item category deleted successfully.',
             'item_deleted' => 'Item deleted successfully.',
-        ]
+        ],
+
+        'countries' => [
+            'reload_countries_api_error' => 'There was an error reloading countries via the API. Changes have been reverted.',
+            'updated' => 'Country updated successfully.',
+            'deleted' => 'Country deleted successfully.',
+            'created' => 'Country created successfully.',
+        ],
     ],
 
     // Placeholders
