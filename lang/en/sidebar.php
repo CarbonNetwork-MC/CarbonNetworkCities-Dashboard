@@ -22,4 +22,5 @@ return [
     'languages' => 'Languages',
     'users' => 'Users',
     'itemsmenu' => 'Items Menu',
+    'city_regions' => 'City Regions',
 ];

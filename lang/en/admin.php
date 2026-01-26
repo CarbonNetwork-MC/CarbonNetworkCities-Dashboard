@@ -67,6 +67,12 @@ return [
             'delete' => 'Delete Country',
             'edit' => 'Edit Country',
         ],
+
+        'city_regions' => [
+            'edit' => 'Edit City Region',
+            'overview' => 'City Regions Overview',
+            'delete' => 'Delete City Region',
+        ]
     ],
 
     // Labels
@@ -146,6 +152,14 @@ return [
             'currency_symbol' => 'Currency Symbol',
             'currency_before_amount' => 'Currency Before Amount',
         ],
+
+        'city_regions' => [
+            'internal_name' => 'Internal Name',
+            'display_name' => 'Display Name',
+            'country' => 'Country',
+            'city' => 'City',
+            'world_id' => 'World ID',
+        ]
     ],
 
     // Buttons
@@ -194,6 +208,10 @@ return [
 
         'countries' => [
             'create' => 'Create Country',
+        ],
+
+        'city_regions' => [
+            'create' => 'Create City Region',
         ],
     ],
 
@@ -251,6 +269,11 @@ return [
         'countries' => [
             'countries_no_records' => 'No countries found.',
             'delete_confirmation' => 'Are you sure you want to delete the country <b>:name</b>? This action cannot be undone.',
+        ],
+
+        'city_regions' => [
+            'city_regions_no_records' => 'No city regions found.',
+            'delete_confirmation' => 'Are you sure you want to delete the city region <b>:name</b>? This action cannot be undone.',
         ],
     ],
 
@@ -327,6 +350,13 @@ return [
             'updated' => 'Country updated successfully.',
             'deleted' => 'Country deleted successfully.',
             'created' => 'Country created successfully.',
+        ],
+
+        'city_regions' => [
+            'reload_regions_api_error' => 'There was an error reloading city regions via the API. Changes have been reverted.',
+            'updated' => 'City region updated successfully.',
+            'created' => 'City region created successfully.',
+            'deleted' => 'City region deleted successfully.',
         ],
     ],
 

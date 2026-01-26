@@ -57,6 +57,14 @@
                     :label="__('sidebar.dashboard')"
                 />
 
+                {{-- City Regions --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.city-regions.render')"
+                    :active="request()->routeIs('admin.city-regions.*')"
+                    icon="fi fi-rr-region-pin-alt"
+                    :label="__('sidebar.city_regions')"
+                />
+
                 {{-- Companies --}}
                 @if ($user->can('manage_companies'))
                 <x-sidebar.nav-item
