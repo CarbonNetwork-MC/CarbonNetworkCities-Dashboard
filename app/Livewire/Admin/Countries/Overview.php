@@ -42,12 +42,12 @@ class Overview extends Component
 
         if ($status !== 202) {
             Country::create($selectedCountry->toArray());
-            return Toaster::error(__('admin.toast.reload_countries_api_error'));
+            return Toaster::error(__('admin.toast.countries.reload_countries_api_error'));
         }
 
         if (!$success) {
             Country::create($selectedCountry->toArray());
-            return Toaster::error(__('admin.toast.reload_countries_api_error'));
+            return Toaster::error(__('admin.toast.countries.reload_countries_api_error'));
         }
 
         $this->reset([

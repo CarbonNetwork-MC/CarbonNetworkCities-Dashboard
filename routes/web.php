@@ -29,6 +29,9 @@ use App\Livewire\Admin\Users\Overview as UserOverview;
 use App\Livewire\Admin\Countries\Overview as CountriesOverview;
 use App\Livewire\Admin\Countries\NewCountry;
 use App\Livewire\Admin\Countries\Edit as EditCountry;
+use App\Livewire\Admin\CityRegions\Overview as CityRegionsOverview;
+use App\Livewire\Admin\CityRegions\NewCityRegion;
+use App\Livewire\Admin\CityRegions\Edit as EditCityRegion;
 use Illuminate\Support\Facades\Route;
 
 // ! Guest Routes
@@ -106,4 +109,9 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     Route::get('/countries', CountriesOverview::class)->name('admin.countries.render');
     Route::get('/countries/new', NewCountry::class)->name('admin.countries.new');
     Route::get('/countries/edit/{id}', EditCountry::class)->name('admin.countries.edit');
+
+    // ? Countries
+    Route::get('/city-regions', CityRegionsOverview::class)->name('admin.city-regions.render');
+    Route::get('/city-regions/new', NewCityRegion::class)->name('admin.city-regions.new');
+    Route::get('/city-regions/edit/{id}', EditCityRegion::class)->name('admin.city-regions.edit');
 });
