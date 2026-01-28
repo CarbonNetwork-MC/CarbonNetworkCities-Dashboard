@@ -29,17 +29,21 @@
 
         <div class="mt-6">
             <div class="grid grid-cols-4 gap-x-4 gap-y-6">
-                {{-- Company ID --}}
-                <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.company.company_id') }}" wire:model="companyId" required />
-                </div>
-
                 {{-- Account ID --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.company.bank_account_number') }}" wire:model="accountId" required />
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2.5">
+                        {{ __('admin.labels.company.bank_account_number') }}
+                    </label>
+                    <livewire:async-select
+                        id="accountSelect"
+                        wire:key="accounts-{{ $company->id }}"
+                        :options="$accounts->map(fn($account) => ['label' => $account->id, 'value' => $account->id])"
+                        wire:model="accountId"
+                        :min-search-length="2"
+                    />
                 </div>
 
-                <div class="col-span-2"></div>
+                <div class="col-span-3"></div>
 
                 {{-- X --}}
                 <div class="col-span-1">
@@ -71,7 +75,7 @@
                     <livewire:async-select
                         id="country"
                         :options="$countries->map(fn($country) => ['value' => $country->id, 'label' => $country->name])"
-                        wire:model="country"
+                        wire:model="countryId"
                         :min-search-length="2"
                     />
                 </div>

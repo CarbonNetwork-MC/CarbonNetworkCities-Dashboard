@@ -315,6 +315,9 @@ return [
             'bank_account_add_failed' => 'Failed to add bank account to company. Please try again.',
             'employee_assign_failed' => 'Failed to assign employee to company. Please try again.',
             'plot_remove_failed' => 'Failed to remove plot from company. Please try again.',
+
+            'pin_console_added' => 'PIN console successfully added to company.',
+            'pin_console_removed' => 'PIN console successfully removed from company.',
         ],
 
         'languages' => [
