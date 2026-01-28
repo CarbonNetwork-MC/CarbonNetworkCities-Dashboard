@@ -23,4 +23,5 @@ return [
     'users' => 'Users',
     'itemsmenu' => 'Items Menu',
     'city_regions' => 'City Regions',
+    'pin_consoles' => 'PIN Consoles',
 ];

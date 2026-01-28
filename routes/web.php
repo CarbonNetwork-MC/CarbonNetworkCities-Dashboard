@@ -32,6 +32,9 @@ use App\Livewire\Admin\Countries\Edit as EditCountry;
 use App\Livewire\Admin\CityRegions\Overview as CityRegionsOverview;
 use App\Livewire\Admin\CityRegions\NewCityRegion;
 use App\Livewire\Admin\CityRegions\Edit as EditCityRegion;
+use App\Livewire\Admin\PinConsoles\Overview as PinConsolesOverview;
+use App\Livewire\Admin\PinConsoles\NewPinConsole;
+use App\Livewire\Admin\PinConsoles\Edit as EditPinConsole;
 use Illuminate\Support\Facades\Route;
 
 // ! Guest Routes
@@ -114,4 +117,9 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     Route::get('/city-regions', CityRegionsOverview::class)->name('admin.city-regions.render');
     Route::get('/city-regions/new', NewCityRegion::class)->name('admin.city-regions.new');
     Route::get('/city-regions/edit/{id}', EditCityRegion::class)->name('admin.city-regions.edit');
+
+    // ? PIN Consoles
+    Route::get('/pin-consoles', PinConsolesOverview::class)->name('admin.pin-consoles.render');
+    Route::get('/pin-consoles/new', NewPinConsole::class)->name('admin.pin-consoles.new');
+    Route::get('/pin-consoles/edit/{id}', EditPinConsole::class)->name('admin.pin-consoles.edit');
 });

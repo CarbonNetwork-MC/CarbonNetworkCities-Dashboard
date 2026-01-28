@@ -72,7 +72,14 @@ return [
             'edit' => 'Edit City Region',
             'overview' => 'City Regions Overview',
             'delete' => 'Delete City Region',
-        ]
+        ],
+
+        'pin_consoles' => [
+            'overview' => 'PIN Consoles Overview',
+            'delete' => 'Delete PIN Console',
+            'create' => 'Create PIN Console',
+            'edit' => 'Edit PIN Console',
+        ],
     ],
 
     // Labels
@@ -159,7 +166,11 @@ return [
             'country' => 'Country',
             'city' => 'City',
             'world_id' => 'World ID',
-        ]
+        ],
+
+        'pin_consoles' => [
+            'company' => 'Company',
+        ] 
     ],
 
     // Buttons
@@ -275,6 +286,11 @@ return [
             'city_regions_no_records' => 'No city regions found.',
             'delete_confirmation' => 'Are you sure you want to delete the city region <b>:name</b>? This action cannot be undone.',
         ],
+
+        'pin_consoles' => [
+            'pin_consoles_no_records' => 'No pin consoles found.',
+            'delete_confirmation' => 'Are you sure you want to delete this pin console? This action cannot be undone.',
+        ],
     ],
 
     // Toasts
@@ -358,6 +374,15 @@ return [
             'created' => 'City region created successfully.',
             'deleted' => 'City region deleted successfully.',
         ],
+
+        'pin_consoles' => [
+            'invalidate_pin_console_api_error' => 'Failed to invalidate PIN console via API. Changes have been reverted.',
+            'pin_console_update_failed' => 'Failed to update PIN console. Please try again.',
+            'pin_console_create_failed' => 'Failed to create PIN console. Please try again.',
+            'updated' => 'PIN console updated successfully.',
+            'created' => 'PIN console created successfully.',
+            'deleted' => 'PIN console deleted successfully.',
+        ]
     ],
 
     // Placeholders
