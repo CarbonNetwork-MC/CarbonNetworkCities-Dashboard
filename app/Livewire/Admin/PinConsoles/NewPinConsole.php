@@ -87,9 +87,6 @@ class NewPinConsole extends Component
 
     public function render()
     {
-        if ($this->getErrorBag()->isNotEmpty()) {
-            logger()->debug('Validation errors', $this->getErrorBag()->toArray());
-        }
         return view('livewire.admin.pin-consoles.new-pin-console');
     }
 }
