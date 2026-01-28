@@ -8,27 +8,35 @@
                 'label'=> '',
             ],
             [
-                'url'   => route('admin.companies.render'),
-                'label' => __('sidebar.companies'),
+                'url'   => route('admin.pin-consoles.render'),
+                'label' => __('sidebar.pin_consoles'),
             ],
             [
-                'url'   => route('admin.companies.edit', ['id' => $company->id]),
-                'label' => __('admin.titles.company.edit'),
-            ],
-            [
-                'url' => route('admin.companies.add-bank-account', ['id' => $company->id]),
-                'label' => __('admin.titles.company.add_bank_account'),
+                'url'   => route('admin.pin-consoles.new'),
+                'label' => __('admin.titles.pin_consoles.create'),
             ]
         ]" />
     </x-slot>
 
     <x-containers.main>
         <x-containers.title>
-            {{ __('admin.titles.company.add_bank_account') }}
+            {{ __('admin.titles.pin_consoles.create') }}
         </x-containers.title>
 
         <div class="mt-6">
             <div class="grid grid-cols-4 gap-x-4 gap-y-6">
+                {{-- Company ID --}}
+                <div class="col-span-1">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2.5">
+                        {{ __('admin.labels.company.company_id') }}
+                    </label>
+                    <livewire:async-select
+                        :options="$companies->map(fn($company) => ['label' => $company->name, 'value' => $company->id])"
+                        wire:model.live="companyId"
+                        :min-search-length="2"
+                    />
+                </div>
+
                 {{-- Account ID --}}
                 <div class="col-span-1">
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2.5">
@@ -36,14 +44,14 @@
                     </label>
                     <livewire:async-select
                         id="accountSelect"
-                        wire:key="accounts-{{ $company->id }}"
+                        wire:key="accounts-{{ $companyId }}"
                         :options="$accounts->map(fn($account) => ['label' => $account->id, 'value' => $account->id])"
                         wire:model="accountId"
                         :min-search-length="2"
                     />
                 </div>
 
-                <div class="col-span-3"></div>
+                <div class="col-span-2"></div>
 
                 {{-- X --}}
                 <div class="col-span-1">
@@ -100,8 +108,8 @@
 
             <div class="flex justify-end items-center gap-x-4">
                 <x-forms.required-fields />
-                <x-buttons.primary-button wire:click="addPinConsole">
-                    {{ __('general.buttons.add') }}
+                <x-buttons.primary-button wire:click="createPinConsole">
+                    {{ __('general.buttons.create') }}
                 </x-buttons.primary-button>
             </div>
         </div>

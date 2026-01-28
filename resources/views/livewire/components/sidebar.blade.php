@@ -99,6 +99,14 @@
                     :label="__('sidebar.languages')"
                 />
 
+                {{-- PIN Consoles --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.pin-consoles.render')"
+                    :active="request()->routeIs('admin.pin-consoles.*')"
+                    icon="fi fi-rr-payment-pos"
+                    :label="__('sidebar.pin_consoles')"
+                />
+
                 {{-- Roles & Permissions --}}
                 @if ($user->can('manage_permissions'))
                 <x-sidebar.nav-item

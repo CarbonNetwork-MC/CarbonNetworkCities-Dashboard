@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin\Companies;
+namespace App\Livewire\Admin\PinConsoles;
 
 use App\Models\Company;
 use App\Models\Country;
@@ -8,13 +8,15 @@ use Livewire\Component;
 use App\Models\CompanyBankaccount;
 use App\Services\PluginAPI\ApiService;
 
-class AddPinConsole extends Component
+class NewPinConsole extends Component
 {
-    public $company;
-
+    public $companies;
     public $accounts;
     public $countries;
-    
+
+    public $company;
+
+    public $companyId;
     public $accountId;
     public $x;
     public $y;
@@ -24,18 +26,27 @@ class AddPinConsole extends Component
     public $worldId;
     public $isActive = true;
 
-    public function mount($id) {
-        $this->company = Company::where('id', $id)->firstOrFail();
+    public function mount() {
+        $this->companies = Company::all();
         $this->countries = Country::all();
-        $this->accounts = CompanyBankaccount::where('company_id', $this->company->id)->get();
+        $this->accounts = collect();
     }
 
-    public function addPinConsole(ApiService $apiService) {
+    public function updated($key, $value) {
+        if ($key === 'companyId') {
+            $this->company = Company::find($value);
+            $this->accounts = CompanyBankaccount::where('company_id', $value)->get();
+            $this->accountId = null;
+        }
+    }
+
+    public function createPinConsole(ApiService $apiService) {
         $data = $this->validate([
+            'companyId' => ['required', 'integer'],
             'accountId' => ['required', 'integer'],
-            'x' => ['required', 'numeric'],
-            'y' => ['required', 'numeric'],
-            'z' => ['required', 'numeric'],
+            'x' => ['required', 'integer'],
+            'y' => ['required', 'integer'],
+            'z' => ['required', 'integer'],
             'city' => ['required', 'string', 'max:255'],
             'countryId' => ['required', 'integer', 'exists:countries,id'],
             'worldId' => ['required', 'string', 'max:50'],
@@ -44,7 +55,7 @@ class AddPinConsole extends Component
 
         // 1. Create PIN Console
         $pinConsole = $this->company->pinConsoles()->create([
-            'company_id' => $this->company->id,
+            'company_id' => $data['companyId'],
             'account_id' => $data['accountId'],
             'x' => $data['x'],
             'y' => $data['y'],
@@ -61,21 +72,21 @@ class AddPinConsole extends Component
         // Immediate failure (request not accepted)
         if ($status !== 202) {
             $pinConsole->delete();
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company.pin_console_add_failed'));
+            return redirect()->route('admin.pin-consoles.new')->error(__('admin.toast.pin_consoles.pin_console_create_failed'));
         }
 
         // 3. Poll for result
         if (!$success) {
             $pinConsole->delete();
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company.pin_console_add_failed'));
+            return redirect()->route('admin.pin-consoles.new')->error(__('admin.toast.pin_consoles.pin_console_create_failed'));
         }
 
         // 4. Success
-        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toast.company.pin_console_added'));
+        return redirect()->route('admin.pin-consoles.render')->success(__('admin.toast.pin_consoles.created'));
     }
 
     public function render()
     {
-        return view('livewire.admin.companies.add-pin-console');
+        return view('livewire.admin.pin-consoles.new-pin-console');
     }
 }

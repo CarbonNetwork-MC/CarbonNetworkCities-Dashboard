@@ -236,7 +236,7 @@ class EditCompany extends Component
         Toaster::success(__('admin.toast.company.plot_removed'));
     }
 
-    // Delete Pin Console (relation)
+    // Delete PIN Console (relation)
     public function removePinConsole($id) {
         $this->pinConsoleToRemove = $this->company->pinConsoles()->where('id', $id)->first();
         $this->removePinConsoleModal = true;

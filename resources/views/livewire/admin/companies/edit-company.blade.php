@@ -267,7 +267,7 @@
         </div>
     </x-containers.main>
 
-    {{-- Pin Consoles --}}
+    {{-- PIN Consoles --}}
     <x-containers.main class="mt-4">
         <div class="flex justify-between">
             <x-containers.title>
@@ -288,6 +288,8 @@
                         <x-tables.table-header>{{ __('admin.labels.company.pin_console_id') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.company.pin_console_account') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.company.pin_console_location') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.city_regions.city') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.city_regions.country') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.company.world_id') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.company.pin_console_is_active') }}</x-tables.table-header>
                         <x-tables.table-header></x-tables.table-header>
@@ -299,12 +301,14 @@
                             <x-tables.table-data>{{ $pinConsole->id }}</x-tables.table-data>
                             <x-tables.table-data>{{ $pinConsole->account_id }}</x-tables.table-data>
                             <x-tables.table-data>[{{ $pinConsole->x }}, {{ $pinConsole->y }}, {{ $pinConsole->z }}]</x-tables.table-data>
+                            <x-tables.table-data>{{ $pinConsole->city }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $pinConsole->country->name }}</x-tables.table-data>
                             <x-tables.table-data>{{ $pinConsole->world_id }}</x-tables.table-data>
                             <x-tables.table-data>
                                 @if ($pinConsole->is_active)
-                                    <span class="bg-green-100 text-green-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full">{{ __('general.true') }}</span>
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full">{{ __('general.yes') }}</span>
                                 @else
-                                    <span class="bg-red-100 text-red-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full">{{ __('general.false') }}</span>
+                                    <span class="bg-red-100 text-red-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full">{{ __('general.no') }}</span>
                                 @endif
                             </x-tables.table-data>
                             <x-tables.table-actions>
@@ -322,15 +326,22 @@
                     @endforelse
                 </x-slot>
                 <x-slot name="pagination">
-
+                    @if ($pinConsoles->hasPages())
+                        <div class="w-full flex items-center gap-x-4 mt-4">
+                            {{ $pinConsoles->links() }}
+                            <x-tables.per-page-select wire:model.live="pinConsolesPerPage">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </x-tables.per-page-select>
+                        </div>
+                    @endif
                 </x-slot>
             </x-tables.table-striped>
         </div>
     </x-containers.main>
-
-    {{-- Assign Employee Modal --}}
-
-    {{-- Assign Plot Modal --}}
     
     {{-- Remove Employee Modal --}}
     <x-modals.modal wire:model="removeEmployeeModal">
@@ -398,7 +409,7 @@
         </x-slot>
     </x-modals.modal>
 
-    {{-- Remove Pin Console Modal --}}
+    {{-- Remove PIN Console Modal --}}
     <x-modals.modal wire:model="removePinConsoleModal">
         <x-slot name="title">
             <div class="w-full flex justify-center">
