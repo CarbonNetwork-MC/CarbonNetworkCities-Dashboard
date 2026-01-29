@@ -226,6 +226,12 @@ return [
         'players' => [
             'delete_confirmation' => 'Are you sure you want to delete the player <b>:name</b>? This action cannot be undone.',
             'players_no_records' => 'No players found.',
+            'prefixes_no_records' => 'No prefixes found for this player.',
+            'chat_colors_no_records' => 'No chat colors found for this player.',
+            'bank_accounts_no_records' => 'No bank accounts found for this player.',
+            'plots_no_records' => 'No plots found for this player.',
+            'companies_no_records' => 'No companies found for this player.',
+            'past_usernames_no_records' => 'No past usernames found for this player.',
         ],
 
         'roles' => [

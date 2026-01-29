@@ -50,12 +50,12 @@ class Player extends Model
 
     public function chatColors(): BelongsTo
     {
-        return $this->belongsTo(PlayerChatColor::class, 'player_uuid', 'uuid');
+        return $this->belongsTo(PlayerChatColor::class, 'uuid', 'player_uuid');
     }
 
     public function prefixes(): BelongsTo
     {
-        return $this->belongsTo(PlayerPrefix::class, 'player_uuid', 'uuid');
+        return $this->belongsTo(PlayerPrefix::class, 'uuid', 'player_uuid');
     }
 
     public function pastUsernames(): HasMany

@@ -322,15 +322,22 @@
                     @endforelse
                 </x-slot>
                 <x-slot name="pagination">
-
+                    @if ($pinConsoles->hasPages())
+                        <div class="w-full flex items-center gap-x-4 mt-4">
+                            {{ $pinConsoles->links() }}
+                            <x-tables.per-page-select wire:model.live="pinConsolesPerPage">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </x-tables.per-page-select>
+                        </div>
+                    @endif
                 </x-slot>
             </x-tables.table-striped>
         </div>
     </x-containers.main>
-
-    {{-- Assign Employee Modal --}}
-
-    {{-- Assign Plot Modal --}}
     
     {{-- Remove Employee Modal --}}
     <x-modals.modal wire:model="removeEmployeeModal">

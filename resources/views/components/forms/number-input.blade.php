@@ -40,6 +40,9 @@
             $hasError
                 ? 'border border-red-500 focus:ring-red-500 focus:border-red-500'
                 : 'border border-default-medium focus:ring-brand focus:border-brand',
+            $disabled
+                ? 'cursor-not-allowed bg-gray-300'
+                : 'focus:outline-none',
         ]) }}
     />
 

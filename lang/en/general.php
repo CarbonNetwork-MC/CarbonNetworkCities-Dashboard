@@ -32,6 +32,7 @@ return [
         'save' => 'Save',
         'update' => 'Update',
         'view' => 'View',
+        'select' => 'Select',
     ],
 
     // Labels

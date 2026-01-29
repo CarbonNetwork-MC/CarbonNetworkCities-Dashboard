@@ -4,21 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PlayerChatColor extends Model
 {
     protected $filable = [
         'player_uuid',
-        'level',
-        'level_selected',
-        'prefix',
-        'prefix_selected',
-        'chat',
-        'chat_selected',
+        'color_id',
+        'type',
+        'selected',
     ];
 
     public function player(): BelongsTo
     {
         return $this->belongsTo(Player::class, 'player_uuid', 'uuid');
+    }
+
+    public function colors(): HasMany
+    {
+        return $this->hasMany(ChatColor::class, 'id', 'color_id');
     }
 }
