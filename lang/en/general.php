@@ -30,9 +30,10 @@ return [
         'edit' => 'Edit',
         'remove' => 'Remove',
         'save' => 'Save',
+        'select' => 'Select',
+        'unlink' => 'Unlink',
         'update' => 'Update',
         'view' => 'View',
-        'select' => 'Select',
     ],
 
     // Labels

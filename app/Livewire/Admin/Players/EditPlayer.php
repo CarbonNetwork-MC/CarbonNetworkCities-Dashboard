@@ -14,6 +14,7 @@ use App\Models\PlayerChatColor;
 use App\Models\PlayerPastUsername;
 use App\Models\PlayerPrefix;
 use App\Models\Plot;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -160,10 +161,12 @@ class EditPlayer extends Component
             ]);
 
         if ($updated === 0) {
-            return Toaster::error(__('admin.toast.players.playtime_conflict'));
+            Toaster::error(__('admin.toast.players.playtime_conflict'));
+            return;
         }
 
         // 3. Send invalidate request to Velocity
+        /** @var Response $response */
         $response = Http::withToken(config('services.plugin-api.key'))
             ->post(config('services.plugin-api.url') . 'api/invalidate/player/' . $originalPlayer->uuid);
 
@@ -185,7 +188,7 @@ class EditPlayer extends Component
         }
         
         // 5. Success
-        Toaster::success(__('admin.toast.players.update_successful'));
+        Toaster::success(__('admin.toast.players.update_success'));
     }
 
     // ! Prefix
@@ -213,6 +216,7 @@ class EditPlayer extends Component
         }
 
         // 2. Send invalidate request to Velocity
+        /** @var Response $response */
         $response = Http::withToken(config('services.plugin-api.key'))
             ->post(config('services.plugin-api.url') . 'api/invalidate/player/' . $this->player->uuid);
 
@@ -237,7 +241,7 @@ class EditPlayer extends Component
         $this->showRemovePrefixModal = false;
         $this->prefixToRemove = null;
 
-        Toaster::success(__('admin.toast.players.prefix_remove_successful'));
+        Toaster::success(__('admin.toast.players.prefix_remove_success'));
     }
 
     // ! Chat Colors
@@ -281,6 +285,7 @@ class EditPlayer extends Component
         }
 
         // 2. Send invalidate request to Velocity
+        /** @var Response $response */
         $response = Http::withToken(config('services.plugin-api.key'))
             ->post(config('services.plugin-api.url') . 'api/invalidate/player/' . $this->player->uuid);
 
@@ -303,7 +308,7 @@ class EditPlayer extends Component
         $this->showRemoveChatColorModal = false;
         $this->chatColorToRemove = null;
 
-        Toaster::success(__('admin.toast.players.chat_color_remove_successful'));
+        Toaster::success(__('admin.toast.players.chat_color_remove_success'));
     }
 
     // ! Bank Accounts
@@ -320,6 +325,7 @@ class EditPlayer extends Component
         $this->bankAccountToRemove->delete();
 
         // 2. Send invalidate request to Velocity
+        /** @var Response $response */
         $response = Http::withToken(config('services.plugin-api.key'))
             ->post(config('services.plugin-api.url') . 'api/invalidate/player/' . $this->player->uuid);
 
@@ -342,7 +348,7 @@ class EditPlayer extends Component
         $this->showRemoveBankAccountModal = false;
         $this->bankAccountToRemove = null;
 
-        Toaster::success(__('admin.toast.players.bank_account_remove_successful'));
+        Toaster::success(__('admin.toast.players.bank_account_remove_success'));
     }
 
     // ! Plots
@@ -360,6 +366,7 @@ class EditPlayer extends Component
             ->update(['owner_uuid' => null]);
 
         // 2. Send invalidate request to Velocity
+        /** @var Response $response */
         $response = Http::withToken(config('services.plugin-api.key'))
             ->post(config('services.plugin-api.url') . 'api/invalidate/plot/' . $this->plotToRemove->plot_id);
 
@@ -384,7 +391,7 @@ class EditPlayer extends Component
         $this->showRemovePlotModal = false;
         $this->plotToRemove = null;
 
-        Toaster::success(__('admin.toast.players.plot_unlink_successful'));
+        Toaster::success(__('admin.toast.players.plot_unlink_success'));
     }
 
     // ! Companies
@@ -402,6 +409,7 @@ class EditPlayer extends Component
             ->update(['owner_uuid' => null]);
 
         // 2. Send invalidate request to Velocity
+        /** @var Response $response */
         $response = Http::withToken(config('services.plugin-api.key'))
             ->post(config('services.plugin-api.url') . 'api/invalidate/company/' . $this->companyToRemove->id);
 
@@ -424,7 +432,7 @@ class EditPlayer extends Component
         $this->showRemoveCompanyModal = false;
         $this->companyToRemove = null;
 
-        Toaster::success(__('admin.toast.players.company_unlink_successful'));
+        Toaster::success(__('admin.toast.players.company_unlink_success'));
     }
 
     // ! Past Usernames
@@ -441,6 +449,7 @@ class EditPlayer extends Component
         $this->pastUsernameToRemove->delete();
 
         // 2. Send invalidate request to Velocity
+        /** @var Response $response */
         $response = Http::withToken(config('services.plugin-api.key'))
             ->post(config('services.plugin-api.url') . 'api/invalidate/player/' . $this->player->uuid);
 
@@ -463,7 +472,7 @@ class EditPlayer extends Component
         $this->showRemovePastUsernameModal = false;
         $this->pastUsernameToRemove = null;
 
-        Toaster::success(__('admin.toast.players.past_username_remove_successful'));
+        Toaster::success(__('admin.toast.players.past_username_remove_success'));
     }
 
     public function render()
