@@ -93,7 +93,7 @@
                     />
                 </div>
 
-                <div class="col-span-1 flex justify-center items-end mb-3">
+                <div class="col-span-1 flex items-end ml-6 mb-3">
                     <x-forms.checkbox 
                         label="{{ __('admin.labels.players.update_playtime') }}" 
                         wire:model.live="updatePlaytime" 
@@ -111,7 +111,7 @@
     </x-containers.main>
 
     {{-- Prefixes --}}
-    <x-containers.main class="mt-4" x-data="{open: false}">
+    <x-containers.main class="mt-4" x-data="{open: true}">
         <div class="flex justify-between">
             <div class="flex items-center gap-x-4">
                 <x-containers.title>{{ __('admin.titles.players.prefixes') }}</x-containers.title>
@@ -122,7 +122,7 @@
             </div>
             <div class="flex items-center gap-x-4" x-show="open">
                 <x-forms.search-bar id="searchPrefixes" wire:model.live="searchPrefixes" />
-                <x-buttons.primary-button size="sm" href="">{{ __('general.buttons.add') }}</x-buttons.primary-button>
+                <x-buttons.primary-button size="sm" href="{{ route('admin.players.add-prefix', ['uuid' => $player->uuid]) }}">{{ __('general.buttons.add') }}</x-buttons.primary-button>
             </div>
         </div>
 
@@ -147,15 +147,13 @@
                                 @endif
                             </x-tables.table-data>
                             <x-tables.table-actions>
-                                @if ($prefix->prefix !== 'Citizen')
-                                    @if($prefix->selected)
-                                        <x-tables.secondary-action disabled>{{ __('admin.labels.players.selected') }}</x-tables.secondary-action>
-                                    @else
-                                        <x-tables.primary-action wire:click="assignPrefix('{{ $prefix->id }}')">{{ __('general.buttons.select') }}</x-tables.primary-action>
-                                    @endif
+                                @if(!$prefix->selected)
+                                    <x-tables.primary-action wire:click="assignPrefix('{{ $prefix->id }}')">{{ __('general.buttons.select') }}</x-tables.primary-action>
                                 @endif
-                                <x-tables.primary-action href="">{{ __('general.buttons.edit') }}</x-tables.primary-action>
-                                <x-tables.danger-action wire:click="removePrefix('{{ $prefix->id }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
+                                @if ($prefix->prefix !== 'Citizen')
+                                    <x-tables.primary-action href="">{{ __('general.buttons.edit') }}</x-tables.primary-action>
+                                    <x-tables.danger-action wire:click="removePrefix('{{ $prefix->id }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
+                                @endif
                             </x-tables.table-actions>
                         </x-tables.table-row>
                     @empty
@@ -185,7 +183,7 @@
     </x-containers.main>
 
     {{-- Chat Colors --}}
-    <x-containers.main class="mt-4" x-data="{open: false}">
+    <x-containers.main class="mt-4" x-data="{open: true}">
         <div class="flex justify-between">
             <div class="flex items-center gap-x-4">
                 <x-containers.title :marginBottom="false">{{ __('admin.titles.players.chat_colors') }}</x-containers.title>
@@ -223,12 +221,9 @@
                                 @endif
                             </x-tables.table-data>
                             <x-tables.table-actions>
-                                @if($chatColor->selected)
-                                    <x-tables.secondary-action disabled>{{ __('admin.labels.players.chat_color_selected') }}</x-tables.secondary-action>
-                                @else
+                                @if(!$chatColor->selected)
                                     <x-tables.primary-action wire:click="assignChatColor('{{ $chatColor->id }}')">{{ __('general.buttons.select') }}</x-tables.primary-action>
                                 @endif
-                                <x-tables.primary-action href="">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removeChatColor('{{ $chatColor->id }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
                             </x-tables.table-actions>
                         </x-tables.table-row>
@@ -259,7 +254,7 @@
     </x-containers.main>
 
     {{-- Bank Accounts --}}
-    <x-containers.main class="mt-4" x-data="{open: false}">
+    <x-containers.main class="mt-4" x-data="{open: true}">
         <div class="flex justify-between">
             <div class="flex items-center gap-x-4">
                 <x-containers.title>{{ __('admin.titles.players.bank_accounts') }}</x-containers.title>
@@ -278,7 +273,7 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <x-tables.table-header>{{ __('admin.labels.players.bank_account_id') }}</x-tables.table-header>
+                        <x-tables.table-header>#</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.players.balance') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.players.type') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.players.currency') }}</x-tables.table-header>
@@ -324,7 +319,7 @@
     </x-containers.main>
 
     {{-- Plots --}}
-    <x-containers.main class="mt-4" x-data="{open: false}">
+    <x-containers.main class="mt-4" x-data="{open: true}">
         <div class="flex justify-between">
             <div class="flex items-center gap-x-4">
                 <x-containers.title>{{ __('admin.titles.players.plots') }}</x-containers.title>
@@ -387,7 +382,7 @@
     </x-containers.main>
 
     {{-- Companies --}}
-    <x-containers.main class="mt-4" x-data="{open: false}">
+    <x-containers.main class="mt-4" x-data="{open: true}">
         <div class="flex justify-between">
             <div class="flex items-center gap-x-4">
                 <x-containers.title>{{ __('admin.titles.players.companies') }}</x-containers.title>
@@ -406,7 +401,7 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <x-tables.table-header>{{ __('admin.labels.players.company_name') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.players.name') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.players.coc_number') }}</x-tables.table-header>
                         <x-tables.table-header></x-tables.table-header>
                     </tr>
@@ -460,7 +455,6 @@
             </div>
             <div class="flex items-center gap-x-4" x-show="open">
                 <x-forms.search-bar id="searchPastUsernames" wire:model.live="searchPastUsernames" />
-                <x-buttons.primary-button size="sm" href="">{{ __('general.buttons.add') }}</x-buttons.primary-button>
             </div>
         </div>
 

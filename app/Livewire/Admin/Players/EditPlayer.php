@@ -201,7 +201,8 @@ class EditPlayer extends Component
                                     ->where('prefix', 'Citizen')->first();
 
         if ($this->prefixToRemove->id === $defaultPrefix->id) {
-            return Toaster::error(__('admin.toast.players.cannot_remove_default_prefix'));
+            Toaster::error(__('admin.toast.players.cannot_remove_default_prefix'));
+            return;
         }
 
         // 1. Optimistic delete & unselect if needed
@@ -218,7 +219,8 @@ class EditPlayer extends Component
         // Immediate failure (request not accepted)
         if ($response->status() !== 202) {
             $this->rollbackPrefix($originalPrefix, $defaultPrefix);
-            return Toaster::error(__('admin.toast.players.prefix_remove_failed'));
+            Toaster::error(__('admin.toast.players.prefix_remove_failed'));
+            return;
         }
 
         $requestId = $response->json('requestId');
@@ -227,7 +229,8 @@ class EditPlayer extends Component
         $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             $this->rollbackPrefix($originalPrefix, $defaultPrefix);
-            return Toaster::error(__('admin.toast.players.prefix_remove_failed'));
+            Toaster::error(__('admin.toast.players.prefix_remove_failed'));
+            return;
         }
 
         // 4. Success

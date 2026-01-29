@@ -19,6 +19,7 @@ use App\Livewire\Admin\Dashboard\Dashboard as AdminDashboard;
 use App\Livewire\Admin\Languages\Overview as LanguagesOverview;
 use App\Livewire\Admin\Languages\Edit as EditLanguage;
 use App\Livewire\Admin\Languages\NewLanguage;
+use App\Livewire\Admin\Players\AddPrefix;
 use App\Livewire\Admin\Players\EditPlayer;
 use App\Livewire\Admin\Players\Overview as PlayerOverview;
 use App\Livewire\Admin\RolesPerms\NewRole;
@@ -89,6 +90,7 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     Route::prefix('players')->group(function() {
         Route::get('/', PlayerOverview::class)->name('admin.players.render');
         Route::get('/edit/{uuid}', EditPlayer::class)->name('admin.players.edit');
+        Route::get('/add-prefix/{uuid}', AddPrefix::class)->name('admin.players.add-prefix');
     });
 
     // ? Languages
