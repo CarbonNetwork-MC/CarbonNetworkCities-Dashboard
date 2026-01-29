@@ -36,9 +36,15 @@ return [
         ],
 
         'players' => [
-            'overview' => 'Players Overview',
-            'edit' => 'Edit Player',
+            'bank_accounts' => 'Bank Accounts',
+            'chat_colors' => 'Chat Colors',
+            'companies' => 'Companies',
             'delete' => 'Delete Player',
+            'edit' => 'Edit Player',
+            'past_usernames' => 'Past Usernames',
+            'plots' => 'Plots',
+            'prefixes' => 'Prefixes',
+            'overview' => 'Players Overview',
         ],
 
         'roles' => [
@@ -111,14 +117,26 @@ return [
         ],
 
         'players' => [
+            'balance' => 'Balance',
+            'chat_color' => 'Chat Color',
+            'coc_number' => 'COC Number',
+            'currency' => 'Currency',
             'uuid' => 'UUID',
             'username' => 'Username',
+            'last_region' => 'Last Region',
             'level' => 'Level',
+            'name' => 'Name',
             'nationality' => 'Nationality',
+            'selected' => 'Selected',
             'selected_language' => 'Selected Language',
             'playtime' => 'Playtime',
+            'prefix' => 'Prefix',
+            'plot_id' => 'Plot ID',
             'last_login' => 'Last Login',
             'last_logout' => 'Last Logout',
+            'type' => 'Type',
+            'update_playtime' => 'Update Playtime',
+            'world' => 'World',
         ],
 
         'roles' => [
