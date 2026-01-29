@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Players;
 
 use App\Http\Livewire\Concerns\WithInvalidation;
 use App\Models\Player;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 
@@ -41,13 +42,14 @@ class AddPrefix extends Component
         }
 
         // 3. Send invalidate request to Velocity
+        /** @var Response $response */
         $response = Http::withToken(config('services.plugin-api.key'))
             ->post(config('services.plugin-api.url') . "api/invalidate/player/{$this->player->uuid}");
 
         // Immediate failure (request not accepted)
         if ($response->status() !== 202) {
             $this->rollbackPrefix($prefix, $originalSelectedPrefix);
-            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.player.prefix_add_failed'));
+            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.prefix_add_failed'));
         }
 
         $requestId = $response->json()['requestId'];
@@ -56,11 +58,11 @@ class AddPrefix extends Component
         $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             $this->rollbackPrefix($prefix, $originalSelectedPrefix);
-            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.player.prefix_add_failed'));
+            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.prefix_add_failed'));
         }
 
         // 5. Success
-        return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->success(__('admin.toast.player.prefix_add_success'));
+        return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->success(__('admin.toast.players.prefix_add_success'));
     }
 
     public function render()

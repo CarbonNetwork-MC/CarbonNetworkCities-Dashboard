@@ -21,6 +21,7 @@ use App\Livewire\Admin\Languages\Edit as EditLanguage;
 use App\Livewire\Admin\Languages\NewLanguage;
 use App\Livewire\Admin\Players\AddPrefix;
 use App\Livewire\Admin\Players\EditPlayer;
+use App\Livewire\Admin\Players\EditPrefix;
 use App\Livewire\Admin\Players\Overview as PlayerOverview;
 use App\Livewire\Admin\RolesPerms\NewRole;
 use App\Livewire\Admin\RolesPerms\EditRole;
@@ -87,11 +88,10 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     });
 
     // ? Players
-    Route::prefix('players')->group(function() {
-        Route::get('/', PlayerOverview::class)->name('admin.players.render');
-        Route::get('/edit/{uuid}', EditPlayer::class)->name('admin.players.edit');
-        Route::get('/add-prefix/{uuid}', AddPrefix::class)->name('admin.players.add-prefix');
-    });
+    Route::get('/players', PlayerOverview::class)->name('admin.players.render');
+    Route::get('/players/edit/{uuid}', EditPlayer::class)->name('admin.players.edit');
+    Route::get('/players/add-prefix/{uuid}', AddPrefix::class)->name('admin.players.add-prefix');
+    Route::get('/players/edit-prefix/{uuid}/{id}', EditPrefix::class)->name('admin.players.edit-prefix');
 
     // ? Languages
     Route::get('/languages', LanguagesOverview::class)->name('admin.languages.render');

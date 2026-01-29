@@ -151,7 +151,7 @@
                                     <x-tables.primary-action wire:click="assignPrefix('{{ $prefix->id }}')">{{ __('general.buttons.select') }}</x-tables.primary-action>
                                 @endif
                                 @if ($prefix->prefix !== 'Citizen')
-                                    <x-tables.primary-action href="">{{ __('general.buttons.edit') }}</x-tables.primary-action>
+                                    <x-tables.primary-action href="{{ route('admin.players.edit-prefix', ['uuid' => $player->uuid, 'id' => $prefix->id]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                     <x-tables.danger-action wire:click="removePrefix('{{ $prefix->id }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
                                 @endif
                             </x-tables.table-actions>
