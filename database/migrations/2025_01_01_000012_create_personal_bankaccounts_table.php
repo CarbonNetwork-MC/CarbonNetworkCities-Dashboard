@@ -16,7 +16,7 @@ return new class extends Migration
             $table->char('player_uuid', 36);
             $table->foreign('player_uuid')->references('uuid')->on('players')->onDelete('cascade');
             $table->decimal('balance', 10, 2);
-            $table->enum('type', ['current', 'savings']);
+            $table->enum('type', ['checking', 'savings']);
             $table->string('currency', 3);
             $table->timestamps();
         });
