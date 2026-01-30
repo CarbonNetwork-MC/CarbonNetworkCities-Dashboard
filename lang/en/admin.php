@@ -338,6 +338,8 @@ return [
             'chat_color_add_success' => 'Chat color added successfully.',
             'chat_color_remove_failed' => 'Failed to remove chat color. Please try again.',
             'chat_color_remove_success' => 'Chat color removed successfully.',
+            'chat_color_select_failed' => 'Failed to select chat color. Please try again.',
+            'chat_color_select_success' => 'Chat color selected successfully.',
             'company_unlink_failed' => 'Failed to unlink company. Please try again.',
             'company_unlink_success' => 'Company unlinked successfully.',
             'past_username_remove_failed' => 'Failed to remove past username. Please try again.',

@@ -222,7 +222,7 @@
                             </x-tables.table-data>
                             <x-tables.table-actions>
                                 @if(!$chatColor->selected)
-                                    <x-tables.primary-action wire:click="assignChatColor('{{ $chatColor->id }}')">{{ __('general.buttons.select') }}</x-tables.primary-action>
+                                    <x-tables.primary-action wire:click="selectChatColor('{{ $chatColor->id }}', '{{ $chatColor->type }}')">{{ __('general.buttons.select') }}</x-tables.primary-action>
                                 @endif
                                 <x-tables.danger-action wire:click="removeChatColor('{{ $chatColor->id }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
                             </x-tables.table-actions>

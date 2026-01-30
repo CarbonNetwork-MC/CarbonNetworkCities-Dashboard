@@ -282,6 +282,43 @@ class EditPlayer extends Component
     }
 
     // ! Chat Colors
+    public function selectChatColor($id, $type) {
+        // Store the current selected chat color and the original values for rollback in case of failure
+        $originalSelectedChatColor = $this->player->chatColors()->where('selected', true)->where('type', $type)->first();
+        $newSelectedChatColor = PlayerChatColor::find($id);
+
+        // 1. Optimistic update
+        $newSelectedChatColor->update(['selected' => true]);
+        $this->player->chatColors()->where('id', '!=', $newSelectedChatColor->id)->where('type', $type)->update(['selected' => false]);
+
+        // 2. Send invalidate request to Velocity
+        /** @var Response $response */
+        $response = Http::withToken(config('services.plugin-api.key'))
+            ->post(config('services.plugin-api.url') . "api/invalidate/player/{$this->player->uuid}");
+
+        // Immediate failure (request not accepted)
+        if ($response->status() !== 202) {
+            $this->rollbackChatColorSelect($newSelectedChatColor, $originalSelectedChatColor);
+            Toaster::error(__('admin.toast.players.chat_color_select_failed'));
+            return;
+        }
+
+        $requestId = $response->json('requestId');
+
+        // 3. Poll for result
+        $success = $this->waitForInvalidationResult($requestId);
+        if (!$success) {
+            $this->rollbackChatColorSelect($newSelectedChatColor, $originalSelectedChatColor);
+            Toaster::error(__('admin.toast.players.chat_color_select_failed'));
+            return;
+        }
+
+        // 4. Success
+        $this->resetPage('chatColors');
+
+        Toaster::success(__('admin.toast.players.chat_color_select_success'));
+    }
+
     public function removeChatColor($id) {
         $this->chatColorToRemove = PlayerChatColor::find($id);
         $this->showRemoveChatColorModal = true;
@@ -566,6 +603,19 @@ class EditPlayer extends Component
         if ($originalChatColor->selected && $defaultColor && $defaultColor->id !== $originalChatColor->id) {
             $defaultColor->selected = false;
             $defaultColor->save();
+        }
+    }
+
+    private function rollbackChatColorSelect($newSelectedChatColor, $originalSelectedChatColor) {
+        // Rollback the updated chat color
+        $newSelectedChatColor->update([
+            'selected' => false,
+        ]);
+
+        // Rollback the selected chat color if it was changed
+        if ($originalSelectedChatColor) {
+            $this->player->chatColors()->where('id', '!=', $newSelectedChatColor->id)->where('type', $newSelectedChatColor->type)->update(['selected' => false]);
+            $originalSelectedChatColor->update(['selected' => true]);
         }
     }
 
