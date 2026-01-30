@@ -20,7 +20,7 @@ class NewCompany extends Component
     public $players;
 
     public function mount() {
-        $this->players = Player::orderBy('username')->get();
+        $this->players = Player::orderBy('username')->get(['uuid', 'username']);
     }
 
     public function createCompany() {

@@ -49,7 +49,7 @@ class EditCompany extends Component
 
     public function mount($id) {
         $this->company = Company::where('id', $id)->firstOrFail();
-        $this->players = Player::orderBy('username')->get();
+        $this->players = Player::orderBy('username')->get(['username', 'uuid']);
 
         $this->companyName = $this->company->name;
         $this->cocNumber = $this->company->coc_number;
