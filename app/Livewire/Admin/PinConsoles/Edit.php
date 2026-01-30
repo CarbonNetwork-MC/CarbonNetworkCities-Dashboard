@@ -89,12 +89,12 @@ class Edit extends Component
 
         if ($status !== 202) {
             $this->rollbackPinConsole($originalData);
-            return redirect()->route('admin.pin-consoles.edit')->error(__('admin.toast.pin_consoles.pin_console_update_failed'));
+            return redirect()->route('admin.pin-consoles.edit', ['id' => $this->pinConsole->id])->error(__('admin.toast.pin_consoles.pin_console_update_failed'));
         }
 
         if (!$success) {
             $this->rollbackPinConsole($originalData);
-            return redirect()->route('admin.pin-consoles.edit')->error(__('admin.toast.pin_consoles.pin_console_update_failed'));
+            return redirect()->route('admin.pin-consoles.edit', ['id' => $this->pinConsole->id])->error(__('admin.toast.pin_consoles.pin_console_update_failed'));
         }
 
         return redirect()->route('admin.pin-consoles.render')->success(__('admin.toast.pin_consoles.updated'));
