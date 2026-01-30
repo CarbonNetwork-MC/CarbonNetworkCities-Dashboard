@@ -406,7 +406,8 @@ class EditPlayer extends Component
         // Immediate failure (request not accepted)
         if ($response->status() !== 202) {
             $this->rollbackBankAccount($originalBankAccount);
-            return Toaster::error(__('admin.toast.players.bank_account_remove_failed'));
+            Toaster::error(__('admin.toast.players.bank_account_remove_failed'));
+            return;
         }
 
         $requestId = $response->json('requestId');
@@ -415,7 +416,8 @@ class EditPlayer extends Component
         $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             $this->rollbackBankAccount($originalBankAccount);
-            return Toaster::error(__('admin.toast.players.bank_account_remove_failed'));
+            Toaster::error(__('admin.toast.players.bank_account_remove_failed'));
+            return;
         }
 
         // 4. Success
