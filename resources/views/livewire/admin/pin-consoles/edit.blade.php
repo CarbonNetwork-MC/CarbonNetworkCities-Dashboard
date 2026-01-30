@@ -28,7 +28,7 @@
                 {{-- Company ID --}}
                 <div class="col-span-1">
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2.5">
-                        {{ __('admin.labels.company.company_id') }}
+                        {{ __('admin.labels.companies.company_id') }}
                     </label>
                     <livewire:async-select
                         :options="$companies->map(fn($company) => ['label' => $company->name, 'value' => $company->id])"
@@ -41,7 +41,7 @@
                 {{-- Account ID --}}
                 <div class="col-span-1">
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2.5">
-                        {{ __('admin.labels.company.bank_account_number') }}
+                        {{ __('admin.labels.companies.bank_account_number') }}
                     </label>
                     <livewire:async-select
                         id="accountSelect"
@@ -74,13 +74,13 @@
 
                 {{-- City --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.company.city') }}" wire:model="city" required />
+                    <x-forms.text-input label="{{ __('admin.labels.companies.city') }}" wire:model="city" required />
                 </div>
 
                 {{-- Country --}}
                 <div class="col-span-1">
                     <x-forms.label for="countryId" required>
-                        {{ __('admin.labels.company.country') }}
+                        {{ __('admin.labels.companies.country') }}
                     </x-forms.label>
                     <livewire:async-select
                         id="countryId"
@@ -92,7 +92,7 @@
 
                 {{-- World Name/ID --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.company.world_id') }}" wire:model="worldId" required />
+                    <x-forms.text-input label="{{ __('admin.labels.companies.world_id') }}" wire:model="worldId" required />
                 </div>
 
                 <div class="col-span-1"></div>
@@ -101,7 +101,7 @@
                 <div class="col-span-1">
                     <x-forms.checkbox
                         id="is_active"
-                        label="{{ __('admin.labels.company.pin_console_is_active') }}"
+                        label="{{ __('admin.labels.companies.pin_console_is_active') }}"
                         wire:model="isActive"
                         checked="{{ $isActive }}"
                     />

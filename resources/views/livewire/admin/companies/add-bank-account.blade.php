@@ -13,31 +13,31 @@
             ],
             [
                 'url'   => route('admin.companies.edit', ['id' => $company->id]),
-                'label' => __('admin.titles.company.edit'),
+                'label' => __('admin.titles.companies.edit'),
             ],
             [
                 'url' => route('admin.companies.add-bank-account', ['id' => $company->id]),
-                'label' => __('admin.titles.company.add_bank_account'),
+                'label' => __('admin.titles.companies.add_bank_account'),
             ]
         ]" />
     </x-slot>
 
     <x-containers.main>
         <x-containers.title>
-            {{ __('admin.titles.company.add_bank_account') }}
+            {{ __('admin.titles.companies.add_bank_account') }}
         </x-containers.title>
 
         <div class="mt-6">
             <div class="grid grid-cols-4 gap-x-4 gap-y-6">
                 {{-- Balance --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.company.bank_account_balance') }}" wire:model="balance" required />
+                    <x-forms.text-input label="{{ __('admin.labels.companies.bank_account_balance') }}" wire:model="balance" required />
                 </div>
 
                 {{-- Currency --}}
                 <div class="col-span-1">
                     <x-forms.label for="currency" required>
-                        {{ __('admin.labels.company.bank_account_currency') }}
+                        {{ __('admin.labels.companies.bank_account_currency') }}
                     </x-forms.label>
                     <livewire:async-select
                         id="currency"
@@ -53,7 +53,7 @@
                 <div class="col-span-1 mt-6">
                     <x-forms.checkbox
                         id="is_main"
-                        label="{{ __('admin.labels.company.bank_account_is_main') }}"
+                        label="{{ __('admin.labels.companies.bank_account_is_main') }}"
                         wire:model="isMain"
                     />
                 </div>

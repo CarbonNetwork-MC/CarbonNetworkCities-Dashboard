@@ -18,11 +18,11 @@
     {{-- Companies --}}
     <x-containers.main>
         <div class="flex justify-between">
-            <x-containers.title>{{ __('admin.titles.company.overview') }}</x-containers.title>
+            <x-containers.title>{{ __('admin.titles.companies.overview') }}</x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="search" wire:model.live="search" class="w-full" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.companies.new') }}">
-                    {{ __('admin.buttons.company.create') }}
+                    {{ __('admin.buttons.companies.create') }}
                 </x-buttons.primary-button>
             </div>
         </div>
@@ -32,14 +32,14 @@
                 <x-slot name="headers">
                     <tr>
                         <x-tables.table-header>{{ __('general.labels.id') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.name') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.world_id') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.coc_number') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.owner') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.bank_accounts') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.employees') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.plots') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.pin_consoles') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.name') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.world_id') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.coc_number') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.owner') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.bank_accounts') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.employees') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.plots') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.pin_consoles') }}</x-tables.table-header>
                         <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
@@ -50,7 +50,7 @@
                             <x-tables.table-data>{{ $company->name }}</x-tables.table-data>
                             <x-tables.table-data>{{ $company->world_id }}</x-tables.table-data>
                             <x-tables.table-data>{{ $company->coc_number }}</x-tables.table-data>
-                            <x-tables.table-data>{{ $company->owner->username ?? __('admin.labels.company.no_owner_assigned') }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $company->owner->username ?? __('admin.labels.companies.no_owner_assigned') }}</x-tables.table-data>
                             <x-tables.table-data>{{ $company->bankAccounts->count() }}</x-tables.table-data>
                             <x-tables.table-data>{{ $company->employees->count() }}</x-tables.table-data>
                             <x-tables.table-data>{{ $company->plots->count() }}</x-tables.table-data>
@@ -63,7 +63,7 @@
                     @empty
                         <tr>
                             <x-tables.empty-state colspan="9">
-                                {{ __('admin.messages.company.companies_no_records') }}
+                                {{ __('admin.messages.companies.companies_no_records') }}
                             </x-tables.empty-state>
                         </tr>
                     @endforelse
@@ -87,10 +87,10 @@
     </x-containers.main>
 
     {{-- Delete Company Modal --}}
-    <x-modals.modal wire:model="deleteCompanyModal" :title="__('admin.titles.company.delete')">
+    <x-modals.modal wire:model="deleteCompanyModal" :title="__('admin.titles.companies.delete')">
         <x-slot name="content">
             <p class="text-gray-700 dark:text-gray-300">
-                {!! __('admin.messages.company.delete_confirmation', ['name' => $selectedCompany->name ?? '']) !!}
+                {!! __('admin.messages.companies.delete_confirmation', ['name' => $selectedCompany->name ?? '']) !!}
             </p>
         </x-slot>
         <x-slot name="footer">

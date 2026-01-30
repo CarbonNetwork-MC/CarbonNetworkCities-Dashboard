@@ -53,7 +53,7 @@
 
                 {{-- Balance --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.company.bank_account_balance') }}" wire:model="balance" required />
+                    <x-forms.text-input label="{{ __('admin.labels.companies.bank_account_balance') }}" wire:model="balance" required />
                 </div>
 
                 {{-- Account type --}}

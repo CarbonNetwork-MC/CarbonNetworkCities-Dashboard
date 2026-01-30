@@ -61,17 +61,17 @@ class AddPinConsole extends Component
         // Immediate failure (request not accepted)
         if ($status !== 202) {
             $pinConsole->delete();
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company.pin_console_add_failed'));
+            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.companies.pin_console_add_failed'));
         }
 
         // 3. Poll for result
         if (!$success) {
             $pinConsole->delete();
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company.pin_console_add_failed'));
+            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.companies.pin_console_add_failed'));
         }
 
         // 4. Success
-        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toast.company.pin_console_added'));
+        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toast.companies.pin_console_added'));
     }
 
     public function render()

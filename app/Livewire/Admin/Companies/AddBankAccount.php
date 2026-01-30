@@ -51,17 +51,17 @@ class AddBankAccount extends Component
         // Immediate failure (request not accepted)
         if ($status !== 202) {
             $this->rollbackBankAccounts($bankAccount, $originalBankAccounts);
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company.bank_account_add_failed'));
+            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.companies.bank_account_add_failed'));
         }
 
         // 3. Poll for result
         if (!$success) {
             $this->rollbackBankAccounts($bankAccount, $originalBankAccounts);
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company.bank_account_add_failed'));
+            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.companies.bank_account_add_failed'));
         }
 
         // 4. Success
-        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toast.company.bank_account_added'));
+        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toast.companies.bank_account_added'));
     }
 
     public function render()

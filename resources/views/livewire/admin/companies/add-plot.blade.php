@@ -13,25 +13,25 @@
             ],
             [
                 'url'   => route('admin.companies.edit', ['id' => $company->id]),
-                'label' => __('admin.titles.company.edit'),
+                'label' => __('admin.titles.companies.edit'),
             ],
             [
                 'url' => route('admin.companies.add-plot', ['id' => $company->id]),
-                'label' => __('admin.titles.company.add_plot'),
+                'label' => __('admin.titles.companies.add_plot'),
             ]
         ]" />
     </x-slot>
 
     <x-containers.main>
         <x-containers.title>
-            {{ __('admin.titles.company.add_plot') }}
+            {{ __('admin.titles.companies.add_plot') }}
         </x-containers.title>
 
         <div class="mt-6">
             <div class="grid grid-cols-4 gap-x-4 gap-y-6">
                 {{-- Plot ID --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.company.plot_id') }}" wire:model="plotId" required />
+                    <x-forms.text-input label="{{ __('admin.labels.companies.plot_id') }}" wire:model="plotId" required />
                 </div>
             </div>
 
