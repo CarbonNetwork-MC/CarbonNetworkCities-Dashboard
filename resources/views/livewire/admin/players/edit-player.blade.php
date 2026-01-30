@@ -330,7 +330,7 @@
             </div>
             <div class="flex items-center gap-x-4" x-show="open">
                 <x-forms.search-bar id="searchPlots" wire:model.live="searchPlots" />
-                <x-buttons.primary-button size="sm" href="">{{ __('general.buttons.add') }}</x-buttons.primary-button>
+                <x-buttons.primary-button size="sm" href="{{ route('admin.players.add-plot', ['uuid' => $player->uuid]) }}">{{ __('general.buttons.add') }}</x-buttons.primary-button>
             </div>
         </div>
 

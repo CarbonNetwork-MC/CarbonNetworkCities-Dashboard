@@ -38,6 +38,7 @@ return [
         'players' => [
             'add_bank_account' => 'Add Bank Account',
             'add_chat_color' => 'Add Chat Color',
+            'add_plot' => 'Add Plot',
             'add_prefix' => 'Add Prefix',
             'bank_accounts' => 'Bank Accounts',
             'chat_colors' => 'Chat Colors',
@@ -346,6 +347,9 @@ return [
             'past_username_remove_failed' => 'Failed to remove past username. Please try again.',
             'past_username_remove_success' => 'Past username removed successfully.',
             'playtime_conflict' => 'Playtime update conflict detected. Please try again.',
+            'plot_add_failed' => 'Failed to add plot. Please try again.',
+            'plot_add_success' => 'Plot added successfully.',
+            'plot_not_found' => 'Plot not found.',
             'plot_unlink_failed' => 'Failed to unlink plot. Please try again.',
             'plot_unlink_success' => 'Plot unlinked successfully.',
             'prefix_add_failed' => 'Failed to add prefix. Please try again.',
