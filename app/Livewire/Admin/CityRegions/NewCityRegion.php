@@ -70,7 +70,7 @@ class NewCityRegion extends Component
     public function render()
     {
         return view('livewire.admin.city-regions.new-city-region', [
-            'countries' => Country::all(),
+            'countries' => Country::get(['id', 'name']),
         ]);
     }
 }

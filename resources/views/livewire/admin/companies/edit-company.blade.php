@@ -169,7 +169,7 @@
                             </x-tables.table-data>
                             <x-tables.table-data>{{ strtoupper($bankAccount->currency) }}</x-tables.table-data>
                             <x-tables.table-actions>
-                                <x-tables.primary-action href="">
+                                <x-tables.primary-action href="{{ route('admin.bank-accounts.company.edit', ['id' => $bankAccount->id]) }}">
                                     {{ __('general.buttons.edit') }}
                                 </x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removeBankAccount('{{ $bankAccount->id }}')">
@@ -312,6 +312,9 @@
                                 @endif
                             </x-tables.table-data>
                             <x-tables.table-actions>
+                                <x-tables.primary-action href="{{ route('admin.pin-consoles.edit', ['id' => $pinConsole->id]) }}">
+                                    {{ __('general.buttons.edit') }}
+                                </x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removePinConsole('{{ $pinConsole->id }}')">
                                     {{ __('general.buttons.remove') }}
                                 </x-tables.danger-action>

@@ -27,7 +27,7 @@ class AddEmployee extends Component
         $employeesUuids = $this->company->employees()->pluck('player_uuid')->toArray();
         $ownerUuid = $this->company->owner?->uuid;
 
-        $this->players = Player::whereNotIn('uuid', array_filter(array_merge($employeesUuids, [$ownerUuid])))->get();
+        $this->players = Player::whereNotIn('uuid', array_filter(array_merge($employeesUuids, [$ownerUuid])))->get(['uuid', 'username']);
     }
 
     public function addEmployee(ApiService $apiService) {

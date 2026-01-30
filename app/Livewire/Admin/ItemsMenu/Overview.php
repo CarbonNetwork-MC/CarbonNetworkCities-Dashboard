@@ -43,7 +43,7 @@ class Overview extends Component
     // ? Category Methods
     public function removeCategory($id) {
         $this->selectedCategory = ItemCategory::find($id);
-        $this->remainingCategories = ItemCategory::where('id', '!=', $id)->get();
+        $this->remainingCategories = ItemCategory::where('id', '!=', $id)->get(['id', 'name']);
         $this->deleteCategoryModal = true;
     }
 

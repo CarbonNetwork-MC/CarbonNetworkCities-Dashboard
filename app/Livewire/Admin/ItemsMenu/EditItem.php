@@ -104,7 +104,7 @@ class EditItem extends Component
     public function render()
     {
         return view('livewire.admin.itemsmenu.edit-item', [
-            'categories' => ItemCategory::all(),
+            'categories' => ItemCategory::get(['id', 'name']),
             'expiredPrefixes' => config('items.expired_prefixes'),
         ]);
     }

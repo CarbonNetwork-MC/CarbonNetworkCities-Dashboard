@@ -35,6 +35,11 @@ use App\Livewire\Admin\CityRegions\Edit as EditCityRegion;
 use App\Livewire\Admin\PinConsoles\Overview as PinConsolesOverview;
 use App\Livewire\Admin\PinConsoles\NewPinConsole;
 use App\Livewire\Admin\PinConsoles\Edit as EditPinConsole;
+use App\Livewire\Admin\BankAccounts\Overview as BankAccountsOverview;
+use App\Livewire\Admin\BankAccounts\NewCompanyBankAccount;
+use App\Livewire\Admin\BankAccounts\NewPersonalBankAccount;
+use App\Livewire\Admin\BankAccounts\EditCompanyBankAccount;
+use App\Livewire\Admin\BankAccounts\EditPersonalBankAccount;
 use Illuminate\Support\Facades\Route;
 
 // ! Guest Routes
@@ -122,4 +127,11 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     Route::get('/pin-consoles', PinConsolesOverview::class)->name('admin.pin-consoles.render');
     Route::get('/pin-consoles/new', NewPinConsole::class)->name('admin.pin-consoles.new');
     Route::get('/pin-consoles/edit/{id}', EditPinConsole::class)->name('admin.pin-consoles.edit');
+
+    // ? Bank Accounts
+    Route::get('/bank-accounts', BankAccountsOverview::class)->name('admin.bank-accounts.render');
+    Route::get('/bank-accounts/company/new', NewCompanyBankAccount::class)->name('admin.bank-accounts.company.new');
+    Route::get('/bank-accounts/personal/new', NewPersonalBankAccount::class)->name('admin.bank-accounts.personal.new');
+    Route::get('/bank-accounts/company/edit/{id}', EditCompanyBankAccount::class)->name('admin.bank-accounts.company.edit');
+    Route::get('/bank-accounts/personal/edit/{id}', EditPersonalBankAccount::class)->name('admin.bank-accounts.personal.edit');
 });

@@ -26,8 +26,8 @@ class AddPinConsole extends Component
 
     public function mount($id) {
         $this->company = Company::where('id', $id)->firstOrFail();
-        $this->countries = Country::all();
-        $this->accounts = CompanyBankaccount::where('company_id', $this->company->id)->get();
+        $this->countries = Country::get(['id', 'name']);
+        $this->accounts = CompanyBankaccount::where('company_id', $this->company->id)->get(['id']);
     }
 
     public function addPinConsole(ApiService $apiService) {

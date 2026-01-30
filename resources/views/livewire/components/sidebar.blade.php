@@ -57,6 +57,14 @@
                     :label="__('sidebar.dashboard')"
                 />
 
+                {{-- Bank Accounts --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.bank-accounts.render')"
+                    :active="request()->routeIs('admin.bank-accounts.*')"
+                    icon="fi fi-tr-piggy-bank"
+                    :label="__('sidebar.bank_accounts')"
+                />
+
                 {{-- City Regions --}}
                 <x-sidebar.nav-item
                     :href="route('admin.city-regions.render')"

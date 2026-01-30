@@ -80,6 +80,21 @@ return [
             'create' => 'Create PIN Console',
             'edit' => 'Edit PIN Console',
         ],
+
+        'bank_accounts' => [
+            'company' => [
+                'overview' => 'Company Bank Accounts Overview',
+                'create' => 'Create Company Bank Account',
+                'delete' => 'Delete Company Bank Account',
+                'edit' => 'Edit Company Bank Account',
+            ],
+            'personal' => [
+                'overview' => 'Personal Bank Accounts Overview',
+                'create' => 'Create Personal Bank Account',
+                'delete' => 'Delete Personal Bank Account',
+                'edit' => 'Edit Personal Bank Account',
+            ],
+        ],
     ],
 
     // Labels
@@ -170,7 +185,11 @@ return [
 
         'pin_consoles' => [
             'company' => 'Company',
-        ] 
+        ],
+
+        'bank_accounts' => [
+            'account_type' => 'Account Type',
+        ],
     ],
 
     // Buttons
@@ -291,6 +310,13 @@ return [
             'pin_consoles_no_records' => 'No pin consoles found.',
             'delete_confirmation' => 'Are you sure you want to delete this pin console? This action cannot be undone.',
         ],
+
+        'bank_accounts' => [
+            'company_bank_accounts_no_records' => 'No company bank accounts found.',
+            'company_bank_account_delete_confirmation' => 'Are you sure you want to delete the company bank account <b>:id</b>? This action cannot be undone.',
+            'personal_bank_accounts_no_records' => 'No personal bank accounts found.',
+            'personal_bank_account_delete_confirmation' => 'Are you sure you want to delete the personal bank account <b>:id</b>? This action cannot be undone.',
+        ],
     ],
 
     // Toasts
@@ -385,6 +411,21 @@ return [
             'updated' => 'PIN console updated successfully.',
             'created' => 'PIN console created successfully.',
             'deleted' => 'PIN console deleted successfully.',
+        ],
+
+        'bank_accounts' => [
+            'company' => [
+                'invalidate_bankaccount_api_error' => 'Failed to invalidate company bank account via API. Changes have been reverted.',
+                'deleted' => 'Company bank account deleted successfully.',
+                'created' => 'Company bank account created successfully.',
+                'updated' => 'Company bank account updated successfully.',
+            ],
+            'personal' => [
+                'invalidate_bankaccount_api_error' => 'Failed to invalidate personal bank account via API. Changes have been reverted.',
+                'deleted' => 'Personal bank account deleted successfully.',
+                'created' => 'Personal bank account created successfully.',
+                'updated' => 'Personal bank account updated successfully.',
+            ],
         ]
     ],
 

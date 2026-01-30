@@ -47,21 +47,21 @@ class EditUser extends Component
         $this->userName = $this->user->name;
         $this->userEmail = $this->user->email;
         $this->selectedLanguage = $this->user->selected_language;
-        $this->languages = Language::all();
+        $this->languages = Language::get(['id', 'name']);
 
         $this->availableRoles = Role::whereNotIn('uuid', function($query) {
             $query->select('role_id')
                 ->from('panel_model_has_roles')
                 ->where('model_uuid', $this->user->uuid)
                 ->where('model_type', User::class);
-        })->get();
+        })->get(['uuid', 'name']);
 
         $this->availablePermissions = Permission::whereNotIn('uuid', function($query) {
             $query->select('permission_id')
                 ->from('panel_model_has_permissions')
                 ->where('model_uuid', $this->user->uuid)
                 ->where('model_type', User::class);
-        })->get();
+        })->get(['uuid', 'name']);
     }
 
     public function updated($key, $value) {

@@ -98,7 +98,7 @@ class Edit extends Component
     public function render()
     {
         return view('livewire.admin.city-regions.edit', [
-            'countries' => Country::all(),
+            'countries' => Country::get(['id', 'name']),
         ]);
     }
 
