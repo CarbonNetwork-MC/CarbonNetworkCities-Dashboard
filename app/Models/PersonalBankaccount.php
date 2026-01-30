@@ -11,6 +11,7 @@ class PersonalBankaccount extends Model
         'player_uuid',
         'balance',
         'type',
+        'currency',
     ];
 
     public function player(): BelongsTo
