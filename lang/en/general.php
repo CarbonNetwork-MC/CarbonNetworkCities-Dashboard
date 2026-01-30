@@ -33,6 +33,8 @@ return [
         'edit' => 'Edit',
         'remove' => 'Remove',
         'save' => 'Save',
+        'select' => 'Select',
+        'unlink' => 'Unlink',
         'update' => 'Update',
         'view' => 'View',
     ],
@@ -49,5 +51,5 @@ return [
     // Messages
     'messages' => [
         'required_fields' => 'Required fields'
-    ]
+    ],
 ];

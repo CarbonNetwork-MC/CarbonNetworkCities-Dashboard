@@ -14,14 +14,17 @@ return new class extends Migration
         Schema::create('player_chat_colors', function (Blueprint $table) {
             $table->id();
             $table->char('player_uuid', 36);
-            $table->foreign('player_uuid')->references('uuid')->on('players')->onDelete('cascade');
-            $table->json('level');
-            $table->string('level_selected', 50)->default('<white>');
-            $table->json('prefix');
-            $table->string('prefix_selected', 50)->default('<white>');
-            $table->json('chat');
-            $table->string('chat_selected', 50)->default('<gray>');
+            $table->unsignedBigInteger('color_id');
+            $table->enum('type', ['chat', 'prefix', 'level', 'name']);
+            $table->boolean('selected')->default(false);
             $table->timestamps();
+
+            // Foreign keys
+            $table->foreign('player_uuid')->references('uuid')->on('players')->onDelete('cascade');
+            $table->foreign('color_id')->references('id')->on('chat_colors')->onDelete('cascade');
+
+            // Unique constraint to prevent duplicate entries
+            $table->unique(['player_uuid', 'color_id', 'type'], 'uq_player_color_type');
         });
     }
 

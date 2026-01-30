@@ -171,9 +171,9 @@
         <x-slot name="title">{{ __('admin.buttons.users.assign_role') }}</x-slot>
         <x-slot name="content">
             <livewire:async-select 
-                 id="role"
-                 :options="$availableRoles->map(fn($role) => ['value' => $role->uuid, 'label' => $role->name])"
-                 wire:model="selectedRole"
+                id="role"
+                :options="$availableRoles->map(fn($role) => ['value' => $role->uuid, 'label' => $role->name])"
+                wire:model="selectedRole"
                 :min-search-length="2"
             />
         </x-slot>

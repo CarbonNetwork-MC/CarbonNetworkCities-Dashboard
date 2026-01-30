@@ -7,18 +7,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PlayerChatColor extends Model
 {
-    protected $filable = [
+    protected $fillable = [
         'player_uuid',
-        'level',
-        'level_selected',
-        'prefix',
-        'prefix_selected',
-        'chat',
-        'chat_selected',
+        'color_id',
+        'type',
+        'selected',
     ];
 
     public function player(): BelongsTo
     {
         return $this->belongsTo(Player::class, 'player_uuid', 'uuid');
+    }
+
+    public function color(): BelongsTo
+    {
+        return $this->belongsTo(ChatColor::class, 'color_id', 'id');
     }
 }

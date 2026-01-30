@@ -107,6 +107,14 @@
                     :label="__('sidebar.languages')"
                 />
 
+                {{-- Players --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.players.render')"
+                    :active="request()->routeIs('admin.players.*')"
+                    icon="fi fi-rr-user"
+                    :label="__('sidebar.players')"
+                />
+                    
                 {{-- PIN Consoles --}}
                 <x-sidebar.nav-item
                     :href="route('admin.pin-consoles.render')"

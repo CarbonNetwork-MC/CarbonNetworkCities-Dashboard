@@ -28,7 +28,7 @@
         </x-containers.title>
 
         <div class="mt-6">
-            <div class="grid grid-cols-4 gap-x-4 gap-y-6">
+            <div class="grid grid-cols-4 gap-4">
                 {{-- Balance --}}
                 <div class="col-span-1">
                     <x-forms.text-input label="{{ __('admin.labels.companies.bank_account_balance') }}" wire:model="balance" required />
