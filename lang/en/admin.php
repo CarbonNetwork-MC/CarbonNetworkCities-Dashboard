@@ -344,6 +344,8 @@ return [
             'plot_unlink_success' => 'Plot unlinked successfully.',
             'prefix_add_failed' => 'Failed to add prefix. Please try again.',
             'prefix_add_success' => 'Prefix added successfully.',
+            'prefix_assign_failed' => 'Failed to assign prefix. Please try again.',
+            'prefix_assign_success' => 'Prefix assigned successfully.',
             'prefix_remove_failed' => 'Failed to remove prefix. Please try again.',
             'prefix_remove_success' => 'Prefix removed successfully.',
             'prefix_update_failed' => 'Failed to update prefix. Please try again.',

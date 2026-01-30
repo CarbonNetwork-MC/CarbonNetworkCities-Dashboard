@@ -211,7 +211,7 @@
                 <x-slot name="rows">
                     @forelse ($chatColors as $chatColor)
                         <x-tables.table-row>
-                            <x-tables.table-data>{{ $chatColor->color_id }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $allChatColors->where('id', $chatColor->color_id)->first()->name ?? '' }}</x-tables.table-data>
                             <x-tables.table-data>{{ ucfirst($chatColor->type) }}</x-tables.table-data>
                             <x-tables.table-data>
                                 @if($chatColor->selected)

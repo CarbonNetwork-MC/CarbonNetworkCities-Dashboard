@@ -192,6 +192,43 @@ class EditPlayer extends Component
     }
 
     // ! Prefix
+    public function assignPrefix($id) {
+        // Store the current selected prefix and the original values for rollback in case of failure
+        $originalSelectedPrefix = $this->player->prefixes()->where('selected', true)->first();
+        $newSelectedPrefix = PlayerPrefix::find($id);
+
+        // 1. Optimistic update
+        $newSelectedPrefix->update(['selected' => true]);
+        $this->player->prefixes()->where('id', '!=', $newSelectedPrefix->id)->update(['selected' => false]);
+
+        // 2. Send invalidate request to Velocity
+        /** @var Response $response */
+        $response = Http::withToken(config('services.plugin-api.key'))
+            ->post(config('services.plugin-api.url') . "api/invalidate/player/{$this->player->uuid}");
+
+        // Immediate failure (request not accepted)
+        if ($response->status() !== 202) {
+            $this->rollbackPrefix($newSelectedPrefix, $originalSelectedPrefix);
+            Toaster::error(__('admin.toast.players.prefix_assign_failed'));
+            return;
+        }
+
+        $requestId = $response->json('requestId');
+
+        // 3. Poll for result
+        $success = $this->waitForInvalidationResult($requestId);
+        if (!$success) {
+            $this->rollbackPrefix($newSelectedPrefix, $originalSelectedPrefix);
+            Toaster::error(__('admin.toast.players.prefix_assign_failed'));
+            return;
+        }
+
+        // 4. Success
+        $this->resetPage('prefixes');
+
+        Toaster::success(__('admin.toast.players.prefix_assign_success'));
+    }
+
     public function removePrefix($id) {
         $this->prefixToRemove = PlayerPrefix::find($id);
         $this->showRemovePrefixModal = true;
