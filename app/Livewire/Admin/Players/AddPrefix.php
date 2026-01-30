@@ -2,16 +2,12 @@
 
 namespace App\Livewire\Admin\Players;
 
-use App\Http\Livewire\Concerns\WithInvalidation;
 use App\Models\Player;
-use Illuminate\Http\Client\Response;
-use Illuminate\Support\Facades\Http;
+use App\Services\PluginAPI\ApiService;
 use Livewire\Component;
 
 class AddPrefix extends Component
 {
-    use WithInvalidation;
-
     public $player;
 
     public $prefix;
@@ -21,7 +17,7 @@ class AddPrefix extends Component
         $this->player = Player::where('uuid', $uuid)->firstOrFail();
     }
 
-    public function addPrefix() {
+    public function addPrefix(ApiService $apiService) {
         $data = $this->validate([
             'prefix' => ['required', 'string', 'max:20'],
         ]);
@@ -42,26 +38,13 @@ class AddPrefix extends Component
         }
 
         // 3. Send invalidate request to Velocity
-        /** @var Response $response */
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/invalidate/player/{$this->player->uuid}");
-
-        // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
-            $this->rollbackPrefix($prefix, $originalSelectedPrefix);
-            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.prefix_add_failed'));
-        }
-
-        $requestId = $response->json()['requestId'];
-
-        // 4. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
+        [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
         if (!$success) {
             $this->rollbackPrefix($prefix, $originalSelectedPrefix);
             return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.prefix_add_failed'));
         }
 
-        // 5. Success
+        // 4. Success
         return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->success(__('admin.toast.players.prefix_add_success'));
     }
 

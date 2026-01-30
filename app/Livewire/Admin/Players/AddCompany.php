@@ -2,17 +2,13 @@
 
 namespace App\Livewire\Admin\Players;
 
-use App\Http\Livewire\Concerns\WithInvalidation;
 use App\Models\Company;
 use App\Models\Player;
-use Illuminate\Http\Client\Response;
-use Illuminate\Support\Facades\Http;
+use App\Services\PluginAPI\ApiService;
 use Livewire\Component;
 
 class AddCompany extends Component
 {
-    use WithInvalidation;
-
     public $player;
 
     public $companyId;
@@ -25,7 +21,7 @@ class AddCompany extends Component
         $this->companies = Company::get(['id', 'name']);
     }
 
-    public function addCompany() {
+    public function addCompany(ApiService $apiService) {
         $data = $this->validate([
             'companyId' => ['required', 'exists:companies,id'],
         ]);
@@ -40,26 +36,13 @@ class AddCompany extends Component
         ]);
 
         // 2. Send invalidate request to Velocity
-        /** @var Response $response */
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/invalidate/company/{$company->id}");
-
-        // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
-            $this->rollbackCompany($company, $originalCompany);
-            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.company_add_failed'));
-        }
-
-        $requestId = $response->json()['requestId'];
-
-        // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
+        [$status, $success] = $apiService->post("api/invalidate/company/{$company->id}");
         if (!$success) {
             $this->rollbackCompany($company, $originalCompany);
             return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.company_add_failed'));
         }
 
-        // 4. Success
+        // 3. Success
         return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->success(__('admin.toast.players.company_add_success'));
     }
 

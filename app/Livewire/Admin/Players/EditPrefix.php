@@ -2,16 +2,12 @@
 
 namespace App\Livewire\Admin\Players;
 
-use App\Http\Livewire\Concerns\WithInvalidation;
 use App\Models\Player;
+use App\Services\PluginAPI\ApiService;
 use Livewire\Component;
-use Illuminate\Http\Client\Response;
-use Illuminate\Support\Facades\Http;
 
 class EditPrefix extends Component
 {
-    use WithInvalidation;
-
     public $player;
     public $selectedPrefix;
 
@@ -26,7 +22,7 @@ class EditPrefix extends Component
         $this->selected = $this->selectedPrefix->selected;
     }
 
-    public function updatePrefix() {
+    public function updatePrefix(ApiService $apiService) {
         $data = $this->validate([
             'prefix' => ['required', 'string', 'max:20'],
         ]);
@@ -47,20 +43,7 @@ class EditPrefix extends Component
         }
 
         // 3. Send invalidate request to Velocity
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/invalidate/player/{$this->player->uuid}");
-
-        // Immediate failure (request not accepted)
-        /** @var Response $response */
-        if ($response->status() !== 202) {
-            $this->rollbackPrefix($originalPrefixValues, $originalSelectedPrefix);
-            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.prefix_update_failed'));
-        }
-
-        $requestId = $response->json()['requestId'];
-
-        // 4. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
+        [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
         if (!$success) {
             $this->rollbackPrefix($originalPrefixValues, $originalSelectedPrefix);
             return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.prefix_update_failed'));

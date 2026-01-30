@@ -5,14 +5,10 @@ namespace App\Livewire\Admin\Players;
 use App\Models\Player;
 use Livewire\Component;
 use App\Models\ChatColor;
-use Illuminate\Http\Client\Response;
-use Illuminate\Support\Facades\Http;
-use App\Http\Livewire\Concerns\WithInvalidation;
+use App\Services\PluginAPI\ApiService;
 
 class AddChatColor extends Component
 {
-    use WithInvalidation;
-
     public $player;
 
     public $color;
@@ -39,7 +35,7 @@ class AddChatColor extends Component
         }
     }
 
-    public function addChatColor() {
+    public function addChatColor(ApiService $apiService) {
         $data = $this->validate([
             'color' => ['required', 'string', 'max:20'],
             'type' => ['required', 'in:chat,level,prefix'],
@@ -62,26 +58,13 @@ class AddChatColor extends Component
         }
 
         // 3. Send invalidate request to Velocity
-        /** @var Response $response */
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/invalidate/player/{$this->player->uuid}");
-
-        // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
-            $this->rollbackChatColor($chatColor, $originalSelectedColor);
-            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.chat_color_add_failed'));
-        }
-
-        $requestId = $response->json()['requestId'];
-
-        // 4. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
+        [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
         if (!$success) {
             $this->rollbackChatColor($chatColor, $originalSelectedColor);
             return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.chat_color_add_failed'));
         }
 
-        // 5. Success
+        // 4. Success
         return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->success(__('admin.toast.players.chat_color_add_success'));
     }
 

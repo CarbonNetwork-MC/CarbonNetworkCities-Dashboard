@@ -2,17 +2,13 @@
 
 namespace App\Livewire\Admin\Players;
 
-use App\Http\Livewire\Concerns\WithInvalidation;
 use App\Models\Plot;
 use App\Models\Player;
+use App\Services\PluginAPI\ApiService;
 use Livewire\Component;
-use Illuminate\Http\Client\Response;
-use Illuminate\Support\Facades\Http;
 
 class AddPlot extends Component
 {
-    use WithInvalidation;
-
     public $player;
 
     public $plotId;
@@ -21,7 +17,7 @@ class AddPlot extends Component
         $this->player = Player::where('uuid', $uuid)->firstOrFail();
     }
 
-    public function addPlot() {
+    public function addPlot(ApiService $apiService) {
         $data = $this->validate([
             'plotId' => ['required', 'string', 'exists:plots,plot_id'],
         ]);
@@ -41,26 +37,13 @@ class AddPlot extends Component
         ]);
 
         // 2. Send invalidate request to Velocity
-        /** @var Response $response */
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/invalidate/plot/{$plot->plot_id}");
-
-        // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
-            $this->rollbackPlot($plot, $originalPlot);
-            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.plot_add_failed'));
-        }
-
-        $requestId = $response->json()['requestId'];
-
-        // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
+        [$status, $success] = $apiService->post("api/invalidate/plot/{$plot->plot_id}");
         if (!$success) {
             $this->rollbackPlot($plot, $originalPlot);
             return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.plot_add_failed'));
         }
 
-        // 4. Success
+        // 3. Success
         return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->success(__('admin.toast.players.plot_add_success'));
     }
 

@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Admin\Players;
 
-use App\Http\Livewire\Concerns\WithInvalidation;
 use App\Models\ChatColor;
 use App\Models\CityRegion;
 use App\Models\Company;
@@ -14,8 +13,7 @@ use App\Models\PlayerChatColor;
 use App\Models\PlayerPastUsername;
 use App\Models\PlayerPrefix;
 use App\Models\Plot;
-use Illuminate\Http\Client\Response;
-use Illuminate\Support\Facades\Http;
+use App\Services\PluginAPI\ApiService;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -24,7 +22,6 @@ use Masmerise\Toaster\Toaster;
 class EditPlayer extends Component
 {
     use WithPagination;
-    use WithInvalidation;
 
     private $defaultPrefixColor = "<white>";
     private $defaultLevelColor = "<white>";
@@ -120,7 +117,7 @@ class EditPlayer extends Component
     }
 
     // ! Player
-    public function updatePlayer() {
+    public function updatePlayer(ApiService $apiService) {
         // Store the original player for rollback in case of failure
         $originalPlayer = $this->player;
 
@@ -166,33 +163,18 @@ class EditPlayer extends Component
         }
 
         // 3. Send invalidate request to Velocity
-        /** @var Response $response */
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . 'api/invalidate/player/' . $originalPlayer->uuid);
-
-        // dump($response->status(), $response->body(), $response->json());
-
-        // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
-            $this->rollbackPlayer($originalPlayer);
-            return Toaster::error(__('admin.toast.players.update_failed'));
-        }
-
-        $requestId = $response->json('requestId');
-
-        // 4. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
+        [$status, $success] = $apiService->post("api/invalidate/player/{$originalPlayer->uuid}");
         if (!$success) {
             $this->rollbackPlayer($originalPlayer);
             return Toaster::error(__('admin.toast.players.update_failed'));
         }
         
-        // 5. Success
+        // 4. Success
         Toaster::success(__('admin.toast.players.update_success'));
     }
 
     // ! Prefix
-    public function assignPrefix($id) {
+    public function assignPrefix($id, ApiService $apiService) {
         // Store the current selected prefix and the original values for rollback in case of failure
         $originalSelectedPrefix = $this->player->prefixes()->where('selected', true)->first();
         $newSelectedPrefix = PlayerPrefix::find($id);
@@ -202,28 +184,14 @@ class EditPlayer extends Component
         $this->player->prefixes()->where('id', '!=', $newSelectedPrefix->id)->update(['selected' => false]);
 
         // 2. Send invalidate request to Velocity
-        /** @var Response $response */
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/invalidate/player/{$this->player->uuid}");
-
-        // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
-            $this->rollbackPrefix($newSelectedPrefix, $originalSelectedPrefix);
-            Toaster::error(__('admin.toast.players.prefix_assign_failed'));
-            return;
-        }
-
-        $requestId = $response->json('requestId');
-
-        // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
+        [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
         if (!$success) {
             $this->rollbackPrefix($newSelectedPrefix, $originalSelectedPrefix);
             Toaster::error(__('admin.toast.players.prefix_assign_failed'));
             return;
         }
 
-        // 4. Success
+        // 3. Success
         $this->resetPage('prefixes');
 
         Toaster::success(__('admin.toast.players.prefix_assign_success'));
@@ -234,7 +202,7 @@ class EditPlayer extends Component
         $this->showRemovePrefixModal = true;
     }
 
-    public function destroyPrefix() {
+    public function destroyPrefix(ApiService $apiService) {
         // Store the original prefix for rollback in case of failure
         $originalPrefix = $this->prefixToRemove;
         $defaultPrefix = PlayerPrefix::where('player_uuid', $this->player->uuid)
@@ -253,28 +221,14 @@ class EditPlayer extends Component
         }
 
         // 2. Send invalidate request to Velocity
-        /** @var Response $response */
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . 'api/invalidate/player/' . $this->player->uuid);
-
-        // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
-            $this->rollbackPrefix($originalPrefix, $defaultPrefix);
-            Toaster::error(__('admin.toast.players.prefix_remove_failed'));
-            return;
-        }
-
-        $requestId = $response->json('requestId');
-
-        // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
+        [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
         if (!$success) {
             $this->rollbackPrefix($originalPrefix, $defaultPrefix);
             Toaster::error(__('admin.toast.players.prefix_remove_failed'));
             return;
         }
 
-        // 4. Success
+        // 3. Success
         $this->showRemovePrefixModal = false;
         $this->prefixToRemove = null;
 
@@ -282,7 +236,7 @@ class EditPlayer extends Component
     }
 
     // ! Chat Colors
-    public function selectChatColor($id, $type) {
+    public function selectChatColor($id, $type, ApiService $apiService) {
         // Store the current selected chat color and the original values for rollback in case of failure
         $originalSelectedChatColor = $this->player->chatColors()->where('selected', true)->where('type', $type)->first();
         $newSelectedChatColor = PlayerChatColor::find($id);
@@ -292,21 +246,7 @@ class EditPlayer extends Component
         $this->player->chatColors()->where('id', '!=', $newSelectedChatColor->id)->where('type', $type)->update(['selected' => false]);
 
         // 2. Send invalidate request to Velocity
-        /** @var Response $response */
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/invalidate/player/{$this->player->uuid}");
-
-        // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
-            $this->rollbackChatColorSelect($newSelectedChatColor, $originalSelectedChatColor);
-            Toaster::error(__('admin.toast.players.chat_color_select_failed'));
-            return;
-        }
-
-        $requestId = $response->json('requestId');
-
-        // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
+        [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
         if (!$success) {
             $this->rollbackChatColorSelect($newSelectedChatColor, $originalSelectedChatColor);
             Toaster::error(__('admin.toast.players.chat_color_select_failed'));
@@ -324,7 +264,7 @@ class EditPlayer extends Component
         $this->showRemoveChatColorModal = true;
     }
 
-    public function destroyColor() {
+    public function destroyColor(ApiService $apiService) {
         // Store the original chat color for rollback in case of failure
         $originalChatColor = $this->chatColorToRemove;
 
@@ -359,26 +299,13 @@ class EditPlayer extends Component
         }
 
         // 2. Send invalidate request to Velocity
-        /** @var Response $response */
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . 'api/invalidate/player/' . $this->player->uuid);
-
-        // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
-            $this->rollbackChatColor($originalChatColor, $defaultColor);
-            return Toaster::error(__('admin.toast.players.chat_color_remove_failed'));
-        }
-
-        $requestId = $response->json('requestId');
-
-        // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
+        [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
         if (!$success) {
             $this->rollbackChatColor($originalChatColor, $defaultColor);
             return Toaster::error(__('admin.toast.players.chat_color_remove_failed'));
         }
 
-        // 4. Success
+        // 3. Success
         $this->showRemoveChatColorModal = false;
         $this->chatColorToRemove = null;
 
@@ -391,7 +318,7 @@ class EditPlayer extends Component
         $this->showRemoveBankAccountModal = true;
     }
 
-    public function destroyBankAccount() {
+    public function destroyBankAccount(ApiService $apiService) {
         // Store the original bank account for rollback in case of failure
         $originalBankAccount = $this->bankAccountToRemove;
 
@@ -399,28 +326,14 @@ class EditPlayer extends Component
         $this->bankAccountToRemove->delete();
 
         // 2. Send invalidate request to Velocity
-        /** @var Response $response */
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . 'api/invalidate/player/' . $this->player->uuid);
-
-        // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
-            $this->rollbackBankAccount($originalBankAccount);
-            Toaster::error(__('admin.toast.players.bank_account_remove_failed'));
-            return;
-        }
-
-        $requestId = $response->json('requestId');
-
-        // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
+        [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
         if (!$success) {
             $this->rollbackBankAccount($originalBankAccount);
             Toaster::error(__('admin.toast.players.bank_account_remove_failed'));
             return;
         }
 
-        // 4. Success
+        // 3. Success
         $this->showRemoveBankAccountModal = false;
         $this->bankAccountToRemove = null;
 
@@ -433,7 +346,7 @@ class EditPlayer extends Component
         $this->showRemovePlotModal = true;
     }
 
-    public function unlinkPlot() {
+    public function unlinkPlot(ApiService $apiService) {
         // Store the original plot for rollback in case of failure
         $originalPlot = $this->plotToRemove;
 
@@ -442,28 +355,13 @@ class EditPlayer extends Component
             ->update(['owner_uuid' => null]);
 
         // 2. Send invalidate request to Velocity
-        /** @var Response $response */
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . 'api/invalidate/plot/' . $this->plotToRemove->plot_id);
-
-        // dd($response->status(), $response->body(), $response->json());
-
-        // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
-            $this->rollbackPlot($originalPlot);
-            return Toaster::error(__('admin.toast.players.plot_unlink_failed'));
-        }
-
-        $requestId = $response->json('requestId');
-
-        // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
+        [$status, $success] = $apiService->post("api/invalidate/plot/{$this->plotToRemove->plot_id}");
         if (!$success) {
             $this->rollbackPlot($originalPlot);
             return Toaster::error(__('admin.toast.players.plot_unlink_failed'));
         }
 
-        // 4. Success
+        // 3. Success
         $this->showRemovePlotModal = false;
         $this->plotToRemove = null;
 
@@ -476,7 +374,7 @@ class EditPlayer extends Component
         $this->showRemoveCompanyModal = true;
     }
 
-    public function unlinkCompany() {
+    public function unlinkCompany(ApiService $apiService) {
         // Store the original company for rollback in case of failure
         $originalCompany = $this->companyToRemove;
 
@@ -485,26 +383,13 @@ class EditPlayer extends Component
             ->update(['owner_uuid' => null]);
 
         // 2. Send invalidate request to Velocity
-        /** @var Response $response */
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . 'api/invalidate/company/' . $this->companyToRemove->id);
-
-        // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
-            $this->rollbackCompany($originalCompany);
-            return Toaster::error(__('admin.toast.players.company_unlink_failed'));
-        }
-
-        $requestId = $response->json('requestId');
-
-        // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
+        [$status, $success] = $apiService->post("api/invalidate/company/{$this->companyToRemove->id}");
         if (!$success) {
             $this->rollbackCompany($originalCompany);
             return Toaster::error(__('admin.toast.players.company_unlink_failed'));
         }
 
-        // 4. Success
+        // 3. Success
         $this->showRemoveCompanyModal = false;
         $this->companyToRemove = null;
 
@@ -517,7 +402,7 @@ class EditPlayer extends Component
         $this->showRemovePastUsernameModal = true;
     }
 
-    public function destroyPastUsername() {
+    public function destroyPastUsername(ApiService $apiService) {
         // Store the original past username for rollback in case of failure
         $originalPastUsername = $this->pastUsernameToRemove;
 
@@ -525,20 +410,7 @@ class EditPlayer extends Component
         $this->pastUsernameToRemove->delete();
 
         // 2. Send invalidate request to Velocity
-        /** @var Response $response */
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . 'api/invalidate/player/' . $this->player->uuid);
-
-        // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
-            $this->rollbackPastUsername($originalPastUsername);
-            return Toaster::error(__('admin.toast.players.past_username_remove_failed'));
-        }
-
-        $requestId = $response->json('requestId');
-
-        // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
+        [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
         if (!$success) {
             $this->rollbackPastUsername($originalPastUsername);
             return Toaster::error(__('admin.toast.players.past_username_remove_failed'));

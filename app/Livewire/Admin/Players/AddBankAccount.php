@@ -2,17 +2,13 @@
 
 namespace App\Livewire\Admin\Players;
 
-use App\Http\Livewire\Concerns\WithInvalidation;
 use App\Models\Country;
 use App\Models\Player;
-use Illuminate\Http\Client\Response;
-use Illuminate\Support\Facades\Http;
+use App\Services\PluginAPI\ApiService;
 use Livewire\Component;
 
 class AddBankAccount extends Component
 {
-    use WithInvalidation;
-
     public $player;
 
     public $balance = 0;
@@ -31,7 +27,7 @@ class AddBankAccount extends Component
         $this->currencies = Country::get(['name', 'currency']);
     }
 
-    public function addBankAccount() {
+    public function addBankAccount(ApiService $apiService) {
         $data = $this->validate([
             'balance' => ['required', 'numeric', 'min:0'],
             'type' => ['required', 'string', 'in:' . implode(',', $this->types)],
@@ -47,26 +43,13 @@ class AddBankAccount extends Component
         ]);
 
         // 2. Send invalidate request to Velocity
-        /** @var Response $response */
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/invalidate/player/{$this->player->uuid}");
-
-        // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
-            $bankAccount->delete();
-            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.bank_account_add_failed'));
-        }
-
-        $requestId = $response->json()['requestId'];
-
-        // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
+        [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
         if (!$success) {
             $bankAccount->delete();
             return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.bank_account_add_failed'));
         }
 
-        // 4. Success
+        // 3. Success
         return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->success(__('admin.toast.players.bank_account_add_success'));
     }
 
