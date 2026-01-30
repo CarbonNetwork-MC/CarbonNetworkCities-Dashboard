@@ -13,7 +13,7 @@
             ],
             [
                 'url'   => route('admin.companies.edit', ['id' => $company->id]),
-                'label' => __('admin.titles.company.edit'),
+                'label' => __('admin.titles.companies.edit'),
             ]
         ]" />
     </x-slot>
@@ -21,31 +21,31 @@
     {{-- Company --}}
     <x-containers.main>
         <x-containers.title>
-            {{ __('admin.buttons.company.create') }}
+            {{ __('admin.buttons.companies.create') }}
         </x-containers.title>
 
         <div class="mt-6">
             <div class="grid grid-cols-4 gap-x-4 gap-y-6">
                 {{-- Company Name --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.company.name') }}" wire:model="companyName" required />
+                    <x-forms.text-input label="{{ __('admin.labels.companies.name') }}" wire:model="companyName" required />
                 </div>
 
                 {{-- World ID --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.company.world_id') }}" wire:model="worldId" required />
+                    <x-forms.text-input label="{{ __('admin.labels.companies.world_id') }}" wire:model="worldId" required />
                 </div>
 
                 {{-- CoC Number --}}
                 <div class="col-span-1">
-                    <x-forms.text-input label="{{ __('admin.labels.company.coc_number') }}" wire:model="cocNumber" required />
+                    <x-forms.text-input label="{{ __('admin.labels.companies.coc_number') }}" wire:model="cocNumber" required />
                 </div>
 
                 <div class="cols-span-1"></div>
 
                 <div class="col-span-1">
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        {{ __('admin.labels.company.owner') }}
+                        {{ __('admin.labels.companies.owner') }}
                     </label>
                     <livewire:async-select
                         :options="$players->map(fn($player) => ['label' => $player->username, 'value' => $player->uuid])"
@@ -68,12 +68,12 @@
     <x-containers.main class="mt-4">
         <div class="flex justify-between">
             <x-containers.title>
-                {{ __('admin.titles.company.employees') }}
+                {{ __('admin.titles.companies.employees') }}
             </x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchEmployees" wire:model.live="searchEmployees" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.companies.add-employee', ['id' => $company->id]) }}">
-                    {{ __('admin.buttons.company.add_employee') }}
+                    {{ __('admin.buttons.companies.add_employee') }}
                 </x-buttons.primary-button>
             </div>
         </div>
@@ -83,10 +83,10 @@
                 <x-slot name="headers">
                     <tr>
                         <x-tables.table-header>
-                            {{ __('admin.labels.company.employee_name') }}
+                            {{ __('admin.labels.companies.employee_name') }}
                         </x-tables.table-header>
                         <x-tables.table-header>
-                            {{ __('admin.labels.company.employee_role') }}
+                            {{ __('admin.labels.companies.employee_role') }}
                         </x-tables.table-header>
                         <x-tables.table-header></x-tables.table-header>
                     </tr>
@@ -105,7 +105,7 @@
                     @empty
                         <tr>
                             <x-tables.empty-state colspan="3">
-                                {{ __('admin.messages.company.employees_no_records') }}
+                                {{ __('admin.messages.companies.employees_no_records') }}
                             </x-tables.empty-state>
                         </tr>
                     @endforelse
@@ -132,12 +132,12 @@
     <x-containers.main class="mt-4">
         <div class="flex justify-between">
             <x-containers.title>
-                {{ __('admin.titles.company.bank_accounts') }}
+                {{ __('admin.titles.companies.bank_accounts') }}
             </x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchBankAccounts" wire:model.live="searchBankAccounts" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.companies.add-bank-account', ['id' => $company->id]) }}">
-                    {{ __('admin.buttons.company.add_bank_account') }}
+                    {{ __('admin.buttons.companies.add_bank_account') }}
                 </x-buttons.primary-button>
             </div>
         </div>
@@ -146,10 +146,10 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <x-tables.table-header>{{ __('admin.labels.company.bank_account_number') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.bank_account_balance') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.bank_account_is_main') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.bank_account_currency') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.bank_account_number') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.bank_account_balance') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.bank_account_is_main') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.bank_account_currency') }}</x-tables.table-header>
                         <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
@@ -180,7 +180,7 @@
                     @empty
                         <tr>
                             <x-tables.empty-state colspan="5">
-                                {{ __('admin.messages.company.bank_accounts_no_records') }}
+                                {{ __('admin.messages.companies.bank_accounts_no_records') }}
                             </x-tables.empty-state>
                         </tr>
                     @endforelse
@@ -207,12 +207,12 @@
     <x-containers.main class="mt-4">
         <div class="flex justify-between">
             <x-containers.title>
-                {{ __('admin.titles.company.plots') }}
+                {{ __('admin.titles.companies.plots') }}
             </x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchPlots" wire:model.live="searchPlots" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.companies.add-plot', ['id' => $company->id]) }}">
-                    {{ __('admin.buttons.company.add_plot') }}
+                    {{ __('admin.buttons.companies.add_plot') }}
                 </x-buttons.primary-button>
             </div>
         </div>
@@ -221,10 +221,10 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <x-tables.table-header>{{ __('admin.labels.company.plot_name') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.plot_id') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.world_id') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.plot_location') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.plot_name') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.plot_id') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.world_id') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.plot_location') }}</x-tables.table-header>
                         <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
@@ -244,7 +244,7 @@
                     @empty
                         <tr>
                             <x-tables.empty-state colspan="5">
-                                {{ __('admin.messages.company.plots_no_records') }}
+                                {{ __('admin.messages.companies.plots_no_records') }}
                             </x-tables.empty-state>
                         </tr>
                     @endforelse
@@ -271,12 +271,12 @@
     <x-containers.main class="mt-4">
         <div class="flex justify-between">
             <x-containers.title>
-                {{ __('admin.titles.company.add_pin_console') }}
+                {{ __('admin.titles.companies.add_pin_console') }}
             </x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="searchPinConsoles" wire:model.live="searchPinConsoles" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.companies.add-pin-console', ['id' => $company->id]) }}">
-                    {{ __('admin.buttons.company.add_pin_console') }}
+                    {{ __('admin.buttons.companies.add_pin_console') }}
                 </x-buttons.primary-button>
             </div>
         </div>
@@ -285,13 +285,13 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <x-tables.table-header>{{ __('admin.labels.company.pin_console_id') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.pin_console_account') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.pin_console_location') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.pin_console_id') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.pin_console_account') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.pin_console_location') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.city_regions.city') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.city_regions.country') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.world_id') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.pin_console_is_active') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.world_id') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.pin_console_is_active') }}</x-tables.table-header>
                         <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
@@ -323,7 +323,7 @@
                     @empty
                         <tr>
                             <x-tables.empty-state colspan="5">
-                                {{ __('admin.messages.company.pin_consoles_no_records') }}
+                                {{ __('admin.messages.companies.pin_consoles_no_records') }}
                             </x-tables.empty-state>
                         </tr>
                     @endforelse
@@ -350,12 +350,12 @@
     <x-modals.modal wire:model="removeEmployeeModal">
         <x-slot name="title">
             <div class="w-full flex justify-center">
-                {{ __('admin.buttons.company.remove_employee') }}
+                {{ __('admin.buttons.companies.remove_employee') }}
             </div>
         </x-slot>
         <x-slot name="content">
             <p class="text-center text-gray-600 dark:text-gray-300">
-                {!! __('admin.messages.company.remove_employee_confirmation', ['name' => $employeeToRemove->player->username ?? '']) !!}
+                {!! __('admin.messages.companies.remove_employee_confirmation', ['name' => $employeeToRemove->player->username ?? '']) !!}
             </p>
         </x-slot>
         <x-slot name="footer">
@@ -372,12 +372,12 @@
     <x-modals.modal wire:model="removeBankAccountModal">
         <x-slot name="title">
             <div class="w-full flex justify-center">
-                {{ __('admin.buttons.company.remove_bank_account') }}
+                {{ __('admin.buttons.companies.remove_bank_account') }}
             </div>
         </x-slot>
         <x-slot name="content">
             <p class="text-center text-gray-600 dark:text-gray-300">
-                {!! __('admin.messages.company.remove_bank_account_confirmation', ['id' => $bankAccountToRemove->id ?? '']) !!}
+                {!! __('admin.messages.companies.remove_bank_account_confirmation', ['id' => $bankAccountToRemove->id ?? '']) !!}
             </p>
         </x-slot>
         <x-slot name="footer">
@@ -394,12 +394,12 @@
     <x-modals.modal wire:model="removePlotModal">
         <x-slot name="title">
             <div class="w-full flex justify-center">
-                {{ __('admin.buttons.company.remove_plot') }}
+                {{ __('admin.buttons.companies.remove_plot') }}
             </div>
         </x-slot>
         <x-slot name="content">
             <p class="text-center text-gray-600 dark:text-gray-300">
-                {!! __('admin.messages.company.remove_plot_confirmation', ['id' => $plotToRemove->plot_id ?? '']) !!}
+                {!! __('admin.messages.companies.remove_plot_confirmation', ['id' => $plotToRemove->plot_id ?? '']) !!}
             </p>
         </x-slot>
         <x-slot name="footer">
@@ -416,12 +416,12 @@
     <x-modals.modal wire:model="removePinConsoleModal">
         <x-slot name="title">
             <div class="w-full flex justify-center">
-                {{ __('admin.buttons.company.remove_pin_console') }}
+                {{ __('admin.buttons.companies.remove_pin_console') }}
             </div>
         </x-slot>
         <x-slot name="content">
             <p class="text-center text-gray-600 dark:text-gray-300">
-                {!! __('admin.messages.company.remove_pin_console_confirmation', ['id' => $pinConsoleToRemove->id ?? '']) !!}
+                {!! __('admin.messages.companies.remove_pin_console_confirmation', ['id' => $pinConsoleToRemove->id ?? '']) !!}
             </p>
         </x-slot>
         <x-slot name="footer">

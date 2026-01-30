@@ -11,7 +11,7 @@ return [
 
     // Titles
     'titles' => [
-        'company' => [
+        'companies' => [
             'add_bank_account' => 'Add Bank Account',
             'add_employee' => 'Add Employee',
             'add_pin_console' => 'Add PIN Console',
@@ -102,7 +102,7 @@ return [
         'player_uuid' => 'Player UUID',
 
         // Companies
-        'company' => [
+        'companies' => [
             'bank_accounts' => 'Bank Accounts',
             'bank_account_number' => 'Account No.',
             'bank_account_balance' => 'Balance',
@@ -196,7 +196,7 @@ return [
     'buttons' => [
         'assign' => 'Assign',
 
-        'company' => [
+        'companies' => [
             'add_bank_account' => 'Add Bank Account',
             'add_employee' => 'Add Employee',
             'add_pin_console' => 'Add PIN Console',
@@ -247,7 +247,7 @@ return [
 
     // Messages
     'messages' => [
-        'company' => [
+        'companies' => [
             'delete_confirmation' => 'Are you sure you want to delete the company <b>:name</b>? This action cannot be undone.',
             'remove_employee_confirmation' => 'Are you sure you want to remove the employee <b>:name</b> from this company?',
             'remove_bank_account_confirmation' => 'Are you sure you want to remove the bank account <b>:id</b> from this company?',
@@ -325,7 +325,7 @@ return [
             'unauthorized_error' => 'Unauthorized access to the API. Please check the API key configuration.',
         ],
 
-        'company' => [
+        'companies' => [
             'created' => 'Company created successfully.',
             'deleted' => 'Company deleted successfully.',
             'updated' => 'Company updated successfully.',
@@ -431,7 +431,7 @@ return [
 
     // Placeholders
     'placeholders' => [
-        'company' => [
+        'companies' => [
             'select_role' => 'Select Role',
         ],
 

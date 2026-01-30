@@ -30,9 +30,9 @@
                 <x-slot name="headers">
                     <tr>
                         <x-tables.table-header>{{ __('admin.labels.pin_consoles.company') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.bank_account_balance') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.bank_account_is_main') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.bank_account_currency') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.bank_account_balance') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.bank_account_is_main') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.bank_account_currency') }}</x-tables.table-header>
                         <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
@@ -92,9 +92,9 @@
                 <x-slot name="headers">
                     <tr>
                         <x-tables.table-header>{{ __('admin.labels.itemsmenu.player_username') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.bank_account_balance') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.bank_account_balance') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.bank_accounts.account_type') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.bank_account_currency') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.bank_account_currency') }}</x-tables.table-header>
                         <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>

@@ -28,7 +28,7 @@
                 {{-- Company ID --}}
                 <div class="col-span-1">
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2.5">
-                        {{ __('admin.labels.company.company_id') }}
+                        {{ __('admin.labels.companies.company_id') }}
                     </label>
                     <livewire:async-select
                         :options="$companies->map(fn($company) => ['label' => $company->name, 'value' => $company->id])"
@@ -55,7 +55,7 @@
                 <div class="col-span-1">
                     <x-forms.checkbox
                         id="is_main"
-                        label="{{ __('admin.labels.company.bank_account_is_main') }}"
+                        label="{{ __('admin.labels.companies.bank_account_is_main') }}"
                         wire:model="isMain"
                     />
                 </div>

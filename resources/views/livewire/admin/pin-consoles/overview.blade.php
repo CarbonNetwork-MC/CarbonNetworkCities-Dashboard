@@ -29,16 +29,16 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <x-tables.table-header>{{ __('admin.labels.company.pin_console_id') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.pin_console_id') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.pin_consoles.company') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.pin_console_account') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.pin_console_account') }}</x-tables.table-header>
                         <x-tables.table-header>X</x-tables.table-header>
                         <x-tables.table-header>Y</x-tables.table-header>
                         <x-tables.table-header>Z</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.city_regions.city') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.city_regions.country') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.city_regions.world_id') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.company.pin_console_is_active') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.pin_console_is_active') }}</x-tables.table-header>
                         <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
