@@ -92,7 +92,7 @@ class EditRole extends Component
             })
             ->where('name', 'like', '%' . $this->search . '%')
             ->orderBy('name')
-            ->get(),
+            ->get(['uuid', 'name']),
         ]);
     }
 }

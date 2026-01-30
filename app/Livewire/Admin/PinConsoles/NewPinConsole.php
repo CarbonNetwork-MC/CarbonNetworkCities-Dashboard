@@ -27,8 +27,8 @@ class NewPinConsole extends Component
     public $isActive = true;
 
     public function mount() {
-        $this->companies = Company::all();
-        $this->countries = Country::all();
+        $this->companies = Company::get(['id', 'name']);
+        $this->countries = Country::get(['id', 'name']);
         $this->accounts = collect();
     }
 

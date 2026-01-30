@@ -19,7 +19,7 @@ class AddBankAccount extends Component
 
     public function mount($id) {
         $this->company = Company::where('id', $id)->firstOrFail();
-        $this->currencies = Country::all()->pluck('currency')->unique()->sort()->values();
+        $this->currencies = Country::distinct()->orderBy('currency')->pluck('currency');
     }
 
     public function addBankAccount(ApiService $apiService) {
@@ -30,7 +30,7 @@ class AddBankAccount extends Component
         ]);
 
         // Store the current data for rollback in case of failure
-        $originalBankAccounts = $this->company->bankAccounts()->get();
+        $originalBankAccounts = $this->company->bankAccounts()->get(['id', 'is_main']);
 
         // 1. Create Bank Account
         $bankAccount = $this->company->bankAccounts()->create([

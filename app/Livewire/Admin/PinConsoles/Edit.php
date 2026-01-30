@@ -33,7 +33,7 @@ class Edit extends Component
 
         $this->companyId = $this->pinConsole->company_id;
         $this->company = Company::find($this->companyId);
-        $this->accounts = CompanyBankaccount::where('company_id', $this->company->id)->get()->toArray();
+        $this->accounts = CompanyBankaccount::where('company_id', $this->company->id)->get(['id'])->toArray();
         $this->accountId = $this->pinConsole->account_id;
         $this->x = $this->pinConsole->x;
         $this->y = $this->pinConsole->y;
@@ -43,15 +43,15 @@ class Edit extends Component
         $this->worldId = $this->pinConsole->world_id;
         $this->isActive = $this->pinConsole->is_active;
 
-        $this->companies = Company::all();
-        $this->countries = Country::all();
+        $this->companies = Company::get(['id', 'name']);
+        $this->countries = Country::get(['id', 'name']);
     }
 
     public function updated($key, $value) {
         if ($key === 'companyId') {
             if ($this->company?->id !== (int) $value) {
                 $this->company = Company::find($value);
-                $this->accounts = CompanyBankaccount::where('company_id', $value)->get()->toArray();
+                $this->accounts = CompanyBankaccount::where('company_id', $value)->get(['id'])->toArray();
                 $this->accountId = null;
             }
         }

@@ -75,7 +75,7 @@ class NewItem extends Component
     public function render()
     {
         return view('livewire.admin.itemsmenu.new-item', [
-            'categories' => ItemCategory::all(),
+            'categories' => ItemCategory::get(['id', 'name']),
             'expiredPrefixes' => config('items.expired_prefixes'),
         ]);
     }
