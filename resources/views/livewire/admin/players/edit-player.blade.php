@@ -265,7 +265,7 @@
             </div>
             <div class="flex items-center gap-x-4" x-show="open">
                 <x-forms.search-bar id="searchBankAccounts" wire:model.live="searchBankAccounts" />
-                <x-buttons.primary-button size="sm" href="">{{ __('general.buttons.add') }}</x-buttons.primary-button>
+                <x-buttons.primary-button size="sm" href="{{ route('admin.players.add-bank-account', ['uuid' => $player->uuid]) }}">{{ __('general.buttons.add') }}</x-buttons.primary-button>
             </div>
         </div>
 
@@ -506,7 +506,7 @@
     <x-modals.modal wire:model="showRemovePrefixModal">
         <x-slot name="title"><div class="flex justify-center">{{ __('admin.titles.players.delete_prefix') }}</div></x-slot>
         <x-slot name="content">
-            <p>{{ __('admin.messages.players.delete_prefix_confirmation') }}</p>
+            <p>{!! __('admin.messages.players.delete_prefix_confirmation', ['prefix' => $prefixToRemove?->prefix]) !!}</p>
         </x-slot>
         <x-slot name="footer">
             <x-buttons.secondary-button wire:click="$set('showRemovePrefixModal', false)">
@@ -538,7 +538,7 @@
     <x-modals.modal wire:model="showRemoveBankAccountModal">
         <x-slot name="title"><div class="flex justify-center">{{ __('admin.titles.players.delete_bank_account') }}</div></x-slot>
         <x-slot name="content">
-            <p>{{ __('admin.messages.players.delete_bank_account_confirmation') }}</p>
+            <p>{!! __('admin.messages.players.delete_bank_account_confirmation', ['id' => $bankAccountToRemove?->id]) !!}</p>
         </x-slot>
         <x-slot name="footer">
             <x-buttons.secondary-button wire:click="$set('showRemoveBankAccountModal', false)">
@@ -554,7 +554,7 @@
     <x-modals.modal wire:model="showRemovePlotModal">
         <x-slot name="title"><div class="flex justify-center">{{ __('admin.titles.players.unlink_plot') }}</div></x-slot>
         <x-slot name="content">
-            <p>{{ __('admin.messages.players.unlink_plot_confirmation') }}</p>
+            <p>{!! __('admin.messages.players.unlink_plot_confirmation', ['id' => $plotToRemove?->id]) !!}</p>
         </x-slot>
         <x-slot name="footer">
             <x-buttons.secondary-button wire:click="$set('showRemovePlotModal', false)">

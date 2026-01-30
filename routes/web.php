@@ -8,7 +8,7 @@ use App\Livewire\Admin\ItemsMenu\EditItem;
 use App\Livewire\Admin\ItemsMenu\NewCategory;
 use App\Livewire\Admin\ItemsMenu\NewItem;
 use App\Livewire\Admin\ItemsMenu\Overview as ItemsMenuOverview;
-use App\Livewire\Admin\Companies\AddBankAccount;
+use App\Livewire\Admin\Companies\AddBankAccount as AddCompanyBankAccount;
 use App\Livewire\Admin\Companies\AddEmployee;
 use App\Livewire\Admin\Companies\AddPinConsole;
 use App\Livewire\Admin\Companies\AddPlot;
@@ -19,6 +19,7 @@ use App\Livewire\Admin\Dashboard\Dashboard as AdminDashboard;
 use App\Livewire\Admin\Languages\Overview as LanguagesOverview;
 use App\Livewire\Admin\Languages\Edit as EditLanguage;
 use App\Livewire\Admin\Languages\NewLanguage;
+use App\Livewire\Admin\Players\AddBankAccount as AddPlayerBankAccount;
 use App\Livewire\Admin\Players\AddChatColor;
 use App\Livewire\Admin\Players\AddPrefix;
 use App\Livewire\Admin\Players\EditPlayer;
@@ -74,7 +75,7 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
         Route::get('/companies/new', NewCompany::class)->name('admin.companies.new');
         Route::get('/companies/edit/{id}', EditCompany::class)->name('admin.companies.edit');
         Route::get('/companies/edit/{id}/add-employee', AddEmployee::class)->name('admin.companies.add-employee');
-        Route::get('/companies/edit/{id}/add-bank-account', AddBankAccount::class)->name('admin.companies.add-bank-account');
+        Route::get('/companies/edit/{id}/add-bank-account', AddCompanyBankAccount::class)->name('admin.companies.add-bank-account');
         Route::get('/companies/edit/{id}/add-pin-console', AddPinConsole::class)->name('admin.companies.add-pin-console');
         Route::get('/companies/edit/{id}/add-plot', AddPlot::class)->name('admin.companies.add-plot');
     });
@@ -94,7 +95,8 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     Route::get('/players/add-prefix/{uuid}', AddPrefix::class)->name('admin.players.add-prefix');
     Route::get('/players/edit-prefix/{uuid}/{id}', EditPrefix::class)->name('admin.players.edit-prefix');
     Route::get('/players/add-chat-color/{uuid}', AddChatColor::class)->name('admin.players.add-chat-color');
-
+    Route::get('/players/add-bank-account/{uuid}', AddPlayerBankAccount::class)->name('admin.players.add-bank-account');
+    
     // ? Languages
     Route::get('/languages', LanguagesOverview::class)->name('admin.languages.render');
     Route::get('/languages/edit/{id}', EditLanguage::class)->name('admin.languages.edit');

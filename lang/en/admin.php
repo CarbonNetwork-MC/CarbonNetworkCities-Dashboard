@@ -36,6 +36,7 @@ return [
         ],
 
         'players' => [
+            'add_bank_account' => 'Add Bank Account',
             'add_chat_color' => 'Add Chat Color',
             'add_prefix' => 'Add Prefix',
             'bank_accounts' => 'Bank Accounts',

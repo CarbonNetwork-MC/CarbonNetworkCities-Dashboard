@@ -22,7 +22,7 @@ class AddBankAccount extends Component
 
     public function mount($id) {
         $this->company = Company::where('id', $id)->firstOrFail();
-        $this->currencies = Country::all()->pluck('currency')->unique()->sort()->values();
+        $this->currencies = Country::get(['currency'])->unique()->sort()->values();
     }
 
     public function addBankAccount() {
