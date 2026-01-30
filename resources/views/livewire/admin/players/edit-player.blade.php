@@ -194,7 +194,7 @@
             </div>
             <div class="flex items-center gap-x-4" x-show="open">
                 <x-forms.search-bar id="searchChatColors" wire:model.live="searchChatColors" />
-                <x-buttons.primary-button size="sm" href="">{{ __('general.buttons.add') }}</x-buttons.primary-button>
+                <x-buttons.primary-button size="sm" href="{{ route('admin.players.add-chat-color', ['uuid' => $player->uuid]) }}">{{ __('general.buttons.add') }}</x-buttons.primary-button>
             </div>
         </div>
 

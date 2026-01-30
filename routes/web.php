@@ -19,6 +19,7 @@ use App\Livewire\Admin\Dashboard\Dashboard as AdminDashboard;
 use App\Livewire\Admin\Languages\Overview as LanguagesOverview;
 use App\Livewire\Admin\Languages\Edit as EditLanguage;
 use App\Livewire\Admin\Languages\NewLanguage;
+use App\Livewire\Admin\Players\AddChatColor;
 use App\Livewire\Admin\Players\AddPrefix;
 use App\Livewire\Admin\Players\EditPlayer;
 use App\Livewire\Admin\Players\EditPrefix;
@@ -92,6 +93,7 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     Route::get('/players/edit/{uuid}', EditPlayer::class)->name('admin.players.edit');
     Route::get('/players/add-prefix/{uuid}', AddPrefix::class)->name('admin.players.add-prefix');
     Route::get('/players/edit-prefix/{uuid}/{id}', EditPrefix::class)->name('admin.players.edit-prefix');
+    Route::get('/players/add-chat-color/{uuid}', AddChatColor::class)->name('admin.players.add-chat-color');
 
     // ? Languages
     Route::get('/languages', LanguagesOverview::class)->name('admin.languages.render');

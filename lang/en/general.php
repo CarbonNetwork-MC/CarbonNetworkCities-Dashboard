@@ -48,5 +48,5 @@ return [
     // Messages
     'messages' => [
         'required_fields' => 'Required fields'
-    ]
+    ],
 ];

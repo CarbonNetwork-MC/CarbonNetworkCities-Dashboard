@@ -36,6 +36,7 @@ return [
         ],
 
         'players' => [
+            'add_chat_color' => 'Add Chat Color',
             'add_prefix' => 'Add Prefix',
             'bank_accounts' => 'Bank Accounts',
             'chat_colors' => 'Chat Colors',
@@ -333,6 +334,8 @@ return [
             'cannot_remove_default_prefix' => 'Cannot remove the default prefix.',
             'bank_account_remove_failed' => 'Failed to remove bank account. Please try again.',
             'bank_account_remove_success' => 'Bank account removed successfully.',
+            'chat_color_add_failed' => 'Failed to add chat color. Please try again.',
+            'chat_color_add_success' => 'Chat color added successfully.',
             'chat_color_remove_failed' => 'Failed to remove chat color. Please try again.',
             'chat_color_remove_success' => 'Chat color removed successfully.',
             'company_unlink_failed' => 'Failed to unlink company. Please try again.',
