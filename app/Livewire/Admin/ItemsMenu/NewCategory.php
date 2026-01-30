@@ -4,18 +4,15 @@ namespace App\Livewire\Admin\ItemsMenu;
 
 use Livewire\Component;
 use App\Models\ItemCategory;
+use App\Services\PluginAPI\ApiService;
 use Masmerise\Toaster\Toaster;
-use Illuminate\Support\Facades\Http;
-use App\Http\Livewire\Concerns\WithInvalidation;
 
 class NewCategory extends Component
 {
-    use WithInvalidation;
-
     public $name = '';
     public $iconMaterial = '';
 
-    public function createCategory() {
+    public function createCategory(ApiService $apiService) {
         $data = $this->validate([
             'name' => ['required', 'string', 'max:50', 'unique:item_categories,name'],
             'iconMaterial' => ['required', 'string', 'max:50']
@@ -30,12 +27,8 @@ class NewCategory extends Component
             'user_uuid' => auth()->user()->uuid,
         ]);
 
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/reload/items");
+        [$status, $success] = $apiService->post("api/reload/items");
 
-        $requestId = $response->json('requestId');
-            
-        $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             $newCategory->delete();
             return Toaster::error(__('admin.toast.itemsmenu.reload_items_api_error'));

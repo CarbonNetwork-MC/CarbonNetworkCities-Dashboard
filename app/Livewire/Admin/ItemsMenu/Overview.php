@@ -5,15 +5,13 @@ namespace App\Livewire\Admin\ItemsMenu;
 use App\Models\Item;
 use Livewire\Component;
 use App\Models\ItemCategory;
+use App\Services\PluginAPI\ApiService;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
-use Illuminate\Support\Facades\Http;
-use App\Http\Livewire\Concerns\WithInvalidation;
 
 class Overview extends Component
 {
     use WithPagination;
-    use WithInvalidation;
 
     public $searchCategory = '';
     public $searchItem = '';
@@ -45,11 +43,11 @@ class Overview extends Component
     // ? Category Methods
     public function removeCategory($id) {
         $this->selectedCategory = ItemCategory::find($id);
-        $this->remainingCategories = ItemCategory::where('id', '!=', $id)->get();
+        $this->remainingCategories = ItemCategory::where('id', '!=', $id)->get(['id', 'name']);
         $this->deleteCategoryModal = true;
     }
 
-    public function destroyCategory() {
+    public function destroyCategory(ApiService $apiService) {
         if (!$this->selectedCategory) return;
 
         $selectedCategory = $this->selectedCategory;
@@ -65,12 +63,8 @@ class Overview extends Component
 
         $this->selectedCategory->delete();
 
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/reload/items");
+        [$status, $success] = $apiService->post("api/reload/items");
 
-        $requestId = $response->json('requestId');
-
-        $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             ItemCategory::create($selectedCategory->toArray());
             
@@ -100,19 +94,15 @@ class Overview extends Component
         $this->deleteItemModal = true;
     }
 
-    public function destroyItem() {
+    public function destroyItem(ApiService $apiService) {
         if (!$this->selectedItem) return;
 
         $selectedItem = $this->selectedItem;
 
         $this->selectedItem->delete();
+        
+        [$status, $success] = $apiService->post("api/reload/items");
 
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/reload/items");
-
-        $requestId = $response->json('requestId');
-
-        $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             Item::create($selectedItem->toArray());
             return Toaster::error(__('admin.toast.itemsmenu.reload_items_api_error'));

@@ -6,13 +6,11 @@ use Livewire\Component;
 use App\Models\Language;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
-use Illuminate\Support\Facades\Http;
-use App\Http\Livewire\Concerns\WithInvalidation;
+use App\Services\PluginAPI\ApiService;
 
 class Overview extends Component
 {
     use WithPagination;
-    use WithInvalidation;
 
     public $searchLanguage = '';
 
@@ -33,22 +31,18 @@ class Overview extends Component
         $this->deleteLanguageModal = true;
     }
 
-    public function destroyLanguage() {
+    public function destroyLanguage(ApiService $apiService) {
         if (!$this->selectedLanguage) return;
 
         $selectedLanguage = $this->selectedLanguage;
 
         $this->selectedLanguage->delete();
 
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/reload/languages");
+        [$status, $success] = $apiService->post("api/reload/languages");
 
-        $requestId = $response->json('requestId');
-            
-        $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             Language::create($selectedLanguage->toArray());
-            return Toaster::error(__('admin.toast.reload_languages_api_error'));
+            return Toaster::error(__('admin.toast.languages.reload_api_error'));
         }
 
         $this->reset([

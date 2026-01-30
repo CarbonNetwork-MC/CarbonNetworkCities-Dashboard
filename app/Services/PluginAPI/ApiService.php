@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\Http;
 
 class ApiService
 {
-    public function post(string $endpoint): array
+    public function post(string $endpoint, array $data = []): array
     {
         $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . $endpoint);
+            ->post(config('services.plugin-api.url') . $endpoint, $data);
 
         $requestId = $response->json('requestId');
         

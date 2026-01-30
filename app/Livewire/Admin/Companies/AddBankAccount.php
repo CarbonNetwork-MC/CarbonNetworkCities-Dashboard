@@ -4,14 +4,11 @@ namespace App\Livewire\Admin\Companies;
 
 use App\Models\Company;
 use App\Models\Country;
+use App\Services\PluginAPI\ApiService;
 use Livewire\Component;
-use Illuminate\Support\Facades\Http;
-use App\Http\Livewire\Concerns\WithInvalidation;
 
 class AddBankAccount extends Component
-{
-    use WithInvalidation;
-    
+{    
     public $company;
 
     public $balance = 0;
@@ -22,10 +19,10 @@ class AddBankAccount extends Component
 
     public function mount($id) {
         $this->company = Company::where('id', $id)->firstOrFail();
-        $this->currencies = Country::get(['currency'])->unique()->sort()->values();
+        $this->currencies = Country::distinct()->orderBy('currency')->pluck('currency');
     }
 
-    public function addBankAccount() {
+    public function addBankAccount(ApiService $apiService) {
         $data = $this->validate([
             'balance' => 'required|numeric|min:0',
             'currency' => 'required|string|in:' . $this->currencies->implode(','),
@@ -33,7 +30,7 @@ class AddBankAccount extends Component
         ]);
 
         // Store the current data for rollback in case of failure
-        $originalBankAccounts = $this->company->bankAccounts()->get();
+        $originalBankAccounts = $this->company->bankAccounts()->get(['id', 'is_main']);
 
         // 1. Create Bank Account
         $bankAccount = $this->company->bankAccounts()->create([
@@ -49,26 +46,22 @@ class AddBankAccount extends Component
         }
 
         // 2. Send invalidate request to Velocity
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/invalidate/company/{$this->company->id}");
+        [$status, $success] = $apiService->post("api/invalidate/company/{$this->company->id}");
 
         // Immediate failure (request not accepted)
-        if ($response->status() !== 202) {
+        if ($status !== 202) {
             $this->rollbackBankAccounts($bankAccount, $originalBankAccounts);
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company.bank_account_add_failed'));
+            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.companies.bank_account_add_failed'));
         }
 
-        $requestId = $response->json('requestId');
-
         // 3. Poll for result
-        $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             $this->rollbackBankAccounts($bankAccount, $originalBankAccounts);
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company.bank_account_add_failed'));
+            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.companies.bank_account_add_failed'));
         }
 
         // 4. Success
-        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toast.company.bank_account_added'));
+        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toast.companies.bank_account_added'));
     }
 
     public function render()

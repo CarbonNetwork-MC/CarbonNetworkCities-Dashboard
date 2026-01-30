@@ -32,7 +32,7 @@ class Overview extends Component
             'deleteCompanyModal',
         ]);
 
-        Toaster::success(__('admin.toast.company.deleted'));
+        Toaster::success(__('admin.toast.companies.deleted'));
     }
 
     public function render()

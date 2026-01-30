@@ -6,13 +6,10 @@ use Livewire\Component;
 use App\Models\Language;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Http;
-use App\Http\Livewire\Concerns\WithInvalidation;
+use App\Services\PluginAPI\ApiService;
 
 class Edit extends Component
 {
-    use WithInvalidation;
-
     public $language;
     public $name;
     public $shortCode;
@@ -27,7 +24,7 @@ class Edit extends Component
         $this->headdbId = $this->language->headdb_id;
     }
 
-    public function updateLanguage() {
+    public function updateLanguage(ApiService $apiService) {
         if (!$this->language) return;
 
         $language = $this->language;
@@ -57,12 +54,8 @@ class Edit extends Component
         $this->language->headdb_id = $data['headdbId'];
         $this->language->save();
 
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/reload/languages");
+        [$status, $success] = $apiService->post("api/reload/languages");
 
-        $requestId = $response->json('requestId');
-            
-        $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             $this->language->name = $language['name'];
             $this->language->short_code = $language['shortCode'];

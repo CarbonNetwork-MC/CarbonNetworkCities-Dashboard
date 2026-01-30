@@ -5,15 +5,12 @@ namespace App\Livewire\Admin\ItemsMenu;
 use App\Models\Item;
 use Livewire\Component;
 use App\Models\ItemCategory;
+use App\Services\PluginAPI\ApiService;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Http;
-use App\Http\Livewire\Concerns\WithInvalidation;
 
 class EditItem extends Component
 {
-    use WithInvalidation;
-
     public $item;
     public $internalId;
     public $name;
@@ -45,7 +42,7 @@ class EditItem extends Component
         }
     }
 
-    public function updateItem() {
+    public function updateItem(ApiService $apiService) {
         if (!$this->item) return;
 
         $item = $this->item;
@@ -88,13 +85,9 @@ class EditItem extends Component
         $this->item->material = $material;
         $this->item->data = $itemData;
         $this->item->save();
+        
+        [$status, $success] = $apiService->post("api/reload/items");
 
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/reload/items");
-
-        $requestId = $response->json('requestId');
-
-        $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             $this->item->internal_id = $item['internal_id'];
             $this->item->name = $item['name'];
@@ -111,7 +104,7 @@ class EditItem extends Component
     public function render()
     {
         return view('livewire.admin.itemsmenu.edit-item', [
-            'categories' => ItemCategory::all(),
+            'categories' => ItemCategory::get(['id', 'name']),
             'expiredPrefixes' => config('items.expired_prefixes'),
         ]);
     }

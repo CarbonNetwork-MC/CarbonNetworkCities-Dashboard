@@ -34,6 +34,20 @@ use App\Livewire\Admin\RolesPerms\EditPermission;
 use App\Livewire\Admin\RolesPerms\Overview as RolesPermsOverview;
 use App\Livewire\Admin\Users\EditUser;
 use App\Livewire\Admin\Users\Overview as UserOverview;
+use App\Livewire\Admin\Countries\Overview as CountriesOverview;
+use App\Livewire\Admin\Countries\NewCountry;
+use App\Livewire\Admin\Countries\Edit as EditCountry;
+use App\Livewire\Admin\CityRegions\Overview as CityRegionsOverview;
+use App\Livewire\Admin\CityRegions\NewCityRegion;
+use App\Livewire\Admin\CityRegions\Edit as EditCityRegion;
+use App\Livewire\Admin\PinConsoles\Overview as PinConsolesOverview;
+use App\Livewire\Admin\PinConsoles\NewPinConsole;
+use App\Livewire\Admin\PinConsoles\Edit as EditPinConsole;
+use App\Livewire\Admin\BankAccounts\Overview as BankAccountsOverview;
+use App\Livewire\Admin\BankAccounts\NewCompanyBankAccount;
+use App\Livewire\Admin\BankAccounts\NewPersonalBankAccount;
+use App\Livewire\Admin\BankAccounts\EditCompanyBankAccount;
+use App\Livewire\Admin\BankAccounts\EditPersonalBankAccount;
 use Illuminate\Support\Facades\Route;
 
 // ! Guest Routes
@@ -116,4 +130,26 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     Route::get('/categories/edit/{id}', EditCategory::class)->name('admin.itemsmenu.category.edit');
     Route::get('/items/new', NewItem::class)->name('admin.itemsmenu.item.new');
     Route::get('/items/edit/{id}', EditItem::class)->name('admin.itemsmenu.item.edit');
+
+    // ? Countries
+    Route::get('/countries', CountriesOverview::class)->name('admin.countries.render');
+    Route::get('/countries/new', NewCountry::class)->name('admin.countries.new');
+    Route::get('/countries/edit/{id}', EditCountry::class)->name('admin.countries.edit');
+
+    // ? Countries
+    Route::get('/city-regions', CityRegionsOverview::class)->name('admin.city-regions.render');
+    Route::get('/city-regions/new', NewCityRegion::class)->name('admin.city-regions.new');
+    Route::get('/city-regions/edit/{id}', EditCityRegion::class)->name('admin.city-regions.edit');
+
+    // ? PIN Consoles
+    Route::get('/pin-consoles', PinConsolesOverview::class)->name('admin.pin-consoles.render');
+    Route::get('/pin-consoles/new', NewPinConsole::class)->name('admin.pin-consoles.new');
+    Route::get('/pin-consoles/edit/{id}', EditPinConsole::class)->name('admin.pin-consoles.edit');
+
+    // ? Bank Accounts
+    Route::get('/bank-accounts', BankAccountsOverview::class)->name('admin.bank-accounts.render');
+    Route::get('/bank-accounts/company/new', NewCompanyBankAccount::class)->name('admin.bank-accounts.company.new');
+    Route::get('/bank-accounts/personal/new', NewPersonalBankAccount::class)->name('admin.bank-accounts.personal.new');
+    Route::get('/bank-accounts/company/edit/{id}', EditCompanyBankAccount::class)->name('admin.bank-accounts.company.edit');
+    Route::get('/bank-accounts/personal/edit/{id}', EditPersonalBankAccount::class)->name('admin.bank-accounts.personal.edit');
 });

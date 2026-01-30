@@ -4,14 +4,11 @@ namespace App\Livewire\Admin\ItemsMenu;
 
 use Livewire\Component;
 use App\Models\ItemCategory;
+use App\Services\PluginAPI\ApiService;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Http;
-use App\Http\Livewire\Concerns\WithInvalidation;
 
 class EditCategory extends Component
 {
-    use WithInvalidation;
-
     public $category;
     public $name;
     public $iconMaterial;
@@ -22,7 +19,7 @@ class EditCategory extends Component
         $this->iconMaterial = $this->category->icon_material;
     }
 
-    public function updateCategory() {
+    public function updateCategory(ApiService $apiService) {
         if (!$this->category) return;
 
         $category = $this->category;
@@ -42,13 +39,9 @@ class EditCategory extends Component
         $this->category->name = $categoryName;
         $this->category->icon_material = $material;
         $this->category->save();
+        
+        [$status, $success] = $apiService->post("api/reload/items");
 
-        $response = Http::withToken(config('services.plugin-api.key'))
-            ->post(config('services.plugin-api.url') . "api/reload/items");
-
-        $requestId = $response->json('requestId');
-            
-        $success = $this->waitForInvalidationResult($requestId);
         if (!$success) {
             $this->category->name = $category['name'];
             $this->category->icon_material = $category['icon_material'];

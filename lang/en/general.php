@@ -12,6 +12,9 @@ return [
     'true' => 'True',
     'false' => 'False',
 
+    'yes' => 'Yes',
+    'no' => 'No',
+
     // Placeholders
     'placeholders' => [
         'search' => 'Search...',

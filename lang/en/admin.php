@@ -11,7 +11,7 @@ return [
 
     // Titles
     'titles' => [
-        'company' => [
+        'companies' => [
             'add_bank_account' => 'Add Bank Account',
             'add_employee' => 'Add Employee',
             'add_pin_console' => 'Add PIN Console',
@@ -84,7 +84,41 @@ return [
             'items_overview' => 'Items Overview',
             'delete_category' => 'Delete Item Category',
             'delete_item' => 'Delete Item',
-        ]
+        ],
+
+        'countries' => [
+            'overview' => 'Countries Overview',
+            'delete' => 'Delete Country',
+            'edit' => 'Edit Country',
+        ],
+
+        'city_regions' => [
+            'edit' => 'Edit City Region',
+            'overview' => 'City Regions Overview',
+            'delete' => 'Delete City Region',
+        ],
+
+        'pin_consoles' => [
+            'overview' => 'PIN Consoles Overview',
+            'delete' => 'Delete PIN Console',
+            'create' => 'Create PIN Console',
+            'edit' => 'Edit PIN Console',
+        ],
+
+        'bank_accounts' => [
+            'company' => [
+                'overview' => 'Company Bank Accounts Overview',
+                'create' => 'Create Company Bank Account',
+                'delete' => 'Delete Company Bank Account',
+                'edit' => 'Edit Company Bank Account',
+            ],
+            'personal' => [
+                'overview' => 'Personal Bank Accounts Overview',
+                'create' => 'Create Personal Bank Account',
+                'delete' => 'Delete Personal Bank Account',
+                'edit' => 'Edit Personal Bank Account',
+            ],
+        ],
     ],
 
     // Labels
@@ -92,7 +126,7 @@ return [
         'player_uuid' => 'Player UUID',
 
         // Companies
-        'company' => [
+        'companies' => [
             'bank_accounts' => 'Bank Accounts',
             'bank_account_number' => 'Account No.',
             'bank_account_balance' => 'Balance',
@@ -180,14 +214,37 @@ return [
             'change_category' => 'Change category of items to',
             'select_category' => 'Select Category',
             'select_expired_prefix' => 'Select Expired Prefix',
-        ]
+        ],
+
+        'countries' => [
+            'name' => 'Country Name',
+            'currency' => 'Currency',
+            'currency_symbol' => 'Currency Symbol',
+            'currency_before_amount' => 'Currency Before Amount',
+        ],
+
+        'city_regions' => [
+            'internal_name' => 'Internal Name',
+            'display_name' => 'Display Name',
+            'country' => 'Country',
+            'city' => 'City',
+            'world_id' => 'World ID',
+        ],
+
+        'pin_consoles' => [
+            'company' => 'Company',
+        ],
+
+        'bank_accounts' => [
+            'account_type' => 'Account Type',
+        ],
     ],
 
     // Buttons
     'buttons' => [
         'assign' => 'Assign',
 
-        'company' => [
+        'companies' => [
             'add_bank_account' => 'Add Bank Account',
             'add_employee' => 'Add Employee',
             'add_pin_console' => 'Add PIN Console',
@@ -225,12 +282,20 @@ return [
             'add_lore_line' => 'Add Lore Line',
             'create_category' => 'Create Category',
             'create_item' => 'Create Item',
-        ]
+        ],
+
+        'countries' => [
+            'create' => 'Create Country',
+        ],
+
+        'city_regions' => [
+            'create' => 'Create City Region',
+        ],
     ],
 
     // Messages
     'messages' => [
-        'company' => [
+        'companies' => [
             'delete_confirmation' => 'Are you sure you want to delete the company <b>:name</b>? This action cannot be undone.',
             'remove_employee_confirmation' => 'Are you sure you want to remove the employee <b>:name</b> from this company?',
             'remove_bank_account_confirmation' => 'Are you sure you want to remove the bank account <b>:id</b> from this company?',
@@ -294,7 +359,29 @@ return [
             'category_delete_confirmation_with_items' => 'Are you sure you want to delete the item category <b>:name</b>? This action cannot be undone. You can choose to move its items to another category below.',
             'category_delete_confirmation_without_items' => 'Are you sure you want to delete the item category <b>:name</b>? This action cannot be undone.',
             'item_delete_confirmation' => 'Are you sure you want to delete the item <b>:name</b>? This action cannot be undone.',
-        ]
+        ],
+        
+        'countries' => [
+            'countries_no_records' => 'No countries found.',
+            'delete_confirmation' => 'Are you sure you want to delete the country <b>:name</b>? This action cannot be undone.',
+        ],
+
+        'city_regions' => [
+            'city_regions_no_records' => 'No city regions found.',
+            'delete_confirmation' => 'Are you sure you want to delete the city region <b>:name</b>? This action cannot be undone.',
+        ],
+
+        'pin_consoles' => [
+            'pin_consoles_no_records' => 'No pin consoles found.',
+            'delete_confirmation' => 'Are you sure you want to delete this pin console? This action cannot be undone.',
+        ],
+
+        'bank_accounts' => [
+            'company_bank_accounts_no_records' => 'No company bank accounts found.',
+            'company_bank_account_delete_confirmation' => 'Are you sure you want to delete the company bank account <b>:id</b>? This action cannot be undone.',
+            'personal_bank_accounts_no_records' => 'No personal bank accounts found.',
+            'personal_bank_account_delete_confirmation' => 'Are you sure you want to delete the personal bank account <b>:id</b>? This action cannot be undone.',
+        ],
     ],
 
     // Toasts
@@ -303,7 +390,7 @@ return [
             'unauthorized_error' => 'Unauthorized access to the API. Please check the API key configuration.',
         ],
 
-        'company' => [
+        'companies' => [
             'created' => 'Company created successfully.',
             'deleted' => 'Company deleted successfully.',
             'updated' => 'Company updated successfully.',
@@ -319,12 +406,16 @@ return [
             'bank_account_add_failed' => 'Failed to add bank account to company. Please try again.',
             'employee_assign_failed' => 'Failed to assign employee to company. Please try again.',
             'plot_remove_failed' => 'Failed to remove plot from company. Please try again.',
+
+            'pin_console_added' => 'PIN console successfully added to company.',
+            'pin_console_removed' => 'PIN console successfully removed from company.',
         ],
 
         'languages' => [
             'created' => 'Language created successfully.',
             'deleted' => 'Language deleted successfully.',
             'updated' => 'Language updated successfully.',
+            'reload_api_error' => 'There was an error reloading languages via the API. Changes have been reverted.',
         ],
 
         'permissions' => [
@@ -397,12 +488,50 @@ return [
             'item_created' => 'Item created successfully.',
             'category_deleted' => 'Item category deleted successfully.',
             'item_deleted' => 'Item deleted successfully.',
+        ],
+
+        'countries' => [
+            'reload_countries_api_error' => 'There was an error reloading countries via the API. Changes have been reverted.',
+            'updated' => 'Country updated successfully.',
+            'deleted' => 'Country deleted successfully.',
+            'created' => 'Country created successfully.',
+        ],
+
+        'city_regions' => [
+            'reload_regions_api_error' => 'There was an error reloading city regions via the API. Changes have been reverted.',
+            'updated' => 'City region updated successfully.',
+            'created' => 'City region created successfully.',
+            'deleted' => 'City region deleted successfully.',
+        ],
+
+        'pin_consoles' => [
+            'invalidate_pin_console_api_error' => 'Failed to invalidate PIN console via API. Changes have been reverted.',
+            'pin_console_update_failed' => 'Failed to update PIN console. Please try again.',
+            'pin_console_create_failed' => 'Failed to create PIN console. Please try again.',
+            'updated' => 'PIN console updated successfully.',
+            'created' => 'PIN console created successfully.',
+            'deleted' => 'PIN console deleted successfully.',
+        ],
+
+        'bank_accounts' => [
+            'company' => [
+                'invalidate_bankaccount_api_error' => 'Failed to invalidate company bank account via API. Changes have been reverted.',
+                'deleted' => 'Company bank account deleted successfully.',
+                'created' => 'Company bank account created successfully.',
+                'updated' => 'Company bank account updated successfully.',
+            ],
+            'personal' => [
+                'invalidate_bankaccount_api_error' => 'Failed to invalidate personal bank account via API. Changes have been reverted.',
+                'deleted' => 'Personal bank account deleted successfully.',
+                'created' => 'Personal bank account created successfully.',
+                'updated' => 'Personal bank account updated successfully.',
+            ],
         ]
     ],
 
     // Placeholders
     'placeholders' => [
-        'company' => [
+        'companies' => [
             'select_role' => 'Select Role',
         ],
 

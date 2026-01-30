@@ -57,6 +57,22 @@
                     :label="__('sidebar.dashboard')"
                 />
 
+                {{-- Bank Accounts --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.bank-accounts.render')"
+                    :active="request()->routeIs('admin.bank-accounts.*')"
+                    icon="fi fi-tr-piggy-bank"
+                    :label="__('sidebar.bank_accounts')"
+                />
+
+                {{-- City Regions --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.city-regions.render')"
+                    :active="request()->routeIs('admin.city-regions.*')"
+                    icon="fi fi-rr-region-pin-alt"
+                    :label="__('sidebar.city_regions')"
+                />
+
                 {{-- Companies --}}
                 @if ($user->can('manage_companies'))
                 <x-sidebar.nav-item
@@ -66,6 +82,14 @@
                     :label="__('sidebar.companies')"
                 />
                 @endif
+
+                {{-- Countries --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.countries.render')"
+                    :active="request()->routeIs('admin.countries.*')"
+                    icon="fi fi-rr-flag"
+                    :label="__('sidebar.countries')"
+                />
 
                 {{-- Itemsmenu --}}
                 <x-sidebar.nav-item
@@ -89,6 +113,14 @@
                     :active="request()->routeIs('admin.players.*')"
                     icon="fi fi-rr-user"
                     :label="__('sidebar.players')"
+                />
+                    
+                {{-- PIN Consoles --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.pin-consoles.render')"
+                    :active="request()->routeIs('admin.pin-consoles.*')"
+                    icon="fi fi-rr-payment-pos"
+                    :label="__('sidebar.pin_consoles')"
                 />
 
                 {{-- Roles & Permissions --}}
