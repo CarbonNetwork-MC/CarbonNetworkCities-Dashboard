@@ -21,6 +21,7 @@ class Player extends Model
         'last_region_id',
         'last_login',
         'last_logout',
+        'deletion_pending_at',
     ];
 
     public function user(): BelongsTo

@@ -28,6 +28,7 @@ return new class extends Migration
             $table->foreign('last_region_id')->references('id')->on('city_regions')->onDelete('set null')->onUpdate('cascade');
             $table->timestamp('last_login')->nullable();
             $table->timestamp('last_logout')->nullable();
+            $table->timestamp('deletion_pending_at')->nullable();
             $table->timestamps();
         });
     }
