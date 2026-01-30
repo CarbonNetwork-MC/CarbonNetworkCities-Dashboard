@@ -24,4 +24,5 @@ return [
     'itemsmenu' => 'Items Menu',
     'city_regions' => 'City Regions',
     'pin_consoles' => 'PIN Consoles',
+    'bank_accounts' => 'Bank Accounts',
 ];
