@@ -21,6 +21,7 @@ use App\Livewire\Admin\Languages\Edit as EditLanguage;
 use App\Livewire\Admin\Languages\NewLanguage;
 use App\Livewire\Admin\Players\AddBankAccount as AddPlayerBankAccount;
 use App\Livewire\Admin\Players\AddChatColor;
+use App\Livewire\Admin\Players\AddCompany;
 use App\Livewire\Admin\Players\AddPlot as AddPlotToPlayer;
 use App\Livewire\Admin\Players\AddPrefix;
 use App\Livewire\Admin\Players\EditPlayer;
@@ -98,6 +99,7 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     Route::get('/players/add-chat-color/{uuid}', AddChatColor::class)->name('admin.players.add-chat-color');
     Route::get('/players/add-bank-account/{uuid}', AddPlayerBankAccount::class)->name('admin.players.add-bank-account');
     Route::get('/players/add-plot/{uuid}', AddPlotToPlayer::class)->name('admin.players.add-plot');
+    Route::get('/players/add-company/{uuid}', AddCompany::class)->name('admin.players.add-company');
 
     // ? Languages
     Route::get('/languages', LanguagesOverview::class)->name('admin.languages.render');
