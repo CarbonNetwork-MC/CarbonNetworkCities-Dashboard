@@ -16,6 +16,7 @@ use App\Livewire\Admin\CityRegions\NewCityRegion;
 use App\Livewire\Admin\CityRegions\Edit as EditCityRegion;
 
 use App\Livewire\Admin\CoC\Overview as CoCOverview;
+use App\Livewire\Admin\CoC\NewCoCType;
 
 use App\Livewire\Admin\Companies\AddBankAccount as AddCompanyBankAccount;
 use App\Livewire\Admin\Companies\AddEmployee;
@@ -102,6 +103,7 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
 
     // ? CoC
     Route::get('/coc', CoCOverview::class)->name('admin.coc.render');
+    Route::get('/coc/new', NewCoCType::class)->name('admin.coc.new');
 
     // ? Companies
     Route::middleware('permission:manage_companies')->group(function() {

@@ -10,6 +10,7 @@ class CoCType extends Model
     protected $table = 'coc_types';
     protected $fillable = [
         'name',
+        'description',
     ];
 
     public function itemGroups(): HasMany

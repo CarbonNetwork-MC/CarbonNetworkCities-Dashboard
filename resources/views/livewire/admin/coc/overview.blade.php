@@ -20,7 +20,7 @@
             <x-containers.title>{{ __('admin.titles.coc.overview') }}</x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="search" wire:model.live="search" class="w-full" />
-                <x-buttons.primary-button size="sm" href="">
+                <x-buttons.primary-button size="sm" href="{{ route('admin.coc.new') }}">
                     {{ __('general.buttons.add') }}
                 </x-buttons.primary-button>
             </div>
@@ -40,14 +40,15 @@
                         <x-tables.table-row>
                             <x-tables.table-data>{{ $cocType->id }}</x-tables.table-data>
                             <x-tables.table-data>{{ $cocType->name }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $cocType->description ?? __('general.labels.none') }}</x-tables.table-data>
                             <x-tables.table-actions>
-                                <x-tables.primary-action href="">{{ __('general.buttons.edit') }}</x-tables.primary-action>
+                                <x-tables.primary-action href="{{ route('admin.coc.edit', ['id' => $cocType->id]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removeCoCType('{{ $cocType->id }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
                             </x-tables.table-actions>
                         </x-tables.table-row>
                     @empty
                         <x-tables.table-row>
-                            <x-tables.empty-state colspan="3">
+                            <x-tables.empty-state colspan="4">
                                 {{ __('admin.messages.coc.no_records') }}
                             </x-tables.empty-state>
                         </x-tables.table-row>

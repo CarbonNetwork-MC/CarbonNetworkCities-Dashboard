@@ -125,6 +125,8 @@ return [
 
         'coc' => [
             'overview' => 'Chamber of Commerce Types Overview',
+            'create' => 'Create Chamber of Commerce Type',
+            'edit' => 'Edit Chamber of Commerce Type',
         ]
     ],
 
@@ -248,6 +250,7 @@ return [
 
         'coc' => [
             'name' => 'Name',
+            'description' => 'Description',
         ]
     ],
 
@@ -541,6 +544,12 @@ return [
                 'created' => 'Personal bank account created successfully.',
                 'updated' => 'Personal bank account updated successfully.',
             ],
+        ],
+
+        'coc' => [
+            'created' => 'Chamber of Commerce type created successfully.',
+            'updated' => 'Chamber of Commerce type updated successfully.',
+            'deleted' => 'Chamber of Commerce type deleted successfully.',
         ]
     ],
 
