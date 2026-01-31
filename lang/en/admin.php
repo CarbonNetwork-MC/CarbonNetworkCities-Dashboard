@@ -85,6 +85,7 @@ return [
             'create_item' => 'Create Item',
             'categories_overview' => 'Item Categories Overview',
             'items_overview' => 'Items Overview',
+            'item_groups_overview' => 'Item Groups Overview',
             'delete_category' => 'Delete Item Category',
             'delete_item' => 'Delete Item',
         ],
@@ -224,6 +225,9 @@ return [
             'change_category' => 'Change category of items to',
             'select_category' => 'Select Category',
             'select_expired_prefix' => 'Select Expired Prefix',
+            'coc_type' => 'CoC Type',
+            'item' => 'Item',
+            'sellable' => 'Sellable',
         ],
 
         'countries' => [
@@ -374,6 +378,7 @@ return [
             'category_delete_confirmation_with_items' => 'Are you sure you want to delete the item category <b>:name</b>? This action cannot be undone. You can choose to move its items to another category below.',
             'category_delete_confirmation_without_items' => 'Are you sure you want to delete the item category <b>:name</b>? This action cannot be undone.',
             'item_delete_confirmation' => 'Are you sure you want to delete the item <b>:name</b>? This action cannot be undone.',
+            'item_groups_no_records' => 'No item groups found.',
         ],
         
         'countries' => [

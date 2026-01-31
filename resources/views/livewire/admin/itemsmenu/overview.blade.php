@@ -15,10 +15,16 @@
     </x-slot>
 
     {{-- Categories --}}
-    <x-containers.main>
+    <x-containers.main x-data="{open: false}">
         <div class="flex justify-between">
-            <h1 class="text-xl font-semibold dark:text-white mb-4">{{ __('admin.titles.itemsmenu.categories_overview') }}</h1>
             <div class="flex items-center gap-x-4">
+                <x-containers.title>{{ __('admin.titles.itemsmenu.categories_overview') }}</x-containers.title>
+                <div class="flex justify-end text-black dark:text-white text-xl hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md mt-1" x-on:click="open = !open">
+                    <i class="fi fi-rr-angle-small-down cursor-pointer" x-show="!open"></i>
+                    <i class="fi fi-rr-angle-small-up cursor-pointer" x-show="open"></i>
+                </div>
+            </div>
+            <div class="flex items-center gap-x-4" x-show="open">
                 <x-forms.search-bar id="searchCategory" wire:model.live="searchCategory" class="w-full" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.itemsmenu.category.new') }}">
                     {{ __('admin.buttons.itemsmenu.create_category') }}
@@ -26,7 +32,7 @@
             </div>
         </div>
 
-        <div class="mt-6">
+        <div class="mt-4" x-show="open">
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
@@ -67,10 +73,16 @@
     </x-containers.main>
 
     {{-- Items --}}
-    <x-containers.main class="mt-4">
+    <x-containers.main class="mt-4" x-data="{open: false}">
         <div class="flex justify-between">
-            <h1 class="text-xl font-semibold dark:text-white mb-4">{{ __('admin.titles.itemsmenu.items_overview') }}</h1>
             <div class="flex items-center gap-x-4">
+                <x-containers.title>{{ __('admin.titles.itemsmenu.items_overview') }}</x-containers.title>
+                <div class="flex justify-end text-black dark:text-white text-xl hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md mt-1" x-on:click="open = !open">
+                    <i class="fi fi-rr-angle-small-down cursor-pointer" x-show="!open"></i>
+                    <i class="fi fi-rr-angle-small-up cursor-pointer" x-show="open"></i>
+                </div>
+            </div>
+            <div class="flex items-center gap-x-4" x-show="open">
                 <x-forms.search-bar id="searchItem" wire:model.live="searchItem" class="w-full" />
                 <x-buttons.primary-button size="sm" href="{{ route('admin.itemsmenu.item.new') }}">
                     {{ __('admin.buttons.itemsmenu.create_item') }}
@@ -78,7 +90,7 @@
             </div>
         </div>
 
-        <div class="mt-6">
+        <div class="mt-4" x-show="open">
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
@@ -122,6 +134,77 @@
                 </x-slot>
                 <x-slot name="pagination">
                     {{ $items->links() }}
+                </x-slot>
+            </x-tables.table-striped>
+        </div>
+    </x-containers.main>
+
+    {{-- Item Groups --}}
+    <x-containers.main class="mt-4" x-data="{open: true}">
+        <div class="flex justify-between">
+            <div class="flex items-center gap-x-4">
+                <x-containers.title>{{ __('admin.titles.itemsmenu.item_groups_overview') }}</x-containers.title>
+                <div class="flex justify-end text-black dark:text-white text-xl hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md mt-1" x-on:click="open = !open">
+                    <i class="fi fi-rr-angle-small-down cursor-pointer" x-show="!open"></i>
+                    <i class="fi fi-rr-angle-small-up cursor-pointer" x-show="open"></i>
+                </div>
+            </div>
+            <div class="flex items-center gap-x-4" x-show="open">
+                <x-forms.search-bar id="searchItemGroup" wire:model.live="searchItemGroup" />
+                <x-buttons.primary-button size="sm" href="">
+                    {{ __('general.buttons.add') }}
+                </x-buttons.primary-button>
+            </div>
+        </div>
+
+        <div class="mt-4" x-show="open">
+            <x-tables.table-striped>
+                <x-slot name="headers">
+                    <tr>
+                        <x-tables.table-header>{{ __('admin.labels.itemsmenu.coc_type') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.itemsmenu.item') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.itemsmenu.sellable') }}</x-tables.table-header>
+                        <th></th>
+                    </tr>
+                </x-slot>
+                <x-slot name="rows">
+                    @forelse ($itemGroups as $itemGroup)
+                        <x-tables.table-row>
+                            <x-tables.table-data>{{ $itemGroup->cocType->name ?? '' }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $itemGroup->item->name ?? '' }}</x-tables.table-data>
+                            <x-tables.table-data>
+                                @if($itemGroup->sellable)
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full">{{ __('general.yes') }}</span>
+                                @else
+                                    <span class="bg-red-100 text-red-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full">{{ __('general.no') }}</span>
+                                @endif
+                            </x-tables.table-data>
+                            <x-tables.table-data class="px-6 py-4 flex justify-end gap-x-4 whitespace-nowrap text-right text-sm font-medium">
+                                <x-tables.primary-action href="">{{ __('general.buttons.edit') }}</x-tables.primary-action>
+                                <x-tables.danger-action wire:click="removeItemGroup('{{ $itemGroup->id }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
+                            </x-tables.table-data>
+                        </x-tables.table-row>
+                    @empty
+                        <x-tables.table-row>
+                            <x-tables.empty-state :colspan="4">
+                                {{ __('admin.messages.itemsmenu.item_groups_no_records') }}
+                            </x-tables.empty-state>
+                        </x-tables.table-row>
+                    @endforelse
+                </x-slot>
+                <x-slot name="pagination">
+                    @if ($itemGroups->hasPages())
+                        <div class="w-full flex items-center gap-x-4 mt-4">
+                            {{ $itemGroups->links() }}
+                            <x-tables.per-page-select wire:model="itemGroupsPerPage">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </x-tables.per-page-select>
+                        </div>
+                    @endif
                 </x-slot>
             </x-tables.table-striped>
         </div>
