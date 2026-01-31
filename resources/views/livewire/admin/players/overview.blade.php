@@ -28,14 +28,14 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.players.uuid') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.players.username') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.players.level') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.players.nationality') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.players.selected_language') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.players.playtime') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.players.last_login') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.players.last_logout') }}</th>
+                        <x-tables.table-header>{{ __('admin.labels.players.uuid') }}</th>
+                        <x-tables.table-header>{{ __('admin.labels.players.username') }}</th>
+                        <x-tables.table-header>{{ __('admin.labels.players.level') }}</th>
+                        <x-tables.table-header>{{ __('admin.labels.players.nationality') }}</th>
+                        <x-tables.table-header>{{ __('admin.labels.players.selected_language') }}</th>
+                        <x-tables.table-header>{{ __('admin.labels.players.playtime') }}</th>
+                        <x-tables.table-header>{{ __('admin.labels.players.last_login') }}</th>
+                        <x-tables.table-header>{{ __('admin.labels.players.last_logout') }}</th>
                         <th></th>
                     </tr>
                 </x-slot>

@@ -26,6 +26,9 @@ return [
         ],
 
         'languages' => [
+            'create' => 'Create Language',
+            'delete' => 'Delete Language',
+            'edit' => 'Edit Language',
             'overview' => 'Languages Overview',
         ],
 

@@ -28,11 +28,11 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('general.labels.name') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('general.labels.email') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.users.selected_language') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('general.labels.created_at') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('general.labels.updated_at') }}</th>
+                        <x-tables.table-header>{{ __('general.labels.name') }}</th>
+                        <x-tables.table-header>{{ __('general.labels.email') }}</th>
+                        <x-tables.table-header>{{ __('admin.labels.users.selected_language') }}</th>
+                        <x-tables.table-header>{{ __('general.labels.created_at') }}</th>
+                        <x-tables.table-header>{{ __('general.labels.updated_at') }}</th>
                         <th></th>
                     </tr>
                 </x-slot>

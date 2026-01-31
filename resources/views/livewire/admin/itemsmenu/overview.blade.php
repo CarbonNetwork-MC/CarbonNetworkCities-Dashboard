@@ -30,11 +30,11 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.category_name') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.icon_material') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.items_amount') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.player_username') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.user_name') }}</th>
+                        <x-tables.table-header>{{ __('admin.labels.itemsmenu.category_name') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.itemsmenu.icon_material') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.itemsmenu.items_amount') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.itemsmenu.player_username') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.itemsmenu.user_name') }}</x-tables.table-header>
                         <th></th>
                     </tr>
                 </x-slot>
@@ -53,9 +53,9 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                            <x-tables.empty-state colspan="6">
                                 {{ __('admin.messages.itemsmenu.categories_no_records') }}
-                            </td>
+                            </x-tables.empty-state>
                         </tr>
                     @endforelse
                 </x-slot>
@@ -82,42 +82,42 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.internal_id') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.item_name') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.icon_material') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.category') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">Data</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.player_username') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.itemsmenu.user_name') }}</th>
-                        <th></th>
+                        <x-tables.table-header>{{ __('admin.labels.itemsmenu.internal_id') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.itemsmenu.item_name') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.itemsmenu.icon_material') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.itemsmenu.category') }}</x-tables.table-header>
+                        <x-tables.table-header>Data</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.itemsmenu.player_username') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.itemsmenu.user_name') }}</x-tables.table-header>
+                        <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
                 <x-slot name="rows">
                     @forelse($items as $item)
-                        <tr class="odd:bg-white even:bg-gray-100 dark:odd:bg-gray-600 dark:even:bg-gray-700 border-b border-default">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $item->internal_id }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $item->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $item->material }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $item->category->name }}</td>
-                            <td 
+                        <x-tables.table-row>
+                            <x-tables.table-data>{{ $item->internal_id }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $item->name }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $item->material }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $item->category->name }}</x-tables.table-data>
+                            <x-tables.table-data 
                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white"
                                 title="{{ $item->data ? json_encode($item->data, JSON_UNESCAPED_UNICODE) : '' }}"
                             >
                                 {{ $item->data ? Str::limit(json_encode($item->data, JSON_UNESCAPED_UNICODE), 30, '...') : '' }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $item->player->username ?? null }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $item->user->name ?? null }}</td>
-                            <td class="px-6 py-4 flex justify-end gap-x-4 whitespace-nowrap text-right text-sm font-medium">
+                            </x-tables.table-data>
+                            <x-tables.table-data>{{ $item->player->username ?? null }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $item->user->name ?? null }}</x-tables.table-data>
+                            <x-tables.table-data class="px-6 py-4 flex justify-end gap-x-4 whitespace-nowrap text-right text-sm font-medium">
                                 <x-tables.primary-action href="{{ route('admin.itemsmenu.item.edit', ['id' => $item->id]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removeItem('{{ $item->id }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
-                            </td>
-                        </tr>
+                            </x-tables.table-data>
+                        </x-tables.table-row>
                     @empty
-                        <tr>
-                            <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                        <x-tables.table-row>
+                            <x-tables.empty-state colspan="7">
                                 {{ __('admin.messages.itemsmenu.items_no_records') }}
-                            </td>
-                        </tr>
+                            </x-tables.empty-state>
+                        </x-tables.table-row>
                     @endforelse
                 </x-slot>
                 <x-slot name="pagination">
