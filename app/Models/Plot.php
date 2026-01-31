@@ -45,7 +45,7 @@ class Plot extends Model
 
     public function owner(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'owner_uuid', 'uuid');
+        return $this->belongsTo(Player::class, 'owner_uuid', 'uuid');
     }
 
     public function members(): HasMany
