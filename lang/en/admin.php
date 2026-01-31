@@ -122,6 +122,10 @@ return [
                 'edit' => 'Edit Personal Bank Account',
             ],
         ],
+
+        'coc' => [
+            'overview' => 'Chamber of Commerce Types Overview',
+        ]
     ],
 
     // Labels
@@ -241,6 +245,10 @@ return [
         'bank_accounts' => [
             'account_type' => 'Account Type',
         ],
+
+        'coc' => [
+            'name' => 'Name',
+        ]
     ],
 
     // Buttons
@@ -385,6 +393,10 @@ return [
             'personal_bank_accounts_no_records' => 'No personal bank accounts found.',
             'personal_bank_account_delete_confirmation' => 'Are you sure you want to delete the personal bank account <b>:id</b>? This action cannot be undone.',
         ],
+
+        'coc' => [
+            'no_records' => 'No Chamber of Commerce types found.',
+        ]
     ],
 
     // Toasts

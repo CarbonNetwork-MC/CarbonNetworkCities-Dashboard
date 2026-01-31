@@ -1,13 +1,22 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+
 use App\Livewire\Dashboard;
 use App\Livewire\Onboarding\Onboarding;
-use App\Livewire\Admin\ItemsMenu\EditCategory;
-use App\Livewire\Admin\ItemsMenu\EditItem;
-use App\Livewire\Admin\ItemsMenu\NewCategory;
-use App\Livewire\Admin\ItemsMenu\NewItem;
-use App\Livewire\Admin\ItemsMenu\Overview as ItemsMenuOverview;
+
+use App\Livewire\Admin\BankAccounts\Overview as BankAccountsOverview;
+use App\Livewire\Admin\BankAccounts\NewCompanyBankAccount;
+use App\Livewire\Admin\BankAccounts\NewPersonalBankAccount;
+use App\Livewire\Admin\BankAccounts\EditCompanyBankAccount;
+use App\Livewire\Admin\BankAccounts\EditPersonalBankAccount;
+
+use App\Livewire\Admin\CityRegions\Overview as CityRegionsOverview;
+use App\Livewire\Admin\CityRegions\NewCityRegion;
+use App\Livewire\Admin\CityRegions\Edit as EditCityRegion;
+
+use App\Livewire\Admin\CoC\Overview as CoCOverview;
+
 use App\Livewire\Admin\Companies\AddBankAccount as AddCompanyBankAccount;
 use App\Livewire\Admin\Companies\AddEmployee;
 use App\Livewire\Admin\Companies\AddPinConsole;
@@ -15,10 +24,27 @@ use App\Livewire\Admin\Companies\AddPlot;
 use App\Livewire\Admin\Companies\EditCompany;
 use App\Livewire\Admin\Companies\NewCompany;
 use App\Livewire\Admin\Companies\Overview as CompaniesOverview;
+
+use App\Livewire\Admin\Countries\Overview as CountriesOverview;
+use App\Livewire\Admin\Countries\NewCountry;
+use App\Livewire\Admin\Countries\Edit as EditCountry;
+
 use App\Livewire\Admin\Dashboard\Dashboard as AdminDashboard;
+
+use App\Livewire\Admin\ItemsMenu\EditCategory;
+use App\Livewire\Admin\ItemsMenu\EditItem;
+use App\Livewire\Admin\ItemsMenu\NewCategory;
+use App\Livewire\Admin\ItemsMenu\NewItem;
+use App\Livewire\Admin\ItemsMenu\Overview as ItemsMenuOverview;
+
 use App\Livewire\Admin\Languages\Overview as LanguagesOverview;
 use App\Livewire\Admin\Languages\Edit as EditLanguage;
 use App\Livewire\Admin\Languages\NewLanguage;
+
+use App\Livewire\Admin\PinConsoles\Overview as PinConsolesOverview;
+use App\Livewire\Admin\PinConsoles\NewPinConsole;
+use App\Livewire\Admin\PinConsoles\Edit as EditPinConsole;
+
 use App\Livewire\Admin\Players\AddBankAccount as AddPlayerBankAccount;
 use App\Livewire\Admin\Players\AddChatColor;
 use App\Livewire\Admin\Players\AddCompany;
@@ -27,27 +53,16 @@ use App\Livewire\Admin\Players\AddPrefix;
 use App\Livewire\Admin\Players\EditPlayer;
 use App\Livewire\Admin\Players\EditPrefix;
 use App\Livewire\Admin\Players\Overview as PlayerOverview;
+
 use App\Livewire\Admin\RolesPerms\NewRole;
 use App\Livewire\Admin\RolesPerms\EditRole;
 use App\Livewire\Admin\RolesPerms\NewPermission;
 use App\Livewire\Admin\RolesPerms\EditPermission;
 use App\Livewire\Admin\RolesPerms\Overview as RolesPermsOverview;
+
 use App\Livewire\Admin\Users\EditUser;
 use App\Livewire\Admin\Users\Overview as UserOverview;
-use App\Livewire\Admin\Countries\Overview as CountriesOverview;
-use App\Livewire\Admin\Countries\NewCountry;
-use App\Livewire\Admin\Countries\Edit as EditCountry;
-use App\Livewire\Admin\CityRegions\Overview as CityRegionsOverview;
-use App\Livewire\Admin\CityRegions\NewCityRegion;
-use App\Livewire\Admin\CityRegions\Edit as EditCityRegion;
-use App\Livewire\Admin\PinConsoles\Overview as PinConsolesOverview;
-use App\Livewire\Admin\PinConsoles\NewPinConsole;
-use App\Livewire\Admin\PinConsoles\Edit as EditPinConsole;
-use App\Livewire\Admin\BankAccounts\Overview as BankAccountsOverview;
-use App\Livewire\Admin\BankAccounts\NewCompanyBankAccount;
-use App\Livewire\Admin\BankAccounts\NewPersonalBankAccount;
-use App\Livewire\Admin\BankAccounts\EditCompanyBankAccount;
-use App\Livewire\Admin\BankAccounts\EditPersonalBankAccount;
+
 use Illuminate\Support\Facades\Route;
 
 // ! Guest Routes
@@ -84,6 +99,9 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
 Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Superadmin')->group(function() {
     // ? Admin Dashboard
     Route::get('/dashboard', AdminDashboard::class)->name('admin.dashboard.render');
+
+    // ? CoC
+    Route::get('/coc', CoCOverview::class)->name('admin.coc.render');
 
     // ? Companies
     Route::middleware('permission:manage_companies')->group(function() {

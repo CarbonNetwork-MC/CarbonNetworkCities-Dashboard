@@ -73,15 +73,21 @@
                     :label="__('sidebar.city_regions')"
                 />
 
+                {{-- CoC --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.coc.render')"
+                    :active="request()->routeIs('admin.coc.*')"
+                    icon="fi fi-rr-book"
+                    :label="__('sidebar.coc')"
+                />
+
                 {{-- Companies --}}
-                @if ($user->can('manage_companies'))
                 <x-sidebar.nav-item
                     :href="route('admin.companies.render')"
                     :active="request()->routeIs('admin.companies.*')"
                     icon="fi fi-rr-building"
                     :label="__('sidebar.companies')"
                 />
-                @endif
 
                 {{-- Countries --}}
                 <x-sidebar.nav-item

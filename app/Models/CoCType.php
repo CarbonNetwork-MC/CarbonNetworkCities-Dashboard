@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CoCType extends Model
 {
+    protected $table = 'coc_types';
     protected $fillable = [
         'name',
     ];
