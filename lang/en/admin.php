@@ -119,6 +119,12 @@ return [
                 'edit' => 'Edit Personal Bank Account',
             ],
         ],
+
+        'plots' => [
+            'overview' => 'Plots Overview',
+            'create' => 'Create Plot',
+            'delete' => 'Delete Plot',
+        ],
     ],
 
     // Labels
@@ -237,6 +243,12 @@ return [
 
         'bank_accounts' => [
             'account_type' => 'Account Type',
+        ],
+
+        'plots' => [
+            'description' => 'Description',
+            'for_sale' => 'For Sale',
+            'price' => 'Price',
         ],
     ],
 
@@ -382,6 +394,11 @@ return [
             'personal_bank_accounts_no_records' => 'No personal bank accounts found.',
             'personal_bank_account_delete_confirmation' => 'Are you sure you want to delete the personal bank account <b>:id</b>? This action cannot be undone.',
         ],
+
+        'plots' => [
+            'plots_no_records' => 'No plots found.',
+            'delete_confirmation' => 'Are you sure you want to delete the plot <b>:plot_id</b>? This action cannot be undone.',
+        ]
     ],
 
     // Toasts
@@ -526,6 +543,11 @@ return [
                 'created' => 'Personal bank account created successfully.',
                 'updated' => 'Personal bank account updated successfully.',
             ],
+        ],
+
+        'plots' => [
+            'invalidate_plot_api_error' => 'Failed to invalidate plot via API. Changes have been reverted.',
+            'delete_success' => 'Plot deleted successfully.',
         ]
     ],
 
