@@ -249,6 +249,10 @@ return [
             'description' => 'Description',
             'for_sale' => 'For Sale',
             'price' => 'Price',
+            'north' => 'North',
+            'east' => 'East',
+            'south' => 'South',
+            'west' => 'West',
         ],
     ],
 
