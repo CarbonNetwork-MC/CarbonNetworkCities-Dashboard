@@ -11,6 +11,7 @@ class Company extends Model
     protected $fillable = [
         'name',
         'world_id',
+        'coc_type',
         'coc_number',
         'owner_uuid',
     ];
@@ -18,6 +19,11 @@ class Company extends Model
     public function owner(): HasOne
     {
         return $this->hasOne(Player::class, 'uuid', 'owner_uuid');
+    }
+
+    public function cocType(): HasOne
+    {
+        return $this->hasOne(CocType::class, 'name', 'coc_type');
     }
 
     public function bankAccounts(): HasMany
