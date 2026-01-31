@@ -127,6 +127,7 @@ return [
             'overview' => 'Chamber of Commerce Types Overview',
             'create' => 'Create Chamber of Commerce Type',
             'edit' => 'Edit Chamber of Commerce Type',
+            'delete' => 'Delete Chamber of Commerce Type',
         ]
     ],
 
@@ -399,6 +400,7 @@ return [
 
         'coc' => [
             'no_records' => 'No Chamber of Commerce types found.',
+            'delete_confirmation' => 'Are you sure you want to delete the Chamber of Commerce type <b>:name</b>? This action cannot be undone.',
         ]
     ],
 

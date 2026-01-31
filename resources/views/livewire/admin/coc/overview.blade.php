@@ -32,6 +32,7 @@
                     <tr>
                         <x-tables.table-header>#</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.coc.name') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.coc.description') }}</x-tables.table-header>
                         <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
@@ -70,4 +71,20 @@
             </x-tables.table-striped>
         </div>
     </x-containers.main>
+
+    {{-- Delete CoC Type Modal --}}
+    <x-modals.modal wire:model="showDeleteModal">
+        <x-slot name="title">{{ __('admin.titles.coc.delete') }}</x-slot>
+        <x-slot name="content">
+            <p>{!! __('admin.messages.coc.delete_confirmation', ['name' => $typeToDelete->name ?? '']) !!}</p>
+        </x-slot>
+        <x-slot name="footer">
+            <x-buttons.secondary-button wire:click="$set('showDeleteCoCTypeModal', false)">
+                {{ __('general.buttons.cancel') }}
+            </x-buttons.secondary-button>
+            <x-buttons.danger-button wire:click="confirmRemoveCoCType">
+                {{ __('general.buttons.delete') }}
+            </x-buttons.danger-button>
+        </x-slot>
+    </x-modals.modal>
 </div>

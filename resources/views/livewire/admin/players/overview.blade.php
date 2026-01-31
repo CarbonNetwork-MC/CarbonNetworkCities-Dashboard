@@ -28,14 +28,14 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <x-tables.table-header>{{ __('admin.labels.players.uuid') }}</th>
-                        <x-tables.table-header>{{ __('admin.labels.players.username') }}</th>
-                        <x-tables.table-header>{{ __('admin.labels.players.level') }}</th>
-                        <x-tables.table-header>{{ __('admin.labels.players.nationality') }}</th>
-                        <x-tables.table-header>{{ __('admin.labels.players.selected_language') }}</th>
-                        <x-tables.table-header>{{ __('admin.labels.players.playtime') }}</th>
-                        <x-tables.table-header>{{ __('admin.labels.players.last_login') }}</th>
-                        <x-tables.table-header>{{ __('admin.labels.players.last_logout') }}</th>
+                        <x-tables.table-header>{{ __('admin.labels.players.uuid') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.players.username') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.players.level') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.players.nationality') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.players.selected_language') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.players.playtime') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.players.last_login') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.players.last_logout') }}</x-tables.table-header>
                         <th></th>
                     </tr>
                 </x-slot>
