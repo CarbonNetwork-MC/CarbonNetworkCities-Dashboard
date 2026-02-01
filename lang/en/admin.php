@@ -79,16 +79,17 @@ return [
         ],
 
         'itemsmenu' => [
-            'edit_category' => 'Edit Item Category',
-            'edit_item' => 'Edit Item',
+            'categories_overview' => 'Item Categories Overview',
             'create_category' => 'Create Item Category',
             'create_item' => 'Create Item',
             'create_item_group' => 'Create Item Group',
-            'categories_overview' => 'Item Categories Overview',
-            'items_overview' => 'Items Overview',
-            'item_groups_overview' => 'Item Groups Overview',
             'delete_category' => 'Delete Item Category',
             'delete_item' => 'Delete Item',
+            'edit_category' => 'Edit Item Category',
+            'edit_item' => 'Edit Item',
+            'item_group_items' => 'Item Group Items',
+            'item_groups_overview' => 'Item Groups Overview',
+            'items_overview' => 'Items Overview',
         ],
 
         'countries' => [
@@ -212,6 +213,7 @@ return [
         ],
 
         'itemsmenu' => [
+            'base_price' => 'Base Price',
             'category' => 'Category',
             'category_name' => 'Category Name',
             'change_category' => 'Change category of items to',
@@ -226,6 +228,7 @@ return [
             'lore_line' => 'Lore Line :number',
             'name' => 'Name',
             'player_username' => 'Player Username',
+            'price' => 'Price',
             'select_category' => 'Select Category',
             'select_coc_type' => 'Select CoC Type',
             'select_expired_prefix' => 'Select Expired Prefix',
@@ -302,6 +305,7 @@ return [
         ],
 
         'itemsmenu' => [
+            'add_item_to_group' => 'Add Item to Group',
             'add_lore_line' => 'Add Lore Line',
             'create_category' => 'Create Category',
             'create_item' => 'Create Item',
