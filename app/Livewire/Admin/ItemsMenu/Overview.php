@@ -119,6 +119,25 @@ class Overview extends Component
         Toaster::success(__('admin.toast.itemsmenu.item_deleted'));
     }
 
+    // ? Item Group Methods
+    public function removeItemGroup($id) {
+        $this->selectedItemGroup = ItemGroup::find($id);
+        $this->deleteItemGroupModal = true;
+    }
+
+    public function destroyItemGroup() {
+        if (!$this->selectedItemGroup) return;
+
+        $this->selectedItemGroup->delete();
+
+        $this->reset([
+            'selectedItemGroup',
+            'deleteItemGroupModal',
+        ]);
+
+        Toaster::success(__('admin.toast.itemsmenu.item_group_deleted'));
+    }
+
     public function render()
     {
         return view('livewire.admin.itemsmenu.overview', [

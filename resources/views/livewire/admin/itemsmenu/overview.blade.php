@@ -253,4 +253,20 @@
             </button>
         </x-slot>
     </x-modals.modal>
+
+    {{-- Delete Item Group Modal --}}
+    <x-modals.modal wire:model="deleteItemGroupModal">
+        <x-slot name="title">{{ __('admin.titles.itemsmenu.delete_item_group') }}</x-slot>
+        <x-slot name="content">
+            <p>{!! __('admin.messages.itemsmenu.item_group_delete_confirmation', ['name' => $selectedItemGroup ? $selectedItemGroup->name : '']) !!}</p>
+        </x-slot>
+        <x-slot name="footer">
+            <x-buttons.secondary-button wire:click="$set('deleteItemGroupModal', false)">
+                {{ __('general.buttons.cancel') }}
+            </x-buttons.secondary-button>
+            <x-buttons.danger-button wire:click="destroyItemGroup">
+                {{ __('general.buttons.delete') }}
+            </x-buttons.danger-button>
+        </x-slot>
+    </x-modals.modal>
 </div>
