@@ -11,6 +11,8 @@ class CompanyItemGroup extends Model
         'company_id',
         'item_id',
         'sellable',
+        'price',
+        'base_price',
     ];
 
     public function company(): BelongsTo

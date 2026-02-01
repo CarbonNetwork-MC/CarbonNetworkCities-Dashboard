@@ -37,6 +37,7 @@ use App\Livewire\Admin\ItemsMenu\EditCategory;
 use App\Livewire\Admin\ItemsMenu\EditItem;
 use App\Livewire\Admin\ItemsMenu\NewCategory;
 use App\Livewire\Admin\ItemsMenu\NewItem;
+use App\Livewire\Admin\ItemsMenu\NewItemGroup;
 use App\Livewire\Admin\ItemsMenu\Overview as ItemsMenuOverview;
 
 use App\Livewire\Admin\Languages\Overview as LanguagesOverview;
@@ -152,6 +153,7 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     Route::get('/categories/edit/{id}', EditCategory::class)->name('admin.itemsmenu.category.edit');
     Route::get('/items/new', NewItem::class)->name('admin.itemsmenu.item.new');
     Route::get('/items/edit/{id}', EditItem::class)->name('admin.itemsmenu.item.edit');
+    Route::get('/item-groups/new', NewItemGroup::class)->name('admin.itemsmenu.item-group.new');
 
     // ? Countries
     Route::get('/countries', CountriesOverview::class)->name('admin.countries.render');

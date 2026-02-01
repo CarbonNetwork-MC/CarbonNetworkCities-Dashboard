@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('company_item_groups', function (Blueprint $table) {
+        Schema::create('company_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('item_id');
             $table->boolean('sellable')->default(true);
+            $table->float('price', 8, 2)->default(0);
+            $table->float('base_price', 8, 2)->default(0);
             $table->timestamps();
 
             // Foreign key constraints
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('company_item_groups');
+        Schema::dropIfExists('company_items');
     }
 };

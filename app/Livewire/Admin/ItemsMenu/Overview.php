@@ -129,6 +129,7 @@ class Overview extends Component
                 ->orderBy('created_at', 'desc')
                 ->paginate($this->itemsPerPage, pageName: 'itemsPage'),
             'itemGroups' => ItemGroup::where('coc_type', 'like', '%' . $this->searchItem . '%')
+                ->with('cocType')
                 ->orderBy('created_at', 'desc')
                 ->paginate($this->itemGroupsPerPage, pageName: 'itemGroupsPage'),
         ]);

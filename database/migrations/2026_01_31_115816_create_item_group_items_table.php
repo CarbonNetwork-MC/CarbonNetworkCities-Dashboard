@@ -11,15 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('item_groups', function (Blueprint $table) {
+        Schema::create('item_group_items', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->unsignedBigInteger('coc_type');
+            $table->unsignedBigInteger('item_group_id');
+            $table->unsignedBigInteger('item_id');
+            $table->decimal('price', 10, 2);
+            $table->decimal('base_price', 10, 2);
             $table->boolean('sellable')->default(true);
             $table->timestamps();
 
             // Foreign key constraints
-            $table->foreign('coc_type')->references('id')->on('coc_types')->onDelete('cascade');
+            $table->foreign('item_group_id')->references('id')->on('item_groups')->onDelete('cascade');
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
         });
     }
 
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('item_groups');
+        Schema::dropIfExists('item_group_items');
     }
 };

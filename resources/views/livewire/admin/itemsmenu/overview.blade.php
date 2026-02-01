@@ -151,7 +151,7 @@
             </div>
             <div class="flex items-center gap-x-4" x-show="open">
                 <x-forms.search-bar id="searchItemGroup" wire:model.live="searchItemGroup" />
-                <x-buttons.primary-button size="sm" href="">
+                <x-buttons.primary-button size="sm" href="{{ route('admin.itemsmenu.item-group.new') }}">
                     {{ __('general.buttons.add') }}
                 </x-buttons.primary-button>
             </div>
@@ -161,8 +161,9 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
+                        <x-tables.table-header>{{ __('admin.labels.itemsmenu.name') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.itemsmenu.coc_type') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.itemsmenu.item') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.itemsmenu.items_number') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.itemsmenu.sellable') }}</x-tables.table-header>
                         <th></th>
                     </tr>
@@ -170,8 +171,9 @@
                 <x-slot name="rows">
                     @forelse ($itemGroups as $itemGroup)
                         <x-tables.table-row>
+                            <x-tables.table-data>{{ $itemGroup->name ?? '' }}</x-tables.table-data>
                             <x-tables.table-data>{{ $itemGroup->cocType->name ?? '' }}</x-tables.table-data>
-                            <x-tables.table-data>{{ $itemGroup->item->name ?? '' }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $itemGroup->items->count() ?? 0 }}</x-tables.table-data>
                             <x-tables.table-data>
                                 @if($itemGroup->sellable)
                                     <span class="bg-green-100 text-green-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full">{{ __('general.yes') }}</span>
