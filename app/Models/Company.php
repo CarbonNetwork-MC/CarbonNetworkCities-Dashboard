@@ -45,4 +45,9 @@ class Company extends Model
     {
         return $this->hasMany(PinConsole::class, 'company_id', 'id');
     }
+
+    public function items(): HasMany
+    {
+        return $this->hasMany(CompanyItem::class, 'company_id', 'id');
+    }
 }

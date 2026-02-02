@@ -20,6 +20,7 @@ return [
             'delete' => 'Delete Company',
             'edit' => 'Edit Company',
             'employees' => 'Employees',
+            'items' => 'Items',
             'overview' => 'Company Overview',
             'pin_consoles' => 'PIN Consoles',
             'plots' => 'Plots',
@@ -140,13 +141,13 @@ return [
     'labels' => [
         'player_uuid' => 'Player UUID',
 
-        // Companies
         'companies' => [
             'bank_accounts' => 'Bank Accounts',
             'bank_account_number' => 'Account No.',
             'bank_account_balance' => 'Balance',
             'bank_account_currency' => 'Currency',
             'bank_account_is_main' => 'Is Main Account',
+            'base_price' => 'Base Price',
             'city' => 'City',
             'coc_number' => 'COC Number',
             'company_id' => 'Company ID',
@@ -154,6 +155,7 @@ return [
             'employees' => 'Employees',
             'employee_name' => 'Employee Name',
             'employee_role' => 'Role',
+            'item' => 'Item',
             'name' => 'Name',
             'no_owner_assigned' => 'No owner assigned',
             'owner' => 'Owner',
@@ -166,6 +168,8 @@ return [
             'plot_id' => 'Plot ID',
             'plot_location' => 'Location',
             'plot_name' => 'Plot Name',
+            'price' => 'Price',
+            'sellable' => 'Sellable',
             'world_id' => 'World ID',
         ],
 
@@ -275,6 +279,7 @@ return [
         'companies' => [
             'add_bank_account' => 'Add Bank Account',
             'add_employee' => 'Add Employee',
+            'add_item' => 'Add Item',
             'add_pin_console' => 'Add PIN Console',
             'add_plot' => 'Add Plot',
             'create' => 'Create Company',
@@ -334,6 +339,7 @@ return [
             'companies_no_records' => 'No companies found.',
             'employees_no_records' => 'No employees found for this company.',
             'bank_accounts_no_records' => 'No bank accounts found for this company.',
+            'items_no_records' => 'No items found for this company.',
             'pin_consoles_no_records' => 'No PIN consoles found for this company.',
             'plots_no_records' => 'No plots found for this company.',
         ],

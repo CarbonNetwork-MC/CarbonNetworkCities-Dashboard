@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class CompanyItemGroup extends Model
+class CompanyItem extends Model
 {
     protected $fillable = [
         'company_id',
