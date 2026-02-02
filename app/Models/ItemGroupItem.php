@@ -14,6 +14,11 @@ class ItemGroupItem extends Model
         'base_price',
         'sellable',
     ];
+    protected $casts = [
+        'sellable' => 'boolean',
+        'price' => 'float',
+        'base_price' => 'float',
+    ];
 
     public function itemGroup(): BelongsTo
     {

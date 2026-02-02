@@ -85,8 +85,10 @@ return [
             'create_item_group' => 'Create Item Group',
             'delete_category' => 'Delete Item Category',
             'delete_item' => 'Delete Item',
+            'delete_item_group' => 'Delete Item Group',
             'edit_category' => 'Edit Item Category',
             'edit_item' => 'Edit Item',
+            'edit_item_group' => 'Edit Item Group',
             'item_group_items' => 'Item Group Items',
             'item_groups_overview' => 'Item Groups Overview',
             'items_overview' => 'Items Overview',
@@ -382,11 +384,12 @@ return [
 
         'itemsmenu' => [
             'categories_no_records' => 'No item categories found.',
-            'items_no_records' => 'No items found.',
             'category_delete_confirmation_with_items' => 'Are you sure you want to delete the item category <b>:name</b>? This action cannot be undone. You can choose to move its items to another category below.',
             'category_delete_confirmation_without_items' => 'Are you sure you want to delete the item category <b>:name</b>? This action cannot be undone.',
             'item_delete_confirmation' => 'Are you sure you want to delete the item <b>:name</b>? This action cannot be undone.',
+            'item_group_delete_confirmation' => 'Are you sure you want to delete the item group <b>:name</b>? This action cannot be undone.',
             'item_groups_no_records' => 'No item groups found.',
+            'items_no_records' => 'No items found.',
         ],
         
         'countries' => [
@@ -514,13 +517,16 @@ return [
         ],
 
         'itemsmenu' => [
-            'reload_items_api_error' => 'There was an error reloading items via the API. Changes have been reverted.',
-            'category_updated' => 'Item category updated successfully.',
-            'item_updated' => 'Item updated successfully.',
             'category_created' => 'Item category created successfully.',
-            'item_created' => 'Item created successfully.',
             'category_deleted' => 'Item category deleted successfully.',
+            'category_updated' => 'Item category updated successfully.',
+            'item_created' => 'Item created successfully.',
             'item_deleted' => 'Item deleted successfully.',
+            'item_updated' => 'Item updated successfully.',
+            'item_group_created' => 'Item group created successfully.',
+            'item_group_deleted' => 'Item group deleted successfully.',
+            'item_group_updated' => 'Item group updated successfully.',
+            'reload_items_api_error' => 'There was an error reloading items via the API. Changes have been reverted.',
         ],
 
         'countries' => [

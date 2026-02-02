@@ -182,7 +182,7 @@
                                 @endif
                             </x-tables.table-data>
                             <x-tables.table-data class="px-6 py-4 flex justify-end gap-x-4 whitespace-nowrap text-right text-sm font-medium">
-                                <x-tables.primary-action href="">{{ __('general.buttons.edit') }}</x-tables.primary-action>
+                                <x-tables.primary-action href="{{ route('admin.itemsmenu.item-group.edit', ['id' => $itemGroup->id]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removeItemGroup('{{ $itemGroup->id }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
                             </x-tables.table-data>
                         </x-tables.table-row>
