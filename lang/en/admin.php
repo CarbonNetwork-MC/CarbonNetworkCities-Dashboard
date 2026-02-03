@@ -14,11 +14,14 @@ return [
         'companies' => [
             'add_bank_account' => 'Add Bank Account',
             'add_employee' => 'Add Employee',
+            'add_item' => 'Add Item',
             'add_pin_console' => 'Add PIN Console',
             'add_plot' => 'Add Plot',
             'bank_accounts' => 'Bank Accounts',
             'delete' => 'Delete Company',
+            'delete_item' => 'Delete Company Item',
             'edit' => 'Edit Company',
+            'edit_item' => 'Edit Company Item',
             'employees' => 'Employees',
             'items' => 'Items',
             'overview' => 'Company Overview',
@@ -334,6 +337,7 @@ return [
             'delete_confirmation' => 'Are you sure you want to delete the company <b>:name</b>? This action cannot be undone.',
             'remove_employee_confirmation' => 'Are you sure you want to remove the employee <b>:name</b> from this company?',
             'remove_bank_account_confirmation' => 'Are you sure you want to remove the bank account <b>:id</b> from this company?',
+            'remove_item_confirmation' => 'Are you sure you want to remove the item <b>:name</b> from this company?',
             'remove_pin_console_confirmation' => 'Are you sure you want to remove the PIN console <b>:id</b> from this company.',
             'remove_plot_confirmation' => 'Are you sure you want to remove the plot <b>:id</b> from this company?',
             
@@ -443,6 +447,9 @@ return [
             'employee_assigned' => 'Employee assigned to company successfully.',
             'employee_already_assigned' => 'This employee is already assigned to the company.',
             'employee_removed' => 'Employee removed from company successfully.',
+            'item_added' => 'Item added to company successfully.',
+            'item_removed' => 'Item removed from company successfully.',
+            'item_updated' => 'Company item updated successfully.',
             'plot_removed' => 'Plot removed from company successfully.',
 
             'update_failed' => 'Failed to update company. Please try again.',

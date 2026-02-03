@@ -389,7 +389,7 @@
             </div>
             <div class="flex items-center gap-x-4" x-show="open">
                 <x-forms.search-bar id="searchItems" wire:model.live="searchItems" />
-                <x-buttons.primary-button size="sm" href="{{-- route('admin.companies.add-item', ['id' => $company->id]) --}}">
+                <x-buttons.primary-button size="sm" href="{{ route('admin.companies.add-item', ['id' => $company->id]) }}">
                     {{ __('admin.buttons.companies.add_item') }}
                 </x-buttons.primary-button>
             </div>
