@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Companies;
 
+use App\Models\CoCType;
 use App\Models\Plot;
 use App\Models\Player;
 use App\Models\Company;
@@ -17,12 +18,14 @@ class EditCompany extends Component
     public $company;
     public $companyName;
     public $cocNumber;
+    public $cocType;
     public $worldId;
     public $selectedPlayer;
 
     public $currency;
 
     public $players;
+    public $cocTypes;
 
     public $searchEmployees = '';
     public $searchBankAccounts = '';
@@ -54,9 +57,11 @@ class EditCompany extends Component
     public function mount($id) {
         $this->company = Company::where('id', $id)->firstOrFail();
         $this->players = Player::orderBy('username')->get(['uuid', 'username']);
+        $this->cocTypes = CoCType::get(['id', 'name']);
 
         $this->companyName = $this->company->name;
         $this->cocNumber = $this->company->coc_number;
+        $this->cocType = $this->company->coc_type;
         $this->worldId = $this->company->world_id;
         $this->selectedPlayer = $this->company->owner_uuid;
 

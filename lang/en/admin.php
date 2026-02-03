@@ -150,6 +150,7 @@ return [
             'base_price' => 'Base Price',
             'city' => 'City',
             'coc_number' => 'COC Number',
+            'coc_type' => 'CoC Type',
             'company_id' => 'Company ID',
             'country' => 'Country',
             'employees' => 'Employees',

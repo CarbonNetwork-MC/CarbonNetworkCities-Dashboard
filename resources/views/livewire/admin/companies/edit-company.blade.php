@@ -41,13 +41,28 @@
                     <x-forms.text-input label="{{ __('admin.labels.companies.coc_number') }}" wire:model="cocNumber" required />
                 </div>
 
-                <div class="cols-span-1"></div>
+                <div class="col-span-1"></div>
 
+                {{-- CoC Type --}}
                 <div class="col-span-1">
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        {{ __('admin.labels.companies.owner') }}
-                    </label>
+                    <x-forms.label for="cocTypeSelect">
+                        {{ __('admin.labels.companies.coc_type') }}
+                    </x-forms.label>
                     <livewire:async-select
+                        id="cocTypeSelect"
+                        :options="$cocTypes->map(fn($type) => ['label' => $type->name, 'value' => $type->id])"
+                        wire:model="cocType"
+                        :min-search-length="2"
+                    />
+                </div>
+
+                {{-- Owner --}}
+                <div class="col-span-1">
+                    <x-forms.label for="ownerSelect">
+                        {{ __('admin.labels.companies.owner') }}
+                    </x-forms.label>
+                    <livewire:async-select
+                        id="ownerSelect"
                         :options="$players->map(fn($player) => ['label' => $player->username, 'value' => $player->uuid])"
                         wire:model="selectedPlayer"
                         :min-search-length="2"
