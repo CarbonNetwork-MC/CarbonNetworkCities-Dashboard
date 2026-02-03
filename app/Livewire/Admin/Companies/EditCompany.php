@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Companies;
 
 use App\Models\CoCType;
+use App\Models\CompanyItem;
 use App\Models\Plot;
 use App\Models\Player;
 use App\Models\Company;
@@ -287,6 +288,19 @@ class EditCompany extends Component
 
         // 4. Success
         Toaster::success(__('admin.toast.companies.pin_console_removed'));
+    }
+
+    // Delete Item
+    public function removeItem($id) {
+        $this->itemToRemove = CompanyItem::where('id', $id)->with('item')->first();
+        $this->removeItemModal = true;
+    }
+
+    public function destroyItem() {
+        $this->itemToRemove->delete();
+
+        $this->removeItemModal = false;
+        Toaster::success(__('admin.toast.companies.item_removed'));
     }
 
     public function render()

@@ -541,4 +541,26 @@
             </x-buttons.danger-button>
         </x-slot>
     </x-modals.modal>
+
+    {{-- Remove Item Modal --}}
+    <x-modals.modal wire:model="removeItemModal">
+        <x-slot name="title">
+            <div class="w-full flex justify-center">
+                {{ __('admin.titles.companies.delete_item') }}
+            </div>
+        </x-slot>
+        <x-slot name="content">
+            <p class="text-center text-gray-600 dark:text-gray-300">
+                {!! __('admin.messages.companies.remove_item_confirmation', ['name' => $itemToRemove->item->internal_id ?? '']) !!}
+            </p>
+        </x-slot>
+        <x-slot name="footer">
+            <x-buttons.secondary-button wire:click="$set('removeItemModal', false)">
+                {{ __('general.buttons.cancel') }}
+            </x-buttons.secondary-button>
+            <x-buttons.danger-button wire:click="destroyItem">
+                {{ __('general.buttons.remove') }}
+            </x-buttons.danger-button>
+        </x-slot>
+    </x-modals.modal>
 </div>
