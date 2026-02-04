@@ -66,10 +66,17 @@
             {{ __('admin.titles.itemsmenu.item_group_items') }}
         </x-containers.title>
 
-        <div class="space-y-4 mt-4">
-            @foreach ($items as $index => $item)
-                <div class="grid grid-cols-4 gap-4" wire:key="item-group-item-{{ $index }}">
-                    {{-- Item --}}
+        <x-buttons.secondary-button wire:click="addItem" class="flex items-center gap-x-2 mt-4">
+            <i class="fi fi-rr-plus text-green-500"></i>
+            {{ __('admin.buttons.itemsmenu.add_item_to_group') }}
+        </x-buttons.secondary-button>
+    </x-containers.main>
+
+    <div class="grid grid-cols-2 gap-4 mt-4">
+        @foreach ($items as $index => $item)
+            <x-containers.main class="col-span-1" wire:key="item-group-item-{{ $index }}">
+                <div class="grid grid-cols-2 gap-4">
+
                     <div class="col-span-1">
                         <div class="flex gap-x-2">
                             <x-forms.label for="itemSelect-{{ $index }}" id="itemSelect-{{ $index }}-label" required>
@@ -86,38 +93,28 @@
                         />
                     </div>
 
-                    <div class="col-span-3"></div>
-
-                    {{-- Price --}}
                     <div class="col-span-1">
                         <x-forms.text-input label="{{ __('admin.labels.itemsmenu.price') }}" wire:model="items.{{ $index }}.price" />
                     </div>
                     
-                    {{-- Base Price --}}
                     <div class="col-span-1">
                         <x-forms.text-input label="{{ __('admin.labels.itemsmenu.base_price') }}" wire:model="items.{{ $index }}.base_price" required />
                     </div>
 
-                    <div class="col-span-2"></div>
+                    <div class="col-span-1"></div>
 
-                    {{-- Sellable --}}
                     <div class="col-span-1">
                         <x-forms.checkbox label="{{ __('admin.labels.itemsmenu.sellable') }}" wire:model="items.{{ $index }}.sellable" />
                     </div>
                 </div>
-            @endforeach
 
-            <x-buttons.secondary-button wire:click="addItem" class="flex items-center gap-x-2">
-                <i class="fi fi-rr-plus text-green-500"></i>
-                {{ __('admin.buttons.itemsmenu.add_item_to_group') }}
-            </x-buttons.secondary-button>
-
-            <div class="flex justify-end items-center gap-x-4 mt-6">
-                <x-forms.required-fields />
-                <x-buttons.primary-button wire:click="createItemGroup">
-                    {{ __('general.buttons.create') }}
-                </x-buttons.primary-button>
-            </div>
-        </div>
-    </x-containers.main>
+                <div class="flex justify-end items-center gap-x-4 mt-6">
+                    <x-forms.required-fields />
+                    <x-buttons.primary-button wire:click="createItemGroup">
+                        {{ __('general.buttons.create') }}
+                    </x-buttons.primary-button>
+                </div>
+            </x-containers.main>
+        @endforeach
+    </div>
 </div>
