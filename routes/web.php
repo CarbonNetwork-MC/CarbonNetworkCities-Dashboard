@@ -22,6 +22,7 @@ use App\Livewire\Admin\CoC\EditCoCType;
 use App\Livewire\Admin\Companies\AddBankAccount as AddCompanyBankAccount;
 use App\Livewire\Admin\Companies\AddEmployee;
 use App\Livewire\Admin\Companies\AddItem;
+use App\Livewire\Admin\Companies\AddItemGroup;
 use App\Livewire\Admin\Companies\AddPinConsole;
 use App\Livewire\Admin\Companies\AddPlot;
 use App\Livewire\Admin\Companies\EditCompany;
@@ -119,6 +120,7 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
         Route::get('/companies/edit/{id}/add-bank-account', AddCompanyBankAccount::class)->name('admin.companies.add-bank-account');
         Route::get('/companies/edit/{id}/add-employee', AddEmployee::class)->name('admin.companies.add-employee');
         Route::get('/companies/edit/{id}/add-item', AddItem::class)->name('admin.companies.add-item');
+        Route::get('/companies/edit/{id}/add-item-group', AddItemGroup::class)->name('admin.companies.add-item-group');
         Route::get('/companies/edit/{id}/add-pin-console', AddPinConsole::class)->name('admin.companies.add-pin-console');
         Route::get('/companies/edit/{id}/add-plot', AddPlot::class)->name('admin.companies.add-plot');
         Route::get('/companies/edit/{companyId}/edit-item/{itemId}', EditCompanyItem::class)->name('admin.companies.edit-item');

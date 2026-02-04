@@ -392,6 +392,9 @@
                 <x-buttons.primary-button size="sm" href="{{ route('admin.companies.add-item', ['id' => $company->id]) }}">
                     {{ __('admin.buttons.companies.add_item') }}
                 </x-buttons.primary-button>
+                <x-buttons.primary-button size="sm" href="{{ route('admin.companies.add-item-group', ['id' => $company->id]) }}">
+                    {{ __('admin.buttons.companies.add_item_group') }}
+                </x-buttons.primary-button>
             </div>
         </div>
 
@@ -420,7 +423,7 @@
                                 @endif
                             </x-tables.table-data>
                             <x-tables.table-actions>
-                                <x-tables.primary-action href="">
+                                <x-tables.primary-action href="{{ route('admin.companies.edit-item', ['companyId' => $company->id, 'itemId' => $item->id]) }}">
                                     {{ __('general.buttons.edit') }}
                                 </x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removeItem('{{ $item->id }}')">
