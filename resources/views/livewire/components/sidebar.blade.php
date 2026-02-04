@@ -48,7 +48,7 @@
 
         <!-- Admin Nav -->
         @if (request()->routeIs('admin.*') && $user->hasRole('Superadmin'))
-            <nav class="space-y-2 flex-1 min-h-0">
+            <nav class="space-y-2 flex-1 min-h-0 overflow-y-auto hide-scrollbar">
                 {{-- Admin Dashboard --}}
                 <x-sidebar.nav-item
                     :href="route('admin.dashboard.render')"
