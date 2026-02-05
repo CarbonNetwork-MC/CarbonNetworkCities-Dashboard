@@ -162,7 +162,7 @@
                     :href="route('admin.dashboard.render')"
                     :active="request()->routeIs('admin.dashboard.*')"
                     icon="fi fi-rr-admin-alt"
-                    :label="__('sidebar.admin')"
+                    :label="__('sidebar.management')"
                 />
             @endif
             </div>

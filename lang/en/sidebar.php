@@ -11,8 +11,8 @@ return [
 
     'dashboard' => 'Dashboard',
 
-    // Admin
-    'admin' => 'Admin',
+    // Management
+    'management' => 'Management',
 
     'bank_accounts' => 'Bank Accounts',
     'city_regions' => 'City Regions',
