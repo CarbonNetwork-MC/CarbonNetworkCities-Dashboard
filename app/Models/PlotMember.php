@@ -11,7 +11,6 @@ class PlotMember extends Model
         'plot_id',
         'player_uuid',
         'username',
-        'role',
     ];
 
     public function plot(): BelongsTo
