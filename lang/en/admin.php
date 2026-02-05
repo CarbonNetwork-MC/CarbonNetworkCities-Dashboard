@@ -124,6 +124,7 @@ return [
             'overview' => 'Plots Overview',
             'create' => 'Create Plot',
             'delete' => 'Delete Plot',
+            'edit' => 'Edit Plot',
         ],
     ],
 

@@ -50,6 +50,7 @@ use App\Livewire\Admin\BankAccounts\EditCompanyBankAccount;
 use App\Livewire\Admin\BankAccounts\EditPersonalBankAccount;
 use App\Livewire\Admin\Plots\Overview as PlotsOverview;
 use App\Livewire\Admin\Plots\NewPlot;
+use App\Livewire\Admin\Plots\Edit as EditPlot;
 use Illuminate\Support\Facades\Route;
 
 // ! Guest Routes
@@ -158,4 +159,5 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     // ? Plots
     Route::get('/plots', PlotsOverview::class)->name('admin.plots.render');
     Route::get('/plots/new', NewPlot::class)->name('admin.plots.new');
+    Route::get('/plots/edit/{id}', EditPlot::class)->name('admin.plots.edit');
 });
