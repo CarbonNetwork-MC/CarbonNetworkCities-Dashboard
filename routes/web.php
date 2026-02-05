@@ -48,6 +48,7 @@ use App\Livewire\Admin\BankAccounts\NewCompanyBankAccount;
 use App\Livewire\Admin\BankAccounts\NewPersonalBankAccount;
 use App\Livewire\Admin\BankAccounts\EditCompanyBankAccount;
 use App\Livewire\Admin\BankAccounts\EditPersonalBankAccount;
+use App\Livewire\Profile\Overview as ProfileOverview;
 use Illuminate\Support\Facades\Route;
 
 // ! Guest Routes
@@ -78,6 +79,9 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
 
     // ? Dashboard
     Route::get('/dashboard', Dashboard::class)->name('dashboard.render');
+
+    // ? Profile
+    Route::get('/profile', ProfileOverview::class)->name('profile.render');
 });
 
 // ! Admin Routes
