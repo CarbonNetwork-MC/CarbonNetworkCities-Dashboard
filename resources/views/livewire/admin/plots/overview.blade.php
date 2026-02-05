@@ -60,7 +60,7 @@
                             </x-tables.table-data>
                             <x-tables.table-data>{{ ucfirst($plot->type) }}</x-tables.table-data>
                             <x-tables.table-actions>
-                                <x-tables.primary-action href="#">{{ __('general.buttons.edit') }}</x-tables.primary-action>
+                                <x-tables.primary-action href="{{ route('admin.plots.edit', ['id' => $plot->id]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removePlot('{{ $plot->id }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
                             </x-tables.table-actions>
                         </x-tables.table-row>
