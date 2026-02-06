@@ -170,7 +170,7 @@
 
                 <div class="col-span-1"></div>
 
-                {{-- Type --}}
+                {{-- TP Yaw --}}
                 <div class="col-span-1">
                     <x-forms.label>
                         Teleport Yaw
