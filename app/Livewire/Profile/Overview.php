@@ -18,6 +18,12 @@ class Overview extends Component
     public $profileImage;
     public $currentProfileImage;
 
+    public $playerToUnlink = null;
+    public $accountToDelete = null;
+
+    public $unlinkPlayerModal = false;
+    public $deleteAccountModal = false;
+
     public function mount()
     {
         $this->user = auth()->user();
@@ -62,6 +68,23 @@ class Overview extends Component
         $this->user->save();
 
         Toaster::success(__('profile.toast.profile-updated'));
+    }
+
+
+
+    public function unlinkPlayer() {
+        $this->playerToUnlink = $this->user->player->with('accountLink')->first();
+        $this->unlinkPlayerModal = true;
+    }
+
+    public function unlink() {
+        if (!$this->playerToUnlink) return;
+
+        
+    }
+
+    public function deleteAccount() {
+
     }
 
     public function render()

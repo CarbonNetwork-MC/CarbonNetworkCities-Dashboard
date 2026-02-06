@@ -150,21 +150,21 @@
             <x-sidebar.nav-divider />
 
             <div class="mb-2">
-            @if (request()->routeIs('admin.*'))
-                <x-sidebar.nav-item
-                    :href="route('dashboard.render')"
-                    :active="false"
-                    icon="fi fi-rr-arrow-small-left"
-                    :label="__('sidebar.back_to_dashboard')"
-                />
-            @else
-                <x-sidebar.nav-item
-                    :href="route('admin.dashboard.render')"
-                    :active="request()->routeIs('admin.dashboard.*')"
-                    icon="fi fi-rr-admin-alt"
-                    :label="__('sidebar.management')"
-                />
-            @endif
+                @if (request()->routeIs('admin.*'))
+                    <x-sidebar.nav-item
+                        :href="route('dashboard.render')"
+                        :active="false"
+                        icon="fi fi-rr-arrow-small-left"
+                        :label="__('sidebar.back_to_dashboard')"
+                    />
+                @else
+                    <x-sidebar.nav-item
+                        :href="route('admin.dashboard.render')"
+                        :active="request()->routeIs('admin.dashboard.*')"
+                        icon="fi fi-rr-admin-alt"
+                        :label="__('sidebar.management')"
+                    />
+                @endif
             </div>
             @endif
 
