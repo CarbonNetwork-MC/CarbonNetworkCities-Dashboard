@@ -11,11 +11,12 @@ return [
 
     'dashboard' => 'Dashboard',
 
-    // Admin
-    'admin' => 'Admin',
+    // Management
+    'management' => 'Management',
 
     'bank_accounts' => 'Bank Accounts',
     'city_regions' => 'City Regions',
+    'coc' => 'Chamber of Commerce',
     'companies' => 'Companies',
     'countries' => 'Countries',
     'roles_perms' => 'Roles & Permissions',

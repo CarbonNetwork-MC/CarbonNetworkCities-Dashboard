@@ -19,9 +19,9 @@
     </x-slot>
 
     <x-containers.main>
-        <h1 class="text-xl font-semibold dark:text-white mb-4">
+        <x-containers.title>
             {{ __('admin.titles.itemsmenu.create_item') }}
-        </h1>
+        </x-containers.title>
 
         <div class="mt-6">
             <div class="grid grid-cols-4 gap-x-6">
@@ -119,9 +119,7 @@
             </div>
             
             <div class="flex justify-end items-center gap-x-4 mt-6">
-                <p class="text-black dark:text-white">
-                    {{ __('general.messages.required_fields') }} <span class="text-red-500">*</span>
-                </p>
+                <x-forms.required-fields />
                 <x-buttons.primary-button wire:click="createItem">
                     {{ __('general.buttons.create') }}
                 </x-buttons.primary-button>
