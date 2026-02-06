@@ -120,6 +120,14 @@
                     icon="fi fi-rr-user"
                     :label="__('sidebar.players')"
                 />
+
+                {{-- Plots --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.plots.render')"
+                    :active="request()->routeIs('admin.plots.*')"
+                    icon="fi fi-rr-land-layer-location"
+                    label="Plots"
+                />
                     
                 {{-- PIN Consoles --}}
                 <x-sidebar.nav-item

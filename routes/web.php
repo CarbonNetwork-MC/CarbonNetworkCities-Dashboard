@@ -61,6 +61,11 @@ use App\Livewire\Admin\Players\EditPlayer;
 use App\Livewire\Admin\Players\EditPrefix;
 use App\Livewire\Admin\Players\Overview as PlayerOverview;
 
+use App\Livewire\Admin\Plots\Overview as PlotsOverview;
+use App\Livewire\Admin\Plots\NewPlot;
+use App\Livewire\Admin\Plots\Edit as EditPlot;
+use App\Livewire\Admin\Plots\AddMember;
+
 use App\Livewire\Admin\RolesPerms\NewRole;
 use App\Livewire\Admin\RolesPerms\EditRole;
 use App\Livewire\Admin\RolesPerms\NewPermission;
@@ -184,4 +189,10 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     Route::get('/bank-accounts/personal/new', NewPersonalBankAccount::class)->name('admin.bank-accounts.personal.new');
     Route::get('/bank-accounts/company/edit/{id}', EditCompanyBankAccount::class)->name('admin.bank-accounts.company.edit');
     Route::get('/bank-accounts/personal/edit/{id}', EditPersonalBankAccount::class)->name('admin.bank-accounts.personal.edit');
+
+    // ? Plots
+    Route::get('/plots', PlotsOverview::class)->name('admin.plots.render');
+    Route::get('/plots/new', NewPlot::class)->name('admin.plots.new');
+    Route::get('/plots/edit/{id}', EditPlot::class)->name('admin.plots.edit');
+    Route::get('/plots/add-member/{id}', AddMember::class)->name('admin.plots.add-member');
 });
