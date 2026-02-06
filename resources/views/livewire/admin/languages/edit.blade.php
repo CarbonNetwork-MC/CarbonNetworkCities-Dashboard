@@ -13,14 +13,14 @@
             ],
             [
                 'url'   => route('admin.languages.edit', ['id' => $language->id]),
-                'label' => __('admin.buttons.language.edit'),
+                'label' => __('admin.titles.languages.edit'),
             ]
         ]" />
     </x-slot>
 
     <x-containers.main>
         <x-containers.title>
-            {{ __('admin.buttons.language.edit') }}
+            {{ __('admin.titles.languages.edit') }}
         </x-containers.title>
 
         <div class="mt-6">

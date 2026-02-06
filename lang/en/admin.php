@@ -14,18 +14,27 @@ return [
         'companies' => [
             'add_bank_account' => 'Add Bank Account',
             'add_employee' => 'Add Employee',
+            'add_item' => 'Add Item',
+            'add_items' => 'Add Items',
+            'add_item_group' => 'Add Item Group',
             'add_pin_console' => 'Add PIN Console',
             'add_plot' => 'Add Plot',
             'bank_accounts' => 'Bank Accounts',
             'delete' => 'Delete Company',
+            'delete_item' => 'Delete Company Item',
             'edit' => 'Edit Company',
+            'edit_item' => 'Edit Company Item',
             'employees' => 'Employees',
+            'items' => 'Items',
             'overview' => 'Company Overview',
             'pin_consoles' => 'PIN Consoles',
             'plots' => 'Plots',
         ],
 
         'languages' => [
+            'create' => 'Create Language',
+            'delete' => 'Delete Language',
+            'edit' => 'Edit Language',
             'overview' => 'Languages Overview',
         ],
 
@@ -76,14 +85,19 @@ return [
         ],
 
         'itemsmenu' => [
-            'edit_category' => 'Edit Item Category',
-            'edit_item' => 'Edit Item',
+            'categories_overview' => 'Item Categories Overview',
             'create_category' => 'Create Item Category',
             'create_item' => 'Create Item',
-            'categories_overview' => 'Item Categories Overview',
-            'items_overview' => 'Items Overview',
+            'create_item_group' => 'Create Item Group',
             'delete_category' => 'Delete Item Category',
             'delete_item' => 'Delete Item',
+            'delete_item_group' => 'Delete Item Group',
+            'edit_category' => 'Edit Item Category',
+            'edit_item' => 'Edit Item',
+            'edit_item_group' => 'Edit Item Group',
+            'item_group_items' => 'Item Group Items',
+            'item_groups_overview' => 'Item Groups Overview',
+            'items_overview' => 'Items Overview',
         ],
 
         'countries' => [
@@ -119,26 +133,37 @@ return [
                 'edit' => 'Edit Personal Bank Account',
             ],
         ],
+
+        'coc' => [
+            'overview' => 'Chamber of Commerce Types Overview',
+            'create' => 'Create Chamber of Commerce Type',
+            'edit' => 'Edit Chamber of Commerce Type',
+            'delete' => 'Delete Chamber of Commerce Type',
+        ]
     ],
 
     // Labels
     'labels' => [
         'player_uuid' => 'Player UUID',
 
-        // Companies
         'companies' => [
             'bank_accounts' => 'Bank Accounts',
             'bank_account_number' => 'Account No.',
             'bank_account_balance' => 'Balance',
             'bank_account_currency' => 'Currency',
             'bank_account_is_main' => 'Is Main Account',
+            'base_price' => 'Base Price',
             'city' => 'City',
             'coc_number' => 'COC Number',
+            'coc_type' => 'CoC Type',
             'company_id' => 'Company ID',
             'country' => 'Country',
             'employees' => 'Employees',
             'employee_name' => 'Employee Name',
             'employee_role' => 'Role',
+            'item' => 'Item',
+            'item_group' => 'Item Group',
+            'items_in_group' => 'Items in Group',
             'name' => 'Name',
             'no_owner_assigned' => 'No owner assigned',
             'owner' => 'Owner',
@@ -151,6 +176,8 @@ return [
             'plot_id' => 'Plot ID',
             'plot_location' => 'Location',
             'plot_name' => 'Plot Name',
+            'price' => 'Price',
+            'sellable' => 'Sellable',
             'world_id' => 'World ID',
         ],
 
@@ -200,20 +227,28 @@ return [
         ],
 
         'itemsmenu' => [
+            'base_price' => 'Base Price',
+            'category' => 'Category',
             'category_name' => 'Category Name',
+            'change_category' => 'Change category of items to',
+            'coc_type' => 'CoC Type',
+            'display_name' => 'Display Name',
             'icon_material' => 'Icon Material',
             'internal_id' => 'Internal ID',
+            'item' => 'Item',
             'item_name' => 'Item Name',
-            'category' => 'Category',
-            'display_name' => 'Display Name',
-            'lore_line' => 'Lore Line :number',
-            'shelf_life' => 'Shelf Life (in days)',
             'items_amount' => 'Items Amount',
+            'items_number' => 'No. of items',
+            'lore_line' => 'Lore Line :number',
+            'name' => 'Name',
             'player_username' => 'Player Username',
-            'user_name' => 'User Name',
-            'change_category' => 'Change category of items to',
+            'price' => 'Price',
             'select_category' => 'Select Category',
+            'select_coc_type' => 'Select CoC Type',
             'select_expired_prefix' => 'Select Expired Prefix',
+            'sellable' => 'Sellable',
+            'shelf_life' => 'Shelf Life (in days)',
+            'user_name' => 'User Name',
         ],
 
         'countries' => [
@@ -238,6 +273,11 @@ return [
         'bank_accounts' => [
             'account_type' => 'Account Type',
         ],
+
+        'coc' => [
+            'name' => 'Name',
+            'description' => 'Description',
+        ]
     ],
 
     // Buttons
@@ -247,6 +287,8 @@ return [
         'companies' => [
             'add_bank_account' => 'Add Bank Account',
             'add_employee' => 'Add Employee',
+            'add_items' => 'Add Items',
+            'add_item_group' => 'Add Item Group',
             'add_pin_console' => 'Add PIN Console',
             'add_plot' => 'Add Plot',
             'create' => 'Create Company',
@@ -279,6 +321,7 @@ return [
         ],
 
         'itemsmenu' => [
+            'add_item_to_group' => 'Add Item to Group',
             'add_lore_line' => 'Add Lore Line',
             'create_category' => 'Create Category',
             'create_item' => 'Create Item',
@@ -299,12 +342,14 @@ return [
             'delete_confirmation' => 'Are you sure you want to delete the company <b>:name</b>? This action cannot be undone.',
             'remove_employee_confirmation' => 'Are you sure you want to remove the employee <b>:name</b> from this company?',
             'remove_bank_account_confirmation' => 'Are you sure you want to remove the bank account <b>:id</b> from this company?',
+            'remove_item_confirmation' => 'Are you sure you want to remove the item <b>:name</b> from this company?',
             'remove_pin_console_confirmation' => 'Are you sure you want to remove the PIN console <b>:id</b> from this company.',
             'remove_plot_confirmation' => 'Are you sure you want to remove the plot <b>:id</b> from this company?',
             
             'companies_no_records' => 'No companies found.',
             'employees_no_records' => 'No employees found for this company.',
             'bank_accounts_no_records' => 'No bank accounts found for this company.',
+            'items_no_records' => 'No items found for this company.',
             'pin_consoles_no_records' => 'No PIN consoles found for this company.',
             'plots_no_records' => 'No plots found for this company.',
         ],
@@ -355,10 +400,12 @@ return [
 
         'itemsmenu' => [
             'categories_no_records' => 'No item categories found.',
-            'items_no_records' => 'No items found.',
             'category_delete_confirmation_with_items' => 'Are you sure you want to delete the item category <b>:name</b>? This action cannot be undone. You can choose to move its items to another category below.',
             'category_delete_confirmation_without_items' => 'Are you sure you want to delete the item category <b>:name</b>? This action cannot be undone.',
             'item_delete_confirmation' => 'Are you sure you want to delete the item <b>:name</b>? This action cannot be undone.',
+            'item_group_delete_confirmation' => 'Are you sure you want to delete the item group <b>:name</b>? This action cannot be undone.',
+            'item_groups_no_records' => 'No item groups found.',
+            'items_no_records' => 'No items found.',
         ],
         
         'countries' => [
@@ -382,6 +429,11 @@ return [
             'personal_bank_accounts_no_records' => 'No personal bank accounts found.',
             'personal_bank_account_delete_confirmation' => 'Are you sure you want to delete the personal bank account <b>:id</b>? This action cannot be undone.',
         ],
+
+        'coc' => [
+            'no_records' => 'No Chamber of Commerce types found.',
+            'delete_confirmation' => 'Are you sure you want to delete the Chamber of Commerce type <b>:name</b>? This action cannot be undone.',
+        ]
     ],
 
     // Toasts
@@ -400,6 +452,9 @@ return [
             'employee_assigned' => 'Employee assigned to company successfully.',
             'employee_already_assigned' => 'This employee is already assigned to the company.',
             'employee_removed' => 'Employee removed from company successfully.',
+            'item_added' => 'Item added to company successfully.',
+            'item_removed' => 'Item removed from company successfully.',
+            'item_updated' => 'Company item updated successfully.',
             'plot_removed' => 'Plot removed from company successfully.',
 
             'update_failed' => 'Failed to update company. Please try again.',
@@ -481,13 +536,16 @@ return [
         ],
 
         'itemsmenu' => [
-            'reload_items_api_error' => 'There was an error reloading items via the API. Changes have been reverted.',
-            'category_updated' => 'Item category updated successfully.',
-            'item_updated' => 'Item updated successfully.',
             'category_created' => 'Item category created successfully.',
-            'item_created' => 'Item created successfully.',
             'category_deleted' => 'Item category deleted successfully.',
+            'category_updated' => 'Item category updated successfully.',
+            'item_created' => 'Item created successfully.',
             'item_deleted' => 'Item deleted successfully.',
+            'item_updated' => 'Item updated successfully.',
+            'item_group_created' => 'Item group created successfully.',
+            'item_group_deleted' => 'Item group deleted successfully.',
+            'item_group_updated' => 'Item group updated successfully.',
+            'reload_items_api_error' => 'There was an error reloading items via the API. Changes have been reverted.',
         ],
 
         'countries' => [
@@ -526,6 +584,12 @@ return [
                 'created' => 'Personal bank account created successfully.',
                 'updated' => 'Personal bank account updated successfully.',
             ],
+        ],
+
+        'coc' => [
+            'created' => 'Chamber of Commerce type created successfully.',
+            'updated' => 'Chamber of Commerce type updated successfully.',
+            'deleted' => 'Chamber of Commerce type deleted successfully.',
         ]
     ],
 

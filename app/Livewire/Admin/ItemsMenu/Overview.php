@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\ItemsMenu;
 use App\Models\Item;
 use Livewire\Component;
 use App\Models\ItemCategory;
+use App\Models\ItemGroup;
 use App\Services\PluginAPI\ApiService;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
@@ -19,15 +20,17 @@ class Overview extends Component
     public $categoryId = null;
     public $remainingCategories = [];
 
-
     public $categoriesPerPage = 5;
     public $itemsPerPage = 10;
+    public $itemGroupsPerPage = 10;
 
     public $deleteCategoryModal = false;
     public $deleteItemModal = false;
+    public $deleteItemGroupModal = false;
 
     public $selectedCategory = null;
     public $selectedItem = null;
+    public $selectedItemGroup = null;
 
     // ? Pagination Method
     public function updated($key, $value) {
@@ -116,6 +119,25 @@ class Overview extends Component
         Toaster::success(__('admin.toast.itemsmenu.item_deleted'));
     }
 
+    // ? Item Group Methods
+    public function removeItemGroup($id) {
+        $this->selectedItemGroup = ItemGroup::find($id);
+        $this->deleteItemGroupModal = true;
+    }
+
+    public function destroyItemGroup() {
+        if (!$this->selectedItemGroup) return;
+
+        $this->selectedItemGroup->delete();
+
+        $this->reset([
+            'selectedItemGroup',
+            'deleteItemGroupModal',
+        ]);
+
+        Toaster::success(__('admin.toast.itemsmenu.item_group_deleted'));
+    }
+
     public function render()
     {
         return view('livewire.admin.itemsmenu.overview', [
@@ -125,6 +147,10 @@ class Overview extends Component
             'items' => Item::where('name', 'like', '%' . $this->searchItem . '%')
                 ->orderBy('created_at', 'desc')
                 ->paginate($this->itemsPerPage, pageName: 'itemsPage'),
+            'itemGroups' => ItemGroup::where('coc_type', 'like', '%' . $this->searchItem . '%')
+                ->with('cocType')
+                ->orderBy('created_at', 'desc')
+                ->paginate($this->itemGroupsPerPage, pageName: 'itemGroupsPage'),
         ]);
     }
 }

@@ -35,6 +35,7 @@
                         <x-tables.table-header>{{ __('admin.labels.companies.name') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.companies.world_id') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.companies.coc_number') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.coc_type') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.companies.owner') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.companies.bank_accounts') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.companies.employees') }}</x-tables.table-header>
@@ -50,6 +51,7 @@
                             <x-tables.table-data>{{ $company->name }}</x-tables.table-data>
                             <x-tables.table-data>{{ $company->world_id }}</x-tables.table-data>
                             <x-tables.table-data>{{ $company->coc_number }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $company->coc_type ?? '-' }}</x-tables.table-data>
                             <x-tables.table-data>{{ $company->owner->username ?? __('admin.labels.companies.no_owner_assigned') }}</x-tables.table-data>
                             <x-tables.table-data>{{ $company->bankAccounts->count() }}</x-tables.table-data>
                             <x-tables.table-data>{{ $company->employees->count() }}</x-tables.table-data>
