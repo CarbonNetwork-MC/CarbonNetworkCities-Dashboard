@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Admin\Companies;
 
+use App\Models\CoCType;
+use App\Models\CompanyItem;
 use App\Models\Plot;
 use App\Models\Player;
 use App\Models\Company;
@@ -17,30 +19,38 @@ class EditCompany extends Component
     public $company;
     public $companyName;
     public $cocNumber;
+    public $cocType;
     public $worldId;
     public $selectedPlayer;
 
+    public $currency;
+
     public $players;
+    public $cocTypes;
 
     public $searchEmployees = '';
     public $searchBankAccounts = '';
     public $searchPlots = '';
     public $searchPinConsoles = '';
+    public $searchItems = '';
 
     public $employeesPerPage = 5;
     public $accountsPerPage = 5;
     public $plotsPerPage = 5;
     public $pinConsolesPerPage = 5;
+    public $itemsPerPage = 10;
 
     public $employeeToRemove = null;
     public $bankAccountToRemove = null;
     public $plotToRemove = null;
     public $pinConsoleToRemove = null;
+    public $itemToRemove = null;
 
     public $removeEmployeeModal = false;
     public $removeBankAccountModal = false;
     public $removePlotModal = false;
     public $removePinConsoleModal = false;
+    public $removeItemModal = false;
 
     public $assignEmployeeModal = false;
     public $assignPlotModal = false;
@@ -48,11 +58,15 @@ class EditCompany extends Component
     public function mount($id) {
         $this->company = Company::where('id', $id)->firstOrFail();
         $this->players = Player::orderBy('username')->get(['uuid', 'username']);
+        $this->cocTypes = CoCType::get(['id', 'name']);
 
         $this->companyName = $this->company->name;
         $this->cocNumber = $this->company->coc_number;
+        $this->cocType = $this->company->coc_type;
         $this->worldId = $this->company->world_id;
         $this->selectedPlayer = $this->company->owner_uuid;
+
+        $this->currency = $this->company->bankAccounts()->where('is_main', true)->first()?->currency ?? 'EUR';
     }
 
     // Search queries
@@ -71,6 +85,10 @@ class EditCompany extends Component
 
         if ($key === 'searchPinConsoles') {
             $this->resetPage('pinConsolesPerPage');
+        }
+
+        if ($key === 'searchItems') {
+            $this->resetPage('itemsPerPage');
         }
     }
 
@@ -272,6 +290,19 @@ class EditCompany extends Component
         Toaster::success(__('admin.toast.companies.pin_console_removed'));
     }
 
+    // Delete Item
+    public function removeItem($id) {
+        $this->itemToRemove = CompanyItem::where('id', $id)->with('item')->first();
+        $this->removeItemModal = true;
+    }
+
+    public function destroyItem() {
+        $this->itemToRemove->delete();
+
+        $this->removeItemModal = false;
+        Toaster::success(__('admin.toast.companies.item_removed'));
+    }
+
     public function render()
     {
         return view('livewire.admin.companies.edit-company', [
@@ -310,6 +341,13 @@ class EditCompany extends Component
                     $q->orWhere('account_id', 'like', '%' . $this->searchPinConsoles . '%');
                 })
                 ->paginate($this->pinConsolesPerPage, ['*'], 'pinConsoles'),
+            'items' => $this->company
+                ->items()
+                ->when($this->searchItems !== '', function ($q) {
+                    $q->where('name', 'like', '%' . $this->searchItems . '%');
+                    $q->orWhere('item_id', 'like', '%' . $this->searchItems . '%');
+                })
+                ->paginate($this->itemsPerPage, ['*'], 'items'),
         ]);
     }
 

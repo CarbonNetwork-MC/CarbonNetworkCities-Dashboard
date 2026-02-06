@@ -67,9 +67,9 @@
                         </x-tables.table-row>
                     @empty
                         <x-tables.table-row>
-                            <x-tables.table-data colspan="4">
+                            <x-tables.empty-state colspan="4">
                                 {{ __('admin.messages.pin_consoles.pin_consoles_no_records') }}
-                            </x-tables.table-data>
+                            </x-tables.empty-state>
                         </x-tables.table-row>
                     @endforelse
                 </x-slot>

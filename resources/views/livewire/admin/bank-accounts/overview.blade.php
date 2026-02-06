@@ -29,6 +29,7 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
+                        <x-tables.table-header>#</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.pin_consoles.company') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.companies.bank_account_balance') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.companies.bank_account_is_main') }}</x-tables.table-header>
@@ -39,6 +40,7 @@
                 <x-slot name="rows">
                     @forelse ($companyBankAccounts as $account)
                         <x-tables.table-row>
+                            <x-tables.table-data>{{ $account->id }}</x-tables.table-data>
                             <x-tables.table-data>{{ $account->company->name }}</x-tables.table-data>
                             <x-tables.table-data>
                                 {{ Number::currency($account->balance, $account->currency) }}
@@ -52,9 +54,9 @@
                         </x-tables.table-row>
                     @empty
                         <x-tables.table-row>
-                            <x-tables.table-data colspan="5">
+                            <x-tables.empty-state colspan="5">
                                 {{ __('admin.messages.bank_accounts.company_bank_accounts_no_records') }}
-                            </x-tables.table-data>
+                            </x-tables.empty-state>
                         </x-tables.table-row>
                     @endforelse
                 </x-slot>
@@ -91,6 +93,7 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
+                        <x-tables.table-header>#</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.itemsmenu.player_username') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.companies.bank_account_balance') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.bank_accounts.account_type') }}</x-tables.table-header>
@@ -101,6 +104,7 @@
                 <x-slot name="rows">
                     @forelse ($personalBankAccounts as $account)
                         <x-tables.table-row>
+                            <x-tables.table-data>{{ $account->id }}</x-tables.table-data>
                             <x-tables.table-data>{{ $account->player->username }}</x-tables.table-data>
                             <x-tables.table-data>
                                 {{ Number::currency($account->balance, $account->currency) }}
@@ -114,9 +118,9 @@
                         </x-tables.table-row>
                     @empty
                         <x-tables.table-row>
-                            <x-tables.table-data colspan="5">
+                            <x-tables.empty-state colspan="5">
                                 {{ __('admin.messages.bank_accounts.personal_bank_accounts_no_records') }}
-                            </x-tables.table-data>
+                            </x-tables.empty-state>
                         </x-tables.table-row>
                     @endforelse
                 </x-slot>
