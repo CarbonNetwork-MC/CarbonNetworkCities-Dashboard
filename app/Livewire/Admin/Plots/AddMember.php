@@ -18,7 +18,7 @@ class AddMember extends Component
     public function mount($id) {
         $this->plot = Plot::findOrFail($id);
         $memberUuids = $this->plot->members()->pluck('player_uuid')->toArray();
-        $this->players = Player::whereNotIn('uuid', $memberUuids)->get(['uuid', 'username']);
+        $this->players = Player::whereNotIn('uuid', $memberUuids)->where('uuid', '!=', $this->plot->owner_uuid)->get(['uuid', 'username']);
     }
 
     public function addMember(ApiService $apiService) {
@@ -48,6 +48,8 @@ class AddMember extends Component
             $this->plot->members()->where('player_uuid', $data['playerUuid'])->delete();
             return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toast.plots.invalidate_plot_api_error'));
         }
+
+        return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->success(__('admin.toast.plots.member_added'));
     }
 
     public function render()
