@@ -125,6 +125,11 @@ return [
             'create' => 'Create Plot',
             'delete' => 'Delete Plot',
             'edit' => 'Edit Plot',
+            'add_member' => 'Add Member',
+            'members' => 'Members',
+            'fridges' => 'Fridges',
+            'remove_member' => 'Remove Member',
+            'delete_fridge' => 'Delete Fridge',
         ],
     ],
 
@@ -254,6 +259,8 @@ return [
             'east' => 'East',
             'south' => 'South',
             'west' => 'West',
+            'player' => 'Player',
+            'members' => 'Members',
         ],
     ],
 
@@ -403,6 +410,10 @@ return [
         'plots' => [
             'plots_no_records' => 'No plots found.',
             'delete_confirmation' => 'Are you sure you want to delete the plot <b>:plot_id</b>? This action cannot be undone.',
+            'members_no_records' => 'No members found for this plot.',
+            'fridges_no_records' => 'No fridges found for this plot.',
+            'remove_member_confirmation' => 'Are you sure you want to remove the member <b>:member</b> from this plot?',
+            'delete_fridge_confirmation' => 'Are you sure you want to delete the fridge <b>:id</b> from this plot?',
         ]
     ],
 
@@ -553,6 +564,11 @@ return [
         'plots' => [
             'invalidate_plot_api_error' => 'Failed to invalidate plot via API. Changes have been reverted.',
             'delete_success' => 'Plot deleted successfully.',
+            'player_not_found' => 'Player not found.',
+            'member_added' => 'Member added to plot successfully.',
+            'updated' => 'Plot updated successfully.',
+            'fridge_delete_success' => 'Fridge deleted successfully.',
+            'created' => 'Plot created successfully.',
         ]
     ],
 
