@@ -34,9 +34,9 @@
                         <x-tables.table-header>{{ __('admin.labels.plots.description') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.companies.city') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.companies.country') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.companies.world_id') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.players.company') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.companies.owner') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.plots.members') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.plots.for_sale') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.plots.price') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.players.type') }}</x-tables.table-header>
@@ -51,9 +51,9 @@
                             <x-tables.table-data>{{ $plot->description ? Str::limit($plot->description, 30, '...') : '' }}</x-tables.table-data>
                             <x-tables.table-data>{{ $plot->city }}</x-tables.table-data>
                             <x-tables.table-data>{{ $plot->country->name }}</x-tables.table-data>
-                            <x-tables.table-data>{{ $plot->world_id }}</x-tables.table-data>
                             <x-tables.table-data>{{ $plot->company->name ?? '' }}</x-tables.table-data>
                             <x-tables.table-data>{{ $plot->owner->username ?? '' }}</x-tables.table-data>
+                            <x-tables.table-data>{{ count($plot->members) }}</x-tables.table-data>
                             <x-tables.table-data>{{ $plot->for_sale ? __('general.yes') : __('general.no') }}</x-tables.table-data>
                             <x-tables.table-data>
                                 {{ $plot->price ? Number::currency($plot->price, $plot->country->currency) : '' }}
@@ -66,7 +66,7 @@
                         </x-tables.table-row>
                     @empty
                         <x-tables.table-row>
-                            <x-tables.table-data colspan="5">
+                            <x-tables.table-data colspan="12" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
                                 {{ __('admin.messages.plots.plots_no_records') }}
                             </x-tables.table-data>
                         </x-tables.table-row>
