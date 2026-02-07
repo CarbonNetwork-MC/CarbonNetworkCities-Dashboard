@@ -30,31 +30,31 @@
             <x-tables.table-striped>
                 <x-slot name="headers">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">{{ __('admin.labels.languages.name') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">Shortcode</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">Code</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider">HeadDB ID</th>
-                        <th></th>
+                        <x-tables.table-header>{{ __('admin.labels.languages.name') }}</x-tables.table-header>
+                        <x-tables.table-header>Shortcode</x-tables.table-header>
+                        <x-tables.table-header>Code</x-tables.table-header>
+                        <x-tables.table-header>HeadDB ID</x-tables.table-header>
+                        <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
                 <x-slot name="rows">
                     @forelse($languages as $language)
-                        <tr class="odd:bg-white even:bg-gray-100 dark:odd:bg-gray-600 dark:even:bg-gray-700 border-b border-default">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $language->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $language->short_code }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $language->code }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $language->headdb_id }}</td>
-                            <td class="px-6 py-4 flex justify-end gap-x-4 whitespace-nowrap text-right text-sm font-medium">
+                        <x-tables.table-row>
+                            <x-tables.table-data>{{ $language->name }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $language->short_code }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $language->code }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $language->headdb_id }}</x-tables.table-data>
+                            <x-tables.table-data class="flex justify-end gap-x-4 whitespace-nowrap text-right text-sm font-medium">
                                 <x-tables.primary-action href="{{ route('admin.languages.edit', ['id' => $language->id]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removeLanguage('{{ $language->id }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
-                            </td>
-                        </tr>
+                            </x-tables.table-data>
+                        </x-tables.table-row>
                     @empty
-                        <tr>
-                            <td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                        <x-tables.table-row>
+                            <x-tables.empty-state colspan="5">
                                 {{ __('admin.messages.languages.languages_no_records') }}
-                            </td>
-                        </tr>
+                            </x-tables.empty-state>
+                        </x-tables.table-row>
                     @endforelse
                 </x-slot>
                 <x-slot name="pagination">
@@ -66,17 +66,17 @@
 
     {{-- Delete Language Modal --}}
     <x-modals.modal wire:model="deleteLanguageModal">
-        <x-slot name="title">{{ __('admin.titles.language_delete') }}</x-slot>
+        <x-slot name="title">{{ __('admin.titles.languages.delete') }}</x-slot>
         <x-slot name="content">
             <p>{!! __('admin.messages.languages.delete_confirmation', ['name' => $selectedLanguage ? $selectedLanguage->name : '']) !!}</p>
         </x-slot>
         <x-slot name="footer">
-            <button type="button" @click="$dispatch('close')" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 cursor-pointer">
+            <x-buttons.secondary-button wire:click="$set('deleteLanguageModal', false)">
                 {{ __('general.buttons.cancel') }}
-            </button>
-            <button type="button" wire:click="destroyLanguage" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer">
+            </x-buttons.secondary-button>
+            <x-buttons.danger-button wire:click="destroyLanguage">
                 {{ __('general.buttons.delete') }}
-            </button>
+            </x-buttons.danger-button>
         </x-slot>
     </x-modals.modal>
 </div>

@@ -288,7 +288,7 @@
                             <x-tables.table-data>{{ ucfirst($bankAccount->type) }}</x-tables.table-data>
                             <x-tables.table-data>{{ $bankAccount->currency }}</x-tables.table-data>
                             <x-tables.table-actions>
-                                <x-tables.primary-action href="">{{ __('general.buttons.edit') }}</x-tables.primary-action>
+                                <x-tables.primary-action href="{{ route('admin.bank-accounts.personal.edit', ['id' => $bankAccount->id]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removeBankAccount('{{ $bankAccount->id }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
                             </x-tables.table-actions>
                         </x-tables.table-row>
@@ -351,7 +351,7 @@
                             <x-tables.table-data>{{ $plot->name }}</x-tables.table-data>
                             <x-tables.table-data>{{ $plot->world_id }}</x-tables.table-data>
                             <x-tables.table-actions>
-                                <x-tables.primary-action href="">{{ __('general.buttons.edit') }}</x-tables.primary-action>
+                                <x-tables.primary-action href="{{ route('admin.plots.edit', ['id' => $plot->id]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removePlot('{{ $plot->id }}')">{{ __('general.buttons.remove') }}</x-tables.danger-action>
                             </x-tables.table-actions>
                         </x-tables.table-row>
@@ -412,7 +412,7 @@
                             <x-tables.table-data>{{ $company->name }}</x-tables.table-data>
                             <x-tables.table-data>{{ $company->coc_number }}</x-tables.table-data>
                             <x-tables.table-actions>
-                                <x-tables.primary-action href="">{{ __('general.buttons.edit') }}</x-tables.primary-action>
+                                <x-tables.primary-action href="{{ route('admin.companies.edit', ['id' => $company->id]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removeCompany('{{ $company->id }}')">{{ __('general.buttons.remove') }}</x-tables.danger-action>
                             </x-tables.table-actions>
                         </x-tables.table-row>

@@ -48,7 +48,7 @@
 
         <!-- Admin Nav -->
         @if (request()->routeIs('admin.*') && $user->hasRole('Superadmin'))
-            <nav class="space-y-2 flex-1 min-h-0">
+            <nav class="space-y-2 flex-1 min-h-0 overflow-y-auto hide-scrollbar">
                 {{-- Admin Dashboard --}}
                 <x-sidebar.nav-item
                     :href="route('admin.dashboard.render')"
@@ -73,15 +73,21 @@
                     :label="__('sidebar.city_regions')"
                 />
 
+                {{-- CoC --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.coc.render')"
+                    :active="request()->routeIs('admin.coc.*')"
+                    icon="fi fi-rr-book"
+                    :label="__('sidebar.coc')"
+                />
+
                 {{-- Companies --}}
-                @if ($user->can('manage_companies'))
                 <x-sidebar.nav-item
                     :href="route('admin.companies.render')"
                     :active="request()->routeIs('admin.companies.*')"
                     icon="fi fi-rr-building"
                     :label="__('sidebar.companies')"
                 />
-                @endif
 
                 {{-- Countries --}}
                 <x-sidebar.nav-item
@@ -113,6 +119,14 @@
                     :active="request()->routeIs('admin.players.*')"
                     icon="fi fi-rr-user"
                     :label="__('sidebar.players')"
+                />
+
+                {{-- Plots --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.plots.render')"
+                    :active="request()->routeIs('admin.plots.*')"
+                    icon="fi fi-rr-land-layer-location"
+                    label="Plots"
                 />
                     
                 {{-- PIN Consoles --}}

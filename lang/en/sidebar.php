@@ -17,6 +17,7 @@ return [
 
     'bank_accounts' => 'Bank Accounts',
     'city_regions' => 'City Regions',
+    'coc' => 'Chamber of Commerce',
     'companies' => 'Companies',
     'countries' => 'Countries',
     'back_to_dashboard' => 'Back to Dashboard',

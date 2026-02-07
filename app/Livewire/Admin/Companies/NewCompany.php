@@ -3,21 +3,25 @@
 namespace App\Livewire\Admin\Companies;
 
 use App\Models\Player;
+use App\Models\CoCType;
 use App\Models\Company;
-use App\Services\PluginAPI\ApiService;
 use Livewire\Component;
+use App\Services\PluginAPI\ApiService;
 
 class NewCompany extends Component
 {    
     public $companyName;
     public $cocNumber;
+    public $cocType;
     public $worldId;
     public $selectedPlayer;
 
     public $players;
+    public $cocTypes;
 
     public function mount() {
         $this->players = Player::orderBy('username')->get(['uuid', 'username']);
+        $this->cocTypes = CoCType::get(['id', 'name']);
     }
 
     public function createCompany(ApiService $apiService) {

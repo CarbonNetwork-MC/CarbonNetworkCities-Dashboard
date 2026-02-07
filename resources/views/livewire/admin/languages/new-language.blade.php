@@ -13,14 +13,14 @@
             ],
             [
                 'url'   => route('admin.languages.new'),
-                'label' => __('admin.buttons.language.create'),
+                'label' => __('admin.titles.languages.create'),
             ]
         ]" />
     </x-slot>
 
     <x-containers.main>
         <x-containers.title>
-            {{ __('admin.buttons.language.create') }}
+            {{ __('admin.titles.languages.create') }}
         </x-containers.title>
 
         <div class="mt-6">

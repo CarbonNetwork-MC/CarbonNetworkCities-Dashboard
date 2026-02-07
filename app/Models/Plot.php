@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Fridge;
 
 class Plot extends Model
 {
@@ -45,11 +46,16 @@ class Plot extends Model
 
     public function owner(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'owner_uuid', 'uuid');
+        return $this->belongsTo(Player::class, 'owner_uuid', 'uuid');
     }
 
     public function members(): HasMany
     {
         return $this->hasMany(PlotMember::class, 'plot_id', 'plot_id');
+    }
+
+    public function fridges(): HasMany
+    {
+        return $this->hasMany(Fridge::class, 'plot_id', 'plot_id');
     }
 }

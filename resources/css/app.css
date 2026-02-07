@@ -44,3 +44,8 @@ i.fi {
     display: flex;
     align-items: center;
 }
+
+/* Custom Scrollbar */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
