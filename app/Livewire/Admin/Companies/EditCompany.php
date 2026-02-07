@@ -365,7 +365,7 @@ class EditCompany extends Component
         ]);
     }
 
-    private function rollbackCompany(array $originalData, $selectedPlayer): void {
+    private function rollbackCompany(array $originalData): void {
         $this->company->name = $originalData['name'];
         $this->company->coc_number = $originalData['coc_number'];
         $this->company->world_id = $originalData['world_id'];
