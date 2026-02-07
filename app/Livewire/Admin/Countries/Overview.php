@@ -42,12 +42,12 @@ class Overview extends Component
 
         if ($status !== 202) {
             Country::create($selectedCountry->toArray());
-            return Toaster::error(__('admin.toast.countries.reload_countries_api_error'));
+            return Toaster::error(__('admin.toasts.countries.reload_countries_api_error'));
         }
 
         if (!$success) {
             Country::create($selectedCountry->toArray());
-            return Toaster::error(__('admin.toast.countries.reload_countries_api_error'));
+            return Toaster::error(__('admin.toasts.countries.reload_countries_api_error'));
         }
 
         $this->reset([
@@ -55,7 +55,7 @@ class Overview extends Component
             'deleteCountryModal',
         ]);
 
-        Toaster::success(__('admin.toast.countries.deleted'));
+        Toaster::success(__('admin.toasts.countries.deleted'));
     }
     
     public function render()

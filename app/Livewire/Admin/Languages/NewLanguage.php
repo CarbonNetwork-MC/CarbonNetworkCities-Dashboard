@@ -34,10 +34,10 @@ class NewLanguage extends Component
 
         if (!$success) {
             $newLanguage->delete();
-            return Toaster::error(__('admin.toast.reload_languages_api_error'));
+            return Toaster::error(__('admin.toasts.reload_languages_api_error'));
         }
 
-        return redirect()->route('admin.languages.render')->success(__('admin.toast.languages.create'));
+        return redirect()->route('admin.languages.render')->success(__('admin.toasts.languages.create'));
     }
 
     public function render()

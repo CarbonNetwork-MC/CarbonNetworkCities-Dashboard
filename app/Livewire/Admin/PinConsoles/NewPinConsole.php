@@ -72,17 +72,17 @@ class NewPinConsole extends Component
         // Immediate failure (request not accepted)
         if ($status !== 202) {
             $pinConsole->delete();
-            return redirect()->route('admin.pin-consoles.new')->error(__('admin.toast.pin_consoles.pin_console_create_failed'));
+            return redirect()->route('admin.pin-consoles.new')->error(__('admin.toasts.pin_consoles.pin_console_create_failed'));
         }
 
         // 3. Poll for result
         if (!$success) {
             $pinConsole->delete();
-            return redirect()->route('admin.pin-consoles.new')->error(__('admin.toast.pin_consoles.pin_console_create_failed'));
+            return redirect()->route('admin.pin-consoles.new')->error(__('admin.toasts.pin_consoles.pin_console_create_failed'));
         }
 
         // 4. Success
-        return redirect()->route('admin.pin-consoles.render')->success(__('admin.toast.pin_consoles.created'));
+        return redirect()->route('admin.pin-consoles.render')->success(__('admin.toasts.pin_consoles.created'));
     }
 
     public function render()

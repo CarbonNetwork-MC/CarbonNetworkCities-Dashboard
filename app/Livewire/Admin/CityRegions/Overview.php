@@ -42,12 +42,12 @@ class Overview extends Component
 
         if ($status !== 202) {
             CityRegion::create($selectedCityRegion->toArray());
-            return Toaster::error(__('admin.toast.city_regions.reload_regions_api_error'));
+            return Toaster::error(__('admin.toasts.city_regions.reload_regions_api_error'));
         }
 
         if (!$success) {
             CityRegion::create($selectedCityRegion->toArray());
-            return Toaster::error(__('admin.toast.city_regions.reload_regions_api_error'));
+            return Toaster::error(__('admin.toasts.city_regions.reload_regions_api_error'));
         }
 
         $this->reset([
@@ -55,7 +55,7 @@ class Overview extends Component
             'deleteCityRegionModal',
         ]);
 
-        Toaster::success(__('admin.toast.city_regions.deleted'));
+        Toaster::success(__('admin.toasts.city_regions.deleted'));
     }
     
     public function render()

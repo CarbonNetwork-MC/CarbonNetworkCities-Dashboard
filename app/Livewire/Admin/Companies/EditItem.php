@@ -45,7 +45,7 @@ class EditItem extends Component
             'sellable' => $this->sellable
         ]);
 
-        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toast.companies.item_updated'));
+        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toasts.companies.item_updated'));
     }
 
     public function render()

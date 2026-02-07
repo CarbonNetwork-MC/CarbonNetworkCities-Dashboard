@@ -65,13 +65,13 @@ class AddItems extends Component
             ]);
         }
 
-        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toast.companies.item_added'));
+        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toasts.companies.item_added'));
     }
 
     public function addItemGroup() {
         if (!$this->selectedItemGroup) {
             $this->showAddItemGroupModal = false;
-            Toaster::error(__('admin.toast.companies.no_group_selected'));
+            Toaster::error(__('admin.toasts.companies.no_group_selected'));
             return;
         }
 

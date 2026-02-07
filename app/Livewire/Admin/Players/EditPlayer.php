@@ -158,7 +158,7 @@ class EditPlayer extends Component
             ]);
 
         if ($updated === 0) {
-            Toaster::error(__('admin.toast.players.playtime_conflict'));
+            Toaster::error(__('admin.toasts.players.playtime_conflict'));
             return;
         }
 
@@ -166,11 +166,11 @@ class EditPlayer extends Component
         [$status, $success] = $apiService->post("api/invalidate/player/{$originalPlayer->uuid}");
         if (!$success) {
             $this->rollbackPlayer($originalPlayer);
-            return Toaster::error(__('admin.toast.players.update_failed'));
+            return Toaster::error(__('admin.toasts.players.update_failed'));
         }
         
         // 4. Success
-        Toaster::success(__('admin.toast.players.update_success'));
+        Toaster::success(__('admin.toasts.players.update_success'));
     }
 
     // ! Prefix
@@ -187,14 +187,14 @@ class EditPlayer extends Component
         [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
         if (!$success) {
             $this->rollbackPrefix($newSelectedPrefix, $originalSelectedPrefix);
-            Toaster::error(__('admin.toast.players.prefix_assign_failed'));
+            Toaster::error(__('admin.toasts.players.prefix_assign_failed'));
             return;
         }
 
         // 3. Success
         $this->resetPage('prefixes');
 
-        Toaster::success(__('admin.toast.players.prefix_assign_success'));
+        Toaster::success(__('admin.toasts.players.prefix_assign_success'));
     }
 
     public function removePrefix($id) {
@@ -209,7 +209,7 @@ class EditPlayer extends Component
                                     ->where('prefix', 'Citizen')->first();
 
         if ($this->prefixToRemove->id === $defaultPrefix->id) {
-            Toaster::error(__('admin.toast.players.cannot_remove_default_prefix'));
+            Toaster::error(__('admin.toasts.players.cannot_remove_default_prefix'));
             return;
         }
 
@@ -224,7 +224,7 @@ class EditPlayer extends Component
         [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
         if (!$success) {
             $this->rollbackPrefix($originalPrefix, $defaultPrefix);
-            Toaster::error(__('admin.toast.players.prefix_remove_failed'));
+            Toaster::error(__('admin.toasts.players.prefix_remove_failed'));
             return;
         }
 
@@ -232,7 +232,7 @@ class EditPlayer extends Component
         $this->showRemovePrefixModal = false;
         $this->prefixToRemove = null;
 
-        Toaster::success(__('admin.toast.players.prefix_remove_success'));
+        Toaster::success(__('admin.toasts.players.prefix_remove_success'));
     }
 
     // ! Chat Colors
@@ -249,14 +249,14 @@ class EditPlayer extends Component
         [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
         if (!$success) {
             $this->rollbackChatColorSelect($newSelectedChatColor, $originalSelectedChatColor);
-            Toaster::error(__('admin.toast.players.chat_color_select_failed'));
+            Toaster::error(__('admin.toasts.players.chat_color_select_failed'));
             return;
         }
 
         // 4. Success
         $this->resetPage('chatColors');
 
-        Toaster::success(__('admin.toast.players.chat_color_select_success'));
+        Toaster::success(__('admin.toasts.players.chat_color_select_success'));
     }
 
     public function removeChatColor($id) {
@@ -281,7 +281,7 @@ class EditPlayer extends Component
         ) {
             $this->showRemoveChatColorModal = false;
             $this->chatColorToRemove = null;
-            Toaster::error(__('admin.toast.players.cannot_remove_default_chat_color'));
+            Toaster::error(__('admin.toasts.players.cannot_remove_default_chat_color'));
             return;
         }
 
@@ -302,14 +302,14 @@ class EditPlayer extends Component
         [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
         if (!$success) {
             $this->rollbackChatColor($originalChatColor, $defaultColor);
-            return Toaster::error(__('admin.toast.players.chat_color_remove_failed'));
+            return Toaster::error(__('admin.toasts.players.chat_color_remove_failed'));
         }
 
         // 3. Success
         $this->showRemoveChatColorModal = false;
         $this->chatColorToRemove = null;
 
-        Toaster::success(__('admin.toast.players.chat_color_remove_success'));
+        Toaster::success(__('admin.toasts.players.chat_color_remove_success'));
     }
 
     // ! Bank Accounts
@@ -329,7 +329,7 @@ class EditPlayer extends Component
         [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
         if (!$success) {
             $this->rollbackBankAccount($originalBankAccount);
-            Toaster::error(__('admin.toast.players.bank_account_remove_failed'));
+            Toaster::error(__('admin.toasts.players.bank_account_remove_failed'));
             return;
         }
 
@@ -337,7 +337,7 @@ class EditPlayer extends Component
         $this->showRemoveBankAccountModal = false;
         $this->bankAccountToRemove = null;
 
-        Toaster::success(__('admin.toast.players.bank_account_remove_success'));
+        Toaster::success(__('admin.toasts.players.bank_account_remove_success'));
     }
 
     // ! Plots
@@ -358,14 +358,14 @@ class EditPlayer extends Component
         [$status, $success] = $apiService->post("api/invalidate/plot/{$this->plotToRemove->plot_id}");
         if (!$success) {
             $this->rollbackPlot($originalPlot);
-            return Toaster::error(__('admin.toast.players.plot_unlink_failed'));
+            return Toaster::error(__('admin.toasts.players.plot_unlink_failed'));
         }
 
         // 3. Success
         $this->showRemovePlotModal = false;
         $this->plotToRemove = null;
 
-        Toaster::success(__('admin.toast.players.plot_unlink_success'));
+        Toaster::success(__('admin.toasts.players.plot_unlink_success'));
     }
 
     // ! Companies
@@ -386,14 +386,14 @@ class EditPlayer extends Component
         [$status, $success] = $apiService->post("api/invalidate/company/{$this->companyToRemove->id}");
         if (!$success) {
             $this->rollbackCompany($originalCompany);
-            return Toaster::error(__('admin.toast.players.company_unlink_failed'));
+            return Toaster::error(__('admin.toasts.players.company_unlink_failed'));
         }
 
         // 3. Success
         $this->showRemoveCompanyModal = false;
         $this->companyToRemove = null;
 
-        Toaster::success(__('admin.toast.players.company_unlink_success'));
+        Toaster::success(__('admin.toasts.players.company_unlink_success'));
     }
 
     // ! Past Usernames
@@ -413,14 +413,14 @@ class EditPlayer extends Component
         [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
         if (!$success) {
             $this->rollbackPastUsername($originalPastUsername);
-            return Toaster::error(__('admin.toast.players.past_username_remove_failed'));
+            return Toaster::error(__('admin.toasts.players.past_username_remove_failed'));
         }
 
         // 4. Success
         $this->showRemovePastUsernameModal = false;
         $this->pastUsernameToRemove = null;
 
-        Toaster::success(__('admin.toast.players.past_username_remove_success'));
+        Toaster::success(__('admin.toasts.players.past_username_remove_success'));
     }
 
     public function render()

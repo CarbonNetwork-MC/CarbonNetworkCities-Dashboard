@@ -30,7 +30,7 @@ class AddPlot extends Component
 
         // Guard: plot already linked
         if ($plot->company_id !== null) {
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company_plot_already_assigned'));
+            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toasts.company_plot_already_assigned'));
         }
 
         $previousCompanyId = $plot->company_id;
@@ -46,17 +46,17 @@ class AddPlot extends Component
         // Immediate failure (request not accepted)
         if ($status !== 202) {
             $this->rollbackPlot($plot, $previousCompanyId);
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company_plot_add_failed'));
+            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toasts.company_plot_add_failed'));
         }
 
         // 3. Poll for result
         if (!$success) {
             $this->rollbackPlot($plot, $previousCompanyId);
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.company_plot_add_failed'));
+            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toasts.company_plot_add_failed'));
         }
 
         // 4. Success
-        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toast.company_plot_added'));
+        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toasts.company_plot_added'));
     }
 
     public function render()

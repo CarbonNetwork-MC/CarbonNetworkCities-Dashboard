@@ -37,7 +37,7 @@ class AddEmployee extends Component
         ]);
 
         if ($this->company->employees()->where('player_uuid', $data['playerUuid'])->exists()) {
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.companies.employee_already_assigned'));
+            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toasts.companies.employee_already_assigned'));
         }
 
         // 1. Create Employee
@@ -54,18 +54,18 @@ class AddEmployee extends Component
         if ($status !== 202) {
             // Rollback
             $this->company->employees()->where('player_uuid', $data['playerUuid'])->delete();
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.companies.employee_assign_failed'));
+            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toasts.companies.employee_assign_failed'));
         }
 
         // 3. Poll for result
         if (!$success) {
             // Rollback
             $this->company->employees()->where('player_uuid', $data['playerUuid'])->delete();
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.companies.employee_assign_failed'));
+            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toasts.companies.employee_assign_failed'));
         }
 
         // 4. Success
-        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toast.companies.employee_assigned'));
+        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toasts.companies.employee_assigned'));
     }
 
     public function render()

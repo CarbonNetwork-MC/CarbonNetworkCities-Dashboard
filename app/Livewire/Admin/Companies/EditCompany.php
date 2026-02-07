@@ -122,19 +122,19 @@ class EditCompany extends Component
         // Immediate failure (request not accepted)
         if ($status !== 202) {
             $this->rollbackCompany($originalData);
-            Toaster::error(__('admin.toast.companies.update_failed'));
+            Toaster::error(__('admin.toasts.companies.update_failed'));
             return;
         }
 
         // 3. Poll for result
         if (!$success) {
             $this->rollbackCompany($originalData);
-            Toaster::error(__('admin.toast.companies.update_failed'));
+            Toaster::error(__('admin.toasts.companies.update_failed'));
             return;
         }
 
         // 4. Success
-        Toaster::success(__('admin.toast.companies.updated'));
+        Toaster::success(__('admin.toasts.companies.updated'));
     }
 
     // Delete Employee
@@ -160,19 +160,19 @@ class EditCompany extends Component
         // Immediate failure (did not accept request)
         if ($status !== 202) {
             $this->rollbackEmployee($employee);
-            Toaster::error(__('admin.toast.companies.employee_remove_failed'));
+            Toaster::error(__('admin.toasts.companies.employee_remove_failed'));
             return;
         }
 
         // 3. Poll for result
         if (!$success) {
             $this->rollbackEmployee($employee);
-            Toaster::error(__('admin.toast.companies.employee_remove_failed'));
+            Toaster::error(__('admin.toasts.companies.employee_remove_failed'));
             return;
         }
 
         // 4. Success
-        Toaster::success(__('admin.toast.companies.employee_removed'));
+        Toaster::success(__('admin.toasts.companies.employee_removed'));
     }
 
     // Delete Bank Account
@@ -198,17 +198,17 @@ class EditCompany extends Component
         // Immediate failure (did not accept request)
         if ($status !== 202) {
             $this->company->bankAccounts()->save($bankAccount);
-            return Toaster::error(__('admin.toast.companies.bank_account_remove_failed'));
+            return Toaster::error(__('admin.toasts.companies.bank_account_remove_failed'));
         }
         
         // 3. Poll for result
         if (!$success) {
             $this->company->bankAccounts()->save($bankAccount);
-            return Toaster::error(__('admin.toast.companies.bank_account_remove_failed'));
+            return Toaster::error(__('admin.toasts.companies.bank_account_remove_failed'));
         }
 
         // 4. Success
-        Toaster::success(__('admin.toast.companies.bank_account_removed'));
+        Toaster::success(__('admin.toasts.companies.bank_account_removed'));
     }
 
     // Delete Plot (relation)
@@ -239,19 +239,19 @@ class EditCompany extends Component
         // Immediate failure (did not accept request)
         if ($status !== 202) {
             $this->rollbackPlot($plot, $companyId);
-            Toaster::error(__('admin.toast.companies.plot_remove_failed'));
+            Toaster::error(__('admin.toasts.companies.plot_remove_failed'));
             return;
         }
 
         // 3. Poll for result (short, bounded wait)
         if (!$success) {
             $this->rollbackPlot($plot, $companyId);
-            Toaster::error(__('admin.toast.companies.plot_remove_failed'));
+            Toaster::error(__('admin.toasts.companies.plot_remove_failed'));
             return;
         }
 
         // 4. Success
-        Toaster::success(__('admin.toast.companies.plot_removed'));
+        Toaster::success(__('admin.toasts.companies.plot_removed'));
     }
 
     // Delete PIN Console (relation)
@@ -277,17 +277,17 @@ class EditCompany extends Component
         // Immediate failure (did not accept request)
         if ($status !== 202) {
             $this->rollbackPinConsole($pinConsole);
-            return Toaster::error(__('admin.toast.companies.pin_console_remove_failed'));
+            return Toaster::error(__('admin.toasts.companies.pin_console_remove_failed'));
         }
         
         // 3. Poll for result
         if (!$success) {
             $this->rollbackPinConsole($pinConsole);
-            return Toaster::error(__('admin.toast.companies.pin_console_remove_failed'));
+            return Toaster::error(__('admin.toasts.companies.pin_console_remove_failed'));
         }
 
         // 4. Success
-        Toaster::success(__('admin.toast.companies.pin_console_removed'));
+        Toaster::success(__('admin.toasts.companies.pin_console_removed'));
     }
 
     // Delete Item
@@ -300,7 +300,7 @@ class EditCompany extends Component
         $this->itemToRemove->delete();
 
         $this->removeItemModal = false;
-        Toaster::success(__('admin.toast.companies.item_removed'));
+        Toaster::success(__('admin.toasts.companies.item_removed'));
     }
 
     public function render()

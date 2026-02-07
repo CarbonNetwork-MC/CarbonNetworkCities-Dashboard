@@ -39,11 +39,11 @@ class AddCompany extends Component
         [$status, $success] = $apiService->post("api/invalidate/company/{$company->id}");
         if (!$success) {
             $this->rollbackCompany($company, $originalCompany);
-            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.company_add_failed'));
+            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toasts.players.company_add_failed'));
         }
 
         // 3. Success
-        return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->success(__('admin.toast.players.company_add_success'));
+        return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->success(__('admin.toasts.players.company_add_success'));
     }
 
     public function render()

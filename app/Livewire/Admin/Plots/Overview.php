@@ -44,12 +44,12 @@ class Overview extends Component
 
         if ($status !== 202) {
             Plot::create($selectedPlot->toArray());
-            return Toaster::error(__('admin.toast.plots.invalidate_plot_api_error'));
+            return Toaster::error(__('admin.toasts.plots.invalidate_plot_api_error'));
         }
 
         if (!$success) {
             Plot::create($selectedPlot->toArray());
-            return Toaster::error(__('admin.toast.plots.invalidate_plot_api_error'));
+            return Toaster::error(__('admin.toasts.plots.invalidate_plot_api_error'));
         }
 
         $this->reset([
@@ -57,7 +57,7 @@ class Overview extends Component
             'deletePlotModal',
         ]);
 
-        Toaster::success(__('admin.toast.plots.delete_success'));
+        Toaster::success(__('admin.toasts.plots.delete_success'));
     }
 
     public function render()

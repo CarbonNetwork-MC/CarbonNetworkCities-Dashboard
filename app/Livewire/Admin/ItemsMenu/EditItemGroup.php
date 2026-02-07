@@ -78,7 +78,7 @@ class EditItemGroup extends Component
             $this->itemGroup->items()->sync($syncData);
         });
 
-        return redirect()->route('admin.itemsmenu.render')->success(__('admin.toast.itemsmenu.item_group_updated'));
+        return redirect()->route('admin.itemsmenu.render')->success(__('admin.toasts.itemsmenu.item_group_updated'));
     }
 
     public function addItem() {
