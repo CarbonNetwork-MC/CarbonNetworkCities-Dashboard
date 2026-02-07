@@ -75,6 +75,8 @@ use App\Livewire\Admin\RolesPerms\Overview as RolesPermsOverview;
 use App\Livewire\Admin\Users\EditUser;
 use App\Livewire\Admin\Users\Overview as UserOverview;
 
+use App\Livewire\Wholesale\ChooseCompany;
+
 use Illuminate\Support\Facades\Route;
 
 // ! Guest Routes
@@ -105,6 +107,11 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
 
     // ? Dashboard
     Route::get('/dashboard', Dashboard::class)->name('dashboard.render');
+
+    // ? Wholesale
+    Route::middleware('permission:wholesale_order')->group(function() {
+        Route::get('/wholesale/choose-company', ChooseCompany::class)->name('wholesale.choose-company');
+    });
 });
 
 // ! Admin Routes
