@@ -21,7 +21,7 @@
     {{-- Company --}}
     <x-containers.main>
         <x-containers.title>
-            {{ __('admin.buttons.companies.create') }}
+            {{ __('admin.titles.companies.edit') }}
         </x-containers.title>
 
         <div class="mt-6">

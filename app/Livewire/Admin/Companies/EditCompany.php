@@ -97,6 +97,7 @@ class EditCompany extends Component
         $originalData = [
             'name' => $this->company->name,
             'coc_number' => $this->company->coc_number,
+            'coc_type' => $this->company->coc_type,
             'world_id' => $this->company->world_id,
             'owner_uuid' => $this->company->owner_uuid,
         ];
@@ -105,6 +106,7 @@ class EditCompany extends Component
         $data = $this->validate([
             'companyName'    => ['required', 'string', 'max:255'],
             'cocNumber'      => ['required', 'string', 'max:20'],
+            'cocType'        => ['required', 'string', 'exists:coc_types,id'],
             'worldId'        => ['required', 'string', 'max:255'],
             'selectedPlayer' => ['nullable', 'string', 'exists:players,uuid'],
         ]);
@@ -112,6 +114,7 @@ class EditCompany extends Component
         // 2. Optimistic update
         $this->company->name = $this->companyName;
         $this->company->coc_number = $this->cocNumber;
+        $this->company->coc_type = $this->cocType;
         $this->company->world_id = $this->worldId;
         $this->company->owner_uuid = $this->selectedPlayer;
         $this->company->save();
