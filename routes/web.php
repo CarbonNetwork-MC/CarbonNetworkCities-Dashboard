@@ -75,6 +75,8 @@ use App\Livewire\Admin\RolesPerms\Overview as RolesPermsOverview;
 use App\Livewire\Admin\Users\EditUser;
 use App\Livewire\Admin\Users\Overview as UserOverview;
 
+use App\Livewire\Profile\Overview as ProfileOverview;
+
 use Illuminate\Support\Facades\Route;
 
 // ! Guest Routes
@@ -105,6 +107,9 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
 
     // ? Dashboard
     Route::get('/dashboard', Dashboard::class)->name('dashboard.render');
+
+    // ? Profile
+    Route::get('/profile', ProfileOverview::class)->name('profile.render');
 });
 
 // ! Admin Routes

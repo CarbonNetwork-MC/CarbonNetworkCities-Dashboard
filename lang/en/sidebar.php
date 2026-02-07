@@ -10,6 +10,7 @@ return [
     */
 
     'dashboard' => 'Dashboard',
+    'profile' => 'Profile',
 
     // Management
     'management' => 'Management',
@@ -19,9 +20,7 @@ return [
     'coc' => 'Chamber of Commerce',
     'companies' => 'Companies',
     'countries' => 'Countries',
-    'roles_perms' => 'Roles & Permissions',
     'back_to_dashboard' => 'Back to Dashboard',
-    'companies' => 'Companies',
     'itemsmenu' => 'Items Menu',
     'languages' => 'Languages',
     'pin_consoles' => 'PIN Consoles',
