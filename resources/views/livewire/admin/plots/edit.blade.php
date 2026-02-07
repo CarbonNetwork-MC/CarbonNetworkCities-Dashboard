@@ -238,7 +238,6 @@
                             <x-tables.table-data>{{ $member->player->username }}</x-tables.table-data>
                             <x-tables.table-data>{{ ucfirst($member->role) }}</x-tables.table-data>
                             <x-tables.table-actions>
-                                <x-tables.primary-action href="">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removeMember('{{ $member->player_uuid }}')">{{ __('general.buttons.remove') }}</x-tables.danger-action>
                             </x-tables.table-actions>
                         </x-tables.table-row>
