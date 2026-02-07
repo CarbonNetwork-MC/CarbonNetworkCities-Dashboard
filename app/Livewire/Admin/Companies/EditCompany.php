@@ -7,6 +7,7 @@ use App\Models\CompanyItem;
 use App\Models\Plot;
 use App\Models\Player;
 use App\Models\Company;
+use App\Services\PlayerPermissionService;
 use App\Services\PluginAPI\ApiService;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -92,7 +93,7 @@ class EditCompany extends Component
         }
     }
 
-    public function updateCompany(ApiService $apiService) {
+    public function updateCompany(ApiService $apiService, PlayerPermissionService $permissionService) {
         // Store the current data for rollback in case of failure
         $originalData = [
             'name' => $this->company->name,
@@ -116,19 +117,29 @@ class EditCompany extends Component
         $this->company->owner_uuid = $this->selectedPlayer;
         $this->company->save();
 
+        $previousOwner = Player::where('uuid', $originalData['owner_uuid'])->first();
+        if ($previousOwner) {
+            $permissionService->syncWholesaleOrderPermission($previousOwner);
+        }
+
+        if ($this->selectedPlayer && $this->selectedPlayer !== $originalData['owner_uuid']) {
+            $owner = Player::where('uuid', $this->selectedPlayer)->first();
+            $permissionService->syncWholesaleOrderPermission($owner);
+        }
+
         // 3. Send invalidate request to Velocity
         [$status, $success] = $apiService->post("api/invalidate/company/{$this->company->id}");
 
         // Immediate failure (request not accepted)
         if ($status !== 202) {
-            $this->rollbackCompany($originalData);
+            $this->rollbackCompany($originalData, $this->selectedPlayer);
             Toaster::error(__('admin.toasts.companies.update_failed'));
             return;
         }
 
         // 3. Poll for result
         if (!$success) {
-            $this->rollbackCompany($originalData);
+            $this->rollbackCompany($originalData, $this->selectedPlayer);
             Toaster::error(__('admin.toasts.companies.update_failed'));
             return;
         }
@@ -143,7 +154,7 @@ class EditCompany extends Component
         $this->removeEmployeeModal = true;
     }
 
-    public function destroyEmployee(ApiService $apiService) {
+    public function destroyEmployee(ApiService $apiService, PlayerPermissionService $permissionService) {
         if (!$this->employeeToRemove) return;
 
         // Store the current employee for rollback in case of failure
@@ -153,6 +164,9 @@ class EditCompany extends Component
         $this->employeeToRemove->delete();
         $this->removeEmployeeModal = false;
         $this->employeeToRemove = null;
+
+        $player = Player::where('uuid', $employee->player_uuid)->first();
+        $permissionService->syncWholesaleOrderPermission($player);
 
         // 2. Send invalidate request to Velocity
         [$status, $success] = $apiService->post("api/invalidate/company/{$this->company->id}");
@@ -351,16 +365,29 @@ class EditCompany extends Component
         ]);
     }
 
-    private function rollbackCompany(array $originalData): void {
+    private function rollbackCompany(array $originalData, $selectedPlayer): void {
         $this->company->name = $originalData['name'];
         $this->company->coc_number = $originalData['coc_number'];
         $this->company->world_id = $originalData['world_id'];
         $this->company->owner_uuid = $originalData['owner_uuid'];
         $this->company->save();
+
+        $previousOwner = Player::where('uuid', $originalData['owner_uuid'])->first();
+        if ($previousOwner) {
+            app(PlayerPermissionService::class)->syncWholesaleOrderPermission($previousOwner);
+        }
+
+        if ($this->selectedPlayer && $this->selectedPlayer !== $originalData['owner_uuid']) {
+            $owner = Player::where('uuid', $this->selectedPlayer)->first();
+            app(PlayerPermissionService::class)->syncWholesaleOrderPermission($owner);
+        }
     }
 
     private function rollbackEmployee($employee): void {
         $employee->save();
+
+        $player = Player::where('uuid', $employee->player_uuid)->first();
+        app(PlayerPermissionService::class)->syncWholesaleOrderPermission($player);
     }
 
     private function rollbackPlot(Plot $plot, int $companyId): void {

@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Companies;
 
 use App\Models\Player;
 use App\Models\Company;
+use App\Services\PlayerPermissionService;
 use App\Services\PluginAPI\ApiService;
 use Livewire\Component;
 
@@ -30,7 +31,7 @@ class AddEmployee extends Component
         $this->players = Player::whereNotIn('uuid', array_filter(array_merge($employeesUuids, [$ownerUuid])))->get(['uuid', 'username']);
     }
 
-    public function addEmployee(ApiService $apiService) {
+    public function addEmployee(ApiService $apiService, PlayerPermissionService $permissionService) {
         $data = $this->validate([
             'playerUuid' => 'required|exists:players,uuid',
             'role' => 'required|in:Employee,Manager',
@@ -47,20 +48,23 @@ class AddEmployee extends Component
             'role' => $data['role'],
         ]);
 
+        $player = Player::where('uuid', $data['playerUuid'])->first();
+        $permissionService->syncWholesaleOrderPermission($player);
+
         // 2. Send invalidate request to Velocity
         [$status, $success] = $apiService->post("api/invalidate/company/{$this->company->id}");
 
         // Immediate failure (request not accepted)
         if ($status !== 202) {
             // Rollback
-            $this->company->employees()->where('player_uuid', $data['playerUuid'])->delete();
+            $this->rollbackEmployee($data['playerUuid']);
             return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toasts.companies.employee_assign_failed'));
         }
 
         // 3. Poll for result
         if (!$success) {
             // Rollback
-            $this->company->employees()->where('player_uuid', $data['playerUuid'])->delete();
+            $this->rollbackEmployee($data['playerUuid']);
             return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toasts.companies.employee_assign_failed'));
         }
 
@@ -71,5 +75,12 @@ class AddEmployee extends Component
     public function render()
     {
         return view('livewire.admin.companies.add-employee');
+    }
+
+    private function rollbackEmployee($playerUuid) {
+        $this->company->employees()->where('player_uuid', $playerUuid)->delete();
+
+        $player = Player::where('uuid', $playerUuid)->first();
+        app(PlayerPermissionService::class)->syncWholesaleOrderPermission($player);
     }
 }

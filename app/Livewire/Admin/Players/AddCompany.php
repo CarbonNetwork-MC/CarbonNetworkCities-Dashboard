@@ -2,10 +2,11 @@
 
 namespace App\Livewire\Admin\Players;
 
-use App\Models\Company;
 use App\Models\Player;
-use App\Services\PluginAPI\ApiService;
+use App\Models\Company;
 use Livewire\Component;
+use App\Services\PluginAPI\ApiService;
+use App\Services\PlayerPermissionService;
 
 class AddCompany extends Component
 {
@@ -21,7 +22,7 @@ class AddCompany extends Component
         $this->companies = Company::get(['id', 'name']);
     }
 
-    public function addCompany(ApiService $apiService) {
+    public function addCompany(ApiService $apiService, PlayerPermissionService $permissionService) {
         $data = $this->validate([
             'companyId' => ['required', 'exists:companies,id'],
         ]);
@@ -34,6 +35,7 @@ class AddCompany extends Component
         $company->update([
             'owner_uuid' => $this->player->uuid,
         ]);
+        $permissionService->syncWholesaleOrderPermission($this->player);
 
         // 2. Send invalidate request to Velocity
         [$status, $success] = $apiService->post("api/invalidate/company/{$company->id}");
@@ -55,5 +57,6 @@ class AddCompany extends Component
         $company->update([
             'owner_uuid' => $originalCompany->owner_uuid,
         ]);
+        app(PlayerPermissionService::class)->syncWholesaleOrderPermission($this->player);
     }
 }

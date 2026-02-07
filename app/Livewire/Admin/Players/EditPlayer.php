@@ -13,6 +13,7 @@ use App\Models\PlayerChatColor;
 use App\Models\PlayerPastUsername;
 use App\Models\PlayerPrefix;
 use App\Models\Plot;
+use App\Services\PlayerPermissionService;
 use App\Services\PluginAPI\ApiService;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -374,13 +375,14 @@ class EditPlayer extends Component
         $this->showRemoveCompanyModal = true;
     }
 
-    public function unlinkCompany(ApiService $apiService) {
+    public function unlinkCompany(ApiService $apiService, PlayerPermissionService $permissionService) {
         // Store the original company for rollback in case of failure
         $originalCompany = $this->companyToRemove;
 
         // 1. Optimistic unlink
         Company::where('id', $this->companyToRemove->id)->where('owner_uuid', $this->player->uuid)
             ->update(['owner_uuid' => null]);
+        $permissionService->syncWholesaleOrderPermission($this->player);
 
         // 2. Send invalidate request to Velocity
         [$status, $success] = $apiService->post("api/invalidate/company/{$this->companyToRemove->id}");
@@ -510,6 +512,7 @@ class EditPlayer extends Component
     private function rollbackCompany($originalCompany) {
         Company::where('id', $originalCompany->id)->where('owner_uuid', null)
             ->update(['owner_uuid' => $this->player->uuid]);
+        app(PlayerPermissionService::class)->syncWholesaleOrderPermission($this->player);
     }
 
     private function rollbackPastUsername($originalPastUsername) {
