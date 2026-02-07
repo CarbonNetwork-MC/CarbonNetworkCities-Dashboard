@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->string('coc_type', 8)->after('world_id')->nullable();
+            $table->unsignedBigInteger('coc_type_id')->after('world_id')->nullable();
 
             // Foreign key constraint
-            $table->foreign('coc_type')->references('name')->on('coc_types')->onDelete('set null');
+            $table->foreign('coc_type_id')->references('id')->on('coc_types')->onUpdate('cascade')->onDelete('set null');
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->dropForeign(['coc_type']);
-            $table->dropColumn('coc_type');
+            $table->dropForeign(['coc_type_id']);
+            $table->dropColumn('coc_type_id');
         });
     }
 };
