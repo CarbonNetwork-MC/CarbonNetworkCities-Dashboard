@@ -21,7 +21,7 @@
     {{-- Company --}}
     <x-containers.main>
         <x-containers.title>
-            {{ __('admin.buttons.companies.create') }}
+            {{ __('admin.titles.companies.edit') }}
         </x-containers.title>
 
         <div class="mt-6">
@@ -378,7 +378,7 @@
     </x-containers.main>
 
     {{-- Items --}}
-    <x-containers.main class="mt-4" x-data="{open: true}">
+    <x-containers.main class="mt-4" x-data="{open: false}">
         <div class="flex justify-between">
             <div class="flex items-center gap-x-4">
                 <x-containers.title>{{ __('admin.titles.companies.items') }}</x-containers.title>

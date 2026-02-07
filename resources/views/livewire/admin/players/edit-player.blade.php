@@ -413,7 +413,7 @@
                             <x-tables.table-data>{{ $company->coc_number }}</x-tables.table-data>
                             <x-tables.table-actions>
                                 <x-tables.primary-action href="{{ route('admin.companies.edit', ['id' => $company->id]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
-                                <x-tables.danger-action wire:click="removeCompany('{{ $company->id }}')">{{ __('general.buttons.remove') }}</x-tables.danger-action>
+                                <x-tables.danger-action wire:click="removeCompany('{{ $company->id }}')">{{ __('general.buttons.unlink') }}</x-tables.danger-action>
                             </x-tables.table-actions>
                         </x-tables.table-row>
                     @empty
@@ -570,7 +570,7 @@
     <x-modals.modal wire:model="showRemoveCompanyModal">
         <x-slot name="title"><div class="flex justify-center">{{ __('admin.titles.players.unlink_company') }}</div></x-slot>
         <x-slot name="content">
-            <p>{{ __('admin.messages.players.unlink_company_confirmation') }}</p>
+            <p>{!! __('admin.messages.players.unlink_company_confirmation', ['name' => $companyToRemove?->name]) !!}</p>
         </x-slot>
         <x-slot name="footer">
             <x-buttons.secondary-button wire:click="$set('showRemoveCompanyModal', false)">

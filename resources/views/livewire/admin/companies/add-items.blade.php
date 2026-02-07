@@ -125,5 +125,5 @@
                 {{ __('general.buttons.add') }}
             </x-buttons.primary-button>
         </x-slot>
-    </x-modals.modal>"
+    </x-modals.modal>
 </div>
