@@ -404,7 +404,10 @@ return [
 
             'update_failed' => 'Failed to update company. Please try again.',
             'bank_account_add_failed' => 'Failed to add bank account to company. Please try again.',
+            'bank_account_remove_failed' => 'Failed to remove bank account from company. Please try again.',
             'employee_assign_failed' => 'Failed to assign employee to company. Please try again.',
+            'employee_remove_failed' => 'Failed to remove employee from company. Please try again.',
+            'pin_console_remove_failed' => 'Failed to remove PIN console from company. Please try again.',
             'plot_remove_failed' => 'Failed to remove plot from company. Please try again.',
 
             'pin_console_added' => 'PIN console successfully added to company.',
