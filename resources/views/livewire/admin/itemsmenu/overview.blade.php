@@ -140,7 +140,7 @@
     </x-containers.main>
 
     {{-- Item Groups --}}
-    <x-containers.main class="mt-4" x-data="{open: true}">
+    <x-containers.main class="mt-4" x-data="{open: false}">
         <div class="flex justify-between">
             <div class="flex items-center gap-x-4">
                 <x-containers.title>{{ __('admin.titles.itemsmenu.item_groups_overview') }}</x-containers.title>
