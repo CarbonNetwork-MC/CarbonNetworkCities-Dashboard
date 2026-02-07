@@ -470,7 +470,7 @@ return [
     ],
 
     // Toasts
-    'toast' => [
+    'toasts' => [
         'api' => [
             'unauthorized_error' => 'Unauthorized access to the API. Please check the API key configuration.',
         ],
