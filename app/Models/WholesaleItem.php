@@ -10,6 +10,7 @@ class WholesaleItem extends Model
         'item_id',
         'max_amount',
         'price',
+        'sellable',
     ];
 
     public function item()
