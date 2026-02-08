@@ -154,6 +154,14 @@
                     icon="fi fi-rr-users"
                     :label="__('sidebar.users')"
                 />
+
+                {{-- Wholesale Items --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.wholesale.render')"
+                    :active="request()->routeIs('admin.wholesale.*')"
+                    icon="fi fi-rr-shelves"
+                    :label="__('sidebar.wholesale_items')"
+                />
             </nav>
         @endif
 

@@ -155,6 +155,13 @@ return [
             'edit' => 'Edit Chamber of Commerce Type',
             'delete' => 'Delete Chamber of Commerce Type',
         ],
+
+        'wholesale_items' => [
+            'create'=> 'Create Wholesale Item',
+            'delete' => 'Delete Wholesale Item',
+            'edit' => 'Edit Wholesale Item',
+            'overview' => 'Wholesale Items Overview',
+        ]
     ],
 
     // Labels
@@ -305,6 +312,12 @@ return [
             'name' => 'Name',
             'description' => 'Description',
         ],
+
+        'wholesale_items' => [
+            'item' => 'Item',
+            'price' => 'Price',
+            'max_amount' => 'Max Amount',
+        ]
     ],
 
     // Buttons
