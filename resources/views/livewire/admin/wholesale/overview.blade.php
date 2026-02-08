@@ -70,4 +70,24 @@
             </x-tables.table-striped>
         </div>
     </x-containers.main>
+
+    {{-- Delete Item Modal --}}
+    <x-modals.modal wire:model="deleteItemModal">
+        <x-slot name="title">
+            <div class="flex justify-center">{{ __('admin.titles.wholesale_items.delete') }}</div>
+        </x-slot>
+        <x-slot name="content">
+            <p class="text-gray-700 dark:text-gray-300">
+                {!! __('admin.messages.wholesale_items.delete_confirmation', ['name' => $selectedItem->item->name ?? '']) !!}
+            </p>
+        </x-slot>
+        <x-slot name="footer">
+            <x-buttons.secondary-button wire:click="$set('deleteItemModal', false)">
+                {{ __('general.buttons.cancel') }}
+            </x-buttons.secondary-button>
+            <x-buttons.danger-button wire:click="destroyItem">
+                {{ __('general.buttons.delete') }}
+            </x-buttons.danger-button>
+        </x-slot>
+    </x-modals.modal>
 </div>

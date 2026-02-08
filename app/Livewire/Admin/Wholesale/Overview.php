@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Wholesale;
 
 use App\Models\WholesaleItem;
 use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 
 class Overview extends Component
 {
@@ -12,6 +13,24 @@ class Overview extends Component
 
     public $selectedItem = null;
     public $deleteItemModal = false;
+
+    public function removeItem($id) {
+        $this->selectedItem = WholesaleItem::where('id', $id)->with('item')->first();
+        $this->deleteItemModal = true;
+    }
+
+    public function destroyItem() {
+        if (!$this->selectedItem) return;
+
+        $this->selectedItem->delete();
+        
+        $this->reset([
+            'selectedItem',
+            'deleteItemModal',
+        ]);
+
+        Toaster::success(__('admin.toasts.wholesale_items.deleted'));
+    }
 
     public function render()
     {
