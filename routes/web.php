@@ -76,6 +76,10 @@ use App\Livewire\Admin\RolesPerms\Overview as RolesPermsOverview;
 use App\Livewire\Admin\Users\EditUser;
 use App\Livewire\Admin\Users\Overview as UserOverview;
 
+use App\Livewire\Admin\Wholesale\Overview as WholesaleOverview;
+use App\Livewire\Admin\Wholesale\NewItem as NewWholesaleItem;
+use App\Livewire\Admin\Wholesale\EditItem as EditWholesaleItem;
+
 use App\Livewire\Wholesale\ChooseCompany;
 use App\Livewire\Wholesale\CreateOrder;
 
@@ -206,4 +210,9 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     Route::get('/plots/new', NewPlot::class)->name('admin.plots.new');
     Route::get('/plots/edit/{id}', EditPlot::class)->name('admin.plots.edit');
     Route::get('/plots/add-member/{id}', AddMember::class)->name('admin.plots.add-member');
+
+    // ? Wholesale
+    Route::get('/wholesale', WholesaleOverview::class)->name('admin.wholesale-items.render');
+    Route::get('/wholesale/new', NewWholesaleItem::class)->name('admin.wholesale-items.new');
+    Route::get('/wholesale/edit/{id}', EditWholesaleItem::class)->name('admin.wholesale-items.edit');
 });

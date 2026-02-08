@@ -155,6 +155,13 @@ return [
             'edit' => 'Edit Chamber of Commerce Type',
             'delete' => 'Delete Chamber of Commerce Type',
         ],
+
+        'wholesale_items' => [
+            'create'=> 'Create Wholesale Item',
+            'delete' => 'Delete Wholesale Item',
+            'edit' => 'Edit Wholesale Item',
+            'overview' => 'Wholesale Items Overview',
+        ]
     ],
 
     // Labels
@@ -305,6 +312,12 @@ return [
             'name' => 'Name',
             'description' => 'Description',
         ],
+
+        'wholesale_items' => [
+            'item' => 'Item',
+            'price' => 'Price',
+            'max_amount' => 'Max Amount',
+        ]
     ],
 
     // Buttons
@@ -473,6 +486,11 @@ return [
             'no_records' => 'No Chamber of Commerce types found.',
             'delete_confirmation' => 'Are you sure you want to delete the Chamber of Commerce type <b>:name</b>? This action cannot be undone.',
         ],
+
+        'wholesale_items' => [
+            'no_records' => 'No wholesale items found.',
+            'delete_confirmation' => 'Are you sure you want to delete the wholesale item <b>:name</b>? This action cannot be undone.',
+        ]
     ],
 
     // Toasts
@@ -644,6 +662,12 @@ return [
             'updated' => 'Chamber of Commerce type updated successfully.',
             'deleted' => 'Chamber of Commerce type deleted successfully.',
         ],
+
+        'wholesale_items' => [
+            'created' => 'Wholesale item created successfully.',
+            'updated' => 'Wholesale item updated successfully.',
+            'deleted' => 'Wholesale item deleted successfully.',
+        ]
     ],
 
     // Placeholders
