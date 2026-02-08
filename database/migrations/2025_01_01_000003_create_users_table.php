@@ -20,11 +20,15 @@ return new class extends Migration
             $table->boolean('onboarding_status')->default(false);
             $table->integer('onboarding_step')->default(1);
             $table->unsignedBigInteger('selected_language')->nullable();
-            $table->foreign('selected_language')->references('id')->on('languages')->onDelete('set null');
             $table->rememberToken();
-            $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
+
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreign('selected_language')->references('id')->on('languages')->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('current_team_id')->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -35,11 +39,13 @@ return new class extends Migration
 
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->foreignUuid('user_id')->nullable()->index();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');
             $table->integer('last_activity')->index();
+
+            // Foreign key constraints
+            $table->foreignUuid('user_id')->nullable()->index();
         });
     }
 

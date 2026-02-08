@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('display_name');
             $table->unsignedBigInteger('country_id')->nullable();
             $table->string('city', 100)->nullable();
-            $table->foreign('country_id')->references('id')->on('countries')->onDelete('set null');
             $table->string('world_id');
             $table->integer('min_x');
             $table->integer('min_y');
@@ -26,6 +25,11 @@ return new class extends Migration
             $table->integer('max_y');
             $table->integer('max_z');
             $table->timestamps();
+
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreign('country_id')->references('id')->on('countries')->onUpdate('cascade')->onDelete('set null');
         });
     }
 

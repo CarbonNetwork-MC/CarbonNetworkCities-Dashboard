@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('world_id', 50);
             $table->string('plot_id', 10);
-            $table->foreign('plot_id')->references('plot_id')->on('plots')->onDelete('cascade');
             $table->enum('type', ['single', 'double']);
             $table->integer('min_x');
             $table->integer('min_y');
@@ -24,6 +23,11 @@ return new class extends Migration
             $table->integer('max_y');
             $table->integer('max_z');
             $table->timestamps();
+
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreign('plot_id')->references('plot_id')->on('plots')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

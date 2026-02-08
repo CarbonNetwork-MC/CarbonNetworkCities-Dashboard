@@ -19,11 +19,15 @@ return new class extends Migration
             $table->boolean('selected')->default(false);
             $table->timestamps();
 
-            // Foreign keys
-            $table->foreign('player_uuid')->references('uuid')->on('players')->onDelete('cascade');
-            $table->foreign('color_id')->references('id')->on('chat_colors')->onDelete('cascade');
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreign('player_uuid')->references('uuid')->on('players')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('color_id')->references('id')->on('chat_colors')->onUpdate('cascade')->onDelete('cascade');
 
-            // Unique constraint to prevent duplicate entries
+            /* -------------------------------------------------------------
+            * Unique constraint to prevent duplicate entries for the same player, color, and type
+            * ------------------------------------------------------------- */
             $table->unique(['player_uuid', 'color_id', 'type'], 'uq_player_color_type');
         });
     }

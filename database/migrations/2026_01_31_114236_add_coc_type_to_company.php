@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::table('companies', function (Blueprint $table) {
             $table->unsignedBigInteger('coc_type_id')->after('world_id')->nullable();
 
-            // Foreign key constraint
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
             $table->foreign('coc_type_id')->references('id')->on('coc_types')->onUpdate('cascade')->onDelete('set null');
         });
     }
