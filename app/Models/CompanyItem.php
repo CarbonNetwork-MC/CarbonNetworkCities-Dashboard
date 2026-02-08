@@ -12,8 +12,7 @@ class CompanyItem extends Model
         'item_id',
         'sellable',
         'price',
-        'base_price',
-        'max_wholesale_amount',
+        'base_price'
     ];
 
     public function company(): BelongsTo

@@ -26,7 +26,7 @@ class ItemGroup extends Model
     public function items(): BelongsToMany
     {
         return $this->belongsToMany(Item::class, 'item_group_items', 'item_group_id', 'item_id')
-            ->withPivot(['price', 'base_price', 'sellable', 'max_wholesale_amount'])
+            ->withPivot(['price', 'base_price', 'sellable'])
             ->withTimestamps();
     }
 }

@@ -44,8 +44,7 @@ class AddItems extends Component
         $data = $this->validate([
             'items.*.item_id' => ['required', 'distinct', 'exists:items,id'],
             'items.*.price' => ['nullable', 'numeric', 'min:0'],
-            'items.*.base_price' => ['required', 'numeric', 'min:0'],
-            'items.*.max_wholesale_amount' => ['nullable', 'integer', 'default:192', 'min:0'],
+            'items.*.base_price' => ['required', 'numeric', 'min:0']
         ]);
 
         foreach ($this->items as $item) {
@@ -58,7 +57,6 @@ class AddItems extends Component
                 'item_id' => $item['item_id'],
                 'price' => $item['price'] ?? 0,
                 'base_price' => $item['base_price'] ?? 0,
-                'max_wholesale_amount' => $item['max_wholesale_amount'] ?: 192,
                 'sellable' => $item['sellable'],
             ]);
         }
@@ -91,8 +89,7 @@ class AddItems extends Component
                 'item_id' => $item->id,
                 'price' => $item->pivot->price,
                 'base_price' => $item->pivot->base_price,
-                'sellable' => (bool) $item->pivot->sellable,
-                'max_wholesale_amount' => $item->pivot->max_wholesale_amount,
+                'sellable' => (bool) $item->pivot->sellable
             ];
             $this->items = array_values($this->items);
         }
@@ -131,8 +128,7 @@ class AddItems extends Component
             'item_id' => null,
             'price' => null,
             'base_price' => null,
-            'sellable' => false,
-            'max_wholesale_amount' => 192,
+            'sellable' => false
         ];
     }
 

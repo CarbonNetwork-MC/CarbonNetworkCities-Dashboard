@@ -55,6 +55,7 @@ use App\Livewire\Admin\PinConsoles\Edit as EditPinConsole;
 use App\Livewire\Admin\Players\AddBankAccount as AddPlayerBankAccount;
 use App\Livewire\Admin\Players\AddChatColor;
 use App\Livewire\Admin\Players\AddCompany;
+use App\Livewire\Admin\Players\AddEmployer;
 use App\Livewire\Admin\Players\AddPlot as AddPlotToPlayer;
 use App\Livewire\Admin\Players\AddPrefix;
 use App\Livewire\Admin\Players\EditPlayer;
@@ -76,6 +77,7 @@ use App\Livewire\Admin\Users\EditUser;
 use App\Livewire\Admin\Users\Overview as UserOverview;
 
 use App\Livewire\Wholesale\ChooseCompany;
+use App\Livewire\Wholesale\CreateOrder;
 
 use Illuminate\Support\Facades\Route;
 
@@ -111,6 +113,7 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
     // ? Wholesale
     Route::middleware('permission:wholesale_order')->group(function() {
         Route::get('/wholesale/choose-company', ChooseCompany::class)->name('wholesale.choose-company');
+        Route::get('/wholesale/create-order/{companyId}', CreateOrder::class)->name('wholesale.create-order');
     });
 });
 
@@ -156,6 +159,7 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     Route::get('/players/add-bank-account/{uuid}', AddPlayerBankAccount::class)->name('admin.players.add-bank-account');
     Route::get('/players/add-plot/{uuid}', AddPlotToPlayer::class)->name('admin.players.add-plot');
     Route::get('/players/add-company/{uuid}', AddCompany::class)->name('admin.players.add-company');
+    Route::get('/players/add-employer/{uuid}', AddEmployer::class)->name('admin.players.add-employer');
 
     // ? Languages
     Route::get('/languages', LanguagesOverview::class)->name('admin.languages.render');
