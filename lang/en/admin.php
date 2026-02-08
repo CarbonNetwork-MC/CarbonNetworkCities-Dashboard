@@ -66,6 +66,9 @@ return [
             'overview' => 'Players Overview',
             'unlink_company' => 'Unlink Company',
             'unlink_plot' => 'Unlink Plot',
+            'employee_at' => 'Employee At',
+            'unlink_employee_at' => 'Unlink Employee At',
+            'add_employer' => 'Add Employer',
         ],
 
         'roles' => [
@@ -404,6 +407,8 @@ return [
             'players_no_records' => 'No players found.',
             'plots_no_records' => 'No plots found for this player.',
             'prefixes_no_records' => 'No prefixes found for this player.',
+            'employee_at_no_records' => 'No companies found where this player is an employee or manager.',
+            'unlink_employee_at_confirmation' => 'Are you sure you want to unlink this player from the company <b>:name</b>? They will no longer be an employee of the company.',
         ],
 
         'roles' => [
@@ -546,6 +551,10 @@ return [
             'prefix_update_success' => 'Prefix updated successfully.',
             'update_failed' => 'Failed to update player. Please try again.',
             'update_success' => 'Player updated successfully.',
+            'employer_add_failed' => 'Failed to add employer. Please try again.',
+            'employer_add_success' => 'Employer added successfully.',
+            'employee_at_unlink_failed' => 'Failed to unlink employee from company. Please try again.',
+            'employee_at_unlink_success' => 'Employee unlinked from company successfully.',
         ],
 
         'roles' => [

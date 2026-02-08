@@ -19,7 +19,9 @@ class AddCompany extends Component
     public function mount($uuid) {
         $this->player = Player::where('uuid', $uuid)->firstOrFail();
 
-        $this->companies = Company::get(['id', 'name']);
+        $this->companies = Company::where('owner_uuid', '!=', $uuid)
+            ->orWhereNull('owner_uuid')
+            ->get(['id', 'name']);
     }
 
     public function addCompany(ApiService $apiService, PlayerPermissionService $permissionService) {
