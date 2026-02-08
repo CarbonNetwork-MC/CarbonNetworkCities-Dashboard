@@ -67,7 +67,9 @@
                         <x-forms.text-input label="{{ __('admin.labels.itemsmenu.base_price') }}" wire:model="items.{{ $index }}.base_price" required />
                     </div>
 
-                    <div class="col-span-1"></div>
+                    <div class="col-span-1">
+                        <x-forms.number-input label="{{ __('admin.labels.companies.max_wholesale_amount') }}" wire:model="items.{{ $index }}.max_wholesale_amount" />
+                    </div>
 
                     <div class="col-span-1">
                         <x-forms.checkbox label="{{ __('admin.labels.itemsmenu.sellable') }}" wire:model="items.{{ $index }}.sellable" />

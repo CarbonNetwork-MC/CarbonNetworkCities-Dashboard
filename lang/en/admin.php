@@ -194,6 +194,7 @@ return [
             'price' => 'Price',
             'sellable' => 'Sellable',
             'world_id' => 'World ID',
+            'max_wholesale_amount' => 'Max Wholesale Amount',
         ],
 
         'languages' => [

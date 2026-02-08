@@ -15,10 +15,6 @@ class AddItems extends Component
     public $allItems;
     public $itemGroups;
 
-    public $selectedItem;
-    public $price;
-    public $basePrice;
-    public $sellable = false;
     public $selectedItemGroupId;
     public $selectedItemGroup;
 
@@ -49,6 +45,7 @@ class AddItems extends Component
             'items.*.item_id' => ['required', 'distinct', 'exists:items,id'],
             'items.*.price' => ['nullable', 'numeric', 'min:0'],
             'items.*.base_price' => ['required', 'numeric', 'min:0'],
+            'items.*.max_wholesale_amount' => ['nullable', 'integer', 'default:192', 'min:0'],
         ]);
 
         foreach ($this->items as $item) {
@@ -61,6 +58,7 @@ class AddItems extends Component
                 'item_id' => $item['item_id'],
                 'price' => $item['price'] ?? 0,
                 'base_price' => $item['base_price'] ?? 0,
+                'max_wholesale_amount' => $item['max_wholesale_amount'] ?: 192,
                 'sellable' => $item['sellable'],
             ]);
         }
@@ -94,6 +92,7 @@ class AddItems extends Component
                 'price' => $item->pivot->price,
                 'base_price' => $item->pivot->base_price,
                 'sellable' => (bool) $item->pivot->sellable,
+                'max_wholesale_amount' => $item->pivot->max_wholesale_amount,
             ];
             $this->items = array_values($this->items);
         }
@@ -133,6 +132,7 @@ class AddItems extends Component
             'price' => null,
             'base_price' => null,
             'sellable' => false,
+            'max_wholesale_amount' => 192,
         ];
     }
 

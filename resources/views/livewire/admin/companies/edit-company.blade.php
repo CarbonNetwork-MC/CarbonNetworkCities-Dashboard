@@ -403,6 +403,7 @@
                         <x-tables.table-header>{{ __('admin.labels.companies.price') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.companies.base_price') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.companies.sellable') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.max_wholesale_amount') }}</x-tables.table-header>
                         <th></th>
                     </tr>
                 </x-slot>
@@ -419,6 +420,7 @@
                                     <span class="bg-red-100 text-red-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full">{{ __('general.no') }}</span>
                                 @endif
                             </x-tables.table-data>
+                            <x-tables.table-data>{{ $item->max_wholesale_amount }}</x-tables.table-data>
                             <x-tables.table-actions>
                                 <x-tables.primary-action href="{{ route('admin.companies.edit-item', ['companyId' => $company->id, 'itemId' => $item->id]) }}">
                                     {{ __('general.buttons.edit') }}
@@ -430,7 +432,7 @@
                         </x-tables.table-row>
                     @empty
                         <tr>
-                            <x-tables.empty-state colspan="5">
+                            <x-tables.empty-state colspan="6">
                                 {{ __('admin.messages.companies.items_no_records') }}
                             </x-tables.empty-state>
                         </tr>
