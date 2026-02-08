@@ -18,8 +18,10 @@ return new class extends Migration
             $table->boolean('sellable')->default(true);
             $table->timestamps();
 
-            // Foreign key constraints
-            $table->foreign('coc_type')->references('id')->on('coc_types')->onDelete('cascade');
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreign('coc_type')->references('id')->on('coc_types')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

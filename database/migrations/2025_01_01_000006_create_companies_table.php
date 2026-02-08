@@ -17,8 +17,12 @@ return new class extends Migration
             $table->string('world_id')->nullable()->comment('This allows to easily identify the world in which the company is located.');
             $table->string('coc_number', 20)->unique();
             $table->char('owner_uuid', 36)->nullable();
-            $table->foreign('owner_uuid')->references('uuid')->on('players')->onDelete('set null');
             $table->timestamps();
+
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreign('owner_uuid')->references('uuid')->on('players')->onUpdate('cascade')->onDelete('set null');
         });
     }
 

@@ -17,19 +17,23 @@ return new class extends Migration
             $table->string('username', 16);
             $table->integer('level')->default(1);
             $table->unsignedBigInteger('nationality')->nullable();
-            $table->foreign('nationality')->references('id')->on('countries')->onDelete('set null');
             $table->boolean('onboarding')->default(false);
             $table->integer('onboarding_step')->default(1);
             $table->unsignedBigInteger('selected_language')->nullable();
-            $table->foreign('selected_language')->references('id')->on('languages')->onDelete('set null');
             $table->integer('playtime')->default(0);
             $table->timestamp('updated_playtime_at')->default(now())->comment('Used in the playtime command, so players can\'t spam the command.');
             $table->unsignedBigInteger('last_region_id')->nullable();
-            $table->foreign('last_region_id')->references('id')->on('city_regions')->onDelete('set null')->onUpdate('cascade');
             $table->timestamp('last_login')->nullable();
             $table->timestamp('last_logout')->nullable();
             $table->timestamp('deletion_pending_at')->nullable();
             $table->timestamps();
+
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreign('nationality')->references('id')->on('countries')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('selected_language')->references('id')->on('languages')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('last_region_id')->references('id')->on('city_regions')->onUpdate('cascade')->onDelete('set null');
         });
     }
 

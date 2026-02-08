@@ -16,14 +16,18 @@ return new class extends Migration
             $table->string('internal_id', 100)->unique();
             $table->string('name', 100);
             $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('item_categories')->onDelete('restrict');
             $table->string('material', 50);
             $table->json('data')->nullable();
             $table->char('player_uuid', 36)->nullable()->comment('Used when the item is made via Minecraft');
-            $table->foreign('player_uuid')->references('uuid')->on('players')->onDelete('cascade');
             $table->char('user_uuid', 36)->nullable()->comment('Used when the item is made via the website');
-            $table->foreign('user_uuid')->references('uuid')->on('users')->onDelete('cascade');
             $table->timestamps();
+
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreign('category_id')->references('id')->on('item_categories')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('player_uuid')->references('uuid')->on('players')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('user_uuid')->references('uuid')->on('users')->onUpdate('cascade')->onDelete('set null');
         });
     }
 

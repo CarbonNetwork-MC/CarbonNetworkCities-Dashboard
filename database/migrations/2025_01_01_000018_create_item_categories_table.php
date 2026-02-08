@@ -16,10 +16,14 @@ return new class extends Migration
             $table->string('name', 50);
             $table->string('icon_material', 50);
             $table->char('player_uuid', 36)->nullable()->comment('Used when the item is made via Minecraft');
-            $table->foreign('player_uuid')->references('uuid')->on('players')->onDelete('cascade');
             $table->char('user_uuid', 36)->nullable()->comment('Used when the item is made via the website');
-            $table->foreign('user_uuid')->references('uuid')->on('users')->onDelete('set null');
             $table->timestamps();
+
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreign('player_uuid')->references('uuid')->on('players')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('user_uuid')->references('uuid')->on('users')->onUpdate('cascade')->onDelete('set null');
         });
     }
 

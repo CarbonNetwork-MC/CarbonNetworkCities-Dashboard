@@ -20,9 +20,11 @@ return new class extends Migration
             $table->boolean('sellable')->default(true);
             $table->timestamps();
 
-            // Foreign key constraints
-            $table->foreign('item_group_id')->references('id')->on('item_groups')->onDelete('cascade');
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreign('item_group_id')->references('id')->on('item_groups')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('item_id')->references('id')->on('items')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
