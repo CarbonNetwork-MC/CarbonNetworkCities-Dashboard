@@ -42,14 +42,14 @@
                             <x-tables.table-data>{{ $item->price }}</x-tables.table-data>
                             <x-tables.table-data>{{ $item->max_amount }}</x-tables.table-data>
                             <x-tables.table-actions>
-                                <x-tables.primary-action href="">{{ __('general.buttons.edit') }}</x-tables.primary-action>
+                                <x-tables.primary-action href="{{ route('admin.wholesale-items.edit', ['id' => $item->id]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removeItem('{{ $item->id }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
                             </x-tables.table-actions>
                         </x-tables.table-row>
                     @empty
                         <x-tables.table-row>
                             <x-tables.empty-state :colspan="4">
-                                {{ __('admin.labels.wholesale_items.no_items') }}
+                                {{ __('admin.messages.wholesale_items.no_records') }}
                             </x-tables.empty-state>
                         </x-tables.table-row>
                     @endforelse

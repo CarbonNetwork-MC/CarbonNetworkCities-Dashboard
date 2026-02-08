@@ -486,6 +486,11 @@ return [
             'no_records' => 'No Chamber of Commerce types found.',
             'delete_confirmation' => 'Are you sure you want to delete the Chamber of Commerce type <b>:name</b>? This action cannot be undone.',
         ],
+
+        'wholesale_items' => [
+            'no_records' => 'No wholesale items found.',
+            'delete_confirmation' => 'Are you sure you want to delete the wholesale item <b>:name</b>? This action cannot be undone.',
+        ]
     ],
 
     // Toasts
