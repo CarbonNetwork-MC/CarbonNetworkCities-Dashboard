@@ -24,4 +24,9 @@ class CompanyItem extends Model
     {
         return $this->belongsTo(Item::class, 'item_id', 'id');
     }
+
+    public function wholesaleItem()
+    {
+        return $this->hasOne(WholesaleItem::class, 'item_id', 'item_id');
+    }
 }

@@ -15,8 +15,6 @@ class CreateOrder extends Component
     
     public function render()
     {
-        return view('livewire.wholesale.create-order', [
-            'items' => $this->company->items()->with('item')->get([''])
-        ]);
+        return view('livewire.wholesale.create-order');
     }
 }
