@@ -8,8 +8,8 @@
                 'label'=> '',
             ],
             [
-                'url'   => route('admin.pin-consoles.render'),
-                'label' => __('sidebar.pin_consoles'),
+                'url'   => route('admin.wholesale-items.render'),
+                'label' => __('sidebar.wholesale_items'),
             ],
         ]" />
     </x-slot>
