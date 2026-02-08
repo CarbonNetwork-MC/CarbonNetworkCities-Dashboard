@@ -657,6 +657,12 @@ return [
             'updated' => 'Chamber of Commerce type updated successfully.',
             'deleted' => 'Chamber of Commerce type deleted successfully.',
         ],
+
+        'wholesale_items' => [
+            'created' => 'Wholesale item created successfully.',
+            'updated' => 'Wholesale item updated successfully.',
+            'deleted' => 'Wholesale item deleted successfully.',
+        ]
     ],
 
     // Placeholders

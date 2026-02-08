@@ -157,8 +157,8 @@
 
                 {{-- Wholesale Items --}}
                 <x-sidebar.nav-item
-                    :href="route('admin.wholesale.render')"
-                    :active="request()->routeIs('admin.wholesale.*')"
+                    :href="route('admin.wholesale-items.render')"
+                    :active="request()->routeIs('admin.wholesale-items.*')"
                     icon="fi fi-rr-shelves"
                     :label="__('sidebar.wholesale_items')"
                 />

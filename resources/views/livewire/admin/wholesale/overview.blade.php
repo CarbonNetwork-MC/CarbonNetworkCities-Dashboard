@@ -19,7 +19,7 @@
             <x-containers.title>{{ __('admin.titles.wholesale_items.overview') }}</x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="search" wire:model.live="search" class="w-full" />
-                <x-buttons.primary-button size="sm" href="">
+                <x-buttons.primary-button size="sm" href="{{ route('admin.wholesale-items.new') }}">
                     {{ __('admin.titles.wholesale_items.create') }}
                 </x-buttons.primary-button>
             </div>
