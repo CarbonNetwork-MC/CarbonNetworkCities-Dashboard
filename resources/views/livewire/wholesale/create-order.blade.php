@@ -55,6 +55,7 @@
                                 type="button" 
                                 wire:click="decrement({{ $index }})" 
                                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer focus:outline-none focus:ring-0 focus:ring-transparent {{ $item['amount'] == 0 ? 'invisible' : '' }}"
+                                tabindex="-1"
                             >
                                 <i class="fi fi-rr-minus"></i>
                             </button>
@@ -64,6 +65,7 @@
                                 min="0"
                                 max="{{ $item['max_amount'] }}"
                                 wire:model.live="orderItems.{{ $index }}.amount"
+                                wire:blur="calculatePrice({{ $index }})"
                                 class="w-10 text-center text-sm font-medium text-gray-700 dark:text-white appearance-none bg-transparent border border-gray-400 dark:border-gray-600 rounded-md focus:outline-none focus:border-b focus:border-gray-400 hover:cursor-text transition-colors px-1 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             >
     
@@ -71,6 +73,7 @@
                                 type="button" 
                                 wire:click="increment({{ $index }})"
                                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer focus:outline-none focus:ring-0 focus:ring-transparent {{ $item['amount'] >= $item['max_amount'] ? 'invisible' : '' }}"
+                                tabindex="-1"
                             >
                                 <i class="fi fi-rr-plus"></i>
                             </button>

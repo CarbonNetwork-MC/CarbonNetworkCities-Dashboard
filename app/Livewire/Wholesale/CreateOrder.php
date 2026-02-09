@@ -14,22 +14,14 @@ class CreateOrder extends Component
     public $orderItems;
     public $total = 0;
 
-    public function updated($key, $value) {
-        if (str_starts_with($key, 'orderItems.')) {
-            $index = explode('.', $key)[1];
-            $this->calculatePrice($index);
-        }
-    }
-
     public function mount($companyId) {
         $this->company = Company::findOrFail($companyId);
         
-        if ($this->company->items()->count() === 0) {
-            return redirect()->route('wholesale.choose-company')->error(__('wholesale.toasts.no_items'));
-        }
-        
         $this->orderItems = $this->company->items()
             ->with(['item:id,name', 'wholesaleItem'])
+            ->whereHas('wholesaleItem', function ($query) {
+                $query->where('sellable', 1);
+            })
             ->get(['id', 'item_id'])
             ->map(fn ($item) => [
                 'id' => $item->id,
@@ -41,6 +33,10 @@ class CreateOrder extends Component
                 'total' => 0,
             ])
             ->toArray();
+
+        if (count($this->orderItems) === 0) {
+            return redirect()->route('wholesale.choose-company')->error(__('wholesale.toasts.no_items'));
+        }
     }
 
     public function createOrder() {
@@ -89,7 +85,7 @@ class CreateOrder extends Component
         }
     }
 
-    private function calculatePrice($index) {
+    public function calculatePrice($index) {
         $this->orderItems[$index]['total'] = $this->orderItems[$index]['price'] * (int) $this->orderItems[$index]['amount'];
         $this->calculateTotal();
     }
@@ -103,6 +99,9 @@ class CreateOrder extends Component
         return view('livewire.wholesale.create-order', [
             'items' => $this->company->items()
                 ->with(['item:id,name', 'wholesaleItem'])
+                ->whereHas('wholesaleItem', function ($query) {
+                    $query->where('sellable', 1);
+                })
                 ->get(['id', 'item_id'])
         ]);
     }
