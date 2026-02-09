@@ -13,6 +13,10 @@ class WholesaleItem extends Model
         'sellable',
     ];
 
+    protected $casts = [
+        'sellable' => 'boolean',
+    ];
+
     public function item()
     {
         return $this->belongsTo(Item::class);

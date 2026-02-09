@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class WholesaleOrderItem extends Model
 {
@@ -22,5 +23,10 @@ class WholesaleOrderItem extends Model
     public function item(): BelongsTo
     {
         return $this->belongsTo(Item::class, 'item_id');
+    }
+
+    public function wholesaleItem(): HasOneThrough
+    {
+        return $this->hasOneThrough(WholesaleItem::class, Item::class, 'id', 'item_id', 'item_id', 'id');
     }
 }

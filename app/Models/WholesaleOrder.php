@@ -31,6 +31,11 @@ class WholesaleOrder extends Model
         return $this->hasMany(WholesaleOrderItem::class, 'order_id');
     }
 
+    public function amountOfItems(): int
+    {
+        return $this->items()->sum('amount');
+    }
+
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class, 'company_id');
