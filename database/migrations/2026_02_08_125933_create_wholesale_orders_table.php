@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
             $table->char('customer_id', 36)->nullable();
             $table->foreign('customer_id')->references('uuid')->on('players')->onDelete('set null')->onUpdate('cascade');
+            $table->boolean('collected')->default(false);
+            $table->char('collected_by', 36)->nullable();
             $table->boolean('completed')->default(false);
             $table->char('completed_by', 36)->nullable();
             $table->foreign('completed_by')->references('uuid')->on('players')->onDelete('set null')->onUpdate('cascade');

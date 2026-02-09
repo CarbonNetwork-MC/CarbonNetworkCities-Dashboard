@@ -14,9 +14,16 @@ class WholesaleOrder extends Model
     protected $fillable = [
         'company_id',
         'customer_id',
+        'collected',
+        'collected_by',
         'completed',
         'completed_by',
         'total',
+    ];
+
+    protected $casts = [
+        'collected' => 'boolean',
+        'completed' => 'boolean',
     ];
 
     public function items(): HasMany
@@ -37,5 +44,10 @@ class WholesaleOrder extends Model
     public function completedBy(): BelongsTo
     {
         return $this->belongsTo(Player::class, 'completed_by', 'uuid');
+    }
+
+    public function collectedBy(): BelongsTo
+    {
+        return $this->belongsTo(Player::class, 'collected_by', 'uuid');
     }
 }
