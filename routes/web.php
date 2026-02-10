@@ -75,6 +75,8 @@ use App\Livewire\Admin\RolesPerms\Overview as RolesPermsOverview;
 use App\Livewire\Admin\Users\EditUser;
 use App\Livewire\Admin\Users\Overview as UserOverview;
 
+use App\Livewire\Company\CompanyDashboard;
+
 use App\Livewire\Profile\Overview as ProfileOverview;
 
 use Illuminate\Support\Facades\Route;
@@ -110,6 +112,11 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
 
     // ? Profile
     Route::get('/profile', ProfileOverview::class)->name('profile.render');
+
+    // ? Company
+    Route::middleware('employee_or_owner')->group(function() {
+        Route::get('/company/{companyId}/dashboard', CompanyDashboard::class)->name('company.dashboard.render');
+    });
 });
 
 // ! Admin Routes

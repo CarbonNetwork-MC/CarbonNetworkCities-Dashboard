@@ -43,6 +43,16 @@
                     icon="fi fi-rr-home"
                     :label="__('sidebar.dashboard')"
                 />
+
+                {{-- Company (Only when the user is associated with a company?) --}}
+                {{-- <x-sidebar.nav-group :groupKey="companyNavGroup" label="{{ __('sidebar.company.title') }}" icon="rr-building"> --}}
+                    {{-- <x-sidebar.nav-group-item
+                        :href=""
+                        :active="request()->routeIs('company.dashboard.render')"
+                    >
+                        {{ __('sidebar.company.dashboard') }}
+                    </x-sidebar.nav-group-item> --}}
+                {{-- </x-sidebar.nav-group> --}}
             </nav>
         @endif
 

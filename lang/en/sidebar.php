@@ -9,10 +9,16 @@ return [
     |
     */
 
+    // ? Public
     'dashboard' => 'Dashboard',
     'profile' => 'Profile',
 
-    // Management
+    // ? Company
+    'company' => [
+        'dashboard' => 'Dashboard',
+    ],
+
+    // ? Management
     'management' => 'Management',
 
     'bank_accounts' => 'Bank Accounts',
