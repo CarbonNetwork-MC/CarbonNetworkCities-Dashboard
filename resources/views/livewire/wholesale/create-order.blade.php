@@ -54,7 +54,7 @@
                             <button 
                                 type="button" 
                                 wire:click="decrement({{ $index }})" 
-                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer focus:outline-none focus:ring-0 focus:ring-transparent {{ $item['amount'] == 0 ? 'invisible' : '' }}"
+                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer focus:outline-none focus:ring-0 focus:ring-transparent {{ $item['amount'] == 0 || empty($item['amount']) ? 'invisible' : '' }}"
                                 tabindex="-1"
                             >
                                 <i class="fi fi-rr-minus"></i>
