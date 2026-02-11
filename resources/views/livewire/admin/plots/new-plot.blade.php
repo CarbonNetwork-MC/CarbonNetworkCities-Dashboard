@@ -37,7 +37,7 @@
 
                 {{-- Description --}}
                 <div class="col-span-1">
-                    <x-forms.textarea label="{{ __('admin.labels.plots.description') }}" wire:model="description" />
+                    <x-forms.text-area label="{{ __('admin.labels.plots.description') }}" wire:model="description" />
                 </div>
                 
                 <div class="col-span-1"></div>
