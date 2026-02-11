@@ -18,6 +18,7 @@ return [
         'choose' => 'Choose Company',
         'dashboard' => 'Dashboard',
         'title' => 'Companies',
+        'stock' => 'Stock Overview',
     ],
 
     // ? Management

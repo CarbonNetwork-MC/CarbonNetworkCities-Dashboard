@@ -77,6 +77,7 @@ use App\Livewire\Admin\Users\Overview as UserOverview;
 
 use App\Livewire\Company\ChooseCompany;
 use App\Livewire\Company\CompanyDashboard;
+use App\Livewire\Company\StockOverview;
 
 use App\Livewire\Profile\Overview as ProfileOverview;
 
@@ -118,6 +119,7 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
     Route::get('/company/choose', ChooseCompany::class)->name('company.choose.render');
     Route::middleware('employee_or_owner')->group(function() {
         Route::get('/company/{companyId}/dashboard', CompanyDashboard::class)->name('company.dashboard.render');
+        Route::get('/company/{companyId}/stock', StockOverview::class)->name('company.stock.render');
     });
 });
 
