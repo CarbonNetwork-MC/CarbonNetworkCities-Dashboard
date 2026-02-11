@@ -50,4 +50,9 @@ class Company extends Model
     {
         return $this->hasMany(CompanyItem::class, 'company_id', 'id');
     }
+
+    public function stock(): HasMany
+    {
+        return $this->hasMany(CompanyStock::class, 'company_id', 'id');
+    }
 }

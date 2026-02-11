@@ -3,17 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class CompanyItem extends Model
+class CompanyStock extends Model
 {
+    protected $table = 'company_stock';
     protected $fillable = [
         'company_id',
         'item_id',
-        'sellable',
-        'price',
-        'base_price',
+        'quantity',
     ];
 
     public function company(): BelongsTo
@@ -23,11 +21,6 @@ class CompanyItem extends Model
 
     public function item(): BelongsTo
     {
-        return $this->belongsTo(Item::class, 'item_id', 'id');
-    }
-
-    public function stock(): HasOne
-    {
-        return $this->hasOne(CompanyStock::class, 'item_id', 'id');
+        return $this->belongsTo(CompanyItem::class);
     }
 }

@@ -190,6 +190,7 @@ return [
             'plot_name' => 'Plot Name',
             'price' => 'Price',
             'sellable' => 'Sellable',
+            'stock' => 'Stock',
             'world_id' => 'World ID',
         ],
 
