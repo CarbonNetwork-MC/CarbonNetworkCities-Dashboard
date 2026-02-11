@@ -15,7 +15,9 @@ return [
 
     // ? Company
     'company' => [
+        'choose' => 'Choose Company',
         'dashboard' => 'Dashboard',
+        'title' => 'Companies',
     ],
 
     // ? Management

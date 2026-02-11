@@ -45,14 +45,24 @@
                 />
 
                 {{-- Company (Only when the user is associated with a company?) --}}
-                {{-- <x-sidebar.nav-group :groupKey="companyNavGroup" label="{{ __('sidebar.company.title') }}" icon="rr-building"> --}}
-                    {{-- <x-sidebar.nav-group-item
-                        :href=""
-                        :active="request()->routeIs('company.dashboard.render')"
-                    >
-                        {{ __('sidebar.company.dashboard') }}
-                    </x-sidebar.nav-group-item> --}}
-                {{-- </x-sidebar.nav-group> --}}
+                @if ($selectedCompany)
+                    <x-sidebar.nav-group :groupKey="'company'" wire:key="company" label="{{ __('sidebar.company.title') }}" icon="rr-building">
+                        <x-sidebar.nav-group-item
+                            href="{{ route('company.dashboard.render', ['companyId' => $selectedCompany->id]) }}"
+                            :active="request()->routeIs('company.dashboard.render')"
+                            wire:key="company-dashboard"
+                        >
+                            {{ __('sidebar.company.dashboard') }}
+                        </x-sidebar.nav-group-item>
+                    </x-sidebar.nav-group>
+                @else
+                    <x-sidebar.nav-item
+                        :href="route('company.choose.render')"
+                        :active="request()->routeIs('company.choose.render')"
+                        icon="fi fi-rr-building"
+                        :label="__('sidebar.company.title')"
+                    />
+                @endif
             </nav>
         @endif
 

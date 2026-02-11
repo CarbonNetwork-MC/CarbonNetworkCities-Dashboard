@@ -75,6 +75,7 @@ use App\Livewire\Admin\RolesPerms\Overview as RolesPermsOverview;
 use App\Livewire\Admin\Users\EditUser;
 use App\Livewire\Admin\Users\Overview as UserOverview;
 
+use App\Livewire\Company\ChooseCompany;
 use App\Livewire\Company\CompanyDashboard;
 
 use App\Livewire\Profile\Overview as ProfileOverview;
@@ -114,6 +115,7 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
     Route::get('/profile', ProfileOverview::class)->name('profile.render');
 
     // ? Company
+    Route::get('/company/choose', ChooseCompany::class)->name('company.choose.render');
     Route::middleware('employee_or_owner')->group(function() {
         Route::get('/company/{companyId}/dashboard', CompanyDashboard::class)->name('company.dashboard.render');
     });
@@ -137,7 +139,6 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
         Route::get('/companies/edit/{id}/add-bank-account', AddCompanyBankAccount::class)->name('admin.companies.add-bank-account');
         Route::get('/companies/edit/{id}/add-employee', AddEmployee::class)->name('admin.companies.add-employee');
         Route::get('/companies/edit/{id}/add-items', AddItems::class)->name('admin.companies.add-items');
-        Route::get('/companies/edit/{id}/add-item-group', AddItemGroup::class)->name('admin.companies.add-item-group');
         Route::get('/companies/edit/{id}/add-pin-console', AddPinConsole::class)->name('admin.companies.add-pin-console');
         Route::get('/companies/edit/{id}/add-plot', AddPlot::class)->name('admin.companies.add-plot');
         Route::get('/companies/edit/{companyId}/edit-item/{itemId}', EditCompanyItem::class)->name('admin.companies.edit-item');
