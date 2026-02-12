@@ -27,6 +27,8 @@ return [
 
     'messages' => [
         'choose_description' => 'Select the company you want to manage or view.',
+        'no_companies' => 'No companies found.',
+        'stock_no_records' => 'No stock records found.',
     ],
 
     'toast' => [
