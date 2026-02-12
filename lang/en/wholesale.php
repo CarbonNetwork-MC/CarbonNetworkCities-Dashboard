@@ -19,6 +19,7 @@ return [
         'orders_to_collect' => 'Orders yet to collect',
         'orders_to_complete' => 'Orders yet to complete',
         'completed_orders' => 'Completed Orders',
+        'order' => 'Order',
     ],
 
     // Labels
@@ -35,6 +36,8 @@ return [
     'buttons' => [
         'cancel_order' => 'Cancel Order',
         'finish_order' => 'Finish Order',
+        'update_order' => 'Update Order',
+        'collect_order' => 'Collect Order',
     ],
 
     // Messages
@@ -42,6 +45,7 @@ return [
         'no_orders' => 'There are currently no wholesale orders.',
         'no_collected_orders' => 'There are currently no collected wholesale orders.',
         'no_completed_orders' => 'There are currently no completed wholesale orders.',
+        'editing_enabled' => 'Editing is enabled'
     ],
 
     // Toasts
@@ -50,5 +54,7 @@ return [
         'no_items_in_order' => 'Please add at least one item to the order before finishing.',
         'max_amount_exceeded' => 'The amount for :item exceeds the maximum allowed (:max).',
         'order_created' => 'Wholesale order created successfully.',
+        'order_updated' => 'Wholesale order updated successfully.',
+        'order_collected' => 'Wholesale order collected successfully.',
     ],
 ];
