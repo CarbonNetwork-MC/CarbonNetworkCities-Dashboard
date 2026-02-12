@@ -80,6 +80,8 @@ use App\Livewire\Admin\Wholesale\Overview as WholesaleOverview;
 use App\Livewire\Admin\Wholesale\NewItem as NewWholesaleItem;
 use App\Livewire\Admin\Wholesale\EditItem as EditWholesaleItem;
 
+use App\Livewire\Profile\Overview as ProfileOverview;
+
 use App\Livewire\Wholesale\ChooseCompany;
 use App\Livewire\Wholesale\CollectOrder;
 use App\Livewire\Wholesale\CompleteOrder;
@@ -116,6 +118,9 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
 
     // ? Dashboard
     Route::get('/dashboard', Dashboard::class)->name('dashboard.render');
+  
+    // ? Profile
+    Route::get('/profile', ProfileOverview::class)->name('profile.render');
 
     // ? Wholesale
     Route::middleware('permission:wholesale_order')->group(function() {

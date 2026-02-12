@@ -14,11 +14,15 @@ return new class extends Migration
         Schema::create('plot_locks', function (Blueprint $table) {
             $table->id();
             $table->string('plot_id', 10);
-            $table->foreign('plot_id')->references('plot_id')->on('plots')->onDelete('cascade');
             $table->integer('x');
             $table->integer('y');
             $table->integer('z');
             $table->timestamps();
+
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreign('plot_id')->references('plot_id')->on('plots')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -227,7 +227,6 @@
                     <tr>
                         <x-tables.table-header>{{ __('admin.labels.players.uuid') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.players.username') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('admin.labels.companies.employee_role') }}</x-tables.table-header>
                         <x-tables.table-header></x-tables.table-header>
                     </tr>
                 </x-slot>
@@ -236,7 +235,6 @@
                         <x-tables.table-row>
                             <x-tables.table-data>{{ $member->player_uuid }}</x-tables.table-data>
                             <x-tables.table-data>{{ $member->player->username }}</x-tables.table-data>
-                            <x-tables.table-data>{{ ucfirst($member->role) }}</x-tables.table-data>
                             <x-tables.table-actions>
                                 <x-tables.danger-action wire:click="removeMember('{{ $member->player_uuid }}')">{{ __('general.buttons.remove') }}</x-tables.danger-action>
                             </x-tables.table-actions>

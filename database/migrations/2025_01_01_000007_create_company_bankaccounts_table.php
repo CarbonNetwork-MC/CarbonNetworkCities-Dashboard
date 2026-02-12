@@ -14,11 +14,15 @@ return new class extends Migration
         Schema::create('company_bankaccounts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('company_id');
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->decimal('balance', 8, 2);
             $table->boolean('is_main')->default(false);
             $table->string('currency', 3);
             $table->timestamps();
+
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

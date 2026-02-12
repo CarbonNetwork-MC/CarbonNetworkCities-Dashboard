@@ -10,6 +10,7 @@ return [
     */
 
     'dashboard' => 'Dashboard',
+    'profile' => 'Profile',
 
     // Management
     'management' => 'Management',
