@@ -30,7 +30,7 @@
                     {{-- Owner --}}
                     <div class="col-span-1">
                         <p class="text-sm text-gray-800 dark:text-gray-100">{{ __('company.labels.owner') }}: 
-                            <span class="text-gray-600 dark:text-gray-400">{{ $company->owner->username }}</span>
+                            <span class="text-gray-600 dark:text-gray-400">{{ $company->owner->username ?? '-' }}</span>
                         </p>
                     </div>
 
