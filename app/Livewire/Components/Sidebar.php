@@ -9,7 +9,7 @@ use Livewire\Component;
 class Sidebar extends Component
 {
     public $user;
-    public $sidebarItems;
+    public $userProfilePicture;
 
     public $selectedCompany;
 
@@ -17,9 +17,11 @@ class Sidebar extends Component
     public $managePerms;
     public $manageUsers;
 
-    public function mount(): void
-    {
+    public function mount(): void {
         $this->user = auth()->user();
+        $this->userProfilePicture = $this->user->profile_photo_path
+            ? asset('storage/' . $this->user->profile_photo_path)
+            : null;
 
         $this->selectedCompany = request()->route('companyId') ? Company::find(request()->route('companyId')) : null;
 
