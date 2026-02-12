@@ -42,6 +42,7 @@ class CreateOrder extends Component
     public function createOrder() {
         if ($this->total <= 0) {
             Toaster::error(__('wholesale.toasts.no_items_in_order'));
+            return;
         }
 
         foreach ($this->orderItems as $index => $item) {
