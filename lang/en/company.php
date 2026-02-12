@@ -10,16 +10,19 @@ return [
     */
 
     'titles' => [
-        
+        'stock_overview' => 'Stock Overview',
+        'update_stock' => 'Update Stock',
     ],
         
     'labels' => [
-        'owner' => 'Owner',
         'employees' => 'Employees',
+        'item' => 'Item',
+        'owner' => 'Owner',
+        'quantity' => 'Quantity',
     ],
 
     'buttons' => [
-        
+        'update_stock' => 'Update Stock',
     ],
 
     'messages' => [

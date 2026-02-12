@@ -13,6 +13,10 @@
             ],
             [
                 'url'   => route('company.dashboard.render', ['companyId' => $company->id]),
+                'label' => $company->name,
+            ],
+            [
+                'url'   => route('company.dashboard.render', ['companyId' => $company->id]),
                 'label' => __('sidebar.company.dashboard'),
             ],
         ]" />

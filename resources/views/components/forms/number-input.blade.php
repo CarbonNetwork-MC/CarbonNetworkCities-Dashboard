@@ -34,8 +34,9 @@
         placeholder="{{ $placeholder }}" 
         @if($required) required @endif 
         @if($disabled) disabled @endif
-        {{ $attributes->class([
-            'block w-full rounded-base text-sm shadow-xs ' . $sizeClasses,
+        {{ $attributes->merge([
+            'class' =>
+            'block w-full rounded-base text-sm text-black dark:text-gray-800 shadow-xs ' . $sizeClasses,
             'bg-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-600',
             $hasError
                 ? 'border border-red-500 focus:ring-red-500 focus:border-red-500'

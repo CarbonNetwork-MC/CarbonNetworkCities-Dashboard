@@ -4,13 +4,33 @@ namespace App\Livewire\Company;
 
 use App\Models\Company;
 use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 
 class StockOverview extends Component
 {
     public $company;
+    public $selectedStock = null;
+    public $selectedStockQuantity = 0;
+    public $showUpdateStockModal = false;
 
     public function mount($companyId) {
         $this->company = Company::with(['items', 'stock'])->findOrFail($companyId);
+    }
+
+    public function openUpdateStockModal($itemId) {
+        $this->selectedStock = $this->company->stock()->where('item_id', $itemId)->first();
+        $this->selectedStockQuantity = $this->selectedStock->quantity ?? 0;
+        $this->showUpdateStockModal = true;
+    }
+
+    public function saveStock() {
+        if (!$this->selectedStock) return;
+
+        $this->selectedStock->update(['quantity' => $this->selectedStockQuantity]);
+
+        $this->reset(['selectedStock', 'selectedStockQuantity', 'showUpdateStockModal']);
+
+        Toaster::success(__('company.toasts.stock_updated'));
     }
 
     public function render()
