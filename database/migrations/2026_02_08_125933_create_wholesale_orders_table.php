@@ -14,16 +14,18 @@ return new class extends Migration
         Schema::create('wholesale_orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('company_id');
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
             $table->char('customer_id', 36)->nullable();
-            $table->foreign('customer_id')->references('uuid')->on('players')->onDelete('set null')->onUpdate('cascade');
             $table->boolean('collected')->default(false);
             $table->char('collected_by', 36)->nullable();
             $table->boolean('completed')->default(false);
             $table->char('completed_by', 36)->nullable();
-            $table->foreign('completed_by')->references('uuid')->on('players')->onDelete('set null')->onUpdate('cascade');
             $table->decimal('total', 10, 2);
             $table->timestamps();
+            
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('customer_id')->references('uuid')->on('players')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('collected_by')->references('uuid')->on('players')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('completed_by')->references('uuid')->on('players')->onDelete('set null')->onUpdate('cascade');
         });
     }
 
