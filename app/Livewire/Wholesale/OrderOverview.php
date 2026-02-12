@@ -51,13 +51,21 @@ class OrderOverview extends Component
                         });
                 })
                 ->paginate($this->collectedOrdersPerPage, pageName: 'collectedOrdersPage'),
-            'completedOrders' => WholesaleOrder::with(['company:id,name', 'collectedBy:uuid,username', 'completedBy:uuid,username'])
+            'completedOrders' => WholesaleOrder::with(['company:id,name', 'customer:uuid,username', 'collectedBy:uuid,username', 'completedBy:uuid,username'])
                 ->where('collected', 1)
                 ->where('completed', 1)
                 ->where(function ($query) {
                     $query
                         ->whereHas('company', function ($q) {
                             $q->where('name', 'like', '%' . $this->searchCompletedOrders . '%');
+                        })
+                        ->orWhereHas('customer', function ($q) {
+                            $q->where('username', 'like', value: '%' . $this->searchCompletedOrders . '%')
+                            ->orWhere('uuid', 'like', '%' . $this->searchCompletedOrders . '%');
+                        })
+                        ->orWhereHas('collectedBy', function ($q) {
+                            $q->where('username', 'like', '%' . $this->searchCompletedOrders . '%')
+                            ->orWhere('uuid', 'like', '%' . $this->searchCompletedOrders . '%');
                         })
                         ->orWhereHas('completedBy', function ($q) {
                             $q->where('username', 'like', '%' . $this->searchCompletedOrders . '%')

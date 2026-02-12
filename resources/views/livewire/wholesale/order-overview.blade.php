@@ -166,6 +166,7 @@
                         <x-tables.table-header>{{ __('wholesale.labels.amount_of_items') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('wholesale.labels.collected_by') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('wholesale.labels.completed_by') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('wholesale.titles.customer') }}</x-tables.table-header>
                     </tr>
                 </x-slot>
                 <x-slot name="rows">
@@ -180,6 +181,7 @@
                             <x-tables.table-data>{{ $order->amountOfItems() }}</x-tables.table-data>
                             <x-tables.table-data>{{ $order->collectedBy->username ?? '-' }}</x-tables.table-data>
                             <x-tables.table-data>{{ $order->completedBy->username ?? '-' }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $order->customer->username }}</x-tables.table-data>
                         </x-tables.table-row>
                     @empty
                         <x-tables.table-row class="select-none">
