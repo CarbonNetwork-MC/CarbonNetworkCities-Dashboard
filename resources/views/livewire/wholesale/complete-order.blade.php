@@ -26,6 +26,14 @@
                 <x-containers.title class="mb-2">
                     {{ __('wholesale.titles.order_overview') }}
                 </x-containers.title>
+
+                <div class="flex items-center gap-2">
+                    @if (auth()->user()->hasPermissionTo('delete_wholesale_orders'))
+                        <x-buttons.danger-button class="w-full" wire:click="removeOrder()">
+                            {{ __('wholesale.titles.delete_order') }}
+                        </x-buttons.danger-button>
+                    @endif
+                </div>
             </div>
                 
             @foreach ($orderItems as $index => $item)
@@ -64,7 +72,7 @@
             </x-containers.title>
 
             <livewire:async-select
-                :options="$players->map(fn($player) => ['label' => $player->username, 'value' => $player->uuid])"
+                :options="$players->map(fn($player) => ['label' => $player['username'], 'value' => $player['uuid']])"
                 wire:model.live="customerUuid"
                 :min-search-length="2"
             />
@@ -90,12 +98,52 @@
                     </div>
                 </div>
 
-                <div class="col-span-2 flex items-center justify-center mt-5">
-                    <x-buttons.primary-button class="w-full" wire:click="completeOrder()">
+                <div class="col-span-1 flex items-center justify-center mt-5 mr-1.5">
+                    <x-buttons.secondary-button class="w-full" wire:click="undoCollect">
+                        {{ __('wholesale.buttons.undo_collect_order') }}
+                    </x-buttons.secondary-button>
+                </div>
+
+                <div class="col-span-1 flex items-center justify-center mt-5 ml-1.5">
+                    <x-buttons.primary-button class="w-full" wire:click="completeOrder">
                         {{ __('wholesale.buttons.complete_order') }}
                     </x-buttons.primary-button>
                 </div>
             </div>
         </x-containers.main>
     </div>
+
+    {{-- Delete Order Modal --}}
+    <x-modals.modal wire:model="deleteOrderModal" :title="__('wholesale.titles.delete_order')">
+        <x-slot name="content">
+            <p class="text-gray-700 dark:text-gray-300">
+                {{ __('wholesale.messages.delete_order_confirmation') }}
+            </p>
+        </x-slot>
+        <x-slot name="footer">
+            <x-buttons.secondary-button wire:click="$set('deleteOrderModal', false)">
+                {{ __('general.buttons.cancel') }}
+            </x-buttons.secondary-button>
+            <x-buttons.danger-button wire:click="destroyOrder">
+                {{ __('general.buttons.delete') }}
+            </x-buttons.danger-button>
+        </x-slot>
+    </x-modals.modal>
+
+    {{-- Undo Collect Modal --}}
+    <x-modals.modal wire:model="undoCollectModal" :title="__('wholesale.titles.undo_collect_order')">
+        <x-slot name="content">
+            <p class="text-gray-700 dark:text-gray-300">
+                {{ __('wholesale.messages.undo_collect_confirmation') }}
+            </p>
+        </x-slot>
+        <x-slot name="footer">
+            <x-buttons.secondary-button wire:click="$set('undoCollectModal', false)">
+                {{ __('general.buttons.cancel') }}
+            </x-buttons.secondary-button>
+            <x-buttons.danger-button wire:click="undoCollectOrder">
+                {{ __('general.buttons.delete') }}
+            </x-buttons.danger-button>
+        </x-slot>
+    </x-modals.modal>
 </div>
