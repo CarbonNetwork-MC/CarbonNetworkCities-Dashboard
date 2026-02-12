@@ -3,18 +3,27 @@
 namespace App\Livewire\Company;
 
 use App\Models\Company;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
 class StockOverview extends Component
 {
     public $company;
+
+    public $hasPermission = false;
+
     public $selectedStock = null;
     public $selectedStockQuantity = 0;
     public $showUpdateStockModal = false;
 
     public function mount($companyId) {
         $this->company = Company::with(['items', 'stock'])->findOrFail($companyId);
+
+        $player = Auth::user()->player;
+        $this->hasPermission = Auth::user()->hasRole('Superadmin')
+            || $player->uuid == $this->company->owner_uuid
+            || $this->company->employees()->where('player_uuid', $player->uuid)->first()->role == 'manager';
     }
 
     public function openUpdateStockModal($itemId) {

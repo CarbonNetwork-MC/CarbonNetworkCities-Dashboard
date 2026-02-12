@@ -26,9 +26,11 @@
         <x-containers.main class="w-[50%]">
             <div class="flex justify-between">
                 <x-containers.title>{{ __('company.titles.stock_overview') }}</x-containers.title>
-                <x-buttons.primary-button href="{{ route('company.stock.update.render', ['companyId' => $company->id]) }}">
-                    {{ __('company.buttons.update_stock') }}
-                </x-buttons.primary-button>
+                @if ($hasPermission)
+                    <x-buttons.primary-button href="{{ route('company.stock.update.render', ['companyId' => $company->id]) }}">
+                        {{ __('company.buttons.update_stock') }}
+                    </x-buttons.primary-button>
+                @endif
             </div>
 
             <div class="mt-6">
@@ -46,9 +48,11 @@
                                 <x-tables.table-data>{{ $item->item->name }}</x-tables.table-data>
                                 <x-tables.table-data>{{ $item->stock->quantity ?? 0 }}</x-tables.table-data>
                                 <x-tables.table-actions>
-                                    <x-tables.primary-action wire:click="openUpdateStockModal('{{ $item->id }}')">
-                                        {{ __('general.buttons.update') }}
-                                    </x-tables.primary-action>
+                                    @if ($hasPermission)
+                                        <x-tables.primary-action wire:click="openUpdateStockModal('{{ $item->id }}')">
+                                            {{ __('general.buttons.update') }}
+                                        </x-tables.primary-action>
+                                    @endif
                                 </x-tables.table-actions>
                             </x-tables.table-row>
                         @empty
