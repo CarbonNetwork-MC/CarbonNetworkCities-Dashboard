@@ -20,6 +20,11 @@ return [
         'orders_to_complete' => 'Orders yet to complete',
         'completed_orders' => 'Completed Orders',
         'order' => 'Order',
+        'customer' => 'Customer',
+        'collect_order' => 'Collect Order',
+        'complete_order' => 'Complete Order',
+        'delete_order' => 'Delete Order',
+        'undo_collect_order' => 'Undo Collect Order',
     ],
 
     // Labels
@@ -38,6 +43,8 @@ return [
         'finish_order' => 'Finish Order',
         'update_order' => 'Update Order',
         'collect_order' => 'Collect Order',
+        'complete_order' => 'Complete Order',
+        'undo_collect_order' => 'Undo Collect Order',
     ],
 
     // Messages
@@ -45,7 +52,9 @@ return [
         'no_orders' => 'There are currently no wholesale orders.',
         'no_collected_orders' => 'There are currently no collected wholesale orders.',
         'no_completed_orders' => 'There are currently no completed wholesale orders.',
-        'editing_enabled' => 'Editing is enabled'
+        'editing_enabled' => 'Editing is enabled',
+        'delete_order_confirmation' => 'Are you sure you want to delete this order? This action cannot be undone.',
+        'undo_collect_confirmation' => 'Are you sure you want to undo the collection of this order?',
     ],
 
     // Toasts
@@ -56,5 +65,8 @@ return [
         'order_created' => 'Wholesale order created successfully.',
         'order_updated' => 'Wholesale order updated successfully.',
         'order_collected' => 'Wholesale order collected successfully.',
+        'order_completed' => 'Wholesale order completed successfully.',
+        'order_deleted' => 'Wholesale order deleted successfully.',
+        'collect_order_undone' => 'Wholesale order collection successfully undone.',
     ],
 ];
