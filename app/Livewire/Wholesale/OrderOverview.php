@@ -17,6 +17,10 @@ class OrderOverview extends Component
 
     public function selectOrder($orderId) {
         return redirect()->route('wholesale.order', ['orderId' => $orderId]);
+        $order = WholesaleOrder::findOrFail($orderId);
+        if (!$order->collected) {
+            return redirect()->route('wholesale.collect-order', ['orderId' => $orderId]);
+        }
     }
 
     public function render()
