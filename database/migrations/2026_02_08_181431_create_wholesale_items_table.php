@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('wholesale_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('item_id')->nullable();
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('max_amount')->default(192);
             $table->decimal('price', 10, 2)->default(0);
             $table->timestamps();
+            
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
