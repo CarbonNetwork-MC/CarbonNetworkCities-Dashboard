@@ -13,7 +13,7 @@ class WholesaleOrder extends Model
 {
     protected $fillable = [
         'company_id',
-        'customer_id',
+        'customer_uuid',
         'collected',
         'collected_by',
         'completed',
@@ -43,7 +43,7 @@ class WholesaleOrder extends Model
 
     public function customer(): BelongsTo
     {
-        return $this->belongsTo(Player::class, 'customer_id', 'uuid');
+        return $this->belongsTo(Player::class, 'customer_uuid', 'uuid');
     }
 
     public function completedBy(): BelongsTo
