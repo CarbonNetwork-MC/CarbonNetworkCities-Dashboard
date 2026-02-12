@@ -82,8 +82,8 @@ use App\Livewire\Admin\Wholesale\EditItem as EditWholesaleItem;
 
 use App\Livewire\Wholesale\ChooseCompany;
 use App\Livewire\Wholesale\CollectOrder;
+use App\Livewire\Wholesale\CompleteOrder;
 use App\Livewire\Wholesale\CreateOrder;
-use App\Livewire\Wholesale\Order;
 use App\Livewire\Wholesale\OrderOverview;
 
 use Illuminate\Support\Facades\Route;
@@ -125,8 +125,8 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
 
     Route::middleware('permission:manage_wholesale_orders')->group(function() {
         Route::get('/wholesale/order-overview', OrderOverview::class)->name('wholesale.order-overview');
-        Route::get('/wholesale/order/{orderId}', Order::class)->name('wholesale.order');
         Route::get('/wholesale/collect-order/{orderId}', CollectOrder::class)->name('wholesale.collect-order');
+        Route::get('/wholesale/complete-order/{orderId}', CompleteOrder::class)->name('wholesale.complete-order');
     });
 });
 

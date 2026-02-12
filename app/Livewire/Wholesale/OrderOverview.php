@@ -16,10 +16,11 @@ class OrderOverview extends Component
     public $completedOrdersPerPage = 5;
 
     public function selectOrder($orderId) {
-        return redirect()->route('wholesale.order', ['orderId' => $orderId]);
         $order = WholesaleOrder::findOrFail($orderId);
         if (!$order->collected) {
             return redirect()->route('wholesale.collect-order', ['orderId' => $orderId]);
+        } else {
+            return redirect()->route('wholesale.complete-order', ['orderId' => $orderId]);
         }
     }
 
