@@ -46,17 +46,17 @@ class NewCompany extends Component
         // Immediate failure (did not accept request)
         if ($status !== 202) {
             $company->delete();
-            return redirect()->route('admin.companies.new')->error(__('admin.toast.companies.create_failed'));
+            return redirect()->route('admin.companies.new')->error(__('admin.toasts.companies.create_failed'));
         }
 
         // 3. Poll for result
         if (!$success) {
             $company->delete();
-            return redirect()->route('admin.companies.new')->error(__('admin.toast.companies.create_failed'));
+            return redirect()->route('admin.companies.new')->error(__('admin.toasts.companies.create_failed'));
         }
 
         // 4. Success
-        return redirect()->route('admin.companies.render')->success(__('admin.toast.companies.created'));
+        return redirect()->route('admin.companies.render')->success(__('admin.toasts.companies.created'));
     }
 
     public function render()

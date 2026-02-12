@@ -11,7 +11,6 @@
 @endphp
 
 @if ($href)
-{{-- @dd($attributes->get('href')) --}}
     <a
         href="{{ $href }}"
         {{ $attributes->merge([
@@ -22,7 +21,7 @@
     </a>
 @else
     <button
-        type="button"
+        type="{{ $type }}"
         {{ $attributes->merge([
             'class' => "shrink-0 text-white bg-emerald-500 box-border border border-transparent hover:bg-emerald-600 focus:ring-4 focus:ring-emerald-400 shadow-xs font-medium leading-5 rounded-base {$sizeClasses} px-4 py-2 focus:outline-none " . ($disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer')
         ]) }}

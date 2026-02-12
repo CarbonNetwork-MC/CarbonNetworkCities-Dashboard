@@ -62,10 +62,10 @@ class Edit extends Component
             $this->language->code = $language['code'];
             $this->language->headdb_id = $language['headdbId'];
             $this->language->save();
-            return Toaster::error(__('admin.toast.reload_languages_api_error'));
+            return Toaster::error(__('admin.toasts.reload_languages_api_error'));
         }
 
-        return redirect()->route('admin.languages.render')->success(__('admin.toast.languages.updated'));
+        return redirect()->route('admin.languages.render')->success(__('admin.toasts.languages.updated'));
     }
 
     public function render()

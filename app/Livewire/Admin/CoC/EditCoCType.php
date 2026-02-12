@@ -30,7 +30,7 @@ class EditCoCType extends Component
             'description' => $data['description'] ?? null,
         ]);
 
-        return redirect()->route('admin.coc.render')->success(__('admin.toast.coc.updated'));
+        return redirect()->route('admin.coc.render')->success(__('admin.toasts.coc.updated'));
     }
 
     public function render()

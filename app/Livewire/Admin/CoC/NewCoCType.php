@@ -21,7 +21,7 @@ class NewCoCType extends Component
             'description' => $data['description'] ?? null,
         ]);
 
-        return redirect()->route('admin.coc.render')->success(__('admin.toast.coc.created'));
+        return redirect()->route('admin.coc.render')->success(__('admin.toasts.coc.created'));
     }
 
     public function render()

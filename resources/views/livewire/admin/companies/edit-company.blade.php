@@ -430,7 +430,7 @@
                         </x-tables.table-row>
                     @empty
                         <tr>
-                            <x-tables.empty-state colspan="5">
+                            <x-tables.empty-state colspan="6">
                                 {{ __('admin.messages.companies.items_no_records') }}
                             </x-tables.empty-state>
                         </tr>

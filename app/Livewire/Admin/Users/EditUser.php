@@ -104,7 +104,7 @@ class EditUser extends Component
             : null;
         $this->user->save();
 
-        return redirect()->route('admin.users.render')->success(__('admin.toast.users.updated'));
+        return redirect()->route('admin.users.render')->success(__('admin.toasts.users.updated'));
     }
 
     public function assignUserRole() {
@@ -118,7 +118,7 @@ class EditUser extends Component
         $this->selectedRole = null;
         $this->availableRoles = $this->availableRoles->filter(fn($r) => $r->uuid !== $role->uuid);
 
-        Toaster::success(__('admin.toast.users.role_assigned', ['role' => $role->name]));
+        Toaster::success(__('admin.toasts.users.role_assigned', ['role' => $role->name]));
     }
 
     public function assignUserPermission() {
@@ -132,7 +132,7 @@ class EditUser extends Component
         $this->selectedPermission = null;
         $this->availablePermissions = $this->availablePermissions->filter(fn($p) => $p->uuid !== $permission->uuid);
 
-        Toaster::success(__('admin.toast.users.permission_assigned', ['permission' => $permission->name]));
+        Toaster::success(__('admin.toasts.users.permission_assigned', ['permission' => $permission->name]));
     }
 
     public function removeUserRole($uuid) {
@@ -148,7 +148,7 @@ class EditUser extends Component
         $this->roleToRemove = null;
         $this->removeRoleModal = false;
 
-        Toaster::success(__('admin.toast.users.role_removed'));
+        Toaster::success(__('admin.toasts.users.role_removed'));
     }
 
     public function removeUserPermission($uuid) {
@@ -164,7 +164,7 @@ class EditUser extends Component
         $this->permissionToRemove = null;
         $this->removePermissionModal = false;
 
-        Toaster::success(__('admin.toast.users.permission_removed'));
+        Toaster::success(__('admin.toasts.users.permission_removed'));
     }
 
     public function render()

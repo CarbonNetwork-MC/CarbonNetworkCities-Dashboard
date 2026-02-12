@@ -42,15 +42,15 @@ class NewPersonalBankAccount extends Component
 
         if ($status !== 202) {
             $personalBankAccount->delete();
-            return redirect()->route('admin.bank-accounts.personal.new')->error(__('admin.toast.bank_accounts.personal.invalidate_bankaccount_api_error'));
+            return redirect()->route('admin.bank-accounts.personal.new')->error(__('admin.toasts.bank_accounts.personal.invalidate_bankaccount_api_error'));
         }
 
         if (!$success) {
             $personalBankAccount->delete();
-            return redirect()->route('admin.bank-accounts.personal.new')->error(__('admin.toast.bank_accounts.personal.invalidate_bankaccount_api_error'));
+            return redirect()->route('admin.bank-accounts.personal.new')->error(__('admin.toasts.bank_accounts.personal.invalidate_bankaccount_api_error'));
         }
 
-        return redirect()->route('admin.bank-accounts.render')->success(__('admin.toast.bank_account.personal.created'));
+        return redirect()->route('admin.bank-accounts.render')->success(__('admin.toasts.bank_account.personal.created'));
     }
 
     public function render()

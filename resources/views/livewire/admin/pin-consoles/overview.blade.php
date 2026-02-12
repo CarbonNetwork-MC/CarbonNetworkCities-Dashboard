@@ -60,7 +60,8 @@
                                 @else
                                     <span class="bg-red-100 text-red-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full">{{ __('general.no') }}</span>
                                 @endif
-                            </x-tables.table-data>                            <x-tables.table-actions>
+                            </x-tables.table-data>
+                            <x-tables.table-actions>
                                 <x-tables.primary-action href="{{ route('admin.pin-consoles.edit', ['id' => $pinConsole->id]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removePinConsole('{{ $pinConsole->id }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
                             </x-tables.table-actions>

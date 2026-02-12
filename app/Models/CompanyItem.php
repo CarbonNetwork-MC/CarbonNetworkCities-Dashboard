@@ -12,7 +12,7 @@ class CompanyItem extends Model
         'item_id',
         'sellable',
         'price',
-        'base_price',
+        'base_price'
     ];
 
     public function company(): BelongsTo
@@ -23,5 +23,10 @@ class CompanyItem extends Model
     public function item(): BelongsTo
     {
         return $this->belongsTo(Item::class, 'item_id', 'id');
+    }
+
+    public function wholesaleItem()
+    {
+        return $this->hasOne(WholesaleItem::class, 'item_id', 'item_id');
     }
 }

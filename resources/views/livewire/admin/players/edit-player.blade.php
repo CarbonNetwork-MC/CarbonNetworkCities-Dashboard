@@ -413,7 +413,7 @@
                             <x-tables.table-data>{{ $company->coc_number }}</x-tables.table-data>
                             <x-tables.table-actions>
                                 <x-tables.primary-action href="{{ route('admin.companies.edit', ['id' => $company->id]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
-                                <x-tables.danger-action wire:click="removeCompany('{{ $company->id }}')">{{ __('general.buttons.remove') }}</x-tables.danger-action>
+                                <x-tables.danger-action wire:click="removeCompany('{{ $company->id }}')">{{ __('general.buttons.unlink') }}</x-tables.danger-action>
                             </x-tables.table-actions>
                         </x-tables.table-row>
                     @empty
@@ -439,7 +439,68 @@
                     @endif
                 </x-slot>
             </x-tables.table-striped>
+        </div>
+    </x-containers.main>
 
+    {{-- Employee At --}}
+    <x-containers.main class="mt-4" x-data="{open: true}">
+        <div class="flex justify-between">
+            <div class="flex items-center gap-x-4">
+                <x-containers.title>{{ __('admin.titles.players.employee_at') }}</x-containers.title>
+                <div class="flex justify-end text-black dark:text-white text-xl hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md mt-1" x-on:click="open = !open">
+                    <i class="fi fi-rr-angle-small-down cursor-pointer" x-show="!open"></i>
+                    <i class="fi fi-rr-angle-small-up cursor-pointer" x-show="open"></i>
+                </div>
+            </div>
+            <div class="flex items-center gap-x-4" x-show="open">
+                <x-forms.search-bar id="searchEmployeeAt" wire:model.live="searchEmployeeAt" />
+                <x-buttons.primary-button size="sm" href="{{ route('admin.players.add-employer', ['uuid' => $player->uuid]) }}">{{ __('general.buttons.add') }}</x-buttons.primary-button>
+            </div>
+        </div>
+
+        <div class="mt-4" x-show="open">
+            <x-tables.table-striped>
+                <x-slot name="headers">
+                    <tr>
+                        <x-tables.table-header>{{ __('admin.labels.players.name') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.players.coc_number') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.employee_role') }}</x-tables.table-header>
+                        <x-tables.table-header></x-tables.table-header>
+                    </tr>
+                </x-slot>
+                <x-slot name="rows">
+                    @forelse ($employeeAt as $company)
+                        <x-tables.table-row>
+                            <x-tables.table-data>{{ $company->name }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $company->coc_number }}</x-tables.table-data>
+                            <x-tables.table-data>{{ ucfirst($company->pivot->role) }}</x-tables.table-data>
+                            <x-tables.table-actions>
+                                <x-tables.danger-action wire:click="removeEmployeeAt('{{ $company->id }}')">{{ __('general.buttons.unlink') }}</x-tables.danger-action>
+                            </x-tables.table-actions>
+                        </x-tables.table-row>
+                    @empty
+                        <x-tables.table-row>
+                            <x-tables.empty-state :colspan="3">
+                                {{ __('admin.messages.players.employee_at_no_records') }}
+                            </x-tables.empty-state>
+                        </x-tables.table-row>
+                    @endforelse
+                </x-slot>
+                <x-slot name="pagination">
+                    @if ($employeeAt->hasPages())
+                        <div class="w-full flex items-center gap-x-4 mt-4">
+                            {{ $employeeAt->links() }}
+                            <x-tables.per-page-select wire:model.live="employeeAtPerPage">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </x-tables.per-page-select>
+                        </div>
+                    @endif
+                </x-slot>
+            </x-tables.table-striped>
         </div>
     </x-containers.main>
 
@@ -570,13 +631,29 @@
     <x-modals.modal wire:model="showRemoveCompanyModal">
         <x-slot name="title"><div class="flex justify-center">{{ __('admin.titles.players.unlink_company') }}</div></x-slot>
         <x-slot name="content">
-            <p>{{ __('admin.messages.players.unlink_company_confirmation') }}</p>
+            <p>{!! __('admin.messages.players.unlink_company_confirmation', ['name' => $companyToRemove?->name]) !!}</p>
         </x-slot>
         <x-slot name="footer">
             <x-buttons.secondary-button wire:click="$set('showRemoveCompanyModal', false)">
                 {{ __('general.buttons.cancel') }}
             </x-buttons.secondary-button>
             <x-buttons.danger-button wire:click="unlinkCompany">
+                {{ __('general.buttons.unlink') }}
+            </x-buttons.danger-button>
+        </x-slot>
+    </x-modals.modal>
+
+    {{-- Unlink Employee At Modal --}}
+    <x-modals.modal wire:model="showRemoveEmployeeAtModal">
+        <x-slot name="title"><div class="flex justify-center">{{ __('admin.titles.players.unlink_employee_at') }}</div></x-slot>
+        <x-slot name="content">
+            <p>{!! __('admin.messages.players.unlink_employee_at_confirmation', ['name' => $employeeAtToRemove?->name]) !!}</p>
+        </x-slot>
+        <x-slot name="footer">
+            <x-buttons.secondary-button wire:click="$set('showRemoveEmployeeAtModal', false)">
+                {{ __('general.buttons.cancel') }}
+            </x-buttons.secondary-button>
+            <x-buttons.danger-button wire:click="unlinkEmployeeAt">
                 {{ __('general.buttons.unlink') }}
             </x-buttons.danger-button>
         </x-slot>

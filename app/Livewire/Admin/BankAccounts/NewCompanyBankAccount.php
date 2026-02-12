@@ -56,7 +56,7 @@ class NewCompanyBankAccount extends Component
             $this->rollbackCreateCompanyBankAccount($companyBankAccount, $mainAccount, $data['isMain']);
         }
 
-        return redirect()->route('admin.bank-accounts.render')->success(__('admin.toast.bank_account.company.created'));
+        return redirect()->route('admin.bank-accounts.render')->success(__('admin.toasts.bank_accounts.company.created'));
     }
 
     public function render()
@@ -72,6 +72,6 @@ class NewCompanyBankAccount extends Component
             $mainAccount->save();
         }
 
-        return redirect()->route('admin.bank-accounts.company.new')->error(__('admin.toast.bank_accounts.company.invalidate_bankaccount_api_error'));
+        return redirect()->route('admin.bank-accounts.company.new')->error(__('admin.toasts.bank_accounts.company.invalidate_bankaccount_api_error'));
     }   
 }

@@ -69,15 +69,15 @@ class EditCompanyBankAccount extends Component
 
         if ($status !== 202) {
             $this->rollbackCompanyBankAccount($originalData, $mainAccount, $data['isMain']);
-            return redirect()->route('admin.bank-accounts.render')->error(__('admin.toast.bank_accounts.company.invalidate_bankaccount_api_error'));
+            return redirect()->route('admin.bank-accounts.render')->error(__('admin.toasts.bank_accounts.company.invalidate_bankaccount_api_error'));
         }
 
         if (!$success) {
             $this->rollbackCompanyBankAccount($originalData, $mainAccount, $data['isMain']);
-            return redirect()->route('admin.bank-accounts.render')->error(__('admin.toast.bank_accounts.company.invalidate_bankaccount_api_error'));
+            return redirect()->route('admin.bank-accounts.render')->error(__('admin.toasts.bank_accounts.company.invalidate_bankaccount_api_error'));
         }
 
-        return redirect()->route('admin.bank-accounts.render')->success(__('admin.toast.bank_account.company.updated'));
+        return redirect()->route('admin.bank-accounts.render')->success(__('admin.toasts.bank_accounts.company.updated'));
     }
 
     public function render()
