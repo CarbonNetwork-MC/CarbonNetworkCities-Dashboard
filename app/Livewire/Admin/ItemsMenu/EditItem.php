@@ -21,7 +21,7 @@ class EditItem extends Component
     public $shelfLife;
     public $expiredPrefix;
 
-    public $isFood = false;
+    public $isFood;
 
     public function mount($id) {
         $this->item = Item::findOrFail($id);
@@ -33,6 +33,7 @@ class EditItem extends Component
         $this->lore = $this->item->data['lore'] ?? [''];
         $this->shelfLife = $this->item->data['shelf_life'] ?? null;
         $this->expiredPrefix = $this->item->data['expired_prefix'] ?? null;
+        $this->isFood = $this->item->category->name === 'food';
     }
 
     public function updated($key, $value) {
