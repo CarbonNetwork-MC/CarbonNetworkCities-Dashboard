@@ -47,6 +47,7 @@ class EditItem extends Component
         if (!$this->item) return;
 
         $item = $this->item;
+        $this->expiredPrefix = str_replace('<green>', '', $this->expiredPrefix);
     
         $data = $this->validate([
             'internalId' => [
