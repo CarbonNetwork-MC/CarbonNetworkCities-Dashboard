@@ -7,6 +7,7 @@ use App\Models\CompanyItem;
 use App\Models\Plot;
 use App\Models\Player;
 use App\Models\Company;
+use App\Services\PlayerPermissionService;
 use App\Services\PluginAPI\ApiService;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -92,7 +93,7 @@ class EditCompany extends Component
         }
     }
 
-    public function updateCompany(ApiService $apiService) {
+    public function updateCompany(ApiService $apiService, PlayerPermissionService $permissionService) {
         // Store the current data for rollback in case of failure
         $originalData = [
             'name' => $this->company->name,
@@ -119,25 +120,35 @@ class EditCompany extends Component
         $this->company->owner_uuid = $this->selectedPlayer;
         $this->company->save();
 
+        $previousOwner = Player::where('uuid', $originalData['owner_uuid'])->first();
+        if ($previousOwner) {
+            $permissionService->syncWholesaleOrderPermission($previousOwner);
+        }
+
+        if ($this->selectedPlayer && $this->selectedPlayer !== $originalData['owner_uuid']) {
+            $owner = Player::where('uuid', $this->selectedPlayer)->first();
+            $permissionService->syncWholesaleOrderPermission($owner);
+        }
+
         // 3. Send invalidate request to Velocity
         [$status, $success] = $apiService->post("api/invalidate/company/{$this->company->id}");
 
         // Immediate failure (request not accepted)
         if ($status !== 202) {
-            $this->rollbackCompany($originalData);
-            Toaster::error(__('admin.toast.companies.update_failed'));
+            $this->rollbackCompany($originalData, $this->selectedPlayer);
+            Toaster::error(__('admin.toasts.companies.update_failed'));
             return;
         }
 
         // 3. Poll for result
         if (!$success) {
-            $this->rollbackCompany($originalData);
-            Toaster::error(__('admin.toast.companies.update_failed'));
+            $this->rollbackCompany($originalData, $this->selectedPlayer);
+            Toaster::error(__('admin.toasts.companies.update_failed'));
             return;
         }
 
         // 4. Success
-        Toaster::success(__('admin.toast.companies.updated'));
+        Toaster::success(__('admin.toasts.companies.updated'));
     }
 
     // Delete Employee
@@ -146,7 +157,7 @@ class EditCompany extends Component
         $this->removeEmployeeModal = true;
     }
 
-    public function destroyEmployee(ApiService $apiService) {
+    public function destroyEmployee(ApiService $apiService, PlayerPermissionService $permissionService) {
         if (!$this->employeeToRemove) return;
 
         // Store the current employee for rollback in case of failure
@@ -157,25 +168,28 @@ class EditCompany extends Component
         $this->removeEmployeeModal = false;
         $this->employeeToRemove = null;
 
+        $player = Player::where('uuid', $employee->player_uuid)->first();
+        $permissionService->syncWholesaleOrderPermission($player);
+
         // 2. Send invalidate request to Velocity
         [$status, $success] = $apiService->post("api/invalidate/company/{$this->company->id}");
 
         // Immediate failure (did not accept request)
         if ($status !== 202) {
             $this->rollbackEmployee($employee);
-            Toaster::error(__('admin.toast.companies.employee_remove_failed'));
+            Toaster::error(__('admin.toasts.companies.employee_remove_failed'));
             return;
         }
 
         // 3. Poll for result
         if (!$success) {
             $this->rollbackEmployee($employee);
-            Toaster::error(__('admin.toast.companies.employee_remove_failed'));
+            Toaster::error(__('admin.toasts.companies.employee_remove_failed'));
             return;
         }
 
         // 4. Success
-        Toaster::success(__('admin.toast.companies.employee_removed'));
+        Toaster::success(__('admin.toasts.companies.employee_removed'));
     }
 
     // Delete Bank Account
@@ -201,17 +215,17 @@ class EditCompany extends Component
         // Immediate failure (did not accept request)
         if ($status !== 202) {
             $this->company->bankAccounts()->save($bankAccount);
-            return Toaster::error(__('admin.toast.companies.bank_account_remove_failed'));
+            return Toaster::error(__('admin.toasts.companies.bank_account_remove_failed'));
         }
         
         // 3. Poll for result
         if (!$success) {
             $this->company->bankAccounts()->save($bankAccount);
-            return Toaster::error(__('admin.toast.companies.bank_account_remove_failed'));
+            return Toaster::error(__('admin.toasts.companies.bank_account_remove_failed'));
         }
 
         // 4. Success
-        Toaster::success(__('admin.toast.companies.bank_account_removed'));
+        Toaster::success(__('admin.toasts.companies.bank_account_removed'));
     }
 
     // Delete Plot (relation)
@@ -242,19 +256,19 @@ class EditCompany extends Component
         // Immediate failure (did not accept request)
         if ($status !== 202) {
             $this->rollbackPlot($plot, $companyId);
-            Toaster::error(__('admin.toast.companies.plot_remove_failed'));
+            Toaster::error(__('admin.toasts.companies.plot_remove_failed'));
             return;
         }
 
         // 3. Poll for result (short, bounded wait)
         if (!$success) {
             $this->rollbackPlot($plot, $companyId);
-            Toaster::error(__('admin.toast.companies.plot_remove_failed'));
+            Toaster::error(__('admin.toasts.companies.plot_remove_failed'));
             return;
         }
 
         // 4. Success
-        Toaster::success(__('admin.toast.companies.plot_removed'));
+        Toaster::success(__('admin.toasts.companies.plot_removed'));
     }
 
     // Delete PIN Console (relation)
@@ -280,17 +294,17 @@ class EditCompany extends Component
         // Immediate failure (did not accept request)
         if ($status !== 202) {
             $this->rollbackPinConsole($pinConsole);
-            return Toaster::error(__('admin.toast.companies.pin_console_remove_failed'));
+            return Toaster::error(__('admin.toasts.companies.pin_console_remove_failed'));
         }
         
         // 3. Poll for result
         if (!$success) {
             $this->rollbackPinConsole($pinConsole);
-            return Toaster::error(__('admin.toast.companies.pin_console_remove_failed'));
+            return Toaster::error(__('admin.toasts.companies.pin_console_remove_failed'));
         }
 
         // 4. Success
-        Toaster::success(__('admin.toast.companies.pin_console_removed'));
+        Toaster::success(__('admin.toasts.companies.pin_console_removed'));
     }
 
     // Delete Item
@@ -303,7 +317,7 @@ class EditCompany extends Component
         $this->itemToRemove->delete();
 
         $this->removeItemModal = false;
-        Toaster::success(__('admin.toast.companies.item_removed'));
+        Toaster::success(__('admin.toasts.companies.item_removed'));
     }
 
     public function render()
@@ -360,10 +374,23 @@ class EditCompany extends Component
         $this->company->world_id = $originalData['world_id'];
         $this->company->owner_uuid = $originalData['owner_uuid'];
         $this->company->save();
+
+        $previousOwner = Player::where('uuid', $originalData['owner_uuid'])->first();
+        if ($previousOwner) {
+            app(PlayerPermissionService::class)->syncWholesaleOrderPermission($previousOwner);
+        }
+
+        if ($this->selectedPlayer && $this->selectedPlayer !== $originalData['owner_uuid']) {
+            $owner = Player::where('uuid', $this->selectedPlayer)->first();
+            app(PlayerPermissionService::class)->syncWholesaleOrderPermission($owner);
+        }
     }
 
     private function rollbackEmployee($employee): void {
         $employee->save();
+
+        $player = Player::where('uuid', $employee->player_uuid)->first();
+        app(PlayerPermissionService::class)->syncWholesaleOrderPermission($player);
     }
 
     private function rollbackPlot(Plot $plot, int $companyId): void {

@@ -66,6 +66,9 @@ return [
             'overview' => 'Players Overview',
             'unlink_company' => 'Unlink Company',
             'unlink_plot' => 'Unlink Plot',
+            'employee_at' => 'Employee At',
+            'unlink_employee_at' => 'Unlink Employee At',
+            'add_employer' => 'Add Employer',
         ],
 
         'roles' => [
@@ -152,6 +155,13 @@ return [
             'edit' => 'Edit Chamber of Commerce Type',
             'delete' => 'Delete Chamber of Commerce Type',
         ],
+
+        'wholesale_items' => [
+            'create'=> 'Create Wholesale Item',
+            'delete' => 'Delete Wholesale Item',
+            'edit' => 'Edit Wholesale Item',
+            'overview' => 'Wholesale Items Overview',
+        ]
     ],
 
     // Labels
@@ -303,6 +313,12 @@ return [
             'name' => 'Name',
             'description' => 'Description',
         ],
+
+        'wholesale_items' => [
+            'item' => 'Item',
+            'price' => 'Price',
+            'max_amount' => 'Max Amount',
+        ]
     ],
 
     // Buttons
@@ -314,6 +330,7 @@ return [
             'add_employee' => 'Add Employee',
             'add_item' => 'Add Item',
             'add_items' => 'Add Items',
+            'add_item' => 'Add Item',
             'add_item_group' => 'Add Item Group',
             'add_pin_console' => 'Add PIN Console',
             'add_plot' => 'Add Plot',
@@ -405,6 +422,8 @@ return [
             'players_no_records' => 'No players found.',
             'plots_no_records' => 'No plots found for this player.',
             'prefixes_no_records' => 'No prefixes found for this player.',
+            'employee_at_no_records' => 'No companies found where this player is an employee or manager.',
+            'unlink_employee_at_confirmation' => 'Are you sure you want to unlink this player from the company <b>:name</b>? They will no longer be an employee of the company.',
         ],
 
         'roles' => [
@@ -469,10 +488,15 @@ return [
             'no_records' => 'No Chamber of Commerce types found.',
             'delete_confirmation' => 'Are you sure you want to delete the Chamber of Commerce type <b>:name</b>? This action cannot be undone.',
         ],
+
+        'wholesale_items' => [
+            'no_records' => 'No wholesale items found.',
+            'delete_confirmation' => 'Are you sure you want to delete the wholesale item <b>:name</b>? This action cannot be undone.',
+        ]
     ],
 
     // Toasts
-    'toast' => [
+    'toasts' => [
         'api' => [
             'unauthorized_error' => 'Unauthorized access to the API. Please check the API key configuration.',
         ],
@@ -550,6 +574,10 @@ return [
             'prefix_update_success' => 'Prefix updated successfully.',
             'update_failed' => 'Failed to update player. Please try again.',
             'update_success' => 'Player updated successfully.',
+            'employer_add_failed' => 'Failed to add employer. Please try again.',
+            'employer_add_success' => 'Employer added successfully.',
+            'employee_at_unlink_failed' => 'Failed to unlink employee from company. Please try again.',
+            'employee_at_unlink_success' => 'Employee unlinked from company successfully.',
         ],
 
         'roles' => [
@@ -566,10 +594,10 @@ return [
             'account_unlink_missing_player_error' => 'Missing player UUID.',
             'account_unlinked' => 'User account unlinked successfully.',
             'deleted' => 'User deleted successfully.',
-            'permission_assigned' => 'Permission assigned to user successfully.',
-            'permission_removed' => 'Permission removed from user successfully.',
-            'role_assigned' => 'Role assigned to user successfully.',
-            'role_removed' => 'Role removed from user successfully.',
+            'permission_assigned' => 'Permission successfully assigned to user.',
+            'permission_removed' => 'Permission successfully removed from user.',
+            'role_assigned' => 'Role successfully assigned to user.',
+            'role_removed' => 'Role successfully removed from user.',
             'updated' => 'User updated successfully.',
         ],
 
@@ -639,6 +667,12 @@ return [
             'updated' => 'Chamber of Commerce type updated successfully.',
             'deleted' => 'Chamber of Commerce type deleted successfully.',
         ],
+
+        'wholesale_items' => [
+            'created' => 'Wholesale item created successfully.',
+            'updated' => 'Wholesale item updated successfully.',
+            'deleted' => 'Wholesale item deleted successfully.',
+        ]
     ],
 
     // Placeholders

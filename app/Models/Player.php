@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Player extends Model
 {
@@ -24,9 +27,9 @@ class Player extends Model
         'deletion_pending_at',
     ];
 
-    public function user(): BelongsTo
+    public function user(): HasOneThrough
     {
-        return $this->belongsTo(AccountLink::class, 'player_uuid', 'uuid');
+        return $this->hasOneThrough(User::class, AccountLink::class, 'player_uuid', 'uuid', 'uuid', 'user_uuid');
     }
 
     public function bankAccounts(): HasMany
@@ -44,9 +47,25 @@ class Player extends Model
         return $this->hasMany(Company::class, 'owner_uuid', 'uuid');
     }
 
-    public function employeeAt(): HasMany
+    public function employers(): BelongsToMany
     {
-        return $this->hasMany(Employee::class, 'player_uuid', 'uuid');
+        return $this->belongsToMany(Company::class, 'employees', 'player_uuid', 'company_id', 'uuid', 'id')
+            ->withPivot('role');
+    }
+
+    public function employeeAt(): HasManyThrough
+    {
+        return $this->hasManyThrough(Company::class, Employee::class, 'player_uuid', 'id', 'uuid', 'company_id')->where('role', '=', 'employee');
+    }
+
+    public function managerAt(): HasManyThrough
+    {
+        return $this->hasManyThrough(Company::class, Employee::class, 'player_uuid', 'id', 'uuid', 'company_id')->where('role', '=', 'manager');
+    }
+
+    public function amountOfCompanies(): int
+    {
+        return $this->companies()->count() + $this->managerAt()->count();
     }
 
     public function chatColors(): BelongsTo

@@ -53,12 +53,12 @@ class Overview extends Component
 
         if ($status !== 202) {
             CompanyBankaccount::create($selectedCompanyBankAccount->toArray());
-            return Toaster::error(__('admin.toast.bank_accounts.company.invalidate_bankaccount_api_error'));
+            return Toaster::error(__('admin.toasts.bank_accounts.company.invalidate_bankaccount_api_error'));
         }
 
         if (!$success) {
             CompanyBankaccount::create($selectedCompanyBankAccount->toArray());
-            return Toaster::error(__('admin.toast.bank_accounts.company.invalidate_bankaccount_api_error'));
+            return Toaster::error(__('admin.toasts.bank_accounts.company.invalidate_bankaccount_api_error'));
         }
 
         $this->reset([
@@ -66,7 +66,7 @@ class Overview extends Component
             'deleteCompanyBankAccountModal',
         ]);
 
-        Toaster::success(__('admin.toast.bank_accounts.company.deleted'));
+        Toaster::success(__('admin.toasts.bank_accounts.company.deleted'));
     }
 
     // ? Personal Bankaccount Methods
@@ -86,12 +86,12 @@ class Overview extends Component
 
         if ($status !== 202) {
             PersonalBankaccount::create($selectedPersonalBankAccount->toArray());
-            return Toaster::error(__('admin.toast.bank_accounts.personal.invalidate_bankaccount_api_error'));
+            return Toaster::error(__('admin.toasts.bank_accounts.personal.invalidate_bankaccount_api_error'));
         }
 
         if (!$success) {
             PersonalBankaccount::create($selectedPersonalBankAccount->toArray());
-            return Toaster::error(__('admin.toast.bank_accounts.personal.invalidate_bankaccount_api_error'));
+            return Toaster::error(__('admin.toasts.bank_accounts.personal.invalidate_bankaccount_api_error'));
         }
 
         $this->reset([
@@ -99,7 +99,7 @@ class Overview extends Component
             'deletePersonalBankAccountModal',
         ]);
 
-        Toaster::success(__('admin.toast.bank_accounts.personal.deleted'));
+        Toaster::success(__('admin.toasts.bank_accounts.personal.deleted'));
     }
 
     public function render()

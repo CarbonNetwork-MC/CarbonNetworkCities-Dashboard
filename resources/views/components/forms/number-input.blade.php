@@ -1,4 +1,4 @@
-@props(['id' => 'number-input', 'label' => '', 'size' => 'md', 'placeholder' => '', 'required' => false, 'disabled' => false])
+@props(['id' => 'number-input', 'label' => '', 'size' => 'md', 'placeholder' => '', 'required' => false, 'disabled' => false, 'min' => null, 'max' => null])
 @php
     $sizeClasses = match($size) {
         'sm' => 'px-2.5 py-2',
@@ -29,7 +29,9 @@
 
     {{-- Input --}}
     <input 
-        type="number" 
+        type="number"
+        min="{{ $min }}"
+        max="{{ $max }}"
         id="{{ $id }}" 
         placeholder="{{ $placeholder }}" 
         @if($required) required @endif 

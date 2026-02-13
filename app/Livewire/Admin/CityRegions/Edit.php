@@ -82,17 +82,17 @@ class Edit extends Component
 
         if ($status !== 202) {
             $this->rollbackCityRegion($originalData);
-            Toaster::error(__('admin.toast.city_regions.reload_regions_api_error'));
+            Toaster::error(__('admin.toasts.city_regions.reload_regions_api_error'));
             return;
         }
 
         if (!$success) {
             $this->rollbackCityRegion($originalData);
-            Toaster::error(__('admin.toast.city_regions.reload_regions_api_error'));
+            Toaster::error(__('admin.toasts.city_regions.reload_regions_api_error'));
             return;
         }
 
-        return redirect()->route('admin.city-regions.render')->success(__('admin.toast.city_regions.updated'));
+        return redirect()->route('admin.city-regions.render')->success(__('admin.toasts.city_regions.updated'));
     }
 
     public function render()

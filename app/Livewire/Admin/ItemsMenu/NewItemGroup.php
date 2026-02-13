@@ -55,7 +55,7 @@ class NewItemGroup extends Component
             ]);
         }
 
-        return redirect()->route('admin.itemsmenu.render')->success(__('admin.toast.itemsmenu.item_group_created'));
+        return redirect()->route('admin.itemsmenu.render')->success(__('admin.toasts.itemsmenu.item_group_created'));
     }
 
     public function addItem() {

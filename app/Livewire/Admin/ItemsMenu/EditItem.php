@@ -21,7 +21,7 @@ class EditItem extends Component
     public $shelfLife;
     public $expiredPrefix;
 
-    public $isFood = false;
+    public $isFood;
 
     public function mount($id) {
         $this->item = Item::findOrFail($id);
@@ -33,6 +33,7 @@ class EditItem extends Component
         $this->lore = $this->item->data['lore'] ?? [''];
         $this->shelfLife = $this->item->data['shelf_life'] ?? null;
         $this->expiredPrefix = $this->item->data['expired_prefix'] ?? null;
+        $this->isFood = $this->item->category->name === 'food';
     }
 
     public function updated($key, $value) {
@@ -46,6 +47,7 @@ class EditItem extends Component
         if (!$this->item) return;
 
         $item = $this->item;
+        $this->expiredPrefix = str_replace('<green>', '', $this->expiredPrefix);
     
         $data = $this->validate([
             'internalId' => [
@@ -95,10 +97,10 @@ class EditItem extends Component
             $this->item->material = $item['material'];
             $this->item->data = $item['data'];
             $this->item->save();
-            return Toaster::error(__('admin.toast.itemsmenu.reload_items_api_error'));
+            return Toaster::error(__('admin.toasts.itemsmenu.reload_items_api_error'));
         }
 
-        return redirect()->route('admin.itemsmenu.render')->success(__('admin.toast.itemsmenu.item_updated'));
+        return redirect()->route('admin.itemsmenu.render')->success(__('admin.toasts.itemsmenu.item_updated'));
     }
 
     public function render()

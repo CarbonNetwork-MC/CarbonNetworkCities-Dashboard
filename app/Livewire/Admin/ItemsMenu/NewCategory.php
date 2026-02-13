@@ -31,10 +31,10 @@ class NewCategory extends Component
 
         if (!$success) {
             $newCategory->delete();
-            return Toaster::error(__('admin.toast.itemsmenu.reload_items_api_error'));
+            return Toaster::error(__('admin.toasts.itemsmenu.reload_items_api_error'));
         }
 
-        return redirect()->route('admin.itemsmenu.render')->success(__('admin.toast.itemsmenu.category_created'));
+        return redirect()->route('admin.itemsmenu.render')->success(__('admin.toasts.itemsmenu.category_created'));
     }
 
     public function render()

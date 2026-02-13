@@ -60,7 +60,7 @@ class Overview extends Component
                 "api/invalidate/player/{$player->uuid}"
             );
 
-            Toaster::error(__('admin.toast.players.delete_failed'));
+            Toaster::error(__('admin.toasts.players.delete_failed'));
             return;
         }
 

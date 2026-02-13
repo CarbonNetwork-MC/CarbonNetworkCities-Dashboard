@@ -30,7 +30,7 @@ class Overview extends Component
         $this->typeToDelete = null;
         $this->showDeleteModal = false;
 
-        Toaster::success(__('admin.toast.coc.deleted'));
+        Toaster::success(__('admin.toasts.coc.deleted'));
     }
 
     public function render()

@@ -101,15 +101,15 @@ class NewPlot extends Component
 
         if ($status !== 202) {
             $plot->delete();
-            return redirect()->route('admin.plots.new')->error(__('admin.toast.plots.invalidate_plot_api_error'));
+            return redirect()->route('admin.plots.new')->error(__('admin.toasts.plots.invalidate_plot_api_error'));
         }
 
         if (!$success) {
             $plot->delete();
-            return redirect()->route('admin.plots.new')->error(__('admin.toast.plots.invalidate_plot_api_error'));
+            return redirect()->route('admin.plots.new')->error(__('admin.toasts.plots.invalidate_plot_api_error'));
         }
 
-        return redirect()->route('admin.plots.render')->success(__('admin.toast.plots.created'));
+        return redirect()->route('admin.plots.render')->success(__('admin.toasts.plots.created'));
     }
 
     public function render()

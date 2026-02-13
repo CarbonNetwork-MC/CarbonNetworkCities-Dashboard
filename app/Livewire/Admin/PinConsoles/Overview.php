@@ -42,12 +42,12 @@ class Overview extends Component
 
         if ($status !== 202) {
             PinConsole::create($selectedPinConsole->toArray());
-            return Toaster::error(__('admin.toast.pin_consoles.invalidate_pin_console_api_error'));
+            return Toaster::error(__('admin.toasts.pin_consoles.invalidate_pin_console_api_error'));
         }
 
         if (!$success) {
             PinConsole::create($selectedPinConsole->toArray());
-            return Toaster::error(__('admin.toast.pin_consoles.invalidate_pin_console_api_error'));
+            return Toaster::error(__('admin.toasts.pin_consoles.invalidate_pin_console_api_error'));
         }
 
         $this->reset([
@@ -55,7 +55,7 @@ class Overview extends Component
             'deletePinConsoleModal',
         ]);
 
-        Toaster::success(__('admin.toast.pin_consoles.deleted'));
+        Toaster::success(__('admin.toasts.pin_consoles.deleted'));
     }
 
     public function render()

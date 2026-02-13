@@ -55,6 +55,7 @@ use App\Livewire\Admin\PinConsoles\Edit as EditPinConsole;
 use App\Livewire\Admin\Players\AddBankAccount as AddPlayerBankAccount;
 use App\Livewire\Admin\Players\AddChatColor;
 use App\Livewire\Admin\Players\AddCompany;
+use App\Livewire\Admin\Players\AddEmployer;
 use App\Livewire\Admin\Players\AddPlot as AddPlotToPlayer;
 use App\Livewire\Admin\Players\AddPrefix;
 use App\Livewire\Admin\Players\EditPlayer;
@@ -75,6 +76,10 @@ use App\Livewire\Admin\RolesPerms\Overview as RolesPermsOverview;
 use App\Livewire\Admin\Users\EditUser;
 use App\Livewire\Admin\Users\Overview as UserOverview;
 
+use App\Livewire\Admin\Wholesale\Overview as WholesaleOverview;
+use App\Livewire\Admin\Wholesale\NewItem as NewWholesaleItem;
+use App\Livewire\Admin\Wholesale\EditItem as EditWholesaleItem;
+
 use App\Livewire\Company\ChooseCompany;
 use App\Livewire\Company\CompanyDashboard;
 use App\Livewire\Company\Employees as CompanyEmployees;
@@ -83,6 +88,12 @@ use App\Livewire\Company\StockOverview;
 use App\Livewire\Company\UpdateStock;
 
 use App\Livewire\Profile\Overview as ProfileOverview;
+
+use App\Livewire\Wholesale\ChooseCompany;
+use App\Livewire\Wholesale\CollectOrder;
+use App\Livewire\Wholesale\CompleteOrder;
+use App\Livewire\Wholesale\CreateOrder;
+use App\Livewire\Wholesale\OrderOverview;
 
 use Illuminate\Support\Facades\Route;
 
@@ -114,7 +125,7 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
 
     // ? Dashboard
     Route::get('/dashboard', Dashboard::class)->name('dashboard.render');
-
+  
     // ? Profile
     Route::get('/profile', ProfileOverview::class)->name('profile.render');
 
@@ -128,6 +139,18 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
             Route::get('/company/{companyId}/stock/edit/{itemId}', EditStock::class)->name('company.stock.edit.render');
             Route::get('/company/{companyId}/stock/update', UpdateStock::class)->name('company.stock.update.render');
         });
+    });
+  
+    // ? Wholesale
+    Route::middleware('permission:wholesale_order')->group(function() {
+        Route::get('/wholesale/choose-company', ChooseCompany::class)->name('wholesale.choose-company');
+        Route::get('/wholesale/create-order/{companyId}', CreateOrder::class)->name('wholesale.create-order');
+    });
+
+    Route::middleware('permission:manage_wholesale_orders')->group(function() {
+        Route::get('/wholesale/order-overview', OrderOverview::class)->name('wholesale.order-overview');
+        Route::get('/wholesale/collect-order/{orderId}', CollectOrder::class)->name('wholesale.collect-order');
+        Route::get('/wholesale/complete-order/{orderId}', CompleteOrder::class)->name('wholesale.complete-order');
     });
 });
 
@@ -172,6 +195,7 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     Route::get('/players/add-bank-account/{uuid}', AddPlayerBankAccount::class)->name('admin.players.add-bank-account');
     Route::get('/players/add-plot/{uuid}', AddPlotToPlayer::class)->name('admin.players.add-plot');
     Route::get('/players/add-company/{uuid}', AddCompany::class)->name('admin.players.add-company');
+    Route::get('/players/add-employer/{uuid}', AddEmployer::class)->name('admin.players.add-employer');
 
     // ? Languages
     Route::get('/languages', LanguagesOverview::class)->name('admin.languages.render');
@@ -218,4 +242,9 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     Route::get('/plots/new', NewPlot::class)->name('admin.plots.new');
     Route::get('/plots/edit/{id}', EditPlot::class)->name('admin.plots.edit');
     Route::get('/plots/add-member/{id}', AddMember::class)->name('admin.plots.add-member');
+
+    // ? Wholesale
+    Route::get('/wholesale', WholesaleOverview::class)->name('admin.wholesale-items.render');
+    Route::get('/wholesale/new', NewWholesaleItem::class)->name('admin.wholesale-items.new');
+    Route::get('/wholesale/edit/{id}', EditWholesaleItem::class)->name('admin.wholesale-items.edit');
 });

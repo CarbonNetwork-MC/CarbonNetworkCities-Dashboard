@@ -66,10 +66,10 @@ class NewItem extends Component
 
         if (!$success) {
             $newItem->delete();
-            return Toaster::error(__('admin.toast.itemsmenu.reload_items_api_error'));
+            return Toaster::error(__('admin.toasts.itemsmenu.reload_items_api_error'));
         }
 
-        return redirect()->route('admin.itemsmenu.render')->success(__('admin.toast.itemsmenu.item_created'));
+        return redirect()->route('admin.itemsmenu.render')->success(__('admin.toasts.itemsmenu.item_created'));
     }
 
     public function render()

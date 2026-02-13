@@ -46,11 +46,11 @@ class EditPrefix extends Component
         [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
         if (!$success) {
             $this->rollbackPrefix($originalPrefixValues, $originalSelectedPrefix);
-            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.prefix_update_failed'));
+            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toasts.players.prefix_update_failed'));
         }
 
         // 5. Success
-        return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->success(__('admin.toast.players.prefix_update_success'));
+        return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->success(__('admin.toasts.players.prefix_update_success'));
     }
 
     public function render()

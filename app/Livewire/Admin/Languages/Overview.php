@@ -42,7 +42,7 @@ class Overview extends Component
 
         if (!$success) {
             Language::create($selectedLanguage->toArray());
-            return Toaster::error(__('admin.toast.languages.reload_api_error'));
+            return Toaster::error(__('admin.toasts.languages.reload_api_error'));
         }
 
         $this->reset([
@@ -50,7 +50,7 @@ class Overview extends Component
             'deleteLanguageModal',
         ]);
 
-        Toaster::success(__('admin.toast.languages.deleted'));
+        Toaster::success(__('admin.toasts.languages.deleted'));
     }
     
     public function render()
