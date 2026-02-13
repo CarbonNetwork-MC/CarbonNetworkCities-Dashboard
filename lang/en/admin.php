@@ -312,6 +312,7 @@ return [
         'companies' => [
             'add_bank_account' => 'Add Bank Account',
             'add_employee' => 'Add Employee',
+            'add_item' => 'Add Item',
             'add_items' => 'Add Items',
             'add_item_group' => 'Add Item Group',
             'add_pin_console' => 'Add PIN Console',
