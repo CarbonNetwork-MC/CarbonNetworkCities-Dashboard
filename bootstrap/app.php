@@ -1,6 +1,7 @@
 <?php
 
 use App\Console\Commands\CleanupExpiredAccountLinkTokens;
+use App\Console\Commands\CleanupOldCompanyNotifications;
 use App\Http\Middleware\EnsureOnboardingComplete;
 use App\Http\Middleware\EnsureUserIsCompanyOwnerOrManager;
 use App\Http\Middleware\EnsureUserIsEmployeeOrOwner;
@@ -44,4 +45,7 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withSchedule(function (Schedule $schedule): void {
         $schedule->command(new CleanupExpiredAccountLinkTokens)->daily();
+    })
+    ->withSchedule(function (Schedule $schedule): void {
+        $schedule->command(new CleanupOldCompanyNotifications())->daily();
     })->create();

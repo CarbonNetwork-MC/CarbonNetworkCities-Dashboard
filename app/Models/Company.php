@@ -55,4 +55,14 @@ class Company extends Model
     {
         return $this->hasMany(CompanyStock::class, 'company_id', 'id');
     }
+
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(CompanyNotification::class, 'company_id', 'id');
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(WholesaleOrder::class, 'company_id', 'id');
+    }
 }

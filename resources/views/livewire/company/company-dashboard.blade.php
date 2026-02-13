@@ -189,7 +189,31 @@
                 <x-containers.main class="h-full">
                     <x-containers.title>{{ __('company.titles.notifications') }}</x-containers.title>
 
-                    
+                    @foreach ($notifications as $notification)
+                        <div class="flex justify-between rounded-lg bg-gray-300 dark:bg-gray-900 p-4 mt-2">
+                            {{-- Alert --}}
+                            <div class="flex items-center">
+                                @if ($notification->level === 'critical')
+                                    <span class="flex w-3 h-3 me-3 bg-danger rounded-full"></span>
+                                @elseif ($notification->level === 'warning')
+                                    <span class="flex w-3 h-3 me-3 bg-warning rounded-full"></span>
+                                @else
+                                    <span class="flex w-3 h-3 me-3 bg-success rounded-full"></span>
+                                @endif
+
+                                <p class="text-sm text-gray-700 dark:text-gray-300">
+                                    {!! $notification->message !!}
+                                </p>
+                            </div>
+
+                            {{-- Close Button --}}
+                            @if (!$notification->is_read)
+                                <button wire:click="isNotificationRead('{{ $notification->id }}')" class="ms-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer">
+                                    <i class="fi fi-rr-check hover:text-green-500"></i>
+                                </button>
+                            @endif
+                        </div>
+                    @endforeach
                 </x-containers.main>
             </div>
         @endif

@@ -48,6 +48,7 @@ return [
 
     'toasts' => [
         'stock_updated_successfully' => 'Stock updated successfully.',
+        'notification_marked_as_read' => 'Notification marked as read.',
     ],
 
     'placeholders' => [
@@ -58,5 +59,10 @@ return [
         'owner' => 'Owner',
         'manager' => 'Manager',
         'employee' => 'Employee',
-    ]
+    ],
+
+    'notifications' => [
+        'stock_critical' => 'Stock for <b>:item</b> is at critical level!',
+        'stock_warning' => 'Stock for <b>:item</b> is low.',
+    ],
 ];
