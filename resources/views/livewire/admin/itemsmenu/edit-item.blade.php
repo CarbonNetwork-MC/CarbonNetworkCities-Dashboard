@@ -99,8 +99,7 @@
                 @if ($isFood)
                     {{-- Shelf life --}}
                     <div class="col-span-1">
-                        {{-- TODO: change to number input --}}
-                        <x-forms.text-input label="{{ __('admin.labels.itemsmenu.shelf_life') }}" wire:model="shelfLife" />
+                        <x-forms.number-input label="{{ __('admin.labels.itemsmenu.shelf_life') }}" wire:model="shelfLife" min="1"/>
                     </div>
 
                     {{-- Expired prefix --}}
