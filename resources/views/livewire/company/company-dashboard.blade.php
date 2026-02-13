@@ -162,6 +162,23 @@
             <div class="col-span-1">
                 <x-containers.main class="h-full">
                     <x-containers.title href="#">{{ __('company.titles.bank_accounts_overview') }}</x-containers.title>
+
+                    @forelse ($bankAccounts as $account)
+                        <div class="flex gap-x-6 rounded-xl bg-white dark:bg-gray-900 mt-4 p-4">
+                            <i class="fi fi-rr-piggy-bank text-black dark:text-white"></i>
+                            <div class="w-full">
+                                <div class="flex justify-between text-gray-500 dark:text-gray-400">
+                                    <p>#{{ $account->id }}</p>
+                                    <p>{{ $account->is_main ? __('company.labels.is_main') : '' }}</p>
+                                </div>
+                                <div class="text-black dark:text-white">
+                                    {{ $account->country->currency_symbol }}{{ number_format($account->balance, 2) }}
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <p class="text-gray-500 dark:text-gray-400">{{ __('company.messages.bank_accounts_no_records') }}</p>
+                    @endforelse
                 </x-containers.main>
             </div>
         @endif

@@ -3,6 +3,7 @@
 namespace App\Livewire\Company;
 
 use App\Models\Company;
+use App\Models\CompanyBankaccount;
 use App\Models\CompanyStock;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Auth;
@@ -43,7 +44,9 @@ class CompanyDashboard extends Component
             ")
             ->paginate(7, ['*'], 'employees_page');
 
-        $bankAccounts = [];
+        $bankAccounts = CompanyBankaccount::where('company_id', $this->company->id)
+            ->with('country')
+            ->get();
 
         return view('livewire.company.company-dashboard', [
             'companyStock' => $companyStock,

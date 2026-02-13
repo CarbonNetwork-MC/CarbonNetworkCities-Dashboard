@@ -24,6 +24,7 @@ return [
         'critical_threshold' => 'Critical Threshold',
         'employees' => 'Employees',
         'item' => 'Item',
+        'is_main' => 'Main Account',
         'name' => 'Name',
         'owner' => 'Owner',
         'preferred_stock_level' => 'Preferred Stock Level',
