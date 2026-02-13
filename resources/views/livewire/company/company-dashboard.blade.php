@@ -188,6 +188,8 @@
             <div class="col-span-1">
                 <x-containers.main class="h-full">
                     <x-containers.title>{{ __('company.titles.notifications') }}</x-containers.title>
+
+                    
                 </x-containers.main>
             </div>
         @endif

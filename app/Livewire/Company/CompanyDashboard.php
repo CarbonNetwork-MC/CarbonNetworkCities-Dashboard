@@ -55,38 +55,5 @@ class CompanyDashboard extends Component
         ]);
     }
 
-    private function getCompanyEmployees() {
-        $employees = collect();
-
-        $owner = $this->company->owner;
-        if ($owner != null) {
-            $employees->push([
-                'uuid' => $owner->uuid,
-                'username' => $owner->username,
-                'role' => 'owner',
-            ]);
-        }
-
-        $this->employeesList->each(function ($employee) use ($employees) {
-            $player = $employee->player;
-            if ($player != null) {
-                $employees->push([
-                    'uuid' => $player->uuid,
-                    'username' => $player->username,
-                    'role' => $employee->role,
-                ]);
-            }
-        });
-
-        $employees = $employees->sortBy(function ($employee) {
-            switch ($employee['role']) {
-                case 'owner': return 0;
-                case 'manager': return 1;
-                case 'employee': return 2;
-                default: return 3;
-            }
-        })->values();
-
-        return $employees;
     }
 }
