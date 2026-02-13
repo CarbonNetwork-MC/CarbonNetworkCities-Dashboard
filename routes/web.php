@@ -134,8 +134,8 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
     Route::middleware('employee_or_owner')->group(function() {
         Route::get('/company/{companyId}/dashboard', CompanyDashboard::class)->name('company.dashboard.render');
         Route::get('/company/{companyId}/employees', CompanyEmployees::class)->name('company.employees.render');
+        Route::get('/company/{companyId}/stock', StockOverview::class)->name('company.stock.render');
         Route::middleware('company_owner_or_manager')->group(function() {
-            Route::get('/company/{companyId}/stock', StockOverview::class)->name('company.stock.render');
             Route::get('/company/{companyId}/stock/edit/{itemId}', EditStock::class)->name('company.stock.edit.render');
             Route::get('/company/{companyId}/stock/update', UpdateStock::class)->name('company.stock.update.render');
         });
