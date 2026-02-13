@@ -12,6 +12,9 @@ class CompanyStock extends Model
         'company_id',
         'item_id',
         'quantity',
+        'preferred_stock_level',
+        'warning_threshold',
+        'critical_threshold',
     ];
 
     public function company(): BelongsTo
