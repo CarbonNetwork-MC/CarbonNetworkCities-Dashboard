@@ -10,7 +10,11 @@ return [
     */
 
     'titles' => [
+        'bank_accounts_overview' => 'Bank Accounts Overview',
+        'best_selling_products' => 'Best Selling Products',
         'employees' => 'Employees',
+        'employee_overview' => 'Employee Overview',
+        'notifications' => 'Notifications',
         'stock_overview' => 'Stock Overview',
         'update_stock' => 'Update Stock',
     ],
@@ -22,6 +26,7 @@ return [
         'owner' => 'Owner',
         'quantity' => 'Quantity',
         'role' => 'Role',
+        'units' => 'Units',
     ],
 
     'buttons' => [
