@@ -12,6 +12,7 @@ return [
     'titles' => [
         'bank_accounts_overview' => 'Bank Accounts Overview',
         'best_selling_products' => 'Best Selling Products',
+        'edit_stock' => 'Edit Stock',
         'employees' => 'Employees',
         'employee_overview' => 'Employee Overview',
         'notifications' => 'Notifications',
@@ -20,13 +21,17 @@ return [
     ],
         
     'labels' => [
+        'critical_threshold' => 'Critical Threshold',
         'employees' => 'Employees',
         'item' => 'Item',
         'name' => 'Name',
         'owner' => 'Owner',
+        'preferred_stock_level' => 'Preferred Stock Level',
         'quantity' => 'Quantity',
         'role' => 'Role',
+        'stock_level' => 'Stock Level',
         'units' => 'Units',
+        'warning_threshold' => 'Warning Threshold',
     ],
 
     'buttons' => [
@@ -40,8 +45,8 @@ return [
         'stock_no_records' => 'No stock records found.',
     ],
 
-    'toast' => [
-        
+    'toasts' => [
+        'stock_updated_successfully' => 'Stock updated successfully.',
     ],
 
     'placeholders' => [

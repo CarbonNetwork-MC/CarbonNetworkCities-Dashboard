@@ -78,6 +78,7 @@ use App\Livewire\Admin\Users\Overview as UserOverview;
 use App\Livewire\Company\ChooseCompany;
 use App\Livewire\Company\CompanyDashboard;
 use App\Livewire\Company\Employees as CompanyEmployees;
+use App\Livewire\Company\EditStock;
 use App\Livewire\Company\StockOverview;
 use App\Livewire\Company\UpdateStock;
 
@@ -124,6 +125,7 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
         Route::get('/company/{companyId}/employees', CompanyEmployees::class)->name('company.employees.render');
         Route::middleware('company_owner_or_manager')->group(function() {
             Route::get('/company/{companyId}/stock', StockOverview::class)->name('company.stock.render');
+            Route::get('/company/{companyId}/stock/edit/{itemId}', EditStock::class)->name('company.stock.edit.render');
             Route::get('/company/{companyId}/stock/update', UpdateStock::class)->name('company.stock.update.render');
         });
     });

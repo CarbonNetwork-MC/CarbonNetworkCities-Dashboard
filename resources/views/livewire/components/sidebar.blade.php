@@ -70,7 +70,7 @@
                         {{-- Stock --}}
                         <x-sidebar.nav-group-item
                             href="{{ route('company.stock.render', ['companyId' => $selectedCompany->id]) }}"
-                            :active="request()->routeIs('company.stock.render')"
+                            :active="request()->routeIs('company.stock.*')"
                             wire:key="company-stock"
                         >
                             {{ __('sidebar.company.stock') }}
