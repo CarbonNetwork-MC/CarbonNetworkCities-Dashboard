@@ -39,10 +39,12 @@
                         <x-tables.table-header>{{ __('company.labels.item') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('company.labels.quantity') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('company.labels.stock_level') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('company.labels.preferred_stock_level') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('company.labels.warning_threshold') }}</x-tables.table-header>
-                        <x-tables.table-header>{{ __('company.labels.critical_threshold') }}</x-tables.table-header>
-                        <th></th>
+                        @if ($hasPermission)
+                            <x-tables.table-header>{{ __('company.labels.preferred_stock_level') }}</x-tables.table-header>
+                            <x-tables.table-header>{{ __('company.labels.warning_threshold') }}</x-tables.table-header>
+                            <x-tables.table-header>{{ __('company.labels.critical_threshold') }}</x-tables.table-header>
+                            <th></th>
+                        @endif
                     </tr>
                 </x-slot>
                 <x-slot name="rows">
@@ -66,23 +68,23 @@
                                     </div>
                                 </div>
                             </x-tables.table-data>
-                            <x-tables.table-data>{{ $item->stock->preferred_stock_level }}</x-tables.table-data>
-                            <x-tables.table-data>{{ $item->stock->warning_threshold }}</x-tables.table-data>
-                            <x-tables.table-data>{{ $item->stock->critical_threshold }}</x-tables.table-data>
-                            <x-tables.table-actions>
-                                @if ($hasPermission)
+                            @if ($hasPermission)
+                                <x-tables.table-data>{{ $item->stock->preferred_stock_level }}</x-tables.table-data>
+                                <x-tables.table-data>{{ $item->stock->warning_threshold }}</x-tables.table-data>
+                                <x-tables.table-data>{{ $item->stock->critical_threshold }}</x-tables.table-data>
+                                <x-tables.table-actions>
                                     <x-tables.primary-action href="{{ route('company.stock.edit.render', ['companyId' => $company->id, 'itemId' => $item->stock->id]) }}">
                                         {{ __('general.buttons.edit') }}
                                     </x-tables.primary-action>
                                     <x-tables.primary-action wire:click="openUpdateStockModal('{{ $item->id }}')">
                                         {{ __('company.buttons.update_stock') }}
                                     </x-tables.primary-action>
-                                @endif
-                            </x-tables.table-actions>
+                                </x-tables.table-actions>
+                            @endif
                         </x-tables.table-row>
                     @empty
                         <x-tables.table-row>
-                            <x-tables.empty-state :colspan="7">
+                            <x-tables.empty-state :colspan="$hasPermission ? 7 : 3">
                                 {{ __('company.messages.stock_no_records') }}
                             </x-tables.empty-state>
                         </x-tables.table-row>
