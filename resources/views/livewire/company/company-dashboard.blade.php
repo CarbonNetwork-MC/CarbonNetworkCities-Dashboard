@@ -26,7 +26,7 @@
         {{-- Stock Overview --}}
         <div class="col-span-1">
             <x-containers.main class="h-full">
-                <x-containers.title>{{ __('company.titles.stock_overview') }}</x-containers.title>
+                <x-containers.title href="{{ route('company.stock.render', ['companyId' => $company->id]) }}">{{ __('company.titles.stock_overview') }}</x-containers.title>
                 
                 <div class="flex flex-col justify-between h-full">
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-2">
@@ -113,7 +113,7 @@
         {{-- Employee Overview --}}
         <div class="col-span-1">
             <x-containers.main class="h-full">
-                <x-containers.title>{{ __('company.titles.employee_overview') }}</x-containers.title>
+                <x-containers.title href="{{ route('company.employees.render', ['companyId' => $company->id]) }}">{{ __('company.titles.employee_overview') }}</x-containers.title>
 
                 <div class="flex flex-col justify-between h-full">
                     <div class="grid grid-cols-2 gap-4 mt-2">
@@ -161,7 +161,7 @@
         @if ($hasPermission)
             <div class="col-span-1">
                 <x-containers.main class="h-full">
-                    <x-containers.title>{{ __('company.titles.bank_accounts_overview') }}</x-containers.title>
+                    <x-containers.title href="#">{{ __('company.titles.bank_accounts_overview') }}</x-containers.title>
                 </x-containers.main>
             </div>
         @endif
