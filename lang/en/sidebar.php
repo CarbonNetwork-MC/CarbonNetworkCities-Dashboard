@@ -17,6 +17,7 @@ return [
     'company' => [
         'choose' => 'Choose Company',
         'dashboard' => 'Dashboard',
+        'employees' => 'Employees',
         'title' => 'Companies',
         'stock' => 'Stock Overview',
     ],

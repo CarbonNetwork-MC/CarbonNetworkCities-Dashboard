@@ -105,4 +105,9 @@ class Player extends Model
 
         return implode(' ', $result);
     }
+
+    public function playerHead()
+    {
+        return 'https://cravatar.eu/avatar/' . $this->uuid . '/64.png';
+    }
 }

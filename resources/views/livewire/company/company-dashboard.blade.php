@@ -21,4 +21,36 @@
             ],
         ]" />
     </x-slot>
+
+    <div class="grid grid-cols-3 gap-4">
+        {{-- Stock Overview --}}
+        <div class="col-span-1">
+            <x-containers.main></x-containers.main>
+        </div>
+
+        {{-- Best Selling Products --}}
+        <div class="col-span-1">
+            <x-containers.main></x-containers.main>
+        </div>
+
+        {{-- Bank Accounts Overview --}}
+        <div class="col-span-1">
+            <x-containers.main></x-containers.main>
+        </div>
+
+        {{-- Employee Overview --}}
+        <div class="col-span-1">
+            <x-containers.main></x-containers.main>
+        </div>
+
+        {{-- Notifications --}}
+        <div class="col-span-1">
+            <x-containers.main></x-containers.main>
+        </div>
+
+        {{-- Empty --}}
+        <div class="col-span-1">
+
+        </div>
+    </div>
 </div>

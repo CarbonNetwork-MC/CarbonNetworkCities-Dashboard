@@ -56,6 +56,17 @@
                             {{ __('sidebar.company.dashboard') }}
                         </x-sidebar.nav-group-item>
 
+                        {{-- Sell Docs --}}
+
+                        {{-- Employees --}}
+                        <x-sidebar.nav-group-item
+                            href="{{ route('company.employees.render', ['companyId' => $selectedCompany->id]) }}"
+                            :active="request()->routeIs('company.employees.render')"
+                            wire:key="company-employees"
+                        >
+                            {{ __('sidebar.company.employees') }}
+                        </x-sidebar.nav-group-item>
+
                         {{-- Stock --}}
                         <x-sidebar.nav-group-item
                             href="{{ route('company.stock.render', ['companyId' => $selectedCompany->id]) }}"
@@ -64,6 +75,8 @@
                         >
                             {{ __('sidebar.company.stock') }}
                         </x-sidebar.nav-group-item>
+
+                        {{-- Wholesale Orders --}}
                     </x-sidebar.nav-group>
                 @else
                     <x-sidebar.nav-item

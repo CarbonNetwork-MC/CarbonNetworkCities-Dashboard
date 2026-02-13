@@ -10,6 +10,7 @@ return [
     */
 
     'titles' => [
+        'employees' => 'Employees',
         'stock_overview' => 'Stock Overview',
         'update_stock' => 'Update Stock',
     ],
@@ -17,8 +18,10 @@ return [
     'labels' => [
         'employees' => 'Employees',
         'item' => 'Item',
+        'name' => 'Name',
         'owner' => 'Owner',
         'quantity' => 'Quantity',
+        'role' => 'Role',
     ],
 
     'buttons' => [
@@ -28,6 +31,7 @@ return [
     'messages' => [
         'choose_description' => 'Select the company you want to manage or view.',
         'no_companies' => 'No companies found.',
+        'no_employees' => 'No employees found.',
         'stock_no_records' => 'No stock records found.',
     ],
 
@@ -38,4 +42,10 @@ return [
     'placeholders' => [
         
     ],
+
+    'roles' => [
+        'owner' => 'Owner',
+        'manager' => 'Manager',
+        'employee' => 'Employee',
+    ]
 ];
