@@ -12,9 +12,10 @@ class ChooseCompany extends Component
         $companies = collect();
     
         $ownedCompanies = auth()->user()->player->companies;
-        $employeeCompanies = auth()->user()->player->employeeAt->load('company')->pluck('company');
+        $managerCompanies = auth()->user()->player->managerAt;
+        $employeeCompanies = auth()->user()->player->employeeAt;
 
-        $companies = $ownedCompanies->merge($employeeCompanies)->unique('id');
+        $companies = $ownedCompanies->merge($managerCompanies)->merge($employeeCompanies)->unique('id');
         $this->companies = $companies;
     }
 
