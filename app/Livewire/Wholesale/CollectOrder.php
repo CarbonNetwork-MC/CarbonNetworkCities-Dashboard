@@ -69,6 +69,8 @@ class CollectOrder extends Component
         $this->order->collected_by = auth()->user()->player->uuid;
         $this->order->save();
 
+        CompanyOrder::where('order_id', $this->order->id)->update(['status' => 'collected']);
+
         CompanyNotification::create([
             'company_id' => $this->order->company_id,
             'order_id' => $this->order->id,

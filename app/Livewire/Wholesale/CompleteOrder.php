@@ -50,10 +50,7 @@ class CompleteOrder extends Component
         $this->order->customer_uuid = $this->customerUuid;
         $this->order->save();
 
-        CompanyOrder::create([
-            'company_id' => $this->order->company_id,
-            'order_id' => $this->order->id,
-        ]);
+        CompanyOrder::where('order_id', $this->order->id)->update(['status' => 'completed']);
 
         CompanyNotification::create([
             'company_id' => $this->order->company_id,
@@ -84,6 +81,8 @@ class CompleteOrder extends Component
         $this->order->collected = false;
         $this->order->collected_by = null;
         $this->order->save();
+
+        CompanyOrder::where('order_id', $this->order->id)->update(['status' => 'pending']);
 
         CompanyNotification::where('order_id', $this->order->id)
             ->where('type', 'order_collected')
