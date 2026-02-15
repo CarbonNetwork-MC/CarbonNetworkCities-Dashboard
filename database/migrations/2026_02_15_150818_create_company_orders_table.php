@@ -11,17 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('wholesale_items', function (Blueprint $table) {
+        Schema::create('company_orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('item_id')->nullable();
-            $table->integer('max_amount')->default(192);
-            $table->decimal('price', 10, 2)->default(0);
+            $table->unsignedBigInteger('company_id');
+            $table->unsignedBigInteger('order_id');
+            $table->boolean('completed')->default(false);
+            $table->uuid('completed_by')->nullable();
             $table->timestamps();
-            
+
             /* -------------------------------------------------------------
             * Foreign keys
             * ------------------------------------------------------------- */
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('wholesale_orders')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('wholesale_items');
+        Schema::dropIfExists('company_orders');
     }
 };
