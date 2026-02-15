@@ -5,6 +5,7 @@ namespace App\Livewire\Company;
 use App\Models\Company;
 use App\Models\CompanyBankaccount;
 use App\Models\CompanyNotification;
+use App\Models\CompanyOrder;
 use App\Models\CompanyStock;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Auth;
@@ -63,7 +64,6 @@ class CompanyDashboard extends Component
             ->with('country')
             ->paginate(3, ['*'], 'bank_accounts_page');
 
-        // $notifications = $this->getNotifications();
         $notifications = CompanyNotification::where('company_id', $this->company->id)
             ->where('is_read', false)
             ->orderByRaw("
@@ -76,11 +76,23 @@ class CompanyDashboard extends Component
             ")
             ->paginate(5, ['*'], 'notifications_page');
 
+        $orders = CompanyOrder::where('company_id', $this->company->id)
+            ->where('completed', false)
+            ->with('order', 'order.items', 'order.items.item')
+            ->limit(2)
+            ->get();
+        $orderTotal = CompanyOrder::where('company_id', $this->company->id)
+            ->where('completed', false)
+            ->with('order', 'order.items', 'order.items.item')
+            ->count();
+
         return view('livewire.company.company-dashboard', [
             'companyStock' => $companyStock,
             'employees' => $employees,
             'bankAccounts' => $bankAccounts,
             'notifications' => $notifications,
+            'orders' => $orders,
+            'orderTotal' => $orderTotal,
         ]);
     }
 
@@ -118,9 +130,5 @@ class CompanyDashboard extends Component
                 'is_read' => false,
             ]);
         }
-    }
-
-    private function createOrderNotifications() {
-        // TODO: Create a notification when a wholesale order exists for this company, and when the wholesale has collected the order.
     }
 }

@@ -183,6 +183,50 @@
             </div>
         @endif
 
+        {{-- Wholesale Orders --}}
+        @if ($hasPermission)
+            <div class="col-span-1">
+                <x-containers.main class="h-full">
+                    <x-containers.title href="{{ route('company.wholesale-orders.render', ['companyId' => $company->id]) }}">
+                        {{ __('company.titles.wholesale_orders') }}
+                    </x-containers.title>
+
+                    @forelse ($orders as $order)
+                        <div class="grid grid-cols-2 bg-white dark:bg-gray-900 rounded-lg mt-2 p-4">
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400">{{ __('company.labels.order') }} #{{ $order->id }}</p>
+                            </div>
+                            <div class="col-span-1 flex justify-end me-1">
+                                <span class="{{ $order->status === 'pending' ? 'text-red-500' : ($order->status === 'collected' ? 'text-orange-400' : 'text-green-400') }}">{{ __('company.labels.' . $order->status) }}</span>
+                            </div>
+                            <div class="col-span-1 text-black dark:text-white">
+                                {{ __('company.labels.item_types') }}: {{ $order->order->items->count() }}
+                            </div>
+                            <div class="col-span-1"></div>
+                            <div class="col-span-1 text-black dark:text-white">
+                                {{ __('company.labels.total_amount') }}: {{ $order->order->amountOfItems() }} {{ __('company.labels.units') }}
+                            </div>
+                            <div class="col-span-1 flex justify-end">
+                                <x-buttons.primary-button href="{{ route('company.wholesale-orders.details.render', ['companyId' => $company->id, 'orderId' => $order->id]) }}">
+                                    {{ __('general.buttons.view') }}
+                                </x-buttons.primary-button>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="mt-2 rounded-xl bg-white dark:bg-gray-900 p-4">
+                            <p class="text-gray-500 dark:text-gray-400">{{ __('company.messages.wholesale_orders_no_records') }}</p>
+                        </div>
+                    @endforelse
+
+                    @if ($orderTotal > 0 && $orderTotal > 2)
+                        <div class="mt-2 ml-2">
+                            <a href="{{ route('company.wholesale-orders.render', ['companyId' => $company->id]) }}" class="text-blue-500 hover:text-blue-600">{{ __('general.see_more') }}</a>
+                        </div>
+                    @endif
+                </x-containers.main>
+            </div>
+        @endif
+
         {{-- Notifications --}}
         @if ($hasPermission)
             <div class="col-span-1">
@@ -253,10 +297,5 @@
                 </x-containers.main>
             </div>
         @endif
-
-        {{-- Empty --}}
-        <div class="col-span-1">
-
-        </div>
     </div>
 </div>

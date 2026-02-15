@@ -40,6 +40,7 @@ return [
         'direction' => 'Direction',
         'employees' => 'Employees',
         'item' => 'Item',
+        'item_types' => 'Item Types',
         'is_main' => 'Main Account',
         'name' => 'Name',
         'owner' => 'Owner',
@@ -72,12 +73,14 @@ return [
     'messages' => [
         'bank_accounts_no_records' => 'No bank accounts found.',
         'choose_description' => 'Select the company you want to manage or view.',
+        'more_orders' => 'There are more orders that can\'t be displayed here. Please go to the wholesale orders page to view all orders.',
         'no_companies' => 'No companies found.',
         'no_employees' => 'No employees found.',
         'no_orders' => 'No orders found.',
         'no_order_items' => 'No items found for this order.',
         'no_transactions' => 'No transactions found.',
         'stock_no_records' => 'No stock records found.',
+        'wholesale_orders_no_records' => 'No wholesale orders found.',
     ],
 
     'toasts' => [
