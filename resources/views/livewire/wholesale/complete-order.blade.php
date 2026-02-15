@@ -133,16 +133,18 @@
     {{-- Undo Collect Modal --}}
     <x-modals.modal wire:model="undoCollectModal" :title="__('wholesale.titles.undo_collect_order')">
         <x-slot name="content">
-            <p class="text-gray-700 dark:text-gray-300">
-                {{ __('wholesale.messages.undo_collect_confirmation') }}
-            </p>
+            <div class="flex justify-center">
+                <p class="text-gray-700 dark:text-gray-300">
+                    {{ __('wholesale.messages.undo_collect_confirmation') }}
+                </p>
+            </div>
         </x-slot>
         <x-slot name="footer">
             <x-buttons.secondary-button wire:click="$set('undoCollectModal', false)">
                 {{ __('general.buttons.cancel') }}
             </x-buttons.secondary-button>
             <x-buttons.danger-button wire:click="undoCollectOrder">
-                {{ __('general.buttons.delete') }}
+                {{ __('wholesale.buttons.undo_collect_order') }}
             </x-buttons.danger-button>
         </x-slot>
     </x-modals.modal>

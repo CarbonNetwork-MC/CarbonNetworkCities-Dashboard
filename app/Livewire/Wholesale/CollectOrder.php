@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Wholesale;
 
+use App\Models\CompanyNotification;
+use App\Models\CompanyOrder;
 use App\Models\WholesaleOrder;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
@@ -66,6 +68,14 @@ class CollectOrder extends Component
         $this->order->collected = true;
         $this->order->collected_by = auth()->user()->player->uuid;
         $this->order->save();
+
+        CompanyNotification::create([
+            'company_id' => $this->order->company_id,
+            'order_id' => $this->order->id,
+            'type' => 'order_collected',
+            'level' => 'info',
+            'message' => __('wholesale.notifications.order_collected'),
+        ]);
 
         return redirect()->route('wholesale.order-overview')->success(__('wholesale.toasts.order_collected'));
     }
