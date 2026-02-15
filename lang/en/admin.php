@@ -188,6 +188,7 @@ return [
             'items_in_group' => 'Items in Group',
             'name' => 'Name',
             'no_owner_assigned' => 'No owner assigned',
+            'notification_message' => 'Notification Message',
             'owner' => 'Owner',
             'pin_consoles' => 'PIN Consoles',
             'pin_console_account' => 'Account',
@@ -330,7 +331,6 @@ return [
             'add_employee' => 'Add Employee',
             'add_item' => 'Add Item',
             'add_items' => 'Add Items',
-            'add_item' => 'Add Item',
             'add_item_group' => 'Add Item Group',
             'add_pin_console' => 'Add PIN Console',
             'add_plot' => 'Add Plot',
@@ -340,6 +340,8 @@ return [
             'remove_employee' => 'Remove Employee',
             'remove_pin_console' => 'Remove PIN Console',
             'remove_plot' => 'Remove Plot',
+            'send' => 'Send',
+            'send_notification' => 'Send Notification',
         ],
 
         'languages' => [
@@ -526,6 +528,8 @@ return [
 
             'pin_console_added' => 'PIN console successfully added to company.',
             'pin_console_removed' => 'PIN console successfully removed from company.',
+
+            'notification_sent' => 'Notification sent to company successfully.',
         ],
 
         'languages' => [

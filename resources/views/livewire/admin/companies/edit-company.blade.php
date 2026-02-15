@@ -18,8 +18,15 @@
         ]" />
     </x-slot>
 
-    {{-- Company --}}
+    {{-- Extra Functions --}}
     <x-containers.main>
+        <x-buttons.primary-button wire:click="$set('showSendNotificationModal', true)">
+            {{ __('admin.buttons.companies.send_notification') }}
+        </x-buttons.primary-button>
+    </x-containers.main>
+
+    {{-- Company --}}
+    <x-containers.main class="mt-4">
         <x-containers.title>
             {{ __('admin.titles.companies.edit') }}
         </x-containers.title>
@@ -563,6 +570,26 @@
             <x-buttons.danger-button wire:click="destroyItem">
                 {{ __('general.buttons.remove') }}
             </x-buttons.danger-button>
+        </x-slot>
+    </x-modals.modal>
+
+    {{-- Send Notification Modal --}}
+    <x-modals.modal wire:model="showSendNotificationModal">
+        <x-slot name="title">
+            <div class="flex justify-center">
+                {{ __('admin.buttons.companies.send_notification') }}
+            </div>
+        </x-slot>
+        <x-slot name="content">
+            <x-forms.text-area label="{{ __('admin.labels.companies.notification_message') }}" wire:model="notificationMessage" />
+        </x-slot>
+        <x-slot name="footer">
+            <x-buttons.secondary-button wire:click="$set('showSendNotificationModal', false)">
+                {{ __('general.buttons.cancel') }}
+            </x-buttons.secondary-button>
+            <x-buttons.primary-button wire:click="sendNotification">
+                {{ __('admin.buttons.companies.send') }}
+            </x-buttons.primary-button>
         </x-slot>
     </x-modals.modal>
 </div>

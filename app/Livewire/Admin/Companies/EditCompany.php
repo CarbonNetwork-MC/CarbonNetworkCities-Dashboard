@@ -7,6 +7,7 @@ use App\Models\CompanyItem;
 use App\Models\Plot;
 use App\Models\Player;
 use App\Models\Company;
+use App\Models\CompanyNotification;
 use App\Services\PlayerPermissionService;
 use App\Services\PluginAPI\ApiService;
 use Livewire\Component;
@@ -35,6 +36,8 @@ class EditCompany extends Component
     public $searchPinConsoles = '';
     public $searchItems = '';
 
+    public $notificationMessage = '';
+
     public $employeesPerPage = 5;
     public $accountsPerPage = 5;
     public $plotsPerPage = 5;
@@ -52,6 +55,7 @@ class EditCompany extends Component
     public $removePlotModal = false;
     public $removePinConsoleModal = false;
     public $removeItemModal = false;
+    public $showSendNotificationModal = false;
 
     public $assignEmployeeModal = false;
     public $assignPlotModal = false;
@@ -135,14 +139,14 @@ class EditCompany extends Component
 
         // Immediate failure (request not accepted)
         if ($status !== 202) {
-            $this->rollbackCompany($originalData, $this->selectedPlayer);
+            $this->rollbackCompany($originalData);
             Toaster::error(__('admin.toasts.companies.update_failed'));
             return;
         }
 
         // 3. Poll for result
         if (!$success) {
-            $this->rollbackCompany($originalData, $this->selectedPlayer);
+            $this->rollbackCompany($originalData);
             Toaster::error(__('admin.toasts.companies.update_failed'));
             return;
         }
@@ -318,6 +322,24 @@ class EditCompany extends Component
 
         $this->removeItemModal = false;
         Toaster::success(__('admin.toasts.companies.item_removed'));
+    }
+
+    // Send Notification
+    public function sendNotification() {
+        $this->validate([
+            'notificationMessage' => ['required', 'string', 'max:255'],
+        ]);
+
+        CompanyNotification::create([
+            'company_id' => $this->company->id,
+            'type' => 'custom',
+            'level' => 'info',
+            'message' => $this->notificationMessage,
+        ]);
+
+        $this->reset(['notificationMessage', 'showSendNotificationModal']);
+
+        Toaster::success(__('admin.toasts.companies.notification_sent'));
     }
 
     public function render()
