@@ -85,7 +85,7 @@
 
             <hr class="text-gray-400 dark:text-gray-600 mb-1.5">
 
-            <div class="grid grid-cols-2">
+            <div class="grid grid-cols-2 gap-x-4">
                 <div class="col-span-1 flex items-center">
                     <div class="text-md font-medium text-gray-700 dark:text-white">
                         {{ __('wholesale.labels.total') }}
@@ -98,13 +98,13 @@
                     </div>
                 </div>
 
-                <div class="col-span-1 flex items-center justify-center mt-5 mr-1.5">
+                <div class="col-span-1 flex items-center justify-center mt-5">
                     <x-buttons.secondary-button class="w-full" wire:click="undoCollect">
                         {{ __('wholesale.buttons.undo_collect_order') }}
                     </x-buttons.secondary-button>
                 </div>
 
-                <div class="col-span-1 flex items-center justify-center mt-5 ml-1.5">
+                <div class="col-span-1 flex items-center justify-center mt-5">
                     <x-buttons.primary-button class="w-full" wire:click="completeOrder">
                         {{ __('wholesale.buttons.complete_order') }}
                     </x-buttons.primary-button>
