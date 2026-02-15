@@ -21,6 +21,7 @@ return [
         'employees' => 'Employees',
         'title' => 'Companies',
         'stock' => 'Stock Overview',
+        'wholesale_orders' => 'Wholesale Orders',
     ],
 
     // ? Management

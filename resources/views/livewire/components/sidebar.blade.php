@@ -88,6 +88,15 @@
                         </x-sidebar.nav-group-item>
 
                         {{-- Wholesale Orders --}}
+                        @if ($isCompanyOwnerOrManager)
+                            <x-sidebar.nav-group-item
+                                href="{{ route('company.wholesale-orders.render', ['companyId' => $selectedCompany->id]) }}"
+                                :active="request()->routeIs('company.wholesale-orders.*')"
+                                wire:key="company-wholesale-orders"
+                            >
+                                {{ __('sidebar.company.wholesale_orders') }}
+                            </x-sidebar.nav-group-item>
+                        @endif
                     </x-sidebar.nav-group>
                 @else
                     <x-sidebar.nav-item

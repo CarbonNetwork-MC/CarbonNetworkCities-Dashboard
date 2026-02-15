@@ -13,6 +13,7 @@ class CompanyOrder extends Model
         'completed',
         'completed_by',
         'stock_updated',
+        'status',
     ];
 
     public function company(): BelongsTo {

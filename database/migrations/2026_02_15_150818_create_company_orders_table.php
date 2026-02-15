@@ -18,6 +18,7 @@ return new class extends Migration
             $table->boolean('completed')->default(false);
             $table->uuid('completed_by')->nullable();
             $table->boolean('stock_updated')->default(false);
+            $table->enum('status', ['pending', 'collected', 'completed'])->default('pending');
             $table->timestamps();
 
             /* -------------------------------------------------------------
