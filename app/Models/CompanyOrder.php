@@ -12,6 +12,7 @@ class CompanyOrder extends Model
         'order_id',
         'completed',
         'completed_by',
+        'stock_updated',
     ];
 
     public function company(): BelongsTo {
@@ -20,5 +21,9 @@ class CompanyOrder extends Model
 
     public function order(): BelongsTo {
         return $this->belongsTo(WholesaleOrder::class, 'order_id');
+    }
+
+    public function completedBy(): BelongsTo {
+        return $this->belongsTo(Player::class, 'completed_by', 'uuid');
     }
 }
