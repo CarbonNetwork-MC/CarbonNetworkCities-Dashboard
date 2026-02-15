@@ -40,6 +40,13 @@
 
                 <div class="col-span-3"></div>
 
+                {{-- Price --}}
+                <div class="col-span-1">
+                    <x-forms.number-input label="{{ __('company.labels.price') }}" placeholder="{{ $companyItem->base_price }}" wire:model="price" required />
+                </div>
+
+                <div class="col-span-3"></div>
+
                 {{-- Preferred Stock Level --}}
                 <div class="col-span-1">
                     <x-forms.number-input label="{{ __('company.labels.preferred_stock_level') }}" wire:model="preferredStockLevel" required />

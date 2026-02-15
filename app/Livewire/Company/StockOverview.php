@@ -3,6 +3,7 @@
 namespace App\Livewire\Company;
 
 use App\Models\Company;
+use App\Models\CompanyBankaccount;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
@@ -12,6 +13,8 @@ class StockOverview extends Component
     public $company;
 
     public $hasPermission = false;
+
+    public $currencySymbol = '';
 
     public $selectedStock = null;
     public $selectedStockQuantity = 0;
@@ -24,6 +27,8 @@ class StockOverview extends Component
         $this->hasPermission = Auth::user()->hasRole('Superadmin')
             || $player->uuid == $this->company->owner_uuid
             || $this->company->employees()->where('player_uuid', $player->uuid)->first()->role == 'manager';
+
+        $this->currencySymbol = CompanyBankaccount::where('company_id', $this->company->id)->where('is_main', true)->first()->country->currency_symbol ?? '';
     }
 
     public function openUpdateStockModal($itemId) {

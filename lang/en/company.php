@@ -50,6 +50,7 @@ return [
         'pending' => 'Pending',
         'player' => 'Player',
         'preferred_stock_level' => 'Preferred Stock Level',
+        'price' => 'Price',
         'quantity' => 'Quantity',
         'role' => 'Role',
         'status' => 'Status',
