@@ -37,6 +37,7 @@ class EditCompany extends Component
     public $searchItems = '';
 
     public $notificationMessage = '';
+    public $notificationLevel = 'info';
 
     public $employeesPerPage = 5;
     public $accountsPerPage = 5;
@@ -328,16 +329,17 @@ class EditCompany extends Component
     public function sendNotification() {
         $this->validate([
             'notificationMessage' => ['required', 'string', 'max:255'],
+            'notificationLevel' => ['required', 'string', 'in:info,warning,critical'],
         ]);
 
         CompanyNotification::create([
             'company_id' => $this->company->id,
             'type' => 'custom',
-            'level' => 'info',
+            'level' => $this->notificationLevel,
             'message' => $this->notificationMessage,
         ]);
 
-        $this->reset(['notificationMessage', 'showSendNotificationModal']);
+        $this->reset(['notificationMessage', 'notificationLevel', 'showSendNotificationModal']);
 
         Toaster::success(__('admin.toasts.companies.notification_sent'));
     }

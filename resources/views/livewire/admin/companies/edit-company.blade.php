@@ -582,6 +582,13 @@
         </x-slot>
         <x-slot name="content">
             <x-forms.text-area label="{{ __('admin.labels.companies.notification_message') }}" wire:model="notificationMessage" />
+            <div class="mt-4">
+                <x-forms.select label="{{ __('admin.labels.companies.notification_type') }}" wire:model="notificationLevel">
+                    <option value="info">{{ __('admin.notifications.info') }}</option>
+                    <option value="warning">{{ __('admin.notifications.warning') }}</option>
+                    <option value="critical">{{ __('admin.notifications.critical') }}</option>
+                </x-forms.select>
+            </div>
         </x-slot>
         <x-slot name="footer">
             <x-buttons.secondary-button wire:click="$set('showSendNotificationModal', false)">

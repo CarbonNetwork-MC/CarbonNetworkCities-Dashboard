@@ -692,6 +692,13 @@ return [
         'roles' => [
             'role_name' => 'Moderator',
         ],
+    ],
+
+    // Notifications
+    'notifications' => [
+        'info' => 'Info',
+        'warning' => 'Warning',
+        'critical' => 'Critical',
     ]
 
 ];
