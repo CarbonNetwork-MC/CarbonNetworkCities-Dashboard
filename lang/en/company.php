@@ -39,6 +39,7 @@ return [
         'description' => 'Description',
         'direction' => 'Direction',
         'employees' => 'Employees',
+        'inventory_updated' => 'Inventory Updated',
         'item' => 'Item',
         'item_types' => 'Item Types',
         'is_main' => 'Main Account',

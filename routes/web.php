@@ -88,6 +88,7 @@ use App\Livewire\Company\EditStock;
 use App\Livewire\Company\StockOverview;
 use App\Livewire\Company\UpdateStock;
 use App\Livewire\Company\WholesaleOrders;
+use App\Livewire\Company\OrderDetails;
 
 use App\Livewire\Profile\Overview as ProfileOverview;
 
@@ -143,6 +144,7 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
             Route::get('/company/{companyId}/stock/edit/{itemId}', EditStock::class)->name('company.stock.edit.render');
             Route::get('/company/{companyId}/stock/update', UpdateStock::class)->name('company.stock.update.render');
             Route::get('/company/{companyId}/orders', WholesaleOrders::class)->name('company.wholesale-orders.render');
+            Route::get('/company/{companyId}/order/{orderId}', OrderDetails::class)->name('company.wholesale-orders.details.render');
         });
     });
   
