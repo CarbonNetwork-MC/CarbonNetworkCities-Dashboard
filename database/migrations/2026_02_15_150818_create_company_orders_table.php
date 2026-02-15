@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id');
             $table->boolean('completed')->default(false);
             $table->uuid('completed_by')->nullable();
+            $table->boolean('stock_updated')->default(false);
             $table->timestamps();
 
             /* -------------------------------------------------------------
@@ -24,6 +25,7 @@ return new class extends Migration
             * ------------------------------------------------------------- */
             $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('order_id')->references('id')->on('wholesale_orders')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('completed_by')->references('uuid')->on('players')->onUpdate('cascade')->onDelete('set null');
         });
     }
 
