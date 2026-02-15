@@ -58,6 +58,7 @@
                         <x-tables.table-header>{{ __('company.labels.type') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('company.labels.counterparty') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('company.labels.description') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('company.labels.player') }}</x-tables.table-header>
                     </tr>
                 </x-slot>
                 <x-slot name="rows">
@@ -85,10 +86,11 @@
                                 @endif
                             </x-tables.table-data>
                             <x-tables.table-data>{{ $transaction->description ?? '-' }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $transaction->player?->username ?? '-' }}</x-tables.table-data>
                         </x-tables.table-row>
                     @empty
                         <x-tables.table-row>
-                            <x-tables.empty-state colspan="5">
+                            <x-tables.empty-state colspan="6">
                                 {{ __('company.messages.no_transactions') }}
                             </x-tables.empty-state>
                         </x-tables.table-row>

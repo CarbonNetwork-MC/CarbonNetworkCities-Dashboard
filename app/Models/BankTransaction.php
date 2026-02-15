@@ -19,6 +19,7 @@ class BankTransaction extends Model
         'currency',
         'description',
         'transaction_type',
+        'player_uuid',
     ];
     protected $casts = [
         'created_at' => 'datetime',
@@ -42,5 +43,10 @@ class BankTransaction extends Model
     public function toPersonal()
     {
         return $this->belongsTo(PersonalBankaccount::class, 'to_personal_id');
+    }
+
+    public function player()
+    {
+        return $this->belongsTo(Player::class, 'player_uuid', 'uuid');
     }
 }
