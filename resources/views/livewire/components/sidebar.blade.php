@@ -78,13 +78,13 @@
                             </x-sidebar.nav-group-item>
                         @endif
 
-                        {{-- Stock --}}
+                        {{-- Inventory --}}
                         <x-sidebar.nav-group-item
                             href="{{ route('company.stock.render', ['companyId' => $selectedCompany->id]) }}"
                             :active="request()->routeIs('company.stock.*')"
                             wire:key="company-stock"
                         >
-                            {{ __('sidebar.company.stock') }}
+                            {{ __('sidebar.company.inventory') }}
                         </x-sidebar.nav-group-item>
 
                         {{-- Wholesale Orders --}}

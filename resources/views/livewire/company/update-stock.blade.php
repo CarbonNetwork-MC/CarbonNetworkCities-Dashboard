@@ -17,11 +17,11 @@
             ],
             [
                 'url'   => route('company.stock.render', ['companyId' => $company->id]),
-                'label' => __('company.titles.stock_overview'),
+                'label' => __('company.titles.inventory'),
             ],
             [
                 'url'   => route('company.stock.render', ['companyId' => $company->id]),
-                'label' => __('company.titles.update_stock'),
+                'label' => __('company.titles.update_inventory'),
             ],
         ]" />
     </x-slot>
@@ -29,7 +29,7 @@
     <div class="flex justify-center">
         <div class="w-[50%]">
             <x-containers.main>
-                <x-containers.title>{{ __('company.titles.update_stock') }}</x-containers.title>
+                <x-containers.title>{{ __('company.titles.update_inventory') }}</x-containers.title>
 
                 <div class="mt-6">
                     <div class="grid grid-cols-2 gap-y-4">

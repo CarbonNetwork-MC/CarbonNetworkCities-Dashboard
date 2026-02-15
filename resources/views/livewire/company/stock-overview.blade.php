@@ -17,17 +17,17 @@
             ],
             [
                 'url'   => route('company.stock.render', ['companyId' => $company->id]),
-                'label' => __('company.titles.stock_overview'),
+                'label' => __('company.titles.inventory'),
             ],
         ]" />
     </x-slot>
 
     <x-containers.main>
         <div class="flex justify-between">
-            <x-containers.title>{{ __('company.titles.stock_overview') }}</x-containers.title>
+            <x-containers.title>{{ __('company.titles.inventory') }}</x-containers.title>
             @if ($hasPermission)
                 <x-buttons.primary-button href="{{ route('company.stock.update.render', ['companyId' => $company->id]) }}">
-                    {{ __('company.buttons.update_stock') }}
+                    {{ __('company.buttons.update_inventory') }}
                 </x-buttons.primary-button>
             @endif
         </div>
@@ -37,6 +37,7 @@
                 <x-slot name="headers">
                     <tr>
                         <x-tables.table-header>{{ __('company.labels.item') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('company.labels.price') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('company.labels.quantity') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('company.labels.stock_level') }}</x-tables.table-header>
                         @if ($hasPermission)
@@ -60,6 +61,7 @@
                         @endphp
                         <x-tables.table-row>
                             <x-tables.table-data>{{ $item->item->name }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $currencySymbol }}{{ number_format($item->price, 2) }}</x-tables.table-data>
                             <x-tables.table-data>{{ $item->stock->quantity ?? 0 }}</x-tables.table-data>
                             <x-tables.table-data>
                                 <div class="w-full bg-gray-200 dark:bg-gray-300 rounded-full h-2">
@@ -77,7 +79,7 @@
                                         {{ __('general.buttons.edit') }}
                                     </x-tables.primary-action>
                                     <x-tables.primary-action wire:click="openUpdateStockModal('{{ $item->id }}')">
-                                        {{ __('company.buttons.update_stock') }}
+                                        {{ __('company.buttons.update_inventory') }}
                                     </x-tables.primary-action>
                                 </x-tables.table-actions>
                             @endif
@@ -85,7 +87,7 @@
                     @empty
                         <x-tables.table-row>
                             <x-tables.empty-state :colspan="$hasPermission ? 7 : 3">
-                                {{ __('company.messages.stock_no_records') }}
+                                {{ __('company.messages.inventory_no_records') }}
                             </x-tables.empty-state>
                         </x-tables.table-row>
                     @endforelse

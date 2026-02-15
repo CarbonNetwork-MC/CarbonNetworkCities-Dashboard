@@ -20,7 +20,7 @@ return [
         'dashboard' => 'Dashboard',
         'employees' => 'Employees',
         'title' => 'Companies',
-        'stock' => 'Stock Overview',
+        'inventory' => 'Inventory',
         'wholesale_orders' => 'Wholesale Orders',
     ],
 

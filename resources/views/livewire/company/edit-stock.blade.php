@@ -17,7 +17,7 @@
             ],
             [
                 'url'   => route('company.stock.render', ['companyId' => $company->id]),
-                'label' => __('company.titles.stock_overview'),
+                'label' => __('company.titles.inventory'),
             ],
             [
                 'url'   => route('company.stock.edit.render', ['companyId' => $company->id, 'itemId' => $stockItem->id]),

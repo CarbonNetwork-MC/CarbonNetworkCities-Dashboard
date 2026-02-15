@@ -16,11 +16,11 @@ return [
         'edit_stock' => 'Edit Stock',
         'employees' => 'Employees',
         'employee_overview' => 'Employee Overview',
+        'inventory' => 'Inventory',
         'notifications' => 'Notifications',
         'order_details' => 'Order Details',
-        'stock_overview' => 'Stock Overview',
         'transactions' => 'Transactions',
-        'update_stock' => 'Update Stock',
+        'update_inventory' => 'Update Inventory',
         'wholesale_orders' => 'Wholesale Orders',
     ],
         
@@ -65,22 +65,22 @@ return [
     ],
 
     'buttons' => [
-        'update_stock' => 'Update Stock',
+        'update_inventory' => 'Update Inventory',
         'mark_as_completed' => 'Mark as Completed',
-        'mark_as_completed_and_update_stock' => 'Mark as Completed & Update Stock',
+        'mark_as_completed_and_update_inventory' => 'Mark as Completed & Update Inventory',
         'mark_as_uncompleted' => 'Mark as Uncompleted',
     ],
 
     'messages' => [
         'bank_accounts_no_records' => 'No bank accounts found.',
         'choose_description' => 'Select the company you want to manage or view.',
+        'inventory_no_records' => 'No inventory records found.',
         'more_orders' => 'There are more orders that can\'t be displayed here. Please go to the wholesale orders page to view all orders.',
         'no_companies' => 'No companies found.',
         'no_employees' => 'No employees found.',
         'no_orders' => 'No orders found.',
         'no_order_items' => 'No items found for this order.',
         'no_transactions' => 'No transactions found.',
-        'stock_no_records' => 'No stock records found.',
         'wholesale_orders_no_records' => 'No wholesale orders found.',
     ],
 
