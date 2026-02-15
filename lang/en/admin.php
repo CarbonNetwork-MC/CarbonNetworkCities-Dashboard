@@ -29,6 +29,7 @@ return [
             'overview' => 'Company Overview',
             'pin_consoles' => 'PIN Consoles',
             'plots' => 'Plots',
+            'edit_employee' => 'Edit Employee',
         ],
 
         'languages' => [
@@ -513,12 +514,14 @@ return [
             'item_removed' => 'Item removed from company successfully.',
             'item_updated' => 'Company item updated successfully.',
             'plot_removed' => 'Plot removed from company successfully.',
+            'employee_updated' => 'Employee role updated successfully.',
 
             'update_failed' => 'Failed to update company. Please try again.',
             'bank_account_add_failed' => 'Failed to add bank account to company. Please try again.',
             'bank_account_remove_failed' => 'Failed to remove bank account from company. Please try again.',
             'employee_assign_failed' => 'Failed to assign employee to company. Please try again.',
             'employee_remove_failed' => 'Failed to remove employee from company. Please try again.',
+            'employee_edit_failed' => 'Failed to edit employee role. Please try again.',
             'pin_console_remove_failed' => 'Failed to remove PIN console from company. Please try again.',
             'plot_remove_failed' => 'Failed to remove plot from company. Please try again.',
 

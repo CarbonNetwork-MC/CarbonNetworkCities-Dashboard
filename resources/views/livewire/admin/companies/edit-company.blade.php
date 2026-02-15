@@ -116,6 +116,9 @@
                             <x-tables.table-data>{{ $employee->player->username }}</x-tables.table-data>
                             <x-tables.table-data>{{ ucfirst($employee->role) }}</x-tables.table-data>
                             <x-tables.table-actions>
+                                <x-tables.primary-action href="{{ route('admin.companies.edit-employee', ['companyId' => $company->id, 'playerUuid' => $employee->player_uuid]) }}">
+                                    {{ __('general.buttons.edit') }}
+                                </x-tables.primary-action>
                                 <x-tables.danger-action wire:click="removeEmployee('{{ $employee->player_uuid }}')">
                                     {{ __('general.buttons.remove') }}
                                 </x-tables.danger-action>
