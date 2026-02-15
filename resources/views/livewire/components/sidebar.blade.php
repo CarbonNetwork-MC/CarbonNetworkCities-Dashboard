@@ -67,6 +67,17 @@
                             {{ __('sidebar.company.employees') }}
                         </x-sidebar.nav-group-item>
 
+                        {{-- Bank Accounts --}}
+                        @if ($isCompanyOwnerOrManager)
+                            <x-sidebar.nav-group-item
+                                href="{{ route('company.bank-accounts.render', ['companyId' => $selectedCompany->id]) }}"
+                                :active="request()->routeIs('company.bank-accounts.*')"
+                                wire:key="company-bank-accounts"
+                            >
+                                {{ __('sidebar.company.bank_accounts') }}
+                            </x-sidebar.nav-group-item>
+                        @endif
+
                         {{-- Stock --}}
                         <x-sidebar.nav-group-item
                             href="{{ route('company.stock.render', ['companyId' => $selectedCompany->id]) }}"

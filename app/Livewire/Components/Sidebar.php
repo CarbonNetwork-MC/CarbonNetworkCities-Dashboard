@@ -12,6 +12,7 @@ class Sidebar extends Component
     public $userProfilePicture;
 
     public $selectedCompany;
+    public $isCompanyOwnerOrManager = false;
 
     public $editSidebar;
     public $managePerms;
@@ -24,6 +25,9 @@ class Sidebar extends Component
             : null;
 
         $this->selectedCompany = request()->route('companyId') ? Company::find(request()->route('companyId')) : null;
+        if ($this->selectedCompany && ($this->selectedCompany->owner->uuid == $this->user->player->uuid || $this->selectedCompany->employees()->where('player_uuid', $this->user->player->uuid)->where('role', 'manager')->exists())) {
+            $this->isCompanyOwnerOrManager = true;
+        }
 
         $this->editSidebar = Permission::where('name', 'edit_sidebar')->first();
         $this->managePerms = Permission::where('name', 'manage_permissions')->first();

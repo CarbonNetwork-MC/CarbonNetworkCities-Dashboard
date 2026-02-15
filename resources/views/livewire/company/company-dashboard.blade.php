@@ -161,10 +161,10 @@
         @if ($hasPermission)
             <div class="col-span-1">
                 <x-containers.main class="h-full">
-                    <x-containers.title href="#">{{ __('company.titles.bank_accounts_overview') }}</x-containers.title>
+                    <x-containers.title href="{{ route('company.bank-accounts.render', ['companyId' => $company->id]) }}">{{ __('company.titles.bank_accounts_overview') }}</x-containers.title>
 
                     @forelse ($bankAccounts as $account)
-                        <div class="flex gap-x-6 rounded-xl bg-white dark:bg-gray-900 mt-4 p-4">
+                        <div class="flex gap-x-6 rounded-xl bg-white dark:bg-gray-900 mt-2 p-4">
                             <i class="fi fi-rr-piggy-bank text-black dark:text-white"></i>
                             <div class="w-full">
                                 <div class="flex justify-between text-gray-500 dark:text-gray-400">

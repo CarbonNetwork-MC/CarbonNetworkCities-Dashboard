@@ -22,7 +22,6 @@ use App\Livewire\Admin\CoC\EditCoCType;
 use App\Livewire\Admin\Companies\AddBankAccount as AddCompanyBankAccount;
 use App\Livewire\Admin\Companies\AddEmployee;
 use App\Livewire\Admin\Companies\AddItems;
-use App\Livewire\Admin\Companies\AddItemGroup;
 use App\Livewire\Admin\Companies\AddPinConsole;
 use App\Livewire\Admin\Companies\AddPlot;
 use App\Livewire\Admin\Companies\EditCompany;
@@ -80,6 +79,8 @@ use App\Livewire\Admin\Wholesale\Overview as WholesaleOverview;
 use App\Livewire\Admin\Wholesale\NewItem as NewWholesaleItem;
 use App\Livewire\Admin\Wholesale\EditItem as EditWholesaleItem;
 
+use App\Livewire\Company\BankaccountOverview;
+use App\Livewire\Company\ChooseBankaccount;
 use App\Livewire\Company\ChooseCompany;
 use App\Livewire\Company\CompanyDashboard;
 use App\Livewire\Company\Employees as CompanyEmployees;
@@ -136,6 +137,8 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
         Route::get('/company/{companyId}/employees', CompanyEmployees::class)->name('company.employees.render');
         Route::get('/company/{companyId}/stock', StockOverview::class)->name('company.stock.render');
         Route::middleware('company_owner_or_manager')->group(function() {
+            Route::get('/company/{companyId}/bank-account/{bankAccountId}', BankaccountOverview::class)->name('company.bank-account.render');
+            Route::get('/company/{companyId}/choose-bank-account', ChooseBankaccount::class)->name('company.bank-accounts.render');
             Route::get('/company/{companyId}/stock/edit/{itemId}', EditStock::class)->name('company.stock.edit.render');
             Route::get('/company/{companyId}/stock/update', UpdateStock::class)->name('company.stock.update.render');
         });

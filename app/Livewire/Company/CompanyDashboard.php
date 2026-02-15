@@ -61,7 +61,7 @@ class CompanyDashboard extends Component
 
         $bankAccounts = CompanyBankaccount::where('company_id', $this->company->id)
             ->with('country')
-            ->get();
+            ->paginate(3, ['*'], 'bank_accounts_page');
 
         // $notifications = $this->getNotifications();
         $notifications = CompanyNotification::where('company_id', $this->company->id)

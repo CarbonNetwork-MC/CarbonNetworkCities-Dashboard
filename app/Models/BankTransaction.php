@@ -20,6 +20,9 @@ class BankTransaction extends Model
         'description',
         'transaction_type',
     ];
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
 
     public function fromCompany()
     {
