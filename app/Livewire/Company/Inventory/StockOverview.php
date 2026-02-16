@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Company;
+namespace App\Livewire\Company\Inventory;
 
 use App\Models\Company;
 use App\Models\CompanyBankaccount;
@@ -44,11 +44,11 @@ class StockOverview extends Component
 
         $this->reset(['selectedStock', 'selectedStockQuantity', 'showUpdateStockModal']);
 
-        Toaster::success(__('company.toasts.stock_updated'));
+        Toaster::success(__('company.toasts.inventory_updated'));
     }
 
     public function render()
     {
-        return view('livewire.company.stock-overview');
+        return view('livewire.company.inventory.stock-overview');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Company;
+namespace App\Livewire\Company\Inventory;
 
 use App\Models\Company;
 use Livewire\Component;
@@ -30,6 +30,6 @@ class UpdateStock extends Component
 
     public function render()
     {
-        return view('livewire.company.update-stock');
+        return view('livewire.company.inventory.update-stock');
     }
 }

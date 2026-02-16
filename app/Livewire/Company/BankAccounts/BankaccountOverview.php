@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Company;
+namespace App\Livewire\Company\BankAccounts;
 
 use App\Models\BankTransaction;
 use App\Models\Company;
@@ -40,7 +40,7 @@ class BankaccountOverview extends Component
             ->orderByDesc('created_at')
             ->paginate(15);
 
-        return view('livewire.company.bankaccount-overview', [
+        return view('livewire.company.bank-accounts.bankaccount-overview', [
             'transactions' => $transactions,
         ]);
     }

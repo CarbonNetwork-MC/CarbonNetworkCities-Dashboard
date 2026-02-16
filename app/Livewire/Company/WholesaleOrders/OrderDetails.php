@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Company;
+namespace App\Livewire\Company\WholesaleOrders;
 
 use App\Models\Company;
 use App\Models\CompanyOrder;
@@ -53,7 +53,6 @@ class OrderDetails extends Component
             'stock_updated' => false,
         ]);
 
-        // TODO: Revert stock changes if needed
         if ($revertStock) {
             foreach ($this->order->order->items as $orderItem) {
                 foreach ($this->company->stock as $stockItem) {
@@ -71,6 +70,6 @@ class OrderDetails extends Component
 
     public function render()
     {
-        return view('livewire.company.order-details');
+        return view('livewire.company.wholesale-orders.order-details');
     }
 }

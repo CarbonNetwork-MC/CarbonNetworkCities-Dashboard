@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Company;
+namespace App\Livewire\Company\WholesaleOrders;
 
 use Livewire\Component;
 
@@ -21,6 +21,6 @@ class ChooseCompany extends Component
 
     public function render()
     {
-        return view('livewire.company.choose-company');
+        return view('livewire.company.wholesale-orders.choose-company');
     }
 }

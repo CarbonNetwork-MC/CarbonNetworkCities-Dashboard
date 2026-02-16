@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Company;
+namespace App\Livewire\Company\Employees;
 
 use App\Models\Company;
 use App\Models\Player;
@@ -54,6 +54,6 @@ class Employees extends Component
 
     public function render()
     {
-        return view('livewire.company.employees');
+        return view('livewire.company.employees.employees');
     }
 }

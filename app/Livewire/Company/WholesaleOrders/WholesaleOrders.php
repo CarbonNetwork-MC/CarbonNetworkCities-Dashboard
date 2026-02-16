@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Company;
+namespace App\Livewire\Company\WholesaleOrders;
 
 use App\Models\Company;
 use App\Models\CompanyOrder;
@@ -27,7 +27,7 @@ class WholesaleOrders extends Component
             ->orderBy('created_at', 'desc')
             ->paginate($this->orderPerPage);
 
-        return view('livewire.company.wholesale-orders', [
+        return view('livewire.company.wholesale-orders.wholesale-orders', [
             'orders' => $orders,
         ]);
     }

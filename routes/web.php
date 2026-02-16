@@ -79,16 +79,16 @@ use App\Livewire\Admin\Wholesale\Overview as WholesaleOverview;
 use App\Livewire\Admin\Wholesale\NewItem as NewWholesaleItem;
 use App\Livewire\Admin\Wholesale\EditItem as EditWholesaleItem;
 
-use App\Livewire\Company\BankaccountOverview;
-use App\Livewire\Company\ChooseBankaccount;
-use App\Livewire\Company\ChooseCompany;
 use App\Livewire\Company\CompanyDashboard;
-use App\Livewire\Company\Employees as CompanyEmployees;
-use App\Livewire\Company\EditStock;
-use App\Livewire\Company\StockOverview;
-use App\Livewire\Company\UpdateStock;
-use App\Livewire\Company\WholesaleOrders;
-use App\Livewire\Company\OrderDetails;
+use App\Livewire\Company\BankAccounts\BankaccountOverview;
+use App\Livewire\Company\BankAccounts\ChooseBankaccount;
+use App\Livewire\Company\Employees\Employees as CompanyEmployees;
+use App\Livewire\Company\Inventory\EditStock;
+use App\Livewire\Company\Inventory\StockOverview;
+use App\Livewire\Company\Inventory\UpdateStock;
+use App\Livewire\Company\WholesaleOrders\ChooseCompany;
+use App\Livewire\Company\WholesaleOrders\WholesaleOrders;
+use App\Livewire\Company\WholesaleOrders\OrderDetails;
 
 use App\Livewire\Profile\Overview as ProfileOverview;
 

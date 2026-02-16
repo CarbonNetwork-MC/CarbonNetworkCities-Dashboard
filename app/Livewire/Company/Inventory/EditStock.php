@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Company;
+namespace App\Livewire\Company\Inventory;
 
 use App\Models\Company;
 use App\Models\CompanyItem;
@@ -54,6 +54,6 @@ class EditStock extends Component
 
     public function render()
     {
-        return view('livewire.company.edit-stock');
+        return view('livewire.company.inventory.edit-stock');
     }
 }

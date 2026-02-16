@@ -86,6 +86,7 @@ return [
     ],
 
     'toasts' => [
+        'inventory_updated' => 'Inventory updated successfully.',
         'notification_marked_as_read' => 'Notification marked as read.',
         'order_marked_as_completed' => 'Order marked as completed.',
         'order_marked_as_uncompleted' => 'Order marked as uncompleted.',

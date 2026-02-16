@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Company;
+namespace App\Livewire\Company\BankAccounts;
 
 use App\Models\Company;
 use App\Models\CompanyBankaccount;
@@ -21,6 +21,6 @@ class ChooseBankaccount extends Component
     }
     public function render()
     {
-        return view('livewire.company.choose-bankaccount');
+        return view('livewire.company.bank-accounts.choose-bankaccount');
     }
 }
