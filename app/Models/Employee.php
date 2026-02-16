@@ -10,7 +10,12 @@ class Employee extends Model
     protected $fillable = [
         'player_uuid',
         'company_id',
+        'is_paid',
+        'salary_percentage',
         'role',
+    ];
+    protected $casts = [
+        'is_paid' => 'boolean',
     ];
 
     public function player(): BelongsTo
