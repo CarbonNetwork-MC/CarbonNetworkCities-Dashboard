@@ -11,6 +11,7 @@ class Company extends Model
     protected $fillable = [
         'name',
         'world_id',
+        'country_id',
         'coc_type',
         'coc_number',
         'owner_uuid',
@@ -24,6 +25,11 @@ class Company extends Model
     public function cocType(): HasOne
     {
         return $this->hasOne(CocType::class, 'name', 'coc_type');
+    }
+
+    public function country(): HasOne
+    {
+        return $this->hasOne(Country::class, 'id', 'country_id');
     }
 
     public function bankAccounts(): HasMany
