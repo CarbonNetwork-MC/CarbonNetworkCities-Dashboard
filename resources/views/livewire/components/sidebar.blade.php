@@ -57,6 +57,13 @@
                         </x-sidebar.nav-group-item>
 
                         {{-- Sell Docs --}}
+                        <x-sidebar.nav-group-item
+                            href="{{ route('company.sales.render', ['companyId' => $selectedCompany->id]) }}"
+                            :active="request()->routeIs('company.sales.*')"
+                            wire:key="company-sales"
+                        >
+                            {{ __('sidebar.company.sales') }}
+                        </x-sidebar.nav-group-item>
 
                         {{-- Employees --}}
                         <x-sidebar.nav-group-item

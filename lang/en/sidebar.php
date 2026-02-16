@@ -19,8 +19,9 @@ return [
         'choose' => 'Choose Company',
         'dashboard' => 'Dashboard',
         'employees' => 'Employees',
-        'title' => 'Companies',
         'inventory' => 'Inventory',
+        'sales' => 'Sales',
+        'title' => 'Companies',
         'wholesale_orders' => 'Wholesale Orders',
     ],
 

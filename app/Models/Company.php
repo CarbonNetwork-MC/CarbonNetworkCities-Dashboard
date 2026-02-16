@@ -71,4 +71,9 @@ class Company extends Model
     {
         return $this->hasMany(WholesaleOrder::class, 'company_id', 'id');
     }
+
+    public function sales(): HasMany
+    {
+        return $this->hasMany(CompanySale::class, 'company_id', 'id');
+    }
 }
