@@ -14,22 +14,20 @@ return new class extends Migration
         Schema::create('company_sales', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('company_id');
-            $table->unsignedBigInteger('item_id')->nullable();
             $table->integer('year');
             $table->integer('week');
             $table->integer('quantity')->default(0);
             $table->decimal('total_revenue', 15, 2)->default(0);
             $table->char('customer_uuid', 36)->nullable();
-            $table->unsignedBigInteger('employee_id')->nullable();
+            $table->char('employee_uuid', 36)->nullable();
             $table->timestamps();
 
             /* -------------------------------------------------------------
             * Foreign keys
             * ------------------------------------------------------------- */
             $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('item_id')->references('id')->on('company_items')->onUpdate('cascade')->onDelete('set null');
             $table->foreign('customer_uuid')->references('uuid')->on('players')->onUpdate('cascade')->onDelete('set null');
-            $table->foreign('employee_id')->references('id')->on('employees')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('employee_uuid')->references('uuid')->on('players')->onUpdate('cascade')->onDelete('set null');
         });
     }
 

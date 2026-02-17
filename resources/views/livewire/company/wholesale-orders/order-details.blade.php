@@ -98,7 +98,7 @@
                         </div>
                         <div class="col-span-1">
                             <x-buttons.primary-button wire:click="markAsCompletedAndUpdateStock" class="w-full">
-                                {{ __('company.buttons.mark_as_completed_and_update_stock') }}
+                                {{ __('company.buttons.mark_as_completed_and_update_inventory') }}
                             </x-buttons.primary-button>
                         </div>
                     @endif

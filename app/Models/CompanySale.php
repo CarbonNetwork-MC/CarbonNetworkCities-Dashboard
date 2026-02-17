@@ -4,28 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CompanySale extends Model
 {
     protected $fillable = [
         'company_id',
-        'item_id',
         'year',
         'week',
         'quantity',
         'total_revenue',
         'customer_uuid',
-        'employee_id'
+        'employee_uuid'
     ];
 
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class, 'company_id', 'id');
-    }
-
-    public function item(): BelongsTo
-    {
-        return $this->belongsTo(CompanyItem::class, 'item_id', 'id');
     }
 
     public function customer(): BelongsTo
@@ -35,6 +30,11 @@ class CompanySale extends Model
 
     public function employee(): BelongsTo
     {
-        return $this->belongsTo(Employee::class, 'employee_id', 'id');
+        return $this->belongsTo(Player::class, 'employee_uuid', 'uuid');
+    }
+
+    public function items(): HasMany
+    {
+        return $this->hasMany(CompanySaleItem::class, 'sale_id', 'id');
     }
 }
