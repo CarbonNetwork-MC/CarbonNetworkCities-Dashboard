@@ -24,6 +24,7 @@ return [
         'order_summary' => 'Order Summary',
         'products' => 'Products',
         'transactions' => 'Transactions',
+        'sales' => 'Sales',
         'update_inventory' => 'Update Inventory',
         'wholesale_orders' => 'Wholesale Orders',
     ],
@@ -43,6 +44,7 @@ return [
         'deposit' => 'Deposit',
         'description' => 'Description',
         'direction' => 'Direction',
+        'employee' => 'Employee',
         'employees' => 'Employees',
         'inventory_updated' => 'Inventory Updated',
         'item' => 'Item',
@@ -76,6 +78,7 @@ return [
     ],
 
     'buttons' => [
+        'create_sale' => 'Create Sale',
         'update_inventory' => 'Update Inventory',
         'mark_as_completed' => 'Mark as Completed',
         'mark_as_completed_and_update_inventory' => 'Mark as Completed & Update Inventory',

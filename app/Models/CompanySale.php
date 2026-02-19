@@ -17,6 +17,9 @@ class CompanySale extends Model
         'customer_uuid',
         'employee_uuid'
     ];
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
 
     public function company(): BelongsTo
     {
@@ -35,6 +38,6 @@ class CompanySale extends Model
 
     public function items(): HasMany
     {
-        return $this->hasMany(CompanySaleItem::class, 'sale_id', 'id');
+        return $this->hasMany(CompanySaleItem::class, 'company_sale_id', 'id');
     }
 }
