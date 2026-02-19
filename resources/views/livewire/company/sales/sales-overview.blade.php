@@ -25,7 +25,12 @@
     <div class="flex gap-x-4">
         <div class="w-full md:w-[75%]">
             <x-containers.main>
-                <x-containers.title>{{ __('company.titles.sales') }}</x-containers.title>
+                <div class="flex justify-between">
+                    <x-containers.title>{{ __('company.titles.sales') }}</x-containers.title>
+                    <x-buttons.primary-button href="{{ route('company.sales.new.render', ['companyId' => $company->id]) }}">
+                        {{ __('company.buttons.new_sale') }}
+                    </x-buttons.primary-button>
+                </div>
 
                 <div class="mt-6">
                     <x-tables.table-striped>
@@ -48,18 +53,22 @@
                                     <x-tables.table-data>{{ $company->country->currency_symbol ?? '' }}{{ number_format($sale->total_revenue, 2) }}</x-tables.table-data>
                                     <x-tables.table-data>{{ $sale->employee->username }}</x-tables.table-data>
                                     <x-tables.table-actions>
-                                        <x-tables.primary-action href="">
+                                        <x-tables.primary-action href="{{ route('company.sales.details.render', ['companyId' => $company->id, 'saleId' => $sale->id]) }}">
                                             {{ __('general.buttons.view') }}
                                         </x-tables.primary-action>
                                         @if ($hasPermission)
-                                            <x-tables.danger-action href="">
+                                            <x-tables.danger-action wire:click="removeSale('{{ $sale->id }}')">
                                                 {{ __('general.buttons.delete') }}
                                             </x-tables.danger-action>
                                         @endif
                                     </x-tables.table-actions>
                                 </x-tables.table-row>
                             @empty
-
+                                <x-tables.table-row>
+                                    <x-tables.empty-state :colspan="7">
+                                        {{ __('company.messages.no_sales') }}
+                                    </x-tables.empty-state>
+                                </x-tables.table-row>
                             @endforelse
                         </x-slot>
                         <x-slot name="pagination">
@@ -127,4 +136,23 @@
             </x-containers.main>
         </div>
     </div>
+
+    <x-modals.modal wire:model="showDeleteSaleModal">
+        <x-slot name="title">
+            <div class="flex justify-center">
+                {{ __('company.titles.delete_sale') }}
+            </div>
+        </x-slot>
+        <x-slot name="content">
+            {!! __('company.messages.delete_sale_confirmation') !!}
+        </x-slot>
+        <x-slot name="footer">
+            <x-buttons.secondary-button wire:click="$set('showDeleteSaleModal', false)">
+                {{ __('general.buttons.cancel') }}
+            </x-buttons.secondary-button>
+            <x-buttons.danger-button wire:click="destroySale">
+                {{ __('general.buttons.delete') }}
+            </x-buttons.danger-button>
+        </x-slot>
+    </x-modals.modal>
 </div>

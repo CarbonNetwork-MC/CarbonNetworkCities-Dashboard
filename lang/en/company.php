@@ -14,6 +14,7 @@ return [
         'best_selling_products' => 'Best Selling Products',
         'choose_bank_account' => 'Choose Bank Account',
         'create_sale' => 'Create Sale',
+        'delete_sale' => 'Delete Sale',
         'edit_stock' => 'Edit Stock',
         'employees' => 'Employees',
         'employee_overview' => 'Employee Overview',
@@ -62,6 +63,7 @@ return [
         'product' => 'Product',
         'quantity' => 'Quantity',
         'role' => 'Role',
+        'sale_at' => 'Sale at',
         'stacks' => 'Stacks',
         'status' => 'Status',
         'stock' => 'Stock',
@@ -83,11 +85,13 @@ return [
         'mark_as_completed' => 'Mark as Completed',
         'mark_as_completed_and_update_inventory' => 'Mark as Completed & Update Inventory',
         'mark_as_uncompleted' => 'Mark as Uncompleted',
+        'new_sale' => 'New Sale',
     ],
 
     'messages' => [
         'bank_accounts_no_records' => 'No bank accounts found.',
         'choose_description' => 'Select the company you want to manage or view.',
+        'delete_sale_confirmation' => 'Are you sure you want to delete this sale? This action cannot be undone.',
         'inventory_no_records' => 'No inventory records found.',
         'more_orders' => 'There are more orders that can\'t be displayed here. Please go to the wholesale orders page to view all orders.',
         'no_companies' => 'No companies found.',
@@ -95,6 +99,7 @@ return [
         'no_orders' => 'No orders found.',
         'no_order_items' => 'No items found for this order.',
         'no_transactions' => 'No transactions found.',
+        'no_sales' => 'No sales found.',
         'wholesale_orders_no_records' => 'No wholesale orders found.',
     ],
 
@@ -104,6 +109,7 @@ return [
         'order_marked_as_completed' => 'Order marked as completed.',
         'order_marked_as_uncompleted' => 'Order marked as uncompleted.',
         'sale_created' => 'Sale created successfully.',
+        'sale_deleted' => 'Sale deleted successfully.',
         'stock_updated_successfully' => 'Stock updated successfully.',
     ],
 

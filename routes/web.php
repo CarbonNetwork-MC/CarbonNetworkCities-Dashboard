@@ -87,6 +87,7 @@ use App\Livewire\Company\Inventory\EditStock;
 use App\Livewire\Company\Inventory\StockOverview;
 use App\Livewire\Company\Inventory\UpdateStock;
 use App\Livewire\Company\Sales\CreateSale;
+use App\Livewire\Company\Sales\SaleDetails;
 use App\Livewire\Company\Sales\SalesOverview;
 use App\Livewire\Company\WholesaleOrders\ChooseCompany;
 use App\Livewire\Company\WholesaleOrders\WholesaleOrders;
@@ -141,6 +142,7 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
         Route::get('/company/{companyId}/employees', CompanyEmployees::class)->name('company.employees.render');
         Route::get('/company/{companyId}/sales', SalesOverview::class)->name('company.sales.render');
         Route::get('/company/{companyId}/sales/new', CreateSale::class)->name('company.sales.new.render');
+        Route::get('/company/{companyId}/sales/{saleId}', SaleDetails::class)->name('company.sales.details.render');
         Route::get('/company/{companyId}/stock', StockOverview::class)->name('company.stock.render');
         Route::middleware('company_owner_or_manager')->group(function() {
             Route::get('/company/{companyId}/bank-account/{bankAccountId}', BankaccountOverview::class)->name('company.bank-account.render');
