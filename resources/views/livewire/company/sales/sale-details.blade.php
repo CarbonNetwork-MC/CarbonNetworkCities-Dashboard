@@ -66,6 +66,31 @@
                         {{ $sale->company->country->currency_symbol ?? '' }}{{ number_format($sale->total_revenue, 2) }}
                     </div>
                 </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 mt-2">
+                    <div class="col-span-1"
+                        x-data="{
+                            copied: false,
+                            copy() {
+                                const copyText = this.$refs.copyText.innerText;
+                                navigator.clipboard.writeText(copyText).then(() => {
+                                    this.copied = true;
+                                    setTimeout(() => this.copied = false, 2000);
+                                });
+                            }
+                        }"
+                    >
+                        <div class="flex flex-row-reverse items-center justify-between bg-gray-200 dark:bg-gray-900 rounded-md px-4 py-2">
+                            <button class="flex items-center gap-2 px-3 py-1.5 text-sm bg-gray-800 hover:bg-gray-700 text-white rounded-md transition cursor-pointer" @click="copy()">
+                                <i class="fi fi-rr-clone text-lg"></i>
+                            </button>
+
+                            <div class="text-md font-medium text-gray-700 dark:text-white" x-ref="copyText">
+                                /pin set {{ $customer ?? '' }} {{ $sale->total_revenue == 0 ? '' : $sale->total_revenue }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </x-containers.main>
         </div>
     </div>

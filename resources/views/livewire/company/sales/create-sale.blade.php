@@ -149,8 +149,8 @@
                         x-data="{
                             copied: false,
                             copy() {
-                                const code = this.$refs.code.innerText;
-                                navigator.clipboard.writeText(code).then(() => {
+                                const copyText = this.$refs.copyText.innerText;
+                                navigator.clipboard.writeText(copyText).then(() => {
                                     this.copied = true;
                                     setTimeout(() => this.copied = false, 2000);
                                 });
@@ -162,7 +162,7 @@
                                 <i class="fi fi-rr-clone text-lg"></i>
                             </button>
 
-                            <div class="text-md font-medium text-gray-700 dark:text-white" x-ref="code">
+                            <div class="text-md font-medium text-gray-700 dark:text-white" x-ref="copyText">
                                 /pin set {{ $customer ?? '' }} {{ $total == 0 ? '' : $total }}
                             </div>
                         </div>
