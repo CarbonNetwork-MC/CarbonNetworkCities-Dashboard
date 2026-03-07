@@ -9,7 +9,7 @@ class CompanySettings extends Model
     protected $fillable = [
         'company_id',
         'salary_scheme',
-        'tip_schema',
+        'tip_scheme',
         'default_salary_percentage',
     ];
 

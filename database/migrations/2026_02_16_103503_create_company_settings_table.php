@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('company_settings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('company_id');
-            $table->enum('salary_scheme', ['fixed', 'percentage'])->default('percentage');
-            $table->enum('tip_schema', ['per_employee', 'shared'])->default('shared');
+            $table->enum('salary_scheme', ['own_sales_percentage', 'team_sales_percentage'])->default('own_sales_percentage');
+            $table->enum('tip_scheme', ['per_employee', 'shared'])->default('per_employee');
             $table->decimal('default_salary_percentage', 5, 2)->nullable()->default(100.00);
             $table->timestamps();
 

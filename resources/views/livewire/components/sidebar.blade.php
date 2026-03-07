@@ -104,6 +104,17 @@
                                 {{ __('sidebar.company.wholesale_orders') }}
                             </x-sidebar.nav-group-item>
                         @endif
+
+                        {{-- Company Settings --}}
+                        @if ($isCompanyOwnerOrManager)
+                            <x-sidebar.nav-group-item
+                                href="{{ route('company.settings.render', ['companyId' => $selectedCompany->id]) }}"
+                                :active="request()->routeIs('company.settings.*')"
+                                wire:key="company-settings"
+                            >
+                                {{ __('sidebar.company.settings') }}
+                            </x-sidebar.nav-group-item>
+                        @endif
                     </x-sidebar.nav-group>
                 @else
                     <x-sidebar.nav-item

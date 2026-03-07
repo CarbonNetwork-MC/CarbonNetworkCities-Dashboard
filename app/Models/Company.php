@@ -24,7 +24,7 @@ class Company extends Model
 
     public function cocType(): HasOne
     {
-        return $this->hasOne(CocType::class, 'name', 'coc_type');
+        return $this->hasOne(CoCType::class, 'name', 'coc_type');
     }
 
     public function country(): HasOne
@@ -75,5 +75,20 @@ class Company extends Model
     public function sales(): HasMany
     {
         return $this->hasMany(CompanySale::class, 'company_id', 'id');
+    }
+
+    public function settings(): HasOne
+    {
+        return $this->hasOne(CompanySettings::class, 'company_id', 'id');
+    }
+
+    public function salaries(): HasMany
+    {
+        return $this->hasMany(EmployeeSalary::class, 'company_id', 'id');
+    }
+
+    public function tips(): HasMany
+    {
+        return $this->hasMany(CompanyTip::class, 'company_id', 'id');
     }
 }

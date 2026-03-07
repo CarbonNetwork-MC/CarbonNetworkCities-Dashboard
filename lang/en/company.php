@@ -26,6 +26,7 @@ return [
         'products' => 'Products',
         'transactions' => 'Transactions',
         'sales' => 'Sales',
+        'settings' => 'Company Settings',
         'update_inventory' => 'Update Inventory',
         'wholesale_orders' => 'Wholesale Orders',
     ],
@@ -42,6 +43,7 @@ return [
         'critical_threshold' => 'Critical Threshold',
         'customer' => 'Customer',
         'date' => 'Date',
+        'default_salary_percentage' => 'Default Salary Percentage',
         'deposit' => 'Deposit',
         'description' => 'Description',
         'direction' => 'Direction',
@@ -63,6 +65,7 @@ return [
         'product' => 'Product',
         'quantity' => 'Quantity',
         'role' => 'Role',
+        'salary_scheme' => 'Salary Scheme',
         'sale_at' => 'Sale at',
         'stacks' => 'Stacks',
         'status' => 'Status',
@@ -70,6 +73,7 @@ return [
         'stock_level' => 'Stock Level',
         'units' => 'Units',
         'unknown' => 'Unknown',
+        'tip_scheme' => 'Tip Scheme',
         'total' => 'Total',
         'total_amount' => 'Total Amount',
         'transfer' => 'Transfer',
@@ -121,6 +125,17 @@ return [
         'owner' => 'Owner',
         'manager' => 'Manager',
         'employee' => 'Employee',
+    ],
+
+    'options' => [
+        'salary_scheme' => [
+            'own_sales_percentage' => 'Own Sales Percentage',
+            'team_sales_percentage' => 'Team Sales Percentage',
+        ],
+        'tip_scheme' => [
+            'per_employee' => 'Per Employee',
+            'shared' => 'Shared',
+        ],
     ],
 
     'notifications' => [
