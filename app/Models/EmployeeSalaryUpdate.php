@@ -10,6 +10,7 @@ class EmployeeSalaryUpdate extends Model
     protected $fillable = [
         'player_uuid',
         'sale_id',
+        'tip_id',
         'amount',
     ];
 
@@ -21,5 +22,10 @@ class EmployeeSalaryUpdate extends Model
     public function sale(): BelongsTo
     {
         return $this->belongsTo(CompanySale::class, 'sale_id', 'id');
+    }
+
+    public function tip(): BelongsTo
+    {
+        return $this->belongsTo(CompanyTip::class, 'tip_id', 'id');
     }
 }

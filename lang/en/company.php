@@ -25,10 +25,11 @@ return [
         'order_details' => 'Order Details',
         'order_summary' => 'Order Summary',
         'products' => 'Products',
-        'transactions' => 'Transactions',
         'salaries' => 'Salaries',
         'sales' => 'Sales',
         'settings' => 'Company Settings',
+        'tips' => 'Tips',
+        'transactions' => 'Transactions',
         'update_inventory' => 'Update Inventory',
         'wholesale_orders' => 'Wholesale Orders',
     ],
@@ -79,6 +80,7 @@ return [
         'units' => 'Units',
         'unknown' => 'Unknown',
         'tip_scheme' => 'Tip Scheme',
+        'tips' => 'Tips',
         'total' => 'Total',
         'total_amount' => 'Total Amount',
         'transfer' => 'Transfer',
@@ -95,9 +97,10 @@ return [
         'mark_as_completed_and_update_inventory' => 'Mark as Completed & Update Inventory',
         'mark_as_uncompleted' => 'Mark as Uncompleted',
         'mark_paid' => 'Mark as paid',
-        'new_sale' => 'New Sale',
-        'transfer_salary' => 'Transfer salary',
         'mark_unpaid' => 'Mark as unpaid',
+        'new_sale' => 'New Sale',
+        'new_tip' => 'New Tip',
+        'transfer_salary' => 'Transfer salary',
     ],
 
     'messages' => [
@@ -111,9 +114,10 @@ return [
         'no_employees' => 'No employees found.',
         'no_orders' => 'No orders found.',
         'no_order_items' => 'No items found for this order.',
-        'no_transactions' => 'No transactions found.',
         'no_salaries_for_week' => 'No salaries found for this week.',
         'no_sales' => 'No sales found.',
+        'no_tips' => 'No tips found.',
+        'no_transactions' => 'No transactions found.',
         'wholesale_orders_no_records' => 'No wholesale orders found.',
     ],
 
@@ -125,7 +129,9 @@ return [
         'order_marked_as_uncompleted' => 'Order marked as uncompleted.',
         'sale_created' => 'Sale created successfully.',
         'sale_deleted' => 'Sale deleted successfully.',
+        'settings_updated' => 'Company settings updated successfully.',
         'stock_updated_successfully' => 'Stock updated successfully.',
+        'tip_created' => 'Tip added successfully.'
     ],
 
     'placeholders' => [

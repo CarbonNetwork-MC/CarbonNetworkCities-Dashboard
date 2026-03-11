@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('employee_salary_updates', function (Blueprint $table) {
             $table->id();
             $table->char('player_uuid', 36);
-            $table->unsignedBigInteger('sale_id');
+            $table->unsignedBigInteger('sale_id')->nullable();
+            $table->unsignedBigInteger('tip_id')->nullable();
             $table->decimal('amount', 10, 2);
             $table->timestamps();
 
@@ -23,6 +24,7 @@ return new class extends Migration
             * ------------------------------------------------------------- */
             $table->foreign('player_uuid')->references('uuid')->on('players')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('sale_id')->references('id')->on('company_sales')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('tip_id')->references('id')->on('company_tips')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

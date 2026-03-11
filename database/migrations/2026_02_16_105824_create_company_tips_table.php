@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('company_id');
             $table->decimal('amount', 15, 2);
             $table->char('customer_uuid', 36)->nullable();
-            $table->unsignedBigInteger('employee_id')->nullable();
+            $table->char('employee_uuid', 36)->nullable();
             $table->timestamps();
 
             /* -------------------------------------------------------------
@@ -24,7 +24,7 @@ return new class extends Migration
             * ------------------------------------------------------------- */
             $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('customer_uuid')->references('uuid')->on('players')->onUpdate('cascade')->onDelete('set null');
-            $table->foreign('employee_id')->references('id')->on('employees')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('employee_uuid')->references('uuid')->on('players')->onUpdate('cascade')->onDelete('set null');
         });
     }
 

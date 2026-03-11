@@ -92,6 +92,7 @@ use App\Livewire\Company\Sales\CreateSale;
 use App\Livewire\Company\Sales\SaleDetails;
 use App\Livewire\Company\Sales\SalesOverview;
 use App\Livewire\Company\Settings\Overview as CompanySettingsOverview;
+use App\Livewire\Company\Tips\Overview as TipsOverview;
 use App\Livewire\Company\WholesaleOrders\ChooseCompany;
 use App\Livewire\Company\WholesaleOrders\WholesaleOrders;
 use App\Livewire\Company\WholesaleOrders\OrderDetails;
@@ -147,6 +148,7 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
         Route::get('/company/{companyId}/sales/new', CreateSale::class)->name('company.sales.new.render');
         Route::get('/company/{companyId}/sales/{saleId}', SaleDetails::class)->name('company.sales.details.render');
         Route::get('/company/{companyId}/stock', StockOverview::class)->name('company.stock.render');
+        Route::get('/company/{companyId}/tips', TipsOverview::class)->name('company.tips.render');
         Route::middleware('company_owner_or_manager')->group(function() {
             Route::get('/company/{companyId}/bank-account/{bankAccountId}', BankaccountOverview::class)->name('company.bank-account.render');
             Route::get('/company/{companyId}/choose-bank-account', ChooseBankaccount::class)->name('company.bank-accounts.render');

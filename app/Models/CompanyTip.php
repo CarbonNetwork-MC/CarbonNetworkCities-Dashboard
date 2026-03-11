@@ -11,7 +11,7 @@ class CompanyTip extends Model
         'company_id',
         'amount',
         'customer_uuid',
-        'employee_id',
+        'employee_uuid',
     ];
 
     public function company(): BelongsTo
@@ -21,7 +21,7 @@ class CompanyTip extends Model
 
     public function employee(): BelongsTo
     {
-        return $this->belongsTo(Employee::class, 'employee_id', 'id');
+        return $this->belongsTo(Player::class, 'employee_uuid', 'uuid');
     }
 
     public function customer(): BelongsTo

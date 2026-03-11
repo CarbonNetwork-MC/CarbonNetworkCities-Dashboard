@@ -23,6 +23,7 @@ return [
         'salaries' => 'Salaries',
         'sales' => 'Sales',
         'settings' => 'Settings',
+        'tips' => 'Tips',
         'title' => 'Companies',
         'wholesale_orders' => 'Wholesale Orders',
     ],

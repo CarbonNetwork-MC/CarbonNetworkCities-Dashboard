@@ -66,6 +66,13 @@
                         </x-sidebar.nav-group-item>
 
                         {{-- Tips --}}
+                        <x-sidebar.nav-group-item
+                            href="{{ route('company.tips.render', ['companyId' => $selectedCompany->id]) }}"
+                            :active="request()->routeIs('company.tips.*')"
+                            wire:key="company-tips"
+                        >
+                            {{ __('sidebar.company.tips') }}
+                        </x-sidebar.nav-group-item>
 
                         {{-- Inventory --}}
                         <x-sidebar.nav-group-item
