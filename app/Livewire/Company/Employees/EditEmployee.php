@@ -34,6 +34,10 @@ class EditEmployee extends Component
         return redirect()->route('company.employees.render', ['companyId' => $this->company->id])->success(__('company.toasts.employee_updated'));
     }
 
+    public function syncDefaultSalaryPercentage() {
+        $this->salaryPercentage = $this->company->settings->default_salary_percentage;
+    }
+
     public function render()
     {
         return view('livewire.company.employees.edit-employee');

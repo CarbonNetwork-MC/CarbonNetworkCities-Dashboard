@@ -98,6 +98,7 @@ return [
     'messages' => [
         'bank_accounts_no_records' => 'No bank accounts found.',
         'choose_description' => 'Select the company you want to manage or view.',
+        'default_salary_percentage' => 'Sync with company\'s default salary percentage (:percentage%)',
         'delete_sale_confirmation' => 'Are you sure you want to delete this sale? This action cannot be undone.',
         'inventory_no_records' => 'No inventory records found.',
         'more_orders' => 'There are more orders that can\'t be displayed here. Please go to the wholesale orders page to view all orders.',
