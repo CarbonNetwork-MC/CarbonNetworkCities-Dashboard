@@ -15,6 +15,7 @@ return [
         'choose_bank_account' => 'Choose Bank Account',
         'create_sale' => 'Create Sale',
         'delete_sale' => 'Delete Sale',
+        'delete_tip' => 'Delete Tip',
         'edit_employee' => 'Edit Employee',
         'edit_stock' => 'Edit Stock',
         'employees' => 'Employees',
@@ -106,6 +107,7 @@ return [
     'messages' => [
         'bank_accounts_no_records' => 'No bank accounts found.',
         'choose_description' => 'Select the company you want to manage or view.',
+        'confirm_delete_tip' => 'Are you sure you want to delete this tip? This action cannot be undone.',
         'default_salary_percentage' => 'Sync with company\'s default salary percentage (:percentage%)',
         'delete_sale_confirmation' => 'Are you sure you want to delete this sale? This action cannot be undone.',
         'inventory_no_records' => 'No inventory records found.',

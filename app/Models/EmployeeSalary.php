@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class EmployeeSalary extends Model
 {
@@ -28,5 +29,10 @@ class EmployeeSalary extends Model
     public function player(): BelongsTo
     {
         return $this->belongsTo(Player::class, 'player_uuid', 'uuid');
+    }
+
+    public function updates(): HasMany
+    {
+        return $this->hasMany(EmployeeSalaryUpdate::class, 'salary_id', 'id');
     }
 }

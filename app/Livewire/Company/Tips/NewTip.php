@@ -3,6 +3,7 @@
 namespace App\Livewire\Company\Tips;
 
 use App\Models\Company;
+use App\Models\EmployeeSalary;
 use App\Models\EmployeeSalaryUpdate;
 use App\Models\Player;
 use Illuminate\Support\Facades\Auth;
@@ -46,7 +47,7 @@ class NewTip extends Component
                 ->where('status', 'unpaid')
                 ->first();
             if (!$existingSalary) {
-                $this->company->salaries()->create([
+                $existingSalary = EmployeeSalary::create([
                     'company_id' => $this->company->id,
                     'player_uuid' => Auth::user()->player->uuid,
                     'year' => now()->year,
@@ -59,6 +60,7 @@ class NewTip extends Component
             }
 
             EmployeeSalaryUpdate::create([
+                'salary_id' => $existingSalary->id,
                 'player_uuid' => Auth::user()->player->uuid,
                 'tip_id' => $tip->id,
                 'amount' => $this->amount,
@@ -75,7 +77,7 @@ class NewTip extends Component
                     ->where('status', 'unpaid')
                     ->first();
                 if (!$existingSalary) {
-                    $this->company->salaries()->create([
+                    $existingSalary = EmployeeSalary::create([
                         'company_id' => $this->company->id,
                         'player_uuid' => $employee->player_uuid,
                         'year' => now()->year,
@@ -88,37 +90,12 @@ class NewTip extends Component
                 }
 
                 EmployeeSalaryUpdate::create([
+                    'salary_id' => $existingSalary->id,
                     'player_uuid' => $employee->player_uuid,
                     'tip_id' => $tip->id,
                     'amount' => $splitAmount,
                 ]);
             }
-
-            // Owner
-            $ownerExistingSalary = $this->company->salaries()
-                ->where('player_uuid', $this->company->owner_uuid)
-                ->where('year', now()->year)
-                ->where('week', now()->weekOfYear)
-                ->where('status', 'unpaid')
-                ->first();
-            if (!$ownerExistingSalary) {
-                $this->company->salaries()->create([
-                    'company_id' => $this->company->id,
-                    'player_uuid' => $this->company->owner_uuid,
-                    'year' => now()->year,
-                    'week' => now()->weekOfYear,
-                    'amount' => $splitAmount,
-                ]);
-            } else {
-                $ownerExistingSalary->amount += $splitAmount;
-                $ownerExistingSalary->save();
-            }
-
-            EmployeeSalaryUpdate::create([
-                'player_uuid' => $this->company->owner_uuid,
-                'tip_id' => $tip->id,
-                'amount' => $splitAmount,
-            ]);
         }
 
         return redirect()->route('company.tips.render', ['companyId' => $this->company->id, 'tipId' => $tip->id])->success('company.toasts.tip_created');

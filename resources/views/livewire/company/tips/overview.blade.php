@@ -43,13 +43,23 @@
                 </x-slot>
                 <x-slot name="rows">
                     @forelse ($tips as $tip)
+                        @php
+                            $hasPaidSalaries = false;
+                            $salaryUpdates = $tip->salaryUpdates;
+                            foreach ($salaryUpdates as $update) {
+                                if ($update->salary->status !== 'unpaid') {
+                                    $hasPaidSalaries = true;
+                                    break;
+                                }
+                            }
+                        @endphp
                         <x-tables.table-row>
                             <x-tables.table-data>{{ $tip->customer->username }}</x-tables.table-data>
                             <x-tables.table-data>{{ $company->country->currency_symbol ?? '' }}{{ number_format($tip->amount, 2) }}</x-tables.table-data>
                             <x-tables.table-data>{{ $tip->employee->username }}</x-tables.table-data>
                             <x-tables.table-data>{{ $tip->created_at->format('d-m-Y H:i') }}</x-tables.table-data>
                             <x-tables.table-actions>
-                                @if ($hasPermission)
+                                @if ($hasPermission && $hasPaidSalaries === false)
                                     <x-tables.danger-action wire:click="removeTip('{{ $tip->id }}')">
                                         {{ __('general.buttons.delete') }}
                                     </x-tables.danger-action>
@@ -81,4 +91,19 @@
             </x-tables.table-striped>
         </div>
     </x-containers.main>
+
+    <x-modals.modal wire:model="showDeleteTipModal">
+        <x-slot name="title">{{ __('company.titles.delete_tip') }}</x-slot>
+        <x-slot name="content">
+            <p>{{ __('company.messages.confirm_delete_tip') }}</p>
+        </x-slot>
+        <x-slot name="footer">
+            <x-buttons.secondary-button wire:click="$set('showDeleteTipModal', false)">
+                {{ __('general.buttons.cancel') }}
+            </x-buttons.secondary-button>
+            <x-buttons.danger-button wire:click="destroyTip">
+                {{ __('general.buttons.delete') }}
+            </x-buttons.danger-button>
+        </x-slot>
+    </x-modals.modal>
 </div>

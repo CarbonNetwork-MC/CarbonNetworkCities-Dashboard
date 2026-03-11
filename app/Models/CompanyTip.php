@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CompanyTip extends Model
 {
@@ -27,5 +28,10 @@ class CompanyTip extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Player::class, 'customer_uuid', 'uuid');
+    }
+
+    public function salaryUpdates(): HasMany
+    {
+        return $this->hasMany(EmployeeSalaryUpdate::class, 'tip_id', 'id');
     }
 }

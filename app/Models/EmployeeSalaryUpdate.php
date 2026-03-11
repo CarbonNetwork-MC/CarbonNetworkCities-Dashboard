@@ -8,11 +8,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class EmployeeSalaryUpdate extends Model
 {
     protected $fillable = [
+        'salary_id',
         'player_uuid',
         'sale_id',
         'tip_id',
         'amount',
     ];
+
+    public function salary(): BelongsTo
+    {
+        return $this->belongsTo(EmployeeSalary::class, 'salary_id', 'id');
+    }
 
     public function player(): BelongsTo
     {
