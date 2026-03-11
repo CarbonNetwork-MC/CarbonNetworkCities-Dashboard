@@ -97,6 +97,15 @@
                         @endif
 
                         {{-- Salaries --}}
+                        @if ($isCompanyOwnerOrManager)
+                            <x-sidebar.nav-group-item
+                                href="{{ route('company.salaries.render', ['companyId' => $selectedCompany->id]) }}"
+                                :active="request()->routeIs('company.salaries.*')"
+                                wire:key="company-salaries"
+                            >
+                                {{ __('sidebar.company.salaries') }}
+                            </x-sidebar.nav-group-item>
+                        @endif
 
                         {{-- Wholesale Orders --}}
                         @if ($isCompanyOwnerOrManager)

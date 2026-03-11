@@ -26,6 +26,7 @@ return [
         'order_summary' => 'Order Summary',
         'products' => 'Products',
         'transactions' => 'Transactions',
+        'salaries' => 'Salaries',
         'sales' => 'Sales',
         'settings' => 'Company Settings',
         'update_inventory' => 'Update Inventory',
@@ -60,6 +61,7 @@ return [
         'owner' => 'Owner',
         'order' => 'Order',
         'order_id' => 'Order ID',
+        'paid_at' => 'Paid at',
         'pending' => 'Pending',
         'player' => 'Player',
         'preferred_stock_level' => 'Preferred Stock Level',
@@ -92,7 +94,10 @@ return [
         'mark_as_completed' => 'Mark as Completed',
         'mark_as_completed_and_update_inventory' => 'Mark as Completed & Update Inventory',
         'mark_as_uncompleted' => 'Mark as Uncompleted',
+        'mark_paid' => 'Mark as paid',
         'new_sale' => 'New Sale',
+        'transfer_salary' => 'Transfer salary',
+        'mark_unpaid' => 'Mark as unpaid',
     ],
 
     'messages' => [
@@ -107,6 +112,7 @@ return [
         'no_orders' => 'No orders found.',
         'no_order_items' => 'No items found for this order.',
         'no_transactions' => 'No transactions found.',
+        'no_salaries_for_week' => 'No salaries found for this week.',
         'no_sales' => 'No sales found.',
         'wholesale_orders_no_records' => 'No wholesale orders found.',
     ],
@@ -123,7 +129,9 @@ return [
     ],
 
     'placeholders' => [
-        
+        'awaiting_payment' => 'Awaiting Payment',
+        'paid' => 'Paid',
+        'transfered' => 'Paid & Transfered',
     ],
 
     'roles' => [
