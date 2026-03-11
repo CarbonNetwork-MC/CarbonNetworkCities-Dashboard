@@ -9,14 +9,15 @@ class EmployeeSalary extends Model
 {
     protected $fillable = [
         'company_id',
-        'employee_id',
+        'player_uuid',
         'year',
         'week',
         'amount',
-        'paid',
+        'status',
+        'paid_at',
     ];
     protected $casts = [
-        'paid' => 'boolean',
+        'paid_at' => 'datetime',
     ];
 
     public function company(): BelongsTo
@@ -24,8 +25,8 @@ class EmployeeSalary extends Model
         return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 
-    public function employee(): BelongsTo
+    public function player(): BelongsTo
     {
-        return $this->belongsTo(Employee::class, 'employee_id', 'id');
+        return $this->belongsTo(Player::class, 'player_uuid', 'uuid');
     }
 }

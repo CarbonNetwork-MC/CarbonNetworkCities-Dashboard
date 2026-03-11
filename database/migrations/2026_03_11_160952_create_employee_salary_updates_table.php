@@ -11,22 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employee_salaries', function (Blueprint $table) {
+        Schema::create('employee_salary_updates', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('company_id');
             $table->char('player_uuid', 36);
-            $table->integer('year');
-            $table->integer('week');
+            $table->unsignedBigInteger('sale_id');
             $table->decimal('amount', 10, 2);
-            $table->enum('status', ['unpaid', 'completed', 'transfered'])->default('unpaid');
-            $table->timestamp('paid_at')->nullable();
             $table->timestamps();
 
             /* -------------------------------------------------------------
             * Foreign keys
             * ------------------------------------------------------------- */
-            $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('player_uuid')->references('uuid')->on('players')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('sale_id')->references('id')->on('company_sales')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -35,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employee_salaries');
+        Schema::dropIfExists('employee_salary_updates');
     }
 };

@@ -6,6 +6,7 @@ use App\Models\Company;
 use App\Models\CompanyItem;
 use App\Models\CompanySale;
 use App\Models\CompanySaleItem;
+use App\Models\EmployeeSalaryUpdate;
 use App\Models\Player;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -120,6 +121,12 @@ class CreateSale extends Component
             $existingSalary->amount += $amount;
             $existingSalary->save();
         }
+
+        EmployeeSalaryUpdate::create([
+            'player_uuid' => $player->uuid,
+            'sale_id' => $sale->id,
+            'amount' => $amount,
+        ]);
 
         return redirect()->route('company.sales.render', ['companyId' => $this->company->id])->success(__('company.toasts.sale_created'));
     }

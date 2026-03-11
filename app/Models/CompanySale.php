@@ -40,4 +40,9 @@ class CompanySale extends Model
     {
         return $this->hasMany(CompanySaleItem::class, 'company_sale_id', 'id');
     }
+
+    public function salaryUpdate(): BelongsTo
+    {
+        return $this->belongsTo(EmployeeSalaryUpdate::class, 'sale_id', 'id');
+    }
 }
