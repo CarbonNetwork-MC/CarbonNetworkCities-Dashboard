@@ -19,6 +19,9 @@ class SalesOverview extends Component
     public $company;
     public $products;
 
+    public $totalSoldProducts;
+    public $totalRevenue;
+
     public $hasPermission;
 
     public $salesPerPage = 10;
@@ -29,6 +32,9 @@ class SalesOverview extends Component
     public function mount($companyId) {
         $this->company = Company::where('id', $companyId)->with(['country'])->first();
         $this->products = CompanyItem::where('company_id', $this->company->id)->with(['stock', 'item'])->get();
+
+        $this->totalSoldProducts = $this->company->sales()->sum('quantity');
+        $this->totalRevenue = $this->company->sales()->sum('total_revenue');
 
         $user = Auth::user();
         $this->hasPermission = $user->hasRole('Superadmin')

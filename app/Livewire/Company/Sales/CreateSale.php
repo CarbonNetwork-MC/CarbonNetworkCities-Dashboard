@@ -128,6 +128,7 @@ class CreateSale extends Component
         }
 
         EmployeeSalaryUpdate::create([
+            'salary_id' => $existingSalary->id,
             'player_uuid' => $player->uuid,
             'sale_id' => $sale->id,
             'amount' => $amount,

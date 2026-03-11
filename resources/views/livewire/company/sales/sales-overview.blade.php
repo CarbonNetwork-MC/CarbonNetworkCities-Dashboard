@@ -134,6 +134,19 @@
                     @endforelse
                 </div>
             </x-containers.main>
+
+            @if ($hasPermission)
+                <x-containers.main class="mt-4 text-gray-700 dark:text-white">
+                    <div class="flex justify-between">
+                        <span>{{ __('company.labels.total_sold_products') }}</span>
+                        <span>{{ $totalSoldProducts }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>{{ __('company.labels.total_revenue') }}</span>
+                        <span>{{ $company->country->currency_symbol ?? '' }}{{ number_format($totalRevenue, 2) }}</span>
+                    </div>
+                </x-containers.main>
+            @endif
         </div>
     </div>
 

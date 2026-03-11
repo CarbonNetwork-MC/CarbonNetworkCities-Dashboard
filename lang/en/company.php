@@ -84,6 +84,8 @@ return [
         'tips' => 'Tips',
         'total' => 'Total',
         'total_amount' => 'Total Amount',
+        'total_revenue' => 'Total Revenue',
+        'total_sold_products' => 'Total Sold Products',
         'transfer' => 'Transfer',
         'type' => 'Type',
         'warning_threshold' => 'Warning Threshold',
