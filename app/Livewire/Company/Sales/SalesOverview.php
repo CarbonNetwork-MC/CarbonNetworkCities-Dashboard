@@ -60,6 +60,7 @@ class SalesOverview extends Component
     public function render()
     {
         $sales = CompanySale::where('company_id', $this->company->id)
+            ->where('week', now()->weekOfYear)
             ->with(['items', 'customer', 'employee'])
             ->paginate($this->salesPerPage, ['*'], 'sales-page');
 
