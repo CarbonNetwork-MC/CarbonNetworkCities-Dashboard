@@ -100,6 +100,18 @@ class CreateSale extends Component
             }
         }
 
+        $player = Auth::user()->player;
+        $existingSalary = $this->company->salaries()->where('player_uuid', $player->uuid)->where('year', $this->currentYear)->where('week', $this->currentWeek)->first();
+        if (!$existingSalary) {
+            $this->company->salaries()->create([
+                'company_id' => $this->company->id,
+                'player_uuid' => $player->uuid,
+                'year' => $this->currentYear,
+                'week' => $this->currentWeek,
+                'amount' => 0,
+            ]);
+        }
+
         return redirect()->route('company.sales.render', ['companyId' => $this->company->id])->success(__('company.toasts.sale_created'));
     }
 
