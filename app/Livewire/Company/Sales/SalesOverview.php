@@ -18,7 +18,6 @@ class SalesOverview extends Component
 
     public $company;
     public $products;
-    public $salary;
 
     public $hasPermission;
 
@@ -30,8 +29,6 @@ class SalesOverview extends Component
     public function mount($companyId) {
         $this->company = Company::where('id', $companyId)->with(['country'])->first();
         $this->products = CompanyItem::where('company_id', $this->company->id)->with(['stock', 'item'])->get();
-
-        $this->salary = EmployeeSalary::where('company_id', $this->company->id)->where('player_uuid', Auth::user()->player->uuid)->first();
 
         $user = Auth::user();
         $this->hasPermission = $user->hasRole('Superadmin')
@@ -79,7 +76,7 @@ class SalesOverview extends Component
     {
         $sales = CompanySale::where('company_id', $this->company->id)
             ->where('week', now()->weekOfYear)
-            ->with(['items', 'customer', 'employee'])
+            ->with(['items', 'customer', 'employee', 'salary'])
             ->paginate($this->salesPerPage, ['*'], 'sales-page');
 
         return view('livewire.company.sales.sales-overview', [

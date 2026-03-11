@@ -56,7 +56,7 @@
                                         <x-tables.primary-action href="{{ route('company.sales.details.render', ['companyId' => $company->id, 'saleId' => $sale->id]) }}">
                                             {{ __('general.buttons.view') }}
                                         </x-tables.primary-action>
-                                        @if ($hasPermission && $salary->status === 'unpaid')
+                                        @if ($hasPermission && $sale->salary && $sale->salary->status === 'unpaid')
                                             <x-tables.danger-action wire:click="removeSale('{{ $sale->id }}')">
                                                 {{ __('general.buttons.delete') }}
                                             </x-tables.danger-action>

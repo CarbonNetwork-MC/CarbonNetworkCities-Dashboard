@@ -108,7 +108,12 @@ class CreateSale extends Component
             ?? $this->company->settings->default_salary_percentage;
         $amount = round(($this->total * $percentage) / 100, 2);
 
-        $existingSalary = $this->company->salaries()->where('player_uuid', $player->uuid)->where('year', $this->currentYear)->where('week', $this->currentWeek)->first();
+        $existingSalary = $this->company->salaries()
+            ->where('player_uuid', $player->uuid)
+            ->where('year', $this->currentYear)
+            ->where('week', $this->currentWeek)
+            ->where('status', 'unpaid')
+            ->first();
         if (!$existingSalary) {
             $this->company->salaries()->create([
                 'company_id' => $this->company->id,
