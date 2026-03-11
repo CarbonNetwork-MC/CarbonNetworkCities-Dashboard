@@ -5,6 +5,8 @@ namespace App\Livewire\Company\Sales;
 use App\Models\Company;
 use App\Models\CompanyItem;
 use App\Models\CompanySale;
+use App\Models\EmployeeSalary;
+use App\Models\EmployeeSalaryUpdate;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -16,6 +18,7 @@ class SalesOverview extends Component
 
     public $company;
     public $products;
+    public $salary;
 
     public $hasPermission;
 
@@ -27,6 +30,8 @@ class SalesOverview extends Component
     public function mount($companyId) {
         $this->company = Company::where('id', $companyId)->with(['country'])->first();
         $this->products = CompanyItem::where('company_id', $this->company->id)->with(['stock', 'item'])->get();
+
+        $this->salary = EmployeeSalary::where('company_id', $this->company->id)->where('player_uuid', Auth::user()->player->uuid)->first();
 
         $user = Auth::user();
         $this->hasPermission = $user->hasRole('Superadmin')
@@ -47,6 +52,19 @@ class SalesOverview extends Component
             if ($companyItem) {
                 $companyItem->stock->quantity += $saleItem->quantity;
                 $companyItem->stock->save();
+            }
+        }
+
+        $salary = EmployeeSalary::where('player_uuid', $this->saleToDelete->employee_uuid)
+            ->where('company_id', $this->company->id)
+            ->where('status', 'unpaid')
+            ->first();
+        if ($salary) {
+            $update = EmployeeSalaryUpdate::where('sale_id', $this->saleToDelete->id)->first();
+            if ($update) {
+                $salary->amount -= $update->amount;
+                $salary->save();
+                $update->delete();
             }
         }
 
