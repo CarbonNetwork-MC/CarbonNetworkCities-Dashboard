@@ -11,11 +11,18 @@ class Employees extends Component
     public $company;
     public $employees;
 
+    public $hasPermission;
+
     public function mount($companyId) {
         $this->company = Company::find($companyId);
 
         $owner = Player::where('uuid', $this->company->owner->uuid)->first();
         $employees = $this->company->employees;
+
+        $user = auth()->user();
+        $this->hasPermission = $user->hasRole('Superadmin')
+            || $user->player->uuid == $this->company->owner_uuid
+            || $this->company->employees()->where('player_uuid', $user->player->uuid)->first()->role == 'manager';
 
         $this->employees = collect();
         if ($owner != null) {

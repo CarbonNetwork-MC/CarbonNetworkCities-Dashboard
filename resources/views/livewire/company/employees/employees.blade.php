@@ -33,7 +33,7 @@
                             <th></th>
                             <x-tables.table-header>{{ __('company.labels.name') }}</x-tables.table-header>
                             <x-tables.table-header>{{ __('company.labels.role') }}</x-tables.table-header>
-                            <th></th>
+                            @if ($hasPermission) <th></th> @endif
                         </tr>
                     </x-slot>
                     <x-slot name="rows">
@@ -42,13 +42,15 @@
                                 <x-tables.table-data><img class="h-8 w-8" src="https://cravatar.eu/avatar/{{ $employee['uuid'] }}/64.png" /></x-tables.table-data>
                                 <x-tables.table-data>{{ $employee['username'] }}</x-tables.table-data>
                                 <x-tables.table-data>{{ __('company.roles.' . $employee['role']) }}</x-tables.table-data>
-                                <x-tables.table-actions>
-                                    @if ($employee['role'] !== 'owner')
-                                        <x-tables.primary-action href="{{ route('company.employees.edit.render', ['companyId' => $company->id, 'employeeId' => $employee['uuid']]) }}">
-                                            {{ __('general.buttons.edit') }}
-                                        </x-tables.primary-action>
-                                    @endif
-                                </x-tables.table-actions>
+                                @if ($hasPermission)
+                                    <x-tables.table-actions>
+                                        @if ($employee['role'] != 'owner')
+                                            <x-tables.primary-action href="{{ route('company.employees.edit.render', ['companyId' => $company->id, 'employeeId' => $employee['uuid']]) }}">
+                                                {{ __('general.buttons.edit') }}
+                                            </x-tables.primary-action>
+                                        @endif
+                                    </x-tables.table-actions>
+                                @endif
                             </x-tables.table-row>
                         @empty
                             <x-tables.table-row>
