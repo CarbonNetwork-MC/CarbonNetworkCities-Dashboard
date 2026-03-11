@@ -83,6 +83,7 @@ use App\Livewire\Company\CompanyDashboard;
 use App\Livewire\Company\BankAccounts\BankaccountOverview;
 use App\Livewire\Company\BankAccounts\ChooseBankaccount;
 use App\Livewire\Company\Employees\Employees as CompanyEmployees;
+use App\Livewire\Company\Employees\EditEmployee;
 use App\Livewire\Company\Inventory\EditStock;
 use App\Livewire\Company\Inventory\StockOverview;
 use App\Livewire\Company\Inventory\UpdateStock;
@@ -148,6 +149,7 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
         Route::middleware('company_owner_or_manager')->group(function() {
             Route::get('/company/{companyId}/bank-account/{bankAccountId}', BankaccountOverview::class)->name('company.bank-account.render');
             Route::get('/company/{companyId}/choose-bank-account', ChooseBankaccount::class)->name('company.bank-accounts.render');
+            Route::get('/company/{companyId}/employees/edit/{employeeId}', EditEmployee::class)->name('company.employees.edit.render');
             Route::get('/company/{companyId}/orders', WholesaleOrders::class)->name('company.wholesale-orders.render');
             Route::get('/company/{companyId}/order/{orderId}', OrderDetails::class)->name('company.wholesale-orders.details.render');
             Route::get('/company/{companyId}/settings', CompanySettingsOverview::class)->name('company.settings.render');

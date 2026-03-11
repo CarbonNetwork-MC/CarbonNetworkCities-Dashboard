@@ -15,6 +15,7 @@ return [
         'choose_bank_account' => 'Choose Bank Account',
         'create_sale' => 'Create Sale',
         'delete_sale' => 'Delete Sale',
+        'edit_employee' => 'Edit Employee',
         'edit_stock' => 'Edit Stock',
         'employees' => 'Employees',
         'employee_overview' => 'Employee Overview',
@@ -54,6 +55,7 @@ return [
         'item_types' => 'Item Types',
         'items' => 'Items',
         'is_main' => 'Main Account',
+        'is_paid' => 'Is Paid',
         'name' => 'Name',
         'owner' => 'Owner',
         'order' => 'Order',
@@ -65,6 +67,7 @@ return [
         'product' => 'Product',
         'quantity' => 'Quantity',
         'role' => 'Role',
+        'salary_percentage' => 'Salary Percentage',
         'salary_scheme' => 'Salary Scheme',
         'sale_at' => 'Sale at',
         'stacks' => 'Stacks',
@@ -108,6 +111,7 @@ return [
     ],
 
     'toasts' => [
+        'employee_updated' => 'Employee updated successfully.',
         'inventory_updated' => 'Inventory updated successfully.',
         'notification_marked_as_read' => 'Notification marked as read.',
         'order_marked_as_completed' => 'Order marked as completed.',
