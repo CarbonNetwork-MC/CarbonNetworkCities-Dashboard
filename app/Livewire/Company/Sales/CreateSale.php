@@ -101,6 +101,12 @@ class CreateSale extends Component
         }
 
         $player = Auth::user()->player;
+
+        // Calculate salary for the employee based on the sale. If the seller is an employee, use their specific salary percentage, if the seller is the owner or doesn't have a specific percentage, use the company's default salary percentage.
+        $percentage = $this->company->employees()->where('player_uuid', $player->uuid)->first()->salary_percentage 
+            ?? $this->company->settings->default_salary_percentage;
+        $amount = round(($this->total * $percentage) / 100, 2);
+
         $existingSalary = $this->company->salaries()->where('player_uuid', $player->uuid)->where('year', $this->currentYear)->where('week', $this->currentWeek)->first();
         if (!$existingSalary) {
             $this->company->salaries()->create([
@@ -108,8 +114,11 @@ class CreateSale extends Component
                 'player_uuid' => $player->uuid,
                 'year' => $this->currentYear,
                 'week' => $this->currentWeek,
-                'amount' => 0,
+                'amount' => $amount,
             ]);
+        } else {
+            $existingSalary->amount += $amount;
+            $existingSalary->save();
         }
 
         return redirect()->route('company.sales.render', ['companyId' => $this->company->id])->success(__('company.toasts.sale_created'));
