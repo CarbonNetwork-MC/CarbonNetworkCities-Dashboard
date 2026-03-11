@@ -15,6 +15,9 @@ class Overview extends Component
 
     public function mount($companyId) {
         $this->company = Company::where('id', $companyId)->firstOrFail();
+        $this->salaryScheme = $this->company->settings->salary_scheme;
+        $this->tipScheme = $this->company->settings->tip_scheme;
+        $this->defaultSalaryPercentage = $this->company->settings->default_salary_percentage;
     }
 
     public function save() {
