@@ -65,10 +65,21 @@
                             {{ __('sidebar.company.sales') }}
                         </x-sidebar.nav-group-item>
 
+                        {{-- Tips --}}
+
+                        {{-- Inventory --}}
+                        <x-sidebar.nav-group-item
+                            href="{{ route('company.stock.render', ['companyId' => $selectedCompany->id]) }}"
+                            :active="request()->routeIs('company.stock.*')"
+                            wire:key="company-stock"
+                        >
+                            {{ __('sidebar.company.inventory') }}
+                        </x-sidebar.nav-group-item>
+
                         {{-- Employees --}}
                         <x-sidebar.nav-group-item
                             href="{{ route('company.employees.render', ['companyId' => $selectedCompany->id]) }}"
-                            :active="request()->routeIs('company.employees.render')"
+                            :active="request()->routeIs('company.employees.*')"
                             wire:key="company-employees"
                         >
                             {{ __('sidebar.company.employees') }}
@@ -85,14 +96,7 @@
                             </x-sidebar.nav-group-item>
                         @endif
 
-                        {{-- Inventory --}}
-                        <x-sidebar.nav-group-item
-                            href="{{ route('company.stock.render', ['companyId' => $selectedCompany->id]) }}"
-                            :active="request()->routeIs('company.stock.*')"
-                            wire:key="company-stock"
-                        >
-                            {{ __('sidebar.company.inventory') }}
-                        </x-sidebar.nav-group-item>
+                        {{-- Salaries --}}
 
                         {{-- Wholesale Orders --}}
                         @if ($isCompanyOwnerOrManager)
@@ -115,6 +119,8 @@
                                 {{ __('sidebar.company.settings') }}
                             </x-sidebar.nav-group-item>
                         @endif
+
+                        {{-- Archive --}}
                     </x-sidebar.nav-group>
                 @else
                     <x-sidebar.nav-item
