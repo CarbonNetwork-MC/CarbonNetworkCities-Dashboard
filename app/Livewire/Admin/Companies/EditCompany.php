@@ -107,7 +107,7 @@ class EditCompany extends Component
         $data = $this->validate([
             'companyName'    => ['required', 'string', 'max:255'],
             'cocNumber'      => ['required', 'string', 'max:20'],
-            'cocType'        => ['required', 'string', 'exists:coc_types,id'],
+            'cocType'        => ['required', 'numeric', 'exists:coc_types,id'],
             'worldId'        => ['required', 'string', 'max:255'],
             'selectedPlayer' => ['nullable', 'string', 'exists:players,uuid'],
         ]);
