@@ -125,6 +125,17 @@
                             </x-sidebar.nav-group-item>
                         @endif
 
+                        {{-- Archive --}}
+                        @if ($isCompanyOwnerOrManager)
+                            <x-sidebar.nav-group-item
+                                href="{{ route('company.archive.render', ['companyId' => $selectedCompany->id]) }}"
+                                :active="request()->routeIs('company.archive.*')"
+                                wire:key="company-archive"
+                            >
+                                {{ __('sidebar.company.archive') }}
+                            </x-sidebar.nav-group-item>
+                        @endif
+
                         {{-- Company Settings --}}
                         @if ($isCompanyOwnerOrManager)
                             <x-sidebar.nav-group-item
@@ -135,8 +146,6 @@
                                 {{ __('sidebar.company.settings') }}
                             </x-sidebar.nav-group-item>
                         @endif
-
-                        {{-- Archive --}}
                     </x-sidebar.nav-group>
                 @else
                     <x-sidebar.nav-item

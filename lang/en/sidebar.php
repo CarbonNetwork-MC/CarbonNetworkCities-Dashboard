@@ -15,6 +15,7 @@ return [
 
     // ? Company
     'company' => [
+        'archive' => 'Archive',
         'bank_accounts' => 'Bank Accounts',
         'choose' => 'Choose Company',
         'dashboard' => 'Dashboard',
