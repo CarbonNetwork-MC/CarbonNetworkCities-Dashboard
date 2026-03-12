@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Companies;
 
 use App\Models\Item;
 use App\Models\Company;
+use App\Models\CompanyStock;
 use App\Models\ItemGroup;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
@@ -52,12 +53,18 @@ class AddItems extends Component
                 continue;
             }
 
-            $this->company->items()->create([
+            $item = $this->company->items()->create([
                 'company_id' => $this->company->id,
                 'item_id' => $item['item_id'],
                 'price' => $item['price'] ?? 0,
                 'base_price' => $item['base_price'] ?? 0,
                 'sellable' => $item['sellable'],
+            ]);
+
+            $this->company->stock()->create([
+                'company_id' => $this->company->id,
+                'item_id' => $item->id,
+                'quantity' => 0,
             ]);
         }
 

@@ -9,10 +9,27 @@ return [
     |
     */
 
+    // ? Public
     'dashboard' => 'Dashboard',
     'profile' => 'Profile',
 
-    // Management
+    // ? Company
+    'company' => [
+        'archive' => 'Archive',
+        'bank_accounts' => 'Bank Accounts',
+        'choose' => 'Choose Company',
+        'dashboard' => 'Dashboard',
+        'employees' => 'Employees',
+        'inventory' => 'Inventory',
+        'salaries' => 'Salaries',
+        'sales' => 'Sales',
+        'settings' => 'Settings',
+        'tips' => 'Tips',
+        'title' => 'Companies',
+        'wholesale_orders' => 'Wholesale Orders',
+    ],
+
+    // ? Management
     'management' => 'Management',
 
     'bank_accounts' => 'Bank Accounts',

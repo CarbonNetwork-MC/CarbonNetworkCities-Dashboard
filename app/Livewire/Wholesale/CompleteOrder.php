@@ -2,9 +2,10 @@
 
 namespace App\Livewire\Wholesale;
 
-use App\Models\Player;
-use Livewire\Component;
+use App\Models\CompanyNotification;
+use App\Models\CompanyOrder;
 use App\Models\WholesaleOrder;
+use Livewire\Component;
 
 class CompleteOrder extends Component
 {
@@ -49,6 +50,16 @@ class CompleteOrder extends Component
         $this->order->customer_uuid = $this->customerUuid;
         $this->order->save();
 
+        CompanyOrder::where('order_id', $this->order->id)->update(['status' => 'completed']);
+
+        CompanyNotification::create([
+            'company_id' => $this->order->company_id,
+            'order_id' => $this->order->id,
+            'type' => 'order_completed',
+            'level' => 'info',
+            'message' => __('wholesale.notifications.order_completed'),
+        ]);
+
         return redirect()->route('wholesale.order-overview')->success(__('wholesale.toasts.order_completed'));
     }
 
@@ -70,6 +81,12 @@ class CompleteOrder extends Component
         $this->order->collected = false;
         $this->order->collected_by = null;
         $this->order->save();
+
+        CompanyOrder::where('order_id', $this->order->id)->update(['status' => 'pending']);
+
+        CompanyNotification::where('order_id', $this->order->id)
+            ->where('type', 'order_collected')
+            ->delete();
 
         return redirect()->route('wholesale.order-overview')->success(__('wholesale.toasts.collect_order_undone'));
     }

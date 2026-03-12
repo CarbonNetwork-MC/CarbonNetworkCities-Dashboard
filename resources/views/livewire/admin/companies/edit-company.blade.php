@@ -18,8 +18,15 @@
         ]" />
     </x-slot>
 
-    {{-- Company --}}
+    {{-- Extra Functions --}}
     <x-containers.main>
+        <x-buttons.primary-button wire:click="$set('showSendNotificationModal', true)">
+            {{ __('admin.buttons.companies.send_notification') }}
+        </x-buttons.primary-button>
+    </x-containers.main>
+
+    {{-- Company --}}
+    <x-containers.main class="mt-4">
         <x-containers.title>
             {{ __('admin.titles.companies.edit') }}
         </x-containers.title>
@@ -406,6 +413,7 @@
                         <x-tables.table-header>{{ __('admin.labels.companies.price') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.companies.base_price') }}</x-tables.table-header>
                         <x-tables.table-header>{{ __('admin.labels.companies.sellable') }}</x-tables.table-header>
+                        <x-tables.table-header>{{ __('admin.labels.companies.stock') }}</x-tables.table-header>
                         <th></th>
                     </tr>
                 </x-slot>
@@ -422,6 +430,7 @@
                                     <span class="bg-red-100 text-red-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full">{{ __('general.no') }}</span>
                                 @endif
                             </x-tables.table-data>
+                            <x-tables.table-data>{{ $item->stock->quantity ?? 0 }}</x-tables.table-data>
                             <x-tables.table-actions>
                                 <x-tables.primary-action href="{{ route('admin.companies.edit-item', ['companyId' => $company->id, 'itemId' => $item->id]) }}">
                                     {{ __('general.buttons.edit') }}
@@ -564,6 +573,33 @@
             <x-buttons.danger-button wire:click="destroyItem">
                 {{ __('general.buttons.remove') }}
             </x-buttons.danger-button>
+        </x-slot>
+    </x-modals.modal>
+
+    {{-- Send Notification Modal --}}
+    <x-modals.modal wire:model="showSendNotificationModal">
+        <x-slot name="title">
+            <div class="flex justify-center">
+                {{ __('admin.buttons.companies.send_notification') }}
+            </div>
+        </x-slot>
+        <x-slot name="content">
+            <x-forms.text-area label="{{ __('admin.labels.companies.notification_message') }}" wire:model="notificationMessage" />
+            <div class="mt-4">
+                <x-forms.select label="{{ __('admin.labels.companies.notification_type') }}" wire:model="notificationLevel">
+                    <option value="info">{{ __('admin.notifications.info') }}</option>
+                    <option value="warning">{{ __('admin.notifications.warning') }}</option>
+                    <option value="critical">{{ __('admin.notifications.critical') }}</option>
+                </x-forms.select>
+            </div>
+        </x-slot>
+        <x-slot name="footer">
+            <x-buttons.secondary-button wire:click="$set('showSendNotificationModal', false)">
+                {{ __('general.buttons.cancel') }}
+            </x-buttons.secondary-button>
+            <x-buttons.primary-button wire:click="sendNotification">
+                {{ __('admin.buttons.companies.send') }}
+            </x-buttons.primary-button>
         </x-slot>
     </x-modals.modal>
 </div>

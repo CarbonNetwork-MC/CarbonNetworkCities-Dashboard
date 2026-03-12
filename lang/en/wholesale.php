@@ -69,4 +69,9 @@ return [
         'order_deleted' => 'Wholesale order deleted successfully.',
         'collect_order_undone' => 'Wholesale order collection successfully undone.',
     ],
+
+    'notifications' => [
+        'order_collected' => 'Your last order has been collected, and is ready to be picked up.',
+        'order_completed' => 'Your last order has been completed, you can now add it to your inventory.'
+    ]
 ];

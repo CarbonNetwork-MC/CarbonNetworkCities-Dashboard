@@ -310,7 +310,7 @@
                     >
 
                         <!-- Avatar -->
-                        <img src="{{ Auth::user()->profile_photo_url
+                        <img src="{{ $userProfilePicture
                             ?? 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name ?? 'U') . '&background=16a34a&color=ffffff' }}"
                             alt="{{ Auth::user()->name ?? 'User' }}" class="h-8 w-8 rounded-xl object-cover" />
 

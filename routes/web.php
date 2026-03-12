@@ -22,7 +22,6 @@ use App\Livewire\Admin\CoC\EditCoCType;
 use App\Livewire\Admin\Companies\AddBankAccount as AddCompanyBankAccount;
 use App\Livewire\Admin\Companies\AddEmployee;
 use App\Livewire\Admin\Companies\AddItems;
-use App\Livewire\Admin\Companies\AddItemGroup;
 use App\Livewire\Admin\Companies\AddPinConsole;
 use App\Livewire\Admin\Companies\AddPlot;
 use App\Livewire\Admin\Companies\EditCompany;
@@ -81,9 +80,30 @@ use App\Livewire\Admin\Wholesale\Overview as WholesaleOverview;
 use App\Livewire\Admin\Wholesale\NewItem as NewWholesaleItem;
 use App\Livewire\Admin\Wholesale\EditItem as EditWholesaleItem;
 
+use App\Livewire\Company\CompanyDashboard;
+use App\Livewire\Company\Archive\Overview as CompanyArchiveOverview;
+use App\Livewire\Company\Archive\Details as CompanyArchiveDetails;
+use App\Livewire\Company\BankAccounts\BankaccountOverview;
+use App\Livewire\Company\BankAccounts\ChooseBankaccount;
+use App\Livewire\Company\Employees\Employees as CompanyEmployees;
+use App\Livewire\Company\Employees\EditEmployee;
+use App\Livewire\Company\Inventory\EditStock;
+use App\Livewire\Company\Inventory\StockOverview;
+use App\Livewire\Company\Inventory\UpdateStock;
+use App\Livewire\Company\Salaries\Overview as SalariesOverview;
+use App\Livewire\Company\Sales\CreateSale;
+use App\Livewire\Company\Sales\SaleDetails;
+use App\Livewire\Company\Sales\SalesOverview;
+use App\Livewire\Company\Settings\Overview as CompanySettingsOverview;
+use App\Livewire\Company\Tips\NewTip;
+use App\Livewire\Company\Tips\Overview as TipsOverview;
+use App\Livewire\Company\WholesaleOrders\ChooseCompany;
+use App\Livewire\Company\WholesaleOrders\WholesaleOrders;
+use App\Livewire\Company\WholesaleOrders\OrderDetails;
+
 use App\Livewire\Profile\Overview as ProfileOverview;
 
-use App\Livewire\Wholesale\ChooseCompany;
+use App\Livewire\Wholesale\ChooseCompany as WholesaleChooseCompany;
 use App\Livewire\Wholesale\CollectOrder;
 use App\Livewire\Wholesale\CompleteOrder;
 use App\Livewire\Wholesale\CreateOrder;
@@ -123,10 +143,36 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
     // ? Profile
     Route::get('/profile', ProfileOverview::class)->name('profile.render');
 
+    // ? Company
+    Route::get('/company/choose', ChooseCompany::class)->name('company.choose.render');
+    Route::middleware('employee_or_owner')->group(function() {
+        Route::get('/company/{companyId}/dashboard', CompanyDashboard::class)->name('company.dashboard.render');
+        Route::get('/company/{companyId}/employees', CompanyEmployees::class)->name('company.employees.render');
+        Route::get('/company/{companyId}/sales', SalesOverview::class)->name('company.sales.render');
+        Route::get('/company/{companyId}/sales/new', CreateSale::class)->name('company.sales.new.render');
+        Route::get('/company/{companyId}/sales/{saleId}', SaleDetails::class)->name('company.sales.details.render');
+        Route::get('/company/{companyId}/stock', StockOverview::class)->name('company.stock.render');
+        Route::get('/company/{companyId}/tips', TipsOverview::class)->name('company.tips.render');
+        Route::get('/company/{companyId}/tips/new', NewTip::class)->name('company.tips.new.render');
+        Route::middleware('company_owner_or_manager')->group(function() {
+            Route::get('/company/{companyId}/archive', CompanyArchiveOverview::class)->name('company.archive.render');
+            Route::get('/company/{companyId}/archive/{saleId}', CompanyArchiveDetails::class)->name('company.archive.details.render');
+            Route::get('/company/{companyId}/bank-account/{bankAccountId}', BankaccountOverview::class)->name('company.bank-account.render');
+            Route::get('/company/{companyId}/choose-bank-account', ChooseBankaccount::class)->name('company.bank-accounts.render');
+            Route::get('/company/{companyId}/employees/edit/{employeeId}', EditEmployee::class)->name('company.employees.edit.render');
+            Route::get('/company/{companyId}/orders', WholesaleOrders::class)->name('company.wholesale-orders.render');
+            Route::get('/company/{companyId}/order/{orderId}', OrderDetails::class)->name('company.wholesale-orders.details.render');
+            Route::get('/company/{companyId}/salaries', SalariesOverview::class)->name('company.salaries.render');
+            Route::get('/company/{companyId}/settings', CompanySettingsOverview::class)->name('company.settings.render');
+            Route::get('/company/{companyId}/stock/edit/{itemId}', EditStock::class)->name('company.stock.edit.render');
+            Route::get('/company/{companyId}/stock/update', UpdateStock::class)->name('company.stock.update.render');
+        });
+    });
+  
     // ? Wholesale
     Route::middleware('permission:wholesale_order')->group(function() {
-        Route::get('/wholesale/choose-company', ChooseCompany::class)->name('wholesale.choose-company');
-        Route::get('/wholesale/create-order/{companyId}', CreateOrder::class)->name('wholesale.create-order');
+        Route::get('/wholesale/choose-company', WholesaleChooseCompany::class)->name('wholesale.choose-company');
+        Route::get('/wholesale/create-order/{companyId}', CreateOrder::class)->middleware('company_owner_or_manager')->name('wholesale.create-order');
     });
 
     Route::middleware('permission:manage_wholesale_orders')->group(function() {
@@ -154,7 +200,6 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
         Route::get('/companies/edit/{id}/add-bank-account', AddCompanyBankAccount::class)->name('admin.companies.add-bank-account');
         Route::get('/companies/edit/{id}/add-employee', AddEmployee::class)->name('admin.companies.add-employee');
         Route::get('/companies/edit/{id}/add-items', AddItems::class)->name('admin.companies.add-items');
-        Route::get('/companies/edit/{id}/add-item-group', AddItemGroup::class)->name('admin.companies.add-item-group');
         Route::get('/companies/edit/{id}/add-pin-console', AddPinConsole::class)->name('admin.companies.add-pin-console');
         Route::get('/companies/edit/{id}/add-plot', AddPlot::class)->name('admin.companies.add-plot');
         Route::get('/companies/edit/{companyId}/edit-item/{itemId}', EditCompanyItem::class)->name('admin.companies.edit-item');

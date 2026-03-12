@@ -3,6 +3,7 @@
 namespace App\Livewire\Wholesale;
 
 use App\Models\Company;
+use App\Models\CompanyOrder;
 use App\Models\WholesaleOrder;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
@@ -68,6 +69,11 @@ class CreateOrder extends Component
                 ])
                 ->toArray()
         );
+
+        CompanyOrder::create([
+            'company_id' => $this->company->id,
+            'order_id' => $order->id,
+        ]);
 
         return redirect()->route('wholesale.choose-company')->success(__('wholesale.toasts.order_created'));
     }

@@ -38,4 +38,9 @@ class CompanyBankaccount extends Model
         return BankTransaction::where('from_company_id', $this->id)
             ->orWhere('to_company_id', $this->id);
     }
+
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class, 'currency', 'currency');
+    }
 }

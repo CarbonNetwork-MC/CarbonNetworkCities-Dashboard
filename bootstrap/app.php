@@ -1,13 +1,15 @@
 <?php
 
+use App\Console\Commands\CleanupExpiredAccountLinkTokens;
+use App\Console\Commands\CleanupOldCompanyNotifications;
+use App\Http\Middleware\EnsureOnboardingComplete;
+use App\Http\Middleware\EnsureUserIsCompanyOwnerOrManager;
+use App\Http\Middleware\EnsureUserIsEmployeeOrOwner;
+use App\Http\Middleware\RedirectIfOnboarded;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-
-use App\Console\Commands\CleanupExpiredAccountLinkTokens;
-use App\Http\Middleware\EnsureOnboardingComplete;
-use App\Http\Middleware\RedirectIfOnboarded;
-use Illuminate\Console\Scheduling\Schedule;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -28,9 +30,22 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
         ]);
     })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias([
+            'employee_or_owner' => EnsureUserIsEmployeeOrOwner::class,
+        ]);
+    })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias([
+            'company_owner_or_manager' => EnsureUserIsCompanyOwnerOrManager::class,
+        ]);
+    })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })
     ->withSchedule(function (Schedule $schedule): void {
         $schedule->command(new CleanupExpiredAccountLinkTokens)->daily();
+    })
+    ->withSchedule(function (Schedule $schedule): void {
+        $schedule->command(new CleanupOldCompanyNotifications())->daily();
     })->create();

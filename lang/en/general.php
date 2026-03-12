@@ -15,6 +15,8 @@ return [
     'yes' => 'Yes',
     'no' => 'No',
 
+    'see_more' => 'See more',
+    
     // Placeholders
     'placeholders' => [
         'search' => 'Search...',
