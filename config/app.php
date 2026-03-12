@@ -134,4 +134,15 @@ return [
 
     'allow_registration' => env('ALLOW_REGISTRATION', true),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Cities Servers
+    |--------------------------------------------------------------------------
+    |
+    | This option controls the number of servers running the plugin
+    |
+    */
+
+    'cities_servers' => env('CITIES_SERVERS', 1),
+
 ];
