@@ -24,7 +24,7 @@ class Overview extends Component
             ->values()
             ->toArray();
 
-        $this->selectedWeek = $this->weeks[0] ?? null;
+        $this->selectedWeek = in_array(now()->weekOfYear, $this->weeks) ? now()->weekOfYear : $this->weeks[0] ?? null;
 
         $this->salaries = $this->company->salaries()
             ->where('week', $this->selectedWeek)
