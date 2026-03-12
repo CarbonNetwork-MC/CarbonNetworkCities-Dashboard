@@ -6,6 +6,7 @@ use App\Models\Company;
 use App\Models\CompanyItem;
 use App\Models\CompanySale;
 use App\Models\CompanySaleItem;
+use App\Models\EmployeeSalary;
 use App\Models\EmployeeSalaryUpdate;
 use App\Models\Player;
 use Illuminate\Support\Facades\Auth;
@@ -66,6 +67,12 @@ class CreateSale extends Component
         ]);
 
         $customer = Player::where('username', $data['customer'])->first();
+        $employeeSalaryEntry = EmployeeSalary::where('player_uuid', Auth::user()->player->uuid)
+            ->where('company_id', $this->company->id)
+            ->where('year', $this->currentYear)
+            ->where('week', $this->currentWeek)
+            ->where('status', 'unpaid')
+            ->first();
         
         $sale = CompanySale::create([
             'company_id' => $this->company->id,
@@ -75,6 +82,7 @@ class CreateSale extends Component
             'total_revenue' => $this->total,
             'customer_uuid' => $customer->uuid,
             'employee_uuid' => Auth::user()->player->uuid,
+            'salary_id' => $employeeSalaryEntry ? $employeeSalaryEntry->id : null,
         ]);
 
         foreach ($data['sales'] as $saleData) {
@@ -115,7 +123,7 @@ class CreateSale extends Component
             ->where('status', 'unpaid')
             ->first();
         if (!$existingSalary) {
-            $this->company->salaries()->create([
+            $existingSalary = $this->company->salaries()->create([
                 'company_id' => $this->company->id,
                 'player_uuid' => $player->uuid,
                 'year' => $this->currentYear,
