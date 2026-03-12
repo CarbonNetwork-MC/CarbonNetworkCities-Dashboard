@@ -149,6 +149,8 @@
                                     {{ __('company.labels.total_spent') }}:
                                     {{ $company->country->currency_symbol }}{{ number_format($mostValuableCustomer['total_spent'], 2) }}
                                 </p>
+                            @else
+                                <p class="text-gray-500 dark:text-gray-400">{{ __('company.messages.no_sales_yet') }}</p>
                             @endif
                         </div>
 
@@ -175,6 +177,8 @@
                                     {{ __('company.labels.revenue') }}:
                                     {{ $company->country->currency_symbol }}{{ number_format($bestProduct['revenue'], 2) }}
                                 </p>
+                            @else
+                                <p class="text-gray-500 dark:text-gray-400">{{ __('company.messages.no_sales_yet') }}</p>
                             @endif
                         </div>
 
@@ -196,6 +200,8 @@
                                     {{ __('company.labels.revenue') }}:
                                     {{ $company->country->currency_symbol }}{{ number_format($worstProduct['revenue'], 2) }}
                                 </p>
+                            @else
+                                <p class="text-gray-500 dark:text-gray-400">{{ __('company.messages.no_sales_yet') }}</p>
                             @endif
                         </div>
                     </div>
