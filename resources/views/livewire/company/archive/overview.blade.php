@@ -56,7 +56,7 @@
                             <x-tables.table-data>{{ $company->country->currency_symbol ?? '' }}{{ number_format($sale->total_revenue, 2) }}</x-tables.table-data>
                             <x-tables.table-data>{{ $sale->employee->username }}</x-tables.table-data>
                             <x-tables.table-actions>
-                                <x-tables.primary-action href="{{-- route('company.archive.details.render', ['companyId' => $company->id, 'saleId' => $sale->id]) --}}">
+                                <x-tables.primary-action href="{{ route('company.archive.details.render', ['companyId' => $company->id, 'saleId' => $sale->id]) }}">
                                     {{ __('general.buttons.view') }}
                                 </x-tables.primary-action>
                             </x-tables.table-actions>

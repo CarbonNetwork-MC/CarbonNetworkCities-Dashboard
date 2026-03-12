@@ -81,6 +81,7 @@ use App\Livewire\Admin\Wholesale\EditItem as EditWholesaleItem;
 
 use App\Livewire\Company\CompanyDashboard;
 use App\Livewire\Company\Archive\Overview as CompanyArchiveOverview;
+use App\Livewire\Company\Archive\Details as CompanyArchiveDetails;
 use App\Livewire\Company\BankAccounts\BankaccountOverview;
 use App\Livewire\Company\BankAccounts\ChooseBankaccount;
 use App\Livewire\Company\Employees\Employees as CompanyEmployees;
@@ -154,6 +155,7 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
         Route::get('/company/{companyId}/tips/new', NewTip::class)->name('company.tips.new.render');
         Route::middleware('company_owner_or_manager')->group(function() {
             Route::get('/company/{companyId}/archive', CompanyArchiveOverview::class)->name('company.archive.render');
+            Route::get('/company/{companyId}/archive/{saleId}', CompanyArchiveDetails::class)->name('company.archive.details.render');
             Route::get('/company/{companyId}/bank-account/{bankAccountId}', BankaccountOverview::class)->name('company.bank-account.render');
             Route::get('/company/{companyId}/choose-bank-account', ChooseBankaccount::class)->name('company.bank-accounts.render');
             Route::get('/company/{companyId}/employees/edit/{employeeId}', EditEmployee::class)->name('company.employees.edit.render');
