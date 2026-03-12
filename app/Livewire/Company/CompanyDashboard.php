@@ -19,10 +19,22 @@ class CompanyDashboard extends Component
 
     public $company;
 
+    public $bestProduct;
+    public $worstProduct;
+    public $weeklyRevenue;
+    public $weeklyOrders;
+    public $mostValuableCustomer;
+
     public $hasPermission = false;
 
     public function mount($companyId) {
         $this->company = Company::find($companyId);
+
+        $this->bestProduct = $this->getBestProduct();
+        $this->worstProduct = $this->getWorstProduct();
+        $this->weeklyRevenue = $this->getWeeklyRevenue();
+        $this->weeklyOrders = $this->getWeeklyOrders();
+        $this->mostValuableCustomer = $this->getMostValuableCustomer();
 
         $user = Auth::user();
         $this->hasPermission = $user->hasRole('Superadmin')
@@ -130,5 +142,78 @@ class CompanyDashboard extends Component
                 'is_read' => false,
             ]);
         }
+    }
+
+    private function getBestProduct() {
+        return $this->company->sales()
+            ->with(['items.item.item'])
+            ->get()
+            ->flatMap(function ($sale) {
+                return $sale->items;
+            })
+            ->groupBy('item_id')
+            ->map(function ($items, $itemId) {
+                return [
+                    'item_id' => $itemId,
+                    'name' => $items->first()->item->item->name,
+                    'quantity' => $items->sum('quantity'),
+                    'revenue' => $items->sum(function ($item) {
+                        return $item->price;
+                    }),
+                ];
+            })
+            ->sortByDesc('quantity')
+            ->first();
+    }
+
+    private function getWorstProduct() {
+        return $this->company->sales()
+            ->with(['items.item.item'])
+            ->get()
+            ->flatMap(function ($sale) {
+                return $sale->items;
+            })
+            ->groupBy('item_id')
+            ->map(function ($items, $itemId) {
+                return [
+                    'item_id' => $itemId,
+                    'name' => $items->first()->item->item->name,
+                    'quantity' => $items->sum('quantity'),
+                    'revenue' => $items->sum(function ($item) {
+                        return $item->price;
+                    }),
+                ];
+            })
+            ->sortBy('quantity')
+            ->first();
+    }
+
+    private function getWeeklyRevenue() {
+        return $this->company->sales()
+            ->where('created_at', '>=', now()->subWeek())
+            ->sum('total_revenue');
+    }
+
+    private function getWeeklyOrders() {
+        return $this->company->sales()
+            ->where('created_at', '>=', now()->subWeek())
+            ->count();
+    }
+
+    private function getMostValuableCustomer() {
+        return $this->company->sales()
+            ->where('created_at', '>=', now()->subMonth())
+            ->with('customer')
+            ->get()
+            ->groupBy('customer_uuid')
+            ->map(function ($sales, $customerUuid) {
+                return [
+                    'customer_uuid' => $customerUuid,
+                    'name' => $sales->first()->customer->username,
+                    'total_spent' => $sales->sum('total_revenue'),
+                ];
+            })
+            ->sortByDesc('total_spent')
+            ->first();
     }
 }

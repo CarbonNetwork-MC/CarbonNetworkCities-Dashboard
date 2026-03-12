@@ -103,10 +103,103 @@
             </x-containers.main>
         </div>
 
-        {{-- Best Selling Products --}}
+        {{-- Statistics --}}
         <div class="col-span-1">
             <x-containers.main class="h-full">
-                <x-containers.title>{{ __('company.titles.best_selling_products') }}</x-containers.title>
+                <x-containers.title>
+                    {{ __('company.titles.company_overview') }}
+                </x-containers.title>
+
+                <div class="bg-white dark:bg-gray-900 rounded-lg mt-2 p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {{-- Weekly Overview --}}
+                        @if ($hasPermission)
+                            <div class="border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700">
+                                <p class="text-xs uppercase font-semibold text-black dark:text-white mb-2">
+                                    {{ __('company.titles.weekly_overview') }}
+                                </p>
+
+                                <p class="text-sm text-gray-600 dark:text-gray-400">
+                                    {{ __('company.labels.total_revenue') }}:
+                                    <span class="font-semibold text-black dark:text-white">
+                                        {{ $company->country->currency_symbol }}{{ number_format($weeklyRevenue, 2) }}
+                                    </span>
+                                </p>
+
+                                <p class="text-sm text-gray-600 dark:text-gray-400">
+                                    {{ __('company.labels.total_orders') }}:
+                                    <span class="font-semibold text-black dark:text-white">
+                                        {{ $weeklyOrders }}
+                                    </span>
+                                </p>
+                            </div>
+                        @endif
+
+                        {{-- Most Valuable Customer --}}
+                        <div class="{{ $hasPermission ? '' : 'border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700' }}">
+                            <p class="text-xs uppercase font-semibold text-black dark:text-white mb-2">
+                                {{ __('company.titles.most_valuable_customer') }}
+                            </p>
+
+                            @if ($mostValuableCustomer)
+                                <p class="font-semibold text-black dark:text-white text-sm">
+                                    {{ $mostValuableCustomer['name'] }}
+                                </p>
+                                <p class="text-xs text-gray-400">
+                                    {{ __('company.labels.total_spent') }}:
+                                    {{ $company->country->currency_symbol }}{{ number_format($mostValuableCustomer['total_spent'], 2) }}
+                                </p>
+                            @endif
+                        </div>
+
+                        @if (!$hasPermission)
+                            <div class="col-span-1">
+                                {{-- Placeholder --}}
+                            </div>
+                        @endif
+
+                        {{-- Best Product --}}
+                        <div class="border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700">
+                            <p class="text-xs uppercase font-semibold text-black dark:text-white mb-2">
+                                {{ __('company.titles.best_product') }}
+                            </p>
+
+                            @if ($bestProduct)
+                                <p class="font-semibold text-black dark:text-white text-sm">
+                                    {{ $bestProduct['name'] }}
+                                </p>
+                                <p class="text-xs text-gray-400">
+                                    {{ __('company.labels.units_sold') }}: {{ $bestProduct['quantity'] }}
+                                </p>
+                                <p class="text-xs text-gray-400">
+                                    {{ __('company.labels.revenue') }}:
+                                    {{ $company->country->currency_symbol }}{{ number_format($bestProduct['revenue'], 2) }}
+                                </p>
+                            @endif
+                        </div>
+
+
+                        {{-- Worst Product --}}
+                        <div class="">
+                            <p class="text-xs uppercase font-semibold text-black dark:text-white mb-2">
+                                {{ __('company.titles.worst_product') }}
+                            </p>
+
+                            @if ($worstProduct)
+                                <p class="font-semibold text-black dark:text-white text-sm">
+                                    {{ $worstProduct['name'] }}
+                                </p>
+                                <p class="text-xs text-gray-400">
+                                    {{ __('company.labels.units_sold') }}: {{ $worstProduct['quantity'] }}
+                                </p>
+                                <p class="text-xs text-gray-400">
+                                    {{ __('company.labels.revenue') }}:
+                                    {{ $company->country->currency_symbol }}{{ number_format($worstProduct['revenue'], 2) }}
+                                </p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
             </x-containers.main>
         </div>
 
