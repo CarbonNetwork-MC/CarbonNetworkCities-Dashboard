@@ -22,6 +22,9 @@ return new class extends Migration
             $table->decimal('total', 10, 2);
             $table->timestamps();
             
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('customer_uuid')->references('uuid')->on('players')->onDelete('set null')->onUpdate('cascade');
             $table->foreign('collected_by')->references('uuid')->on('players')->onDelete('set null')->onUpdate('cascade');

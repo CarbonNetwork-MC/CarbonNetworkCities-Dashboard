@@ -7,6 +7,7 @@ use App\Models\CompanyItem;
 use App\Models\Plot;
 use App\Models\Player;
 use App\Models\Company;
+use App\Models\CompanyNotification;
 use App\Services\PlayerPermissionService;
 use App\Services\PluginAPI\ApiService;
 use Livewire\Component;
@@ -35,6 +36,9 @@ class EditCompany extends Component
     public $searchPinConsoles = '';
     public $searchItems = '';
 
+    public $notificationMessage = '';
+    public $notificationLevel = 'info';
+
     public $employeesPerPage = 5;
     public $accountsPerPage = 5;
     public $plotsPerPage = 5;
@@ -52,6 +56,7 @@ class EditCompany extends Component
     public $removePlotModal = false;
     public $removePinConsoleModal = false;
     public $removeItemModal = false;
+    public $showSendNotificationModal = false;
 
     public $assignEmployeeModal = false;
     public $assignPlotModal = false;
@@ -63,7 +68,7 @@ class EditCompany extends Component
 
         $this->companyName = $this->company->name;
         $this->cocNumber = $this->company->coc_number;
-        $this->cocType = $this->company->coc_type;
+        $this->cocType = $this->company->coc_type_id;
         $this->worldId = $this->company->world_id;
         $this->selectedPlayer = $this->company->owner_uuid;
 
@@ -107,7 +112,7 @@ class EditCompany extends Component
         $data = $this->validate([
             'companyName'    => ['required', 'string', 'max:255'],
             'cocNumber'      => ['required', 'string', 'max:20'],
-            'cocType'        => ['required', 'string', 'exists:coc_types,id'],
+            'cocType'     => ['required', 'numeric', 'exists:coc_types,id'],
             'worldId'        => ['required', 'string', 'max:255'],
             'selectedPlayer' => ['nullable', 'string', 'exists:players,uuid'],
         ]);
@@ -115,7 +120,7 @@ class EditCompany extends Component
         // 2. Optimistic update
         $this->company->name = $this->companyName;
         $this->company->coc_number = $this->cocNumber;
-        $this->company->coc_type = $this->cocType;
+        $this->company->coc_type_id = $this->cocType;
         $this->company->world_id = $this->worldId;
         $this->company->owner_uuid = $this->selectedPlayer;
         $this->company->save();
@@ -135,14 +140,14 @@ class EditCompany extends Component
 
         // Immediate failure (request not accepted)
         if ($status !== 202) {
-            $this->rollbackCompany($originalData, $this->selectedPlayer);
+            $this->rollbackCompany($originalData);
             Toaster::error(__('admin.toasts.companies.update_failed'));
             return;
         }
 
         // 3. Poll for result
         if (!$success) {
-            $this->rollbackCompany($originalData, $this->selectedPlayer);
+            $this->rollbackCompany($originalData);
             Toaster::error(__('admin.toasts.companies.update_failed'));
             return;
         }
@@ -318,6 +323,25 @@ class EditCompany extends Component
 
         $this->removeItemModal = false;
         Toaster::success(__('admin.toasts.companies.item_removed'));
+    }
+
+    // Send Notification
+    public function sendNotification() {
+        $this->validate([
+            'notificationMessage' => ['required', 'string', 'max:255'],
+            'notificationLevel' => ['required', 'string', 'in:info,warning,critical'],
+        ]);
+
+        CompanyNotification::create([
+            'company_id' => $this->company->id,
+            'type' => 'custom',
+            'level' => $this->notificationLevel,
+            'message' => $this->notificationMessage,
+        ]);
+
+        $this->reset(['notificationMessage', 'notificationLevel', 'showSendNotificationModal']);
+
+        Toaster::success(__('admin.toasts.companies.notification_sent'));
     }
 
     public function render()

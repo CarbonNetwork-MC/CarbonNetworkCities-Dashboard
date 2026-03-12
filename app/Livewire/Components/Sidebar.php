@@ -2,21 +2,32 @@
 
 namespace App\Livewire\Components;
 
+use App\Models\Company;
 use App\Models\Permission;
 use Livewire\Component;
 
 class Sidebar extends Component
 {
     public $user;
-    public $sidebarItems;
+    public $userProfilePicture;
+
+    public $selectedCompany;
+    public $isCompanyOwnerOrManager = false;
 
     public $editSidebar;
     public $managePerms;
     public $manageUsers;
 
-    public function mount(): void
-    {
+    public function mount(): void {
         $this->user = auth()->user();
+        $this->userProfilePicture = $this->user->profile_photo_path
+            ? asset('storage/' . $this->user->profile_photo_path)
+            : null;
+
+        $this->selectedCompany = request()->route('companyId') ? Company::find(request()->route('companyId')) : null;
+        if ($this->selectedCompany && ($this->selectedCompany->owner->uuid == $this->user->player->uuid || $this->selectedCompany->employees()->where('player_uuid', $this->user->player->uuid)->where('role', 'manager')->exists())) {
+            $this->isCompanyOwnerOrManager = true;
+        }
 
         $this->editSidebar = Permission::where('name', 'edit_sidebar')->first();
         $this->managePerms = Permission::where('name', 'manage_permissions')->first();

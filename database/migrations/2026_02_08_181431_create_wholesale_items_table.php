@@ -18,6 +18,9 @@ return new class extends Migration
             $table->decimal('price', 10, 2)->default(0);
             $table->timestamps();
             
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade')->onUpdate('cascade');
         });
     }
