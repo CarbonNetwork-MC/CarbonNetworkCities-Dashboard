@@ -8,7 +8,6 @@ use App\Models\CompanyBankaccount;
 use App\Models\Country;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Masmerise\Toaster\Toaster;
 
 class BankaccountOverview extends Component
 {
@@ -24,10 +23,6 @@ class BankaccountOverview extends Component
         $this->bankAccount = CompanyBankaccount::find($bankAccountId);
 
         $this->currencySymbol = Country::where('currency', $this->bankAccount->currency)->first()->currency_symbol ?? $this->bankAccount->currency;
-    }
-
-    public function test() {
-        Toaster::success('Test successful');
     }
 
     public function render()

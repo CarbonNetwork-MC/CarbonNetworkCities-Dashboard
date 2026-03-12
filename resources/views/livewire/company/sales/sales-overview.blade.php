@@ -130,7 +130,9 @@
                             </div>
                         </div>
                     @empty
-
+                        <div class="text-center text-gray-700 dark:text-white">
+                            {{ __('company.messages.no_items') }}
+                        </div>
                     @endforelse
                 </div>
             </x-containers.main>

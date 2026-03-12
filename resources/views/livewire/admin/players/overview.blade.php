@@ -56,7 +56,11 @@
                             </x-tables.table-actions>
                         </x-tables.table-row>
                     @empty
-
+                        <x-tables.table-row>
+                            <x-tables.empty-state colspan="10">
+                                {{ __('admin.messages.players.no_players') }}
+                            </x-tables.empty-state>
+                        </x-tables.table-row>
                     @endforelse
                 </x-slot>
                 <x-slot name="pagination">

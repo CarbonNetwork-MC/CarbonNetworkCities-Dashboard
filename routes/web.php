@@ -25,7 +25,7 @@ use App\Livewire\Admin\Companies\AddItems;
 use App\Livewire\Admin\Companies\AddPinConsole;
 use App\Livewire\Admin\Companies\AddPlot;
 use App\Livewire\Admin\Companies\EditCompany;
-use App\Livewire\Admin\Companies\EditEmployee;
+use App\Livewire\Admin\Companies\EditEmployee as AdminEditEmployee;
 use App\Livewire\Admin\Companies\EditItem as EditCompanyItem;
 use App\Livewire\Admin\Companies\NewCompany;
 use App\Livewire\Admin\Companies\Overview as CompaniesOverview;
@@ -203,7 +203,7 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
         Route::get('/companies/edit/{id}/add-pin-console', AddPinConsole::class)->name('admin.companies.add-pin-console');
         Route::get('/companies/edit/{id}/add-plot', AddPlot::class)->name('admin.companies.add-plot');
         Route::get('/companies/edit/{companyId}/edit-item/{itemId}', EditCompanyItem::class)->name('admin.companies.edit-item');
-        Route::get('/companies/edit/{companyId}/edit-employee/{playerUuid}', EditEmployee::class)->name('admin.companies.edit-employee');
+        Route::get('/companies/edit/{companyId}/edit-employee/{playerUuid}', AdminEditEmployee::class)->name('admin.companies.edit-employee');
     });
 
     // ? Permissions

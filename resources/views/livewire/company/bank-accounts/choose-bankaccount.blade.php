@@ -48,7 +48,11 @@
                             </x-tables.table-data>
                         </x-tables.table-row>
                     @empty
-
+                        <x-tables.table-row>
+                            <x-tables.empty-state colspan="3" class="text-center py-4">
+                                {{ __('company.messages.no_bank_accounts') }}
+                            </x-tables.empty-state>
+                        </x-tables.table-row>
                     @endforelse
                 </x-slot>
             </x-tables.table-striped>

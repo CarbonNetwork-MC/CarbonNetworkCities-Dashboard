@@ -234,7 +234,7 @@
                         @endif
 
                         {{-- Employees --}}
-                        @forelse ($employees as $employee)
+                        @foreach ($employees as $employee)
                             <div class="flex items-center gap-4">
                                 <div class="w-10 h-10 overflow-hidden">
                                     <img src="https://cravatar.eu/avatar/{{ $employee->player->uuid }}/64.png" alt="{{ $employee->player->username }}" class="w-full h-full object-cover">
@@ -248,9 +248,7 @@
                                     </p>
                                 </div>
                             </div>
-                        @empty
-
-                        @endforelse
+                        @endforeach
                     </div>
                 </div>
             </x-containers.main>

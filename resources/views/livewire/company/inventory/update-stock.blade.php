@@ -42,7 +42,7 @@
                                 <x-forms.number-input class="w-full" wire:model="stockUpdates.{{ $item->id }}" />
                             </div>
                         @empty
-
+                            <p class="col-span-2 text-center text-gray-500">{{ __('company.messages.no_items') }}</p>
                         @endforelse
                     </div>
 
