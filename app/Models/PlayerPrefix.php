@@ -12,6 +12,9 @@ class PlayerPrefix extends Model
         'prefix',
         'selected',
     ];
+    protected $casts = [
+        'selected' => 'boolean',
+    ];
 
     public function player(): BelongsTo
     {
