@@ -6,7 +6,7 @@ use App\Models\Company;
 use App\Models\Country;
 use Livewire\Component;
 use App\Models\CompanyBankaccount;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 
 class AddPinConsole extends Component
 {
@@ -30,7 +30,7 @@ class AddPinConsole extends Component
         $this->accounts = CompanyBankaccount::where('company_id', $this->company->id)->get(['id']);
     }
 
-    public function addPinConsole(ApiService $apiService) {
+    public function addPinConsole(RedisService $redisService) {
         $data = $this->validate([
             'accountId' => ['required', 'integer'],
             'x' => ['required', 'numeric'],
@@ -55,23 +55,15 @@ class AddPinConsole extends Component
             'is_active' => $data['isActive'],
         ]);
 
-        // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/pin-console/{$pinConsole->id}");
-
-        // Immediate failure (request not accepted)
-        if ($status !== 202) {
-            $pinConsole->delete();
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toasts.companies.pin_console_add_failed'));
-        }
-
-        // 3. Poll for result
+        // 2. Send invalidate request to the Minecraft servers
+        $success = $redisService->invalidate('INVALIDATE_PIN_CONSOLE', (string) $pinConsole->id);
         if (!$success) {
             $pinConsole->delete();
             return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toasts.companies.pin_console_add_failed'));
         }
 
-        // 4. Success
-        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toasts.companies.pin_console_added'));
+        // 3. Success
+        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toast.companies.pin_console_added'));
     }
 
     public function render()

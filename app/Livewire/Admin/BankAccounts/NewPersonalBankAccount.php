@@ -5,7 +5,7 @@ namespace App\Livewire\Admin\BankAccounts;
 use App\Models\Player;
 use App\Models\Country;
 use App\Models\PersonalBankaccount;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 use Livewire\Component;
 
 class NewPersonalBankAccount extends Component
@@ -22,7 +22,7 @@ class NewPersonalBankAccount extends Component
         $this->countries = Country::get(['name', 'currency']);
     }
 
-    public function createPersonalBankAccount(ApiService $apiService) {
+    public function createPersonalBankAccount(RedisService $redisService) {
         $currencies = Country::pluck('currency')->toArray();
 
         $data = $this->validate([
@@ -38,16 +38,10 @@ class NewPersonalBankAccount extends Component
             'currency' => $data['currency'],
         ]);
 
-        [$status, $success] = $apiService->post("api/invalidate/player/{$this->playerUuid}");
-
-        if ($status !== 202) {
-            $personalBankAccount->delete();
-            return redirect()->route('admin.bank-accounts.personal.new')->error(__('admin.toasts.bank_accounts.personal.invalidate_bankaccount_api_error'));
-        }
-
+        $success = $redisService->invalidate('INVALIDATE_PLAYER', $data['playerUuid']);
         if (!$success) {
             $personalBankAccount->delete();
-            return redirect()->route('admin.bank-accounts.personal.new')->error(__('admin.toasts.bank_accounts.personal.invalidate_bankaccount_api_error'));
+            return redirect()->route('admin.bank-accounts.personal.new')->error(__('admin.toast.bank_accounts.personal.invalidate_bankaccount_redis_error'));
         }
 
         return redirect()->route('admin.bank-accounts.render')->success(__('admin.toasts.bank_account.personal.created'));

@@ -2,13 +2,13 @@
 
 namespace App\Livewire\Profile;
 
+use App\Services\RedisService;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\Password;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Masmerise\Toaster\Toaster;
-use Illuminate\Support\Facades\Hash;
-use App\Services\PluginAPI\ApiService;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rules\Password;
 
 class Overview extends Component
 {
@@ -96,15 +96,14 @@ class Overview extends Component
         $this->unlinkPlayerModal = true;
     }
 
-    public function unlink(ApiService $apiService) {
+    public function unlink(RedisService $redisService) {
         if (!$this->playerToUnlink || !$this->playerToUnlink->accountLink) return;
 
         $originalAccountLink = $this->playerToUnlink->accountLink;
 
         $this->playerToUnlink->accountLink()->delete();
 
-        [$status, $success] = $apiService->post("api/invalidate/player/{$this->playerToUnlink->player->uuid}");
-
+        $success = $redisService->invalidate('INVALIDATE_PLAYER', $this->playerToUnlink->player->uuid);
         if (!$success) {
             $this->playerToUnlink->accountLink()->save($originalAccountLink);
             Toaster::error(__('profile.toast.account_unlink_api_error'));
@@ -121,7 +120,7 @@ class Overview extends Component
         $this->deleteAccountModal = true;
     }
 
-    public function destroyAccount(ApiService $apiService) {
+    public function destroyAccount(RedisService $redisService) {
         if (!$this->accountToDelete) return;
 
         $user = $this->accountToDelete;
@@ -138,8 +137,7 @@ class Overview extends Component
 
         $user->accountLink()->delete();
 
-        [$status, $success] = $apiService->post("api/invalidate/player/{$playerUuid}");
-
+        $success = $redisService->invalidate('INVALIDATE_PLAYER', $playerUuid);
         if (!$success) {
             $user->accountLink()->save($user->accountLink);
             Toaster::error(__('profile.toast.account_delete_api_error'));

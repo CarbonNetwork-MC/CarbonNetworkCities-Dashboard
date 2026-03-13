@@ -3,10 +3,10 @@
 namespace App\Livewire\Admin\Countries;
 
 use App\Models\Country;
+use App\Services\RedisService;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
-use App\Services\PluginAPI\ApiService;
 
 class Overview extends Component
 {
@@ -31,23 +31,19 @@ class Overview extends Component
         $this->deleteCountryModal = true;
     }
 
-    public function destroyCountry(ApiService $apiService) {
+    public function destroyCountry(RedisService $redisService) {
         if (!$this->selectedCountry) return;
 
         $selectedCountry = $this->selectedCountry;
 
         $this->selectedCountry->delete();
 
-        [$status, $success] = $apiService->post("api/reload/countries");
-
-        if ($status !== 202) {
-            Country::create($selectedCountry->toArray());
-            return Toaster::error(__('admin.toasts.countries.reload_countries_api_error'));
-        }
+        $success = $redisService->invalidate('RELOAD_COUNTRIES', 'NULL');
 
         if (!$success) {
             Country::create($selectedCountry->toArray());
-            return Toaster::error(__('admin.toasts.countries.reload_countries_api_error'));
+            Toaster::error(__('admin.toast.countries.reload_countries_api_error'));
+            return;
         }
 
         $this->reset([

@@ -4,7 +4,7 @@ namespace App\Livewire\Admin\Companies;
 
 use App\Models\Company;
 use App\Models\Country;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 use Livewire\Component;
 
 class AddBankAccount extends Component
@@ -22,7 +22,7 @@ class AddBankAccount extends Component
         $this->currencies = Country::distinct()->orderBy('currency')->pluck('currency');
     }
 
-    public function addBankAccount(ApiService $apiService) {
+    public function addBankAccount(RedisService $redisService) {
         $data = $this->validate([
             'balance' => 'required|numeric|min:0',
             'currency' => 'required|string|in:' . $this->currencies->implode(','),
@@ -46,22 +46,14 @@ class AddBankAccount extends Component
         }
 
         // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/company/{$this->company->id}");
-
-        // Immediate failure (request not accepted)
-        if ($status !== 202) {
-            $this->rollbackBankAccounts($bankAccount, $originalBankAccounts);
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toasts.companies.bank_account_add_failed'));
-        }
-
-        // 3. Poll for result
+        $success = $redisService->invalidate('INVALIDATE_COMPANY', (string) $this->company->id);
         if (!$success) {
             $this->rollbackBankAccounts($bankAccount, $originalBankAccounts);
             return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toasts.companies.bank_account_add_failed'));
         }
 
-        // 4. Success
-        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toasts.companies.bank_account_added'));
+        // 3. Success
+        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toast.companies.bank_account_added'));
     }
 
     public function render()

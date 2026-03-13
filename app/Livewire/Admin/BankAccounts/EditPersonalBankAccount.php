@@ -6,7 +6,7 @@ use App\Models\Player;
 use App\Models\Country;
 use Livewire\Component;
 use App\Models\PersonalBankaccount;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 
 class EditPersonalBankAccount extends Component
 {
@@ -32,7 +32,7 @@ class EditPersonalBankAccount extends Component
         $this->countries = Country::get(['name', 'currency']);
     }
 
-    public function updatePersonalBankAccount(ApiService $apiService) {
+    public function updatePersonalBankAccount(RedisService $redisService) {
         if (!$this->account) return;
 
         $originalData = $this->account->toArray();
@@ -52,16 +52,13 @@ class EditPersonalBankAccount extends Component
         $this->account->currency = $data['currency'];
         $this->account->save();
 
+        $success = false;
         if ($data['playerUuid'] !== $originalData['player_uuid']) {
-            $playerUuids = [$data['playerUuid'], $originalData['player_uuid']];
-            [$status, $success] = $apiService->post("api/invalidate/players", $playerUuids);
+            $oldPlayer = $redisService->invalidate('INVALIDATE_PLAYER', $originalData['player_uuid']);
+            $newPlayer = $redisService->invalidate('INVALIDATE_PLAYER', $data['playerUuid']);
+            $success = $oldPlayer && $newPlayer;
         } else {
-            [$status, $success] = $apiService->post("api/invalidate/player/{$this->playerUuid}");
-        }
-
-        if ($status !== 202) {
-            $this->rollbackPersonalBankAccount($originalData);
-            return redirect()->route('admin.bank-accounts.personal.edit', ['id' => $this->account->id])->error(__('admin.toasts.bank_accounts.personal.invalidate_bankaccount_api_error'));
+            $success = $redisService->invalidate('INVALIDATE_PLAYER', $data['playerUuid']);
         }
 
         if (!$success) {

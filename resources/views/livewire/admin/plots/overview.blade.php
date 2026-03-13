@@ -66,9 +66,9 @@
                         </x-tables.table-row>
                     @empty
                         <x-tables.table-row>
-                            <x-tables.table-data colspan="12" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                            <x-tables.empty-state :colspan="12">
                                 {{ __('admin.messages.plots.plots_no_records') }}
-                            </x-tables.table-data>
+                            </x-tables.empty-state>
                         </x-tables.table-row>
                     @endforelse
                 </x-slot>

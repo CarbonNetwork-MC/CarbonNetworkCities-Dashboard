@@ -445,7 +445,7 @@ return [
             'no_roles_assigned' => 'No roles assigned to this user.',
             'no_permissions_assigned' => 'No permissions assigned to this user.',
             'unlink_confirmation' => 'Are you sure you want to unlink this user\'s account? This will reset their onboarding status, onboarding step and remove their account link.',
-            'users_no_records' => 'No users found.',
+            'no_records' => 'No users found.',
         ],
 
         'itemsmenu' => [
@@ -511,16 +511,15 @@ return [
             'deleted' => 'Company deleted successfully.',
             'updated' => 'Company updated successfully.',
 
-            'bank_account_added' => 'Bank account added to company successfully.',
-            'bank_account_removed' => 'Bank account removed from company successfully.',
-            'employee_assigned' => 'Employee assigned to company successfully.',
+            'bank_account_added' => 'Bank account successfully added to company.',
+            'bank_account_removed' => 'Bank account successfully removed from company.',
+            'employee_assigned' => 'Employee successfully assigned to company.',
             'employee_already_assigned' => 'This employee is already assigned to the company.',
-            'employee_removed' => 'Employee removed from company successfully.',
-            'item_added' => 'Item added to company successfully.',
-            'item_removed' => 'Item removed from company successfully.',
-            'item_updated' => 'Company item updated successfully.',
-            'plot_removed' => 'Plot removed from company successfully.',
-            'employee_updated' => 'Employee role updated successfully.',
+            'employee_removed' => 'Employee successfully removed from company.',
+            'item_added' => 'Item successfully added to company.',
+            'item_removed' => 'Item successfully removed from company.',
+            'item_updated' => 'Company item successfully updated.',
+            'plot_removed' => 'Plot successfully removed from company.',
 
             'update_failed' => 'Failed to update company. Please try again.',
             'bank_account_add_failed' => 'Failed to add bank account to company. Please try again.',

@@ -3,7 +3,7 @@
 namespace App\Livewire\Admin\Players;
 
 use App\Models\Player;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 use Livewire\Component;
 
 class EditPrefix extends Component
@@ -22,14 +22,14 @@ class EditPrefix extends Component
         $this->selected = $this->selectedPrefix->selected;
     }
 
-    public function updatePrefix(ApiService $apiService) {
+    public function updatePrefix(RedisService $redisService) {
         $data = $this->validate([
             'prefix' => ['required', 'string', 'max:20'],
         ]);
 
         // Store the current selected prefix (if any) and the original values for rollback in case of failure
         $originalSelectedPrefix = $this->player->prefixes()->where('selected', true)->first();
-        $originalPrefixValues = $this->selectedPrefix;
+        $originalPrefixValues = $this->selectedPrefix->replicate();
 
         // 1. Optimistic update
         $this->selectedPrefix->update([
@@ -42,8 +42,8 @@ class EditPrefix extends Component
             $this->player->prefixes()->where('id', '!=', $this->selectedPrefix->id)->update(['selected' => false]);
         }
 
-        // 3. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
+        // 3. Send invalidate request to the Minecraft servers
+        $success = $redisService->invalidate('INVALIDATE_PLAYER', $this->player->uuid);
         if (!$success) {
             $this->rollbackPrefix($originalPrefixValues, $originalSelectedPrefix);
             return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toasts.players.prefix_update_failed'));

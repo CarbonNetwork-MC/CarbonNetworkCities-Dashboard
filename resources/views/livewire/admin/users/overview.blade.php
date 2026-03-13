@@ -38,26 +38,26 @@
                 </x-slot>
                 <x-slot name="rows">
                     @forelse($users as $user)
-                        <tr class="odd:bg-white even:bg-gray-100 dark:odd:bg-gray-600 dark:even:bg-gray-700 border-b border-default">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->email }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->selectedLanguage->name ?? null }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->created_at->format('Y-m-d H:i:s') }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $user->updated_at->format('Y-m-d H:i:s') }}</td>
-                            <td class="px-6 py-4 flex justify-end gap-x-4 whitespace-nowrap text-right text-sm font-medium">
+                        <x-tables.table-row>
+                            <x-tables.table-data>{{ $user->name }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $user->email }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $user->selectedLanguage->name ?? null }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $user->created_at->format('Y-m-d H:i:s') }}</x-tables.table-data>
+                            <x-tables.table-data>{{ $user->updated_at->format('Y-m-d H:i:s') }}</x-tables.table-data>
+                            <x-tables.table-actions>
                                 <x-tables.primary-action href="{{ route('admin.users.edit', ['uuid' => $user->uuid]) }}">{{ __('general.buttons.edit') }}</x-tables.primary-action>
                                 @if ($user->accountLink)
-                                    <x-tables.danger-action wire:click="unlinkAccount('{{ $user->uuid }}')">{{ __('admin.buttons.users.unlink') }}</x-tables.primary-action>
+                                    <x-tables.danger-action wire:click="unlinkAccount('{{ $user->uuid }}')">{{ __('admin.buttons.users.unlink') }}</x-tables.danger-action>
                                 @endif
                                 <x-tables.danger-action wire:click="removeUser('{{ $user->uuid }}')">{{ __('general.buttons.delete') }}</x-tables.danger-action>
-                            </td>
-                        </tr>
+                            </x-tables.table-actions>
+                        </x-tables.table-row>
                     @empty
-                        <tr>
-                            <td colspan="6" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                                {{ __('admin.messages.users_no_records') }}
-                            </td>
-                        </tr>
+                        <x-tables.table-row>
+                            <x-tables.empty-state :colspan="6" >
+                                {{ __('admin.messages.users.no_records') }}
+                            </x-tables.empty-state>
+                        </x-tables.table-row>
                     @endforelse
                 </x-slot>
                 <x-slot name="pagination">

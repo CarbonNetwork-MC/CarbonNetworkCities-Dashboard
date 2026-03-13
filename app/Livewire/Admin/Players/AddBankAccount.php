@@ -4,7 +4,7 @@ namespace App\Livewire\Admin\Players;
 
 use App\Models\Country;
 use App\Models\Player;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 use Livewire\Component;
 
 class AddBankAccount extends Component
@@ -27,7 +27,7 @@ class AddBankAccount extends Component
         $this->currencies = Country::get(['name', 'currency']);
     }
 
-    public function addBankAccount(ApiService $apiService) {
+    public function addBankAccount(RedisService $redisService) {
         $data = $this->validate([
             'balance' => ['required', 'numeric', 'min:0'],
             'type' => ['required', 'string', 'in:' . implode(',', $this->types)],
@@ -42,8 +42,8 @@ class AddBankAccount extends Component
             'currency' => strtoupper($data['currency']),
         ]);
 
-        // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
+        // 2. Send invalidate request to the Minecraft servers
+        $success = $redisService->invalidate('INVALIDATE_PLAYER', $this->player->uuid);
         if (!$success) {
             $bankAccount->delete();
             return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toasts.players.bank_account_add_failed'));

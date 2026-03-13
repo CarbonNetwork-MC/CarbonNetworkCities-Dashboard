@@ -5,7 +5,7 @@ namespace App\Livewire\Admin\CityRegions;
 use App\Models\Country;
 use Livewire\Component;
 use App\Models\CityRegion;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 
 class NewCityRegion extends Component
 {
@@ -21,7 +21,7 @@ class NewCityRegion extends Component
     public $maxY;
     public $maxZ;
 
-    public function createCityRegion(ApiService $apiService) {
+    public function createCityRegion(RedisService $redisService) {
         $data = $this->validate([
             'internalName' => ['required', 'string', 'max:255', 'unique:city_regions,internal_name'],
             'displayName' => ['required', 'string', 'max:255'],
@@ -52,13 +52,7 @@ class NewCityRegion extends Component
             'max_z' => $data['maxZ'],
         ]);
 
-        [$status, $success] = $apiService->post("api/reload/regions");
-
-        if ($status !== 202) {
-            $cityRegion->delete();
-            return redirect()->route('admin.city-regions.new')->error(__('admin.toasts.city_regions.reload_regions_api_error'));
-        }
-
+        $success = $redisService->invalidate('RELOAD_REGIONS', 'NULL');
         if (!$success) {
             $cityRegion->delete();
             return redirect()->route('admin.city-regions.new')->error(__('admin.toasts.city_regions.reload_regions_api_error'));

@@ -2,12 +2,12 @@
 
 namespace App\Livewire\Admin\CityRegions;
 
-use App\Models\Country;
-use Livewire\Component;
 use App\Models\CityRegion;
-use Masmerise\Toaster\Toaster;
+use App\Models\Country;
+use App\Services\RedisService;
 use Illuminate\Validation\Rule;
-use App\Services\PluginAPI\ApiService;
+use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 
 class Edit extends Component
 {
@@ -40,7 +40,7 @@ class Edit extends Component
         $this->maxZ = $this->cityRegion->max_z;
     }
 
-    public function updateCityRegion(ApiService $apiService) {
+    public function updateCityRegion(RedisService $redisService) {
         if (!$this->cityRegion) return;
 
         $originalData = $this->cityRegion->toArray();
@@ -78,14 +78,7 @@ class Edit extends Component
         $this->cityRegion->max_z = $data['maxZ'];
         $this->cityRegion->save();
 
-        [$status, $success] = $apiService->post("api/reload/regions");
-
-        if ($status !== 202) {
-            $this->rollbackCityRegion($originalData);
-            Toaster::error(__('admin.toasts.city_regions.reload_regions_api_error'));
-            return;
-        }
-
+        $success = $redisService->invalidate('RELOAD_REGIONS', 'NULL');
         if (!$success) {
             $this->rollbackCityRegion($originalData);
             Toaster::error(__('admin.toasts.city_regions.reload_regions_api_error'));

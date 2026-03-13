@@ -3,11 +3,11 @@
 namespace App\Livewire\Admin\Players;
 
 use App\Models\Player;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
-use Illuminate\Support\Facades\DB;
 
 class Overview extends Component
 {
@@ -34,7 +34,7 @@ class Overview extends Component
         $this->showRemovePlayerModal = true;
     }
 
-    public function destroyPlayer(ApiService $apiService) {
+    public function destroyPlayer(RedisService $redisService) {
         if (!$this->playerToRemove) return;
 
         $player = $this->playerToRemove;
@@ -47,18 +47,14 @@ class Overview extends Component
         });
 
         // Phase 2: notify plugin
-        [$status, $success] = $apiService->post(
-            "api/invalidate/player/{$player->uuid}"
-        );
+        $success = $redisService->invalidate('INVALIDATE_PLAYER', $player->uuid);
 
         if (!$success) {
             // Rollback intent
             $player->update(['deletion_pending_at' => null]);
 
             // Force reload player in plugin to avoid inconsistencies
-            [$status, $ignored] = $apiService->post(
-                "api/invalidate/player/{$player->uuid}"
-            );
+            $redisService->invalidate('INVALIDATE_PLAYER', $player->uuid);
 
             Toaster::error(__('admin.toasts.players.delete_failed'));
             return;
@@ -70,7 +66,7 @@ class Overview extends Component
             $player->chatColors()->delete();
             $player->bankAccounts()->delete();
 
-            $player->delete(); // soft delete (or forceDelete if you insist)
+            $player->delete();
         });
 
         $this->playerToRemove = null;

@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Admin\ItemsMenu;
 
-use Livewire\Component;
 use App\Models\ItemCategory;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
+use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
 class NewCategory extends Component
@@ -12,7 +12,7 @@ class NewCategory extends Component
     public $name = '';
     public $iconMaterial = '';
 
-    public function createCategory(ApiService $apiService) {
+    public function createCategory(RedisService $redisService) {
         $data = $this->validate([
             'name' => ['required', 'string', 'max:50', 'unique:item_categories,name'],
             'iconMaterial' => ['required', 'string', 'max:50']
@@ -27,11 +27,11 @@ class NewCategory extends Component
             'user_uuid' => auth()->user()->uuid,
         ]);
 
-        [$status, $success] = $apiService->post("api/reload/items");
-
+        $success = $redisService->invalidate('RELOAD_ITEMS', 'NULL');
         if (!$success) {
             $newCategory->delete();
-            return Toaster::error(__('admin.toasts.itemsmenu.reload_items_api_error'));
+            Toaster::error(__('admin.toast.itemsmenu.reload_items_api_error'));
+            return;
         }
 
         return redirect()->route('admin.itemsmenu.render')->success(__('admin.toasts.itemsmenu.category_created'));

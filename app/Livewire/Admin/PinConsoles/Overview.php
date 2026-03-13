@@ -3,10 +3,10 @@
 namespace App\Livewire\Admin\PinConsoles;
 
 use App\Models\PinConsole;
+use App\Services\RedisService;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
-use App\Services\PluginAPI\ApiService;
 
 class Overview extends Component
 {
@@ -31,23 +31,18 @@ class Overview extends Component
         $this->deletePinConsoleModal = true;
     }
 
-    public function destroyPinConsole(ApiService $apiService) {
+    public function destroyPinConsole(RedisService $redisService) {
         if (!$this->selectedPinConsole) return;
 
         $selectedPinConsole = $this->selectedPinConsole;
 
         $this->selectedPinConsole->delete();
 
-        [$status, $success] = $apiService->post("api/invalidate/pin-console/{$selectedPinConsole->id}");
-
-        if ($status !== 202) {
-            PinConsole::create($selectedPinConsole->toArray());
-            return Toaster::error(__('admin.toasts.pin_consoles.invalidate_pin_console_api_error'));
-        }
-
+        $success = $redisService->invalidate('INVALIDATE_PIN_CONSOLE', $selectedPinConsole->id);
         if (!$success) {
             PinConsole::create($selectedPinConsole->toArray());
-            return Toaster::error(__('admin.toasts.pin_consoles.invalidate_pin_console_api_error'));
+            Toaster::error(__('admin.toast.pin_consoles.invalidate_pin_console_api_error'));
+            return;
         }
 
         $this->reset([

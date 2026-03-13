@@ -4,7 +4,7 @@ namespace App\Livewire\Admin\Plots;
 
 use App\Models\Plot;
 use App\Models\Player;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 use Livewire\Component;
 
 class AddMember extends Component
@@ -21,7 +21,7 @@ class AddMember extends Component
         $this->players = Player::whereNotIn('uuid', $memberUuids)->where('uuid', '!=', $this->plot->owner_uuid)->get(['uuid', 'username']);
     }
 
-    public function addMember(ApiService $apiService) {
+    public function addMember(RedisService $redisService) {
         $data = $this->validate([
             'playerUuid' => 'required|exists:players,uuid',
         ]);
@@ -37,13 +37,7 @@ class AddMember extends Component
             'username' => $player->username,
         ]);
 
-        [$status, $success] = $apiService->post("api/invalidate/plot/{$this->plot->plot_id}");
-
-        if ($status != 202) {
-            $this->plot->members()->where('player_uuid', $data['playerUuid'])->delete();
-            return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toasts.plots.invalidate_plot_api_error'));
-        }
-
+        $success = $redisService->invalidate('INVALIDATE_PLOT_' . $this->plot->plot_id);
         if (!$success) {
             $this->plot->members()->where('player_uuid', $data['playerUuid'])->delete();
             return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toasts.plots.invalidate_plot_api_error'));
