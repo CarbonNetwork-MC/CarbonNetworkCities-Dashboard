@@ -6,7 +6,7 @@ use App\Models\Company;
 use App\Models\Country;
 use Livewire\Component;
 use App\Models\CompanyBankaccount;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 
 class EditCompanyBankAccount extends Component
 {
@@ -32,7 +32,7 @@ class EditCompanyBankAccount extends Component
         $this->countries = Country::get(['name', 'currency']);
     }
 
-    public function updateCompanyBankAccount(ApiService $apiService) {
+    public function updateCompanyBankAccount(RedisService $redisService) {
         if (!$this->account) return;
 
         $originalData = $this->account->toArray();
@@ -60,16 +60,13 @@ class EditCompanyBankAccount extends Component
         $this->account->currency = $data['currency'];
         $this->account->save();
 
+        $success = false;
         if ($data['companyId'] != $originalData['company_id']) {
-            $companyIds = [$data['companyId'], $originalData['company_id']];
-            [$status, $success] = $apiService->post("api/invalidate/companies", $companyIds);
+            $oldCompany = $redisService->invalidate('INVALIDATE_COMPANY', $originalData['company_id']);
+            $newCompany = $redisService->invalidate('INVALIDATE_COMPANY', $data['companyId']);
+            $success = $oldCompany && $newCompany;
         } else {
-            [$status, $success] = $apiService->post("api/invalidate/company/{$company->id}");
-        }
-
-        if ($status !== 202) {
-            $this->rollbackCompanyBankAccount($originalData, $mainAccount, $data['isMain']);
-            return redirect()->route('admin.bank-accounts.render')->error(__('admin.toast.bank_accounts.company.invalidate_bankaccount_api_error'));
+            $success = $redisService->invalidate('INVALIDATE_COMPANY', $data['companyId']);
         }
 
         if (!$success) {

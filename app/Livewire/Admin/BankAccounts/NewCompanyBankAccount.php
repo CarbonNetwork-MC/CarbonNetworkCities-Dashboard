@@ -6,7 +6,7 @@ use App\Models\Company;
 use App\Models\Country;
 use Livewire\Component;
 use App\Models\CompanyBankaccount;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 
 class NewCompanyBankAccount extends Component
 {
@@ -22,7 +22,7 @@ class NewCompanyBankAccount extends Component
         $this->countries = Country::get(['name', 'currency']);
     }
 
-    public function createCompanyBankAccount(ApiService $apiService) {
+    public function createCompanyBankAccount(RedisService $redisService) {
         $currencies = Country::pluck('currency')->toArray();
 
         $data = $this->validate([
@@ -46,17 +46,13 @@ class NewCompanyBankAccount extends Component
             'currency' => $data['currency'],
         ]);
 
-        [$status, $success] = $apiService->post("api/invalidate/company/{$company->id}");
-
-        if ($status !== 202) {
-            $this->rollbackCreateCompanyBankAccount($companyBankAccount, $mainAccount, $data['isMain']);
-        }
-
+        $success = $redisService->invalidate('INVALIDATE_COMPANY', (string) $company->id);
         if (!$success) {
             $this->rollbackCreateCompanyBankAccount($companyBankAccount, $mainAccount, $data['isMain']);
+            return redirect()->route('admin.bank-accounts.company.new')->error(__('admin.toast.companies.bank_account_add_failed'));
         }
 
-        return redirect()->route('admin.bank-accounts.render')->success(__('admin.toast.bank_account.company.created'));
+        return redirect()->route('admin.bank-accounts.render')->success(__('admin.toast.companies.bank_account_added'));
     }
 
     public function render()
