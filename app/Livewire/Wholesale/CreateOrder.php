@@ -5,34 +5,49 @@ namespace App\Livewire\Wholesale;
 use App\Models\Company;
 use App\Models\CompanyOrder;
 use App\Models\WholesaleOrder;
+use App\Models\Wholesaler;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
 class CreateOrder extends Component
 {
     public $company;
+    public $wholesaler;
 
     public $orderItems;
     public $total = 0;
 
-    public function mount($companyId) {
-        $this->company = Company::findOrFail($companyId);
-        
+    public function mount($wholesalerId, $companyId) {
+        $this->company = Company::where('id', $companyId)->firstOrFail();
+        $this->wholesaler = Wholesaler::where('id', $wholesalerId)->firstOrFail();
+
+        // Get all items that the company has, along with their wholesale info, and filter out those that aren't sellable. Then map them to the format needed for the order.
         $this->orderItems = $this->company->items()
-            ->with(['item:id,name', 'wholesaleItem'])
-            ->whereHas('wholesaleItem', function ($query) {
-                $query->where('sellable', 1);
+            ->with([
+                'item:id,name',
+                'wholesaleItem' => function ($query) use ($wholesalerId) {
+                    $query->where('wholesaler_id', $wholesalerId)
+                        ->where('sellable', 1);
+                }
+            ])
+            ->whereHas('wholesaleItem', function ($query) use ($wholesalerId) {
+                $query->where('wholesaler_id', $wholesalerId)
+                    ->where('sellable', 1);
             })
             ->get(['id', 'item_id'])
-            ->map(fn ($item) => [
-                'id' => $item->id,
-                'name' => $item->item->name,
-                'item_id' => $item->item_id,
-                'max_amount' => $item->wholesaleItem ? $item->wholesaleItem->max_amount : 192,
-                'amount' => 0,
-                'price' => $item->wholesaleItem ? $item->wholesaleItem->price : 0,
-                'total' => 0,
-            ])
+            ->map(function ($item) {
+                $wholesale = $item->wholesaleItem;
+
+                return [
+                    'id' => $item->id,
+                    'name' => $item->item->name,
+                    'item_id' => $item->item_id,
+                    'max_amount' => $wholesale?->max_amount ?? 192,
+                    'amount' => 0,
+                    'price' => $wholesale?->price ?? 0,
+                    'total' => 0,
+                ];
+            })
             ->toArray();
 
         if (count($this->orderItems) === 0) {
@@ -55,6 +70,7 @@ class CreateOrder extends Component
         }
         
         $order = WholesaleOrder::create([
+            'wholesaler_id' => $this->wholesaler->id,
             'company_id' => $this->company->id,
             'total' => $this->total,
         ]);
@@ -103,13 +119,6 @@ class CreateOrder extends Component
     
     public function render()
     {
-        return view('livewire.wholesale.create-order', [
-            'items' => $this->company->items()
-                ->with(['item:id,name', 'wholesaleItem'])
-                ->whereHas('wholesaleItem', function ($query) {
-                    $query->where('sellable', 1);
-                })
-                ->get(['id', 'item_id'])
-        ]);
+        return view('livewire.wholesale.create-order');
     }
 }

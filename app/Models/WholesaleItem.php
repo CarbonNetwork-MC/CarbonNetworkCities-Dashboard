@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class WholesaleItem extends Model
 {
     protected $fillable = [
+        'wholesaler_id',
         'item_id',
         'max_amount',
         'price',
@@ -17,7 +19,12 @@ class WholesaleItem extends Model
         'sellable' => 'boolean',
     ];
 
-    public function item()
+    public function wholesaler(): BelongsTo
+    {
+        return $this->belongsTo(Wholesaler::class, 'wholesaler_id');
+    }
+
+    public function item(): BelongsTo
     {
         return $this->belongsTo(Item::class);
     }

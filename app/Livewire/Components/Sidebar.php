@@ -11,7 +11,7 @@ class Sidebar extends Component
     public $user;
     public $userProfilePicture;
 
-    public $selectedCompany;
+    public $selectedCompany = null;
     public $isCompanyOwnerOrManager = false;
 
     public $editSidebar;
@@ -24,7 +24,7 @@ class Sidebar extends Component
             ? asset('storage/' . $this->user->profile_photo_path)
             : null;
 
-        $this->selectedCompany = request()->route('companyId') ? Company::find(request()->route('companyId')) : null;
+        $this->selectedCompany = request()->route('companyId') && request()->routeIs('company.*') ? Company::find(request()->route('companyId')) : null;
         if ($this->selectedCompany && ($this->selectedCompany->owner->uuid == $this->user->player->uuid || $this->selectedCompany->employees()->where('player_uuid', $this->user->player->uuid)->where('role', 'manager')->exists())) {
             $this->isCompanyOwnerOrManager = true;
         }

@@ -5,11 +5,14 @@ namespace App\Livewire\Wholesale;
 use App\Models\CompanyNotification;
 use App\Models\CompanyOrder;
 use App\Models\WholesaleOrder;
+use App\Models\Wholesaler;
 use Livewire\Component;
 
 class CompleteOrder extends Component
 {
+    public $wholesaler;
     public $order;
+    
     public $orderItems;
     public $players;
     
@@ -18,8 +21,10 @@ class CompleteOrder extends Component
     public $deleteOrderModal = null;
     public $undoCollectModal = null;
 
-    public function mount($orderId) {
-        $this->order = WholesaleOrder::findOrFail($orderId);
+    public function mount($wholesalerId, $orderId) {
+        $this->wholesaler = Wholesaler::where('id', $wholesalerId)->firstOrFail();
+        $this->order = WholesaleOrder::where('id', $orderId)->firstOrFail();
+
         $this->orderItems = $this->order->items()
             ->with(['item:id,name', 'item.wholesaleItem'])
             ->get(['id', 'item_id', 'amount'])

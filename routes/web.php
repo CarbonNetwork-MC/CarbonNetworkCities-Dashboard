@@ -172,13 +172,13 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
     // ? Wholesale
     Route::middleware('permission:wholesale_order')->group(function() {
         Route::get('/wholesale/choose-company', WholesaleChooseCompany::class)->name('wholesale.choose-company');
-        Route::get('/wholesale/create-order/{companyId}', CreateOrder::class)->middleware('company_owner_or_manager')->name('wholesale.create-order');
+        Route::get('/wholesale/{wholesalerId}/create-order/{companyId}', CreateOrder::class)->middleware('company_owner_or_manager')->name('wholesale.create-order');
     });
 
     Route::middleware('permission:manage_wholesale_orders')->group(function() {
-        Route::get('/wholesale/order-overview', OrderOverview::class)->name('wholesale.order-overview');
-        Route::get('/wholesale/collect-order/{orderId}', CollectOrder::class)->name('wholesale.collect-order');
-        Route::get('/wholesale/complete-order/{orderId}', CompleteOrder::class)->name('wholesale.complete-order');
+        Route::get('/wholesale/{wholesalerId}/order-overview', OrderOverview::class)->name('wholesale.order-overview');
+        Route::get('/wholesale/{wholesalerId}/collect-order/{orderId}', CollectOrder::class)->name('wholesale.collect-order');
+        Route::get('/wholesale/{wholesalerId}/complete-order/{orderId}', CompleteOrder::class)->name('wholesale.complete-order');
     });
 });
 

@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class WholesaleOrder extends Model
 {
     protected $fillable = [
+        'wholesaler_id',
         'company_id',
         'customer_uuid',
         'collected',
@@ -29,6 +30,11 @@ class WholesaleOrder extends Model
     public function items(): HasMany
     {
         return $this->hasMany(WholesaleOrderItem::class, 'order_id');
+    }
+
+    public function wholesaler(): BelongsTo
+    {
+        return $this->belongsTo(Wholesaler::class, 'wholesaler_id');
     }
 
     public function amountOfItems(): int

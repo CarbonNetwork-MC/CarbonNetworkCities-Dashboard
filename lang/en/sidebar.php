@@ -29,6 +29,13 @@ return [
         'wholesale_orders' => 'Wholesale Orders',
     ],
 
+    // ? Wholesaler
+    'wholesaler' => [
+        'title' => 'Wholesaler',
+        'create_order' => 'Create Order',
+        'orders_overview' => 'Orders Overview'
+    ],
+
     // ? Management
     'management' => 'Management',
 

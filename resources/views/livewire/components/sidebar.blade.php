@@ -45,7 +45,7 @@
                 />
 
                 {{-- Company --}}
-                @if ($selectedCompany)
+                @if (isset($selectedCompany))
                     <x-sidebar.nav-group :groupKey="'company'" wire:key="company" label="{{ __('sidebar.company.title') }}" icon="rr-building">
                         {{-- Dashboard --}}
                         <x-sidebar.nav-group-item
@@ -155,6 +155,29 @@
                         :label="__('sidebar.company.title')"
                     />
                 @endif
+
+                {{-- Wholesaler --}}
+                <x-sidebar.nav-group :groupKey="'wholesaler'" wire:key="wholesaler" label="{{ __('sidebar.wholesaler.title') }}" icon="fi fi-rr-shelves">
+                    {{-- Create Order --}}
+                    <x-sidebar.nav-group-item
+                        href="{{ route('wholesale.choose-company') }}"
+                        :active="request()->routeIs('wholesale.choose-company') || request()->routeIs('wholesale.create-order.*')"
+                        wire:key="wholesaler-create-order"
+                    >
+                        {{ __('sidebar.wholesaler.create_order') }}
+                    </x-sidebar.nav-group-item>
+
+                    {{-- Orders Overview --}}
+                    @if ($user->can('manage_wholesale_orders'))
+                        <x-sidebar.nav-group-item
+                            href="{{ route('wholesale.order-overview', ['wholesalerId' => 1]) }}" {{-- TODO: Change to an actual wholesaler id --}}
+                            :active="request()->routeIs('wholesale.order-overview') || request()->routeIs('wholesale.collect-order.*') || request()->routeIs('wholesale.complete-order.*')"
+                            wire:key="wholesaler-orders-overview"
+                        >
+                            {{ __('sidebar.wholesaler.orders_overview') }}
+                        </x-sidebar.nav-group-item>
+                    @endif
+                </x-sidebar.nav-group>
             </nav>
         @endif
 

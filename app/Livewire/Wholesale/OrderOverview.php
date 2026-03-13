@@ -3,10 +3,13 @@
 namespace App\Livewire\Wholesale;
 
 use App\Models\WholesaleOrder;
+use App\Models\Wholesaler;
 use Livewire\Component;
 
 class OrderOverview extends Component
 {
+    public $wholesaler;
+
     public $searchOrders = '';
     public $searchCollectedOrders = '';
     public $searchCompletedOrders = '';
@@ -15,12 +18,16 @@ class OrderOverview extends Component
     public $collectedOrdersPerPage = 5;
     public $completedOrdersPerPage = 5;
 
+    public function mount($wholesalerId) {
+        $this->wholesaler = Wholesaler::where('id', $wholesalerId)->firstOrFail();
+    }
+
     public function selectOrder($orderId) {
         $order = WholesaleOrder::findOrFail($orderId);
         if (!$order->collected) {
-            return redirect()->route('wholesale.collect-order', ['orderId' => $orderId]);
+            return redirect()->route('wholesale.collect-order', ['wholesalerId' => $this->wholesaler->id, 'orderId' => $orderId]);
         } else {
-            return redirect()->route('wholesale.complete-order', ['orderId' => $orderId]);
+            return redirect()->route('wholesale.complete-order', ['wholesalerId' => $this->wholesaler->id, 'orderId' => $orderId]);
         }
     }
 
@@ -28,6 +35,7 @@ class OrderOverview extends Component
     {
         return view('livewire.wholesale.order-overview', [
             'orders' => WholesaleOrder::with(['company:id,name'])
+                ->where('wholesaler_id', $this->wholesaler->id)
                 ->where('collected', 0)
                 ->where('completed', 0)
                 ->where(function ($query) {
@@ -38,6 +46,7 @@ class OrderOverview extends Component
                 })
                 ->paginate($this->ordersPerPage, pageName: 'ordersPage'),
             'collectedOrders' => WholesaleOrder::with(['company:id,name', 'collectedBy:uuid,username'])
+                ->where('wholesaler_id', $this->wholesaler->id)
                 ->where('collected', 1)
                 ->where('completed', 0)
                 ->where(function ($query) {
@@ -52,6 +61,7 @@ class OrderOverview extends Component
                 })
                 ->paginate($this->collectedOrdersPerPage, pageName: 'collectedOrdersPage'),
             'completedOrders' => WholesaleOrder::with(['company:id,name', 'customer:uuid,username', 'collectedBy:uuid,username', 'completedBy:uuid,username'])
+                ->where('wholesaler_id', $this->wholesaler->id)
                 ->where('collected', 1)
                 ->where('completed', 1)
                 ->where(function ($query) {

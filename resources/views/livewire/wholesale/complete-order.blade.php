@@ -9,12 +9,12 @@
             ],
             [
                 'icon' => '',
-                'url' => route('wholesale.order-overview'),
+                'url' => route('wholesale.order-overview', ['wholesalerId' => $wholesaler->id]),
                 'label' => __('wholesale.titles.orders_overview'),
             ],
             [
                 'icon' => '',
-                'url' => route('wholesale.complete-order', ['orderId' => $order->id]),
+                'url' => route('wholesale.complete-order', ['wholesalerId' => $wholesaler->id, 'orderId' => $order->id]),
                 'label' => __('wholesale.titles.complete_order'),
             ]
         ]" />
@@ -58,7 +58,7 @@
                     <div class="col-span-1 flex items-center justify-end">
                         <div class="text-md font-medium text-gray-700 dark:text-white">
                             {{-- TODO: currency based on wholesale currency --}}
-                            {{ Number::currency($item['total']) }}
+                            {{ $wholesaler->country->currency_symbol }}{{ number_format($item['total'], 2) }}
                         </div>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
 
                 <div class="col-span-1 flex items-center justify-end">
                     <div class="text-md font-medium text-gray-700 dark:text-white">
-                        {{ Number::currency($order->total) }}
+                        {{ $wholesaler->country->currency_symbol }}{{ number_format($order->total, 2) }}
                     </div>
                 </div>
 
