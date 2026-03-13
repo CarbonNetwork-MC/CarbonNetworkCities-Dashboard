@@ -3,11 +3,11 @@
 namespace App\Livewire\Admin\ItemsMenu;
 
 use App\Models\Item;
-use Livewire\Component;
 use App\Models\ItemCategory;
-use App\Services\PluginAPI\ApiService;
-use Masmerise\Toaster\Toaster;
+use App\Services\RedisService;
 use Illuminate\Validation\Rule;
+use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 
 class EditItem extends Component
 {
@@ -42,7 +42,7 @@ class EditItem extends Component
         }
     }
 
-    public function updateItem(ApiService $apiService) {
+    public function updateItem(RedisService $redisService) {
         if (!$this->item) return;
 
         $item = $this->item;
@@ -86,8 +86,7 @@ class EditItem extends Component
         $this->item->data = $itemData;
         $this->item->save();
         
-        [$status, $success] = $apiService->post("api/reload/items");
-
+        $success = $redisService->invalidate('RELOAD_ITEMS', 'NULL');
         if (!$success) {
             $this->item->internal_id = $item['internal_id'];
             $this->item->name = $item['name'];
@@ -95,7 +94,8 @@ class EditItem extends Component
             $this->item->material = $item['material'];
             $this->item->data = $item['data'];
             $this->item->save();
-            return Toaster::error(__('admin.toast.itemsmenu.reload_items_api_error'));
+            Toaster::error(__('admin.toast.itemsmenu.reload_items_api_error'));
+            return;
         }
 
         return redirect()->route('admin.itemsmenu.render')->success(__('admin.toast.itemsmenu.item_updated'));

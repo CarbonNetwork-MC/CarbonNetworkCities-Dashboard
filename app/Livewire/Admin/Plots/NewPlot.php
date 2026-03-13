@@ -6,8 +6,8 @@ use App\Models\Plot;
 use App\Models\Player;
 use App\Models\Company;
 use App\Models\Country;
+use App\Services\RedisService;
 use Livewire\Component;
-use App\Services\PluginAPI\ApiService;
 
 class NewPlot extends Component
 {
@@ -44,7 +44,7 @@ class NewPlot extends Component
         $this->players = Player::get(['uuid', 'username']);
     }
 
-    public function createPlot(ApiService $apiService) {
+    public function createPlot(RedisService $redisService) {
         $types = config('plots.types');
 
         $data = $this->validate([
@@ -97,13 +97,7 @@ class NewPlot extends Component
             'tp_pitch' => $data['tpPitch'] ?? null,
         ]);
 
-        [$status, $success] = $apiService->post("api/invalidate/plot/{$this->plotId}");
-
-        if ($status !== 202) {
-            $plot->delete();
-            return redirect()->route('admin.plots.new')->error(__('admin.toast.plots.invalidate_plot_api_error'));
-        }
-
+        $success = $redisService->invalidate('INVALIDATE_PLOT', $this->plotId);
         if (!$success) {
             $plot->delete();
             return redirect()->route('admin.plots.new')->error(__('admin.toast.plots.invalidate_plot_api_error'));

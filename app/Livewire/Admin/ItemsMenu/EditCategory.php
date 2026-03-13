@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Admin\ItemsMenu;
 
+use App\Services\RedisService;
 use Livewire\Component;
 use App\Models\ItemCategory;
-use App\Services\PluginAPI\ApiService;
 use Illuminate\Validation\Rule;
 
 class EditCategory extends Component
@@ -19,7 +19,7 @@ class EditCategory extends Component
         $this->iconMaterial = $this->category->icon_material;
     }
 
-    public function updateCategory(ApiService $apiService) {
+    public function updateCategory(RedisService $redisService) {
         if (!$this->category) return;
 
         $category = $this->category;
@@ -40,8 +40,7 @@ class EditCategory extends Component
         $this->category->icon_material = $material;
         $this->category->save();
         
-        [$status, $success] = $apiService->post("api/reload/items");
-
+        $success = $redisService->invalidate('RELOAD_ITEMS', 'NULL');
         if (!$success) {
             $this->category->name = $category['name'];
             $this->category->icon_material = $category['icon_material'];

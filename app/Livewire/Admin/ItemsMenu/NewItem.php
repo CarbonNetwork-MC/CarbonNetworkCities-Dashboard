@@ -3,9 +3,9 @@
 namespace App\Livewire\Admin\ItemsMenu;
 
 use App\Models\Item;
-use Livewire\Component;
 use App\Models\ItemCategory;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
+use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
 class NewItem extends Component
@@ -28,7 +28,7 @@ class NewItem extends Component
         }
     }
 
-    public function createItem(ApiService $apiService) {
+    public function createItem(RedisService $redisService) {
         $data = $this->validate([
             'internalId' => ['required', 'string', 'max:100', 'unique:items,internal_id'],
             'name' => ['required', 'string', 'max:100', 'unique:items,name'],
@@ -62,11 +62,11 @@ class NewItem extends Component
             'data' => $itemData,
         ]);
         
-        [$status, $success] = $apiService->post("api/reload/items");
-
+        $success = $redisService->invalidate('RELOAD_ITEMS', 'NULL');
         if (!$success) {
             $newItem->delete();
-            return Toaster::error(__('admin.toast.itemsmenu.reload_items_api_error'));
+            Toaster::error(__('admin.toast.itemsmenu.reload_items_api_error'));
+            return;
         }
 
         return redirect()->route('admin.itemsmenu.render')->success(__('admin.toast.itemsmenu.item_created'));

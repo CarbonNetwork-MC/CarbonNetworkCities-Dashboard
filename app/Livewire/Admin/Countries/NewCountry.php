@@ -3,8 +3,8 @@
 namespace App\Livewire\Admin\Countries;
 
 use App\Models\Country;
+use App\Services\RedisService;
 use Livewire\Component;
-use App\Services\PluginAPI\ApiService;
 
 class NewCountry extends Component
 {
@@ -16,7 +16,7 @@ class NewCountry extends Component
     public $currencySymbol;
     public $currencyBeforeAmount;
 
-    public function createCountry(ApiService $apiService) {
+    public function createCountry(RedisService $redisService) {
         $data = $this->validate([
             'countryName' => ['required', 'string', 'max:100'],
             'iso' => ['required', 'string', 'max:2'],
@@ -37,12 +37,7 @@ class NewCountry extends Component
             'currency_before_amount' => $data['currencyBeforeAmount'],
         ]);
 
-        [$status, $success] = $apiService->post("api/reload/countries");
-
-        if ($status !== 202) {
-            $country->delete();
-            return redirect()->route('admin.countries.new')->error(__('admin.toast.countries.reload_countries_api_error'));
-        }
+        $success = $redisService->invalidate('RELOAD_COUNTRIES', 'NULL');
 
         if (!$success) {
             $country->delete();

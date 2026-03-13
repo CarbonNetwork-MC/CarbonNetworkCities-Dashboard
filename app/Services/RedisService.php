@@ -24,6 +24,7 @@ class RedisService {
             ->executeRaw([
                 'XADD',
                 'carbon:sync',
+                'MAXLEN', '~', '1000',
                 '*',
                 'type', $type,
                 'requestId', $requestId,

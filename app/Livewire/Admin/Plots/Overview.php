@@ -3,7 +3,7 @@
 namespace App\Livewire\Admin\Plots;
 
 use App\Models\Plot;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
@@ -33,23 +33,18 @@ class Overview extends Component
         $this->deletePlotModal = true;
     }
 
-    public function destroyPlot(ApiService $apiService) {
+    public function destroyPlot(RedisService $redisService) {
         if (!$this->selectedPlot) return;
 
         $selectedPlot = $this->selectedPlot;
 
         $this->selectedPlot->delete();
 
-        [$status, $success] = $apiService->post("api/invalidate/plot/{$selectedPlot->plot_id}");
-
-        if ($status !== 202) {
-            Plot::create($selectedPlot->toArray());
-            return Toaster::error(__('admin.toast.plots.invalidate_plot_api_error'));
-        }
-
+        $success = $redisService->invalidate('INVALIDATE_PLOT', $selectedPlot->plot_id);
         if (!$success) {
             Plot::create($selectedPlot->toArray());
-            return Toaster::error(__('admin.toast.plots.invalidate_plot_api_error'));
+            Toaster::error(__('admin.toast.plots.invalidate_plot_api_error'));
+            return;
         }
 
         $this->reset([

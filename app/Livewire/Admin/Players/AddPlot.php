@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Admin\Players;
 
-use App\Models\Plot;
 use App\Models\Player;
-use App\Services\PluginAPI\ApiService;
+use App\Models\Plot;
+use App\Services\RedisService;
 use Livewire\Component;
 
 class AddPlot extends Component
@@ -17,7 +17,7 @@ class AddPlot extends Component
         $this->player = Player::where('uuid', $uuid)->firstOrFail();
     }
 
-    public function addPlot(ApiService $apiService) {
+    public function addPlot(RedisService $redisService) {
         $data = $this->validate([
             'plotId' => ['required', 'string', 'exists:plots,plot_id'],
         ]);
@@ -36,8 +36,8 @@ class AddPlot extends Component
             'owner_uuid' => $this->player->uuid,
         ]);
 
-        // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/plot/{$plot->plot_id}");
+        // 2. Send invalidate request to the Minecraft servers
+        $success = $redisService->invalidate('INVALIDATE_PLOT', $plot->plot_id);
         if (!$success) {
             $this->rollbackPlot($plot, $originalPlot);
             return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.plot_add_failed'));

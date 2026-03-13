@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Admin\Languages;
 
-use Livewire\Component;
 use App\Models\Language;
+use App\Services\RedisService;
+use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
-use App\Services\PluginAPI\ApiService;
 
 class Overview extends Component
 {
@@ -31,18 +31,18 @@ class Overview extends Component
         $this->deleteLanguageModal = true;
     }
 
-    public function destroyLanguage(ApiService $apiService) {
+    public function destroyLanguage(RedisService $redisService) {
         if (!$this->selectedLanguage) return;
 
         $selectedLanguage = $this->selectedLanguage;
 
         $this->selectedLanguage->delete();
 
-        [$status, $success] = $apiService->post("api/reload/languages");
-
+        $success = $redisService->invalidate('RELOAD_LANGUAGES', 'NULL');
         if (!$success) {
             Language::create($selectedLanguage->toArray());
-            return Toaster::error(__('admin.toast.languages.reload_api_error'));
+            Toaster::error(__('admin.toast.languages.reload_api_error'));
+            return;
         }
 
         $this->reset([

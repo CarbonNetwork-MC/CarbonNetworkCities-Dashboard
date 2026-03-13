@@ -3,9 +3,9 @@
 namespace App\Livewire\Admin\Countries;
 
 use App\Models\Country;
+use App\Services\RedisService;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
-use App\Services\PluginAPI\ApiService;
 
 class Edit extends Component
 {
@@ -30,7 +30,7 @@ class Edit extends Component
         $this->currencyBeforeAmount = $this->country->currency_before_amount;
     }
 
-    public function updateCountry(ApiService $apiService) {
+    public function updateCountry(RedisService $redisService) {
         if (!$this->country) return;
 
         $originalData = $this->country->toArray();
@@ -54,13 +54,7 @@ class Edit extends Component
         $this->country->currency_before_amount = $data['currencyBeforeAmount'];
         $this->country->save();
 
-        [$status, $success] = $apiService->post("api/reload/countries");
-
-        if ($status !== 202) {
-            $this->rollbackCountry($originalData);
-            Toaster::error(__('admin.toast.countries.reload_countries_api_error'));
-            return;
-        }
+        $success = $redisService->invalidate('RELOAD_COUNTRIES', 'NULL');
 
         if (!$success) {
             $this->rollbackCountry($originalData);

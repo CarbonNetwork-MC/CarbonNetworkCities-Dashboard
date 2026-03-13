@@ -7,7 +7,7 @@ use App\Models\CompanyItem;
 use App\Models\Plot;
 use App\Models\Player;
 use App\Models\Company;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
@@ -92,7 +92,7 @@ class EditCompany extends Component
         }
     }
 
-    public function updateCompany(ApiService $apiService) {
+    public function updateCompany(RedisService $redisService) {
         // Store the current data for rollback in case of failure
         $originalData = [
             'name' => $this->company->name,
@@ -119,17 +119,8 @@ class EditCompany extends Component
         $this->company->owner_uuid = $this->selectedPlayer;
         $this->company->save();
 
-        // 3. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/company/{$this->company->id}");
-
-        // Immediate failure (request not accepted)
-        if ($status !== 202) {
-            $this->rollbackCompany($originalData);
-            Toaster::error(__('admin.toast.companies.update_failed'));
-            return;
-        }
-
-        // 3. Poll for result
+        // 3. Send invalidate request to the Minecraft servers
+        $success = $redisService->invalidate('INVALIDATE_COMPANY', (string) $this->company->id);
         if (!$success) {
             $this->rollbackCompany($originalData);
             Toaster::error(__('admin.toast.companies.update_failed'));
@@ -146,7 +137,7 @@ class EditCompany extends Component
         $this->removeEmployeeModal = true;
     }
 
-    public function destroyEmployee(ApiService $apiService) {
+    public function destroyEmployee(RedisService $redisService) {
         if (!$this->employeeToRemove) return;
 
         // Store the current employee for rollback in case of failure
@@ -157,34 +148,24 @@ class EditCompany extends Component
         $this->removeEmployeeModal = false;
         $this->employeeToRemove = null;
 
-        // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/company/{$this->company->id}");
-
-        // Immediate failure (did not accept request)
-        if ($status !== 202) {
-            $this->rollbackEmployee($employee);
-            Toaster::error(__('admin.toast.companies.employee_remove_failed'));
-            return;
-        }
-
-        // 3. Poll for result
+        // 2. Send invalidate request to the Minecraft servers
+        $success = $redisService->invalidate('INVALIDATE_COMPANY', $this->company->id);
         if (!$success) {
             $this->rollbackEmployee($employee);
             Toaster::error(__('admin.toast.companies.employee_remove_failed'));
             return;
         }
 
-        // 4. Success
+        // 3. Success
         Toaster::success(__('admin.toast.companies.employee_removed'));
     }
 
-    // Delete Bank Account
     public function removeBankAccount($id) {
         $this->bankAccountToRemove = $this->company->bankAccounts()->where('id', $id)->first();
         $this->removeBankAccountModal = true;
     }
 
-    public function destroyBankAccount(ApiService $apiService) {
+    public function destroyBankAccount(RedisService $redisService) {
         if (!$this->bankAccountToRemove) return;
 
         // Store the current bank account for rollback in case of failure
@@ -195,22 +176,15 @@ class EditCompany extends Component
         $this->removeBankAccountModal = false;
         $this->bankAccountToRemove = null;
 
-        // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/company/{$this->company->id}");
-
-        // Immediate failure (did not accept request)
-        if ($status !== 202) {
-            $this->company->bankAccounts()->save($bankAccount);
-            return Toaster::error(__('admin.toast.companies.bank_account_remove_failed'));
-        }
-        
-        // 3. Poll for result
+        // 2. Send invalidate request to the Minecraft servers
+        $success = $redisService->invalidate('INVALIDATE_COMPANY', $this->company->id);
         if (!$success) {
-            $this->company->bankAccounts()->save($bankAccount);
-            return Toaster::error(__('admin.toast.companies.bank_account_remove_failed'));
+            $this->rollbackBankAccount($bankAccount);
+            Toaster::error(__('admin.toast.companies.bank_account_remove_failed'));
+            return;
         }
 
-        // 4. Success
+        // 3. Success
         Toaster::success(__('admin.toast.companies.bank_account_removed'));
     }
 
@@ -220,7 +194,7 @@ class EditCompany extends Component
         $this->removePlotModal = true;
     }
 
-    public function unlinkPlot(ApiService $apiService) {
+    public function unlinkPlot(RedisService $redisService) {
         if (!$this->plotToRemove) return;
 
         // Store the current plot for rollback in case of failure
@@ -236,24 +210,15 @@ class EditCompany extends Component
         $this->removePlotModal = false;
         $this->plotToRemove = null;
 
-        // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/plot/{$plotId}");
-
-        // Immediate failure (did not accept request)
-        if ($status !== 202) {
-            $this->rollbackPlot($plot, $companyId);
-            Toaster::error(__('admin.toast.companies.plot_remove_failed'));
-            return;
-        }
-
-        // 3. Poll for result (short, bounded wait)
+        // 2. Send invalidate request to the Minecraft servers
+        $success = $redisService->invalidate('INVALIDATE_PLOT', $plotId);
         if (!$success) {
             $this->rollbackPlot($plot, $companyId);
             Toaster::error(__('admin.toast.companies.plot_remove_failed'));
             return;
         }
 
-        // 4. Success
+        // 3. Success
         Toaster::success(__('admin.toast.companies.plot_removed'));
     }
 
@@ -263,7 +228,7 @@ class EditCompany extends Component
         $this->removePinConsoleModal = true;
     }
 
-    public function destroyPinConsole(ApiService $apiService) {
+    public function destroyPinConsole(RedisService $redisService) {
         if (!$this->pinConsoleToRemove) return;
 
         // Store the current pin console for rollback in case of failure
@@ -274,22 +239,15 @@ class EditCompany extends Component
         $this->removePinConsoleModal = false;
         $this->pinConsoleToRemove = null;
 
-        // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/pin-console/{$pinConsole->id}");
-
-        // Immediate failure (did not accept request)
-        if ($status !== 202) {
-            $this->rollbackPinConsole($pinConsole);
-            return Toaster::error(__('admin.toast.companies.pin_console_remove_failed'));
-        }
-        
-        // 3. Poll for result
+        // 2. Send invalidate request to the Minecraft servers
+        $success = $redisService->invalidate('INVALIDATE_PIN_CONSOLE', (string) $pinConsole->id);
         if (!$success) {
             $this->rollbackPinConsole($pinConsole);
-            return Toaster::error(__('admin.toast.companies.pin_console_remove_failed'));
+            Toaster::error(__('admin.toast.companies.pin_console_remove_failed'));
+            return;
         }
 
-        // 4. Success
+        // 3. Success
         Toaster::success(__('admin.toast.companies.pin_console_removed'));
     }
 

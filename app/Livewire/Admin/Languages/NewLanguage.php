@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Admin\Languages;
 
-use Livewire\Component;
 use App\Models\Language;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
+use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
 class NewLanguage extends Component
@@ -15,7 +15,7 @@ class NewLanguage extends Component
     public $code;
     public $headdbId;
 
-    public function createLanguage(ApiService $apiService) {
+    public function createLanguage(RedisService $redisService) {
         $data = $this->validate([
             'name' => ['required', 'string', 'max:50', 'unique:languages,name'],
             'shortCode' => ['required', 'string', 'max:2', 'unique:languages,short_code'],
@@ -30,11 +30,11 @@ class NewLanguage extends Component
             'headdb_id' => $data['headdbId'],
         ]);
 
-        [$status, $success] = $apiService->post("api/reload/languages");
-
+        $success = $redisService->invalidate('RELOAD_LANGUAGES', 'NULL');
         if (!$success) {
             $newLanguage->delete();
-            return Toaster::error(__('admin.toast.reload_languages_api_error'));
+            Toaster::error(__('admin.toast.languages.reload_api_error'));
+            return;
         }
 
         return redirect()->route('admin.languages.render')->success(__('admin.toast.languages.create'));

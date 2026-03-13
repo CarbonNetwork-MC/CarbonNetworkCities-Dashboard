@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Admin\Companies;
 
-use App\Models\Player;
 use App\Models\CoCType;
 use App\Models\Company;
+use App\Models\Player;
+use App\Services\RedisService;
 use Livewire\Component;
-use App\Services\PluginAPI\ApiService;
 
 class NewCompany extends Component
 {    
@@ -24,7 +24,7 @@ class NewCompany extends Component
         $this->cocTypes = CoCType::get(['id', 'name']);
     }
 
-    public function createCompany(ApiService $apiService) {
+    public function createCompany(RedisService $redisService) {
         $data = $this->validate([
             'companyName'    => ['required', 'string', 'max:255'],
             'cocNumber'      => ['required', 'string', 'max:20'],
@@ -40,22 +40,14 @@ class NewCompany extends Component
             'owner_uuid' => $data['selectedPlayer'],
         ]);
 
-        // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/company/{$company->id}");
-
-        // Immediate failure (did not accept request)
-        if ($status !== 202) {
-            $company->delete();
-            return redirect()->route('admin.companies.new')->error(__('admin.toast.companies.create_failed'));
-        }
-
-        // 3. Poll for result
+        // 2. Send invalidate request to the Minecraft servers
+        $success = $redisService->invalidate('INVALIDATE_COMPANY', $company->id);
         if (!$success) {
             $company->delete();
             return redirect()->route('admin.companies.new')->error(__('admin.toast.companies.create_failed'));
         }
 
-        // 4. Success
+        // 3. Success
         return redirect()->route('admin.companies.render')->success(__('admin.toast.companies.created'));
     }
 

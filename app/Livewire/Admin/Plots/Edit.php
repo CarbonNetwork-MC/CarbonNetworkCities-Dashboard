@@ -2,16 +2,16 @@
 
 namespace App\Livewire\Admin\Plots;
 
-use App\Models\Plot;
-use App\Models\Fridge;
-use App\Models\Player;
 use App\Models\Company;
 use App\Models\Country;
-use Livewire\Component;
+use App\Models\Fridge;
+use App\Models\Player;
+use App\Models\Plot;
 use App\Models\PlotMember;
-use Masmerise\Toaster\Toaster;
+use App\Services\RedisService;
 use Illuminate\Validation\Rule;
-use App\Services\PluginAPI\ApiService;
+use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 
 class Edit extends Component
 {
@@ -94,7 +94,7 @@ class Edit extends Component
     }
 
     // ! Plot
-    public function updatePlot(ApiService $apiService) {
+    public function updatePlot(RedisService $redisService) {
         if (!$this->plot) return;
 
         $originalData = $this->plot->toArray();
@@ -152,13 +152,7 @@ class Edit extends Component
         $this->plot->tp_pitch = $data['tpPitch'] ?? null;
         $this->plot->save();
 
-        [$status, $success] = $apiService->post("api/invalidate/plot/{$this->plot->plot_id}");
-
-        if ($status !== 202) {
-            $this->rollbackPlot($originalData);
-            return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toast.plots.invalidate_plot_api_error'));
-        }
-
+        $success = $redisService->invalidate('INVALIDATE_PLOT', $this->plot->plot_id);
         if (!$success) {
             $this->rollbackPlot($originalData);
             return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toast.plots.invalidate_plot_api_error'));
@@ -173,18 +167,12 @@ class Edit extends Component
         $this->showRemoveMemberModal = true;
     }
 
-    public function destroyMember(ApiService $apiService) {
+    public function destroyMember(RedisService $redisService) {
         $originalData = $this->selectedMember;
 
         $this->selectedMember->delete();
 
-        [$status, $success] = $apiService->post("api/invalidate/plot/{$this->plot->plot_id}");
-
-        if ($status !== 202) {
-            PlotMember::create($originalData->toArray());
-            return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toast.plots.invalidate_plot_api_error'));
-        }
-
+        $success = $redisService->invalidate('INVALIDATE_PLOT', $this->plot->plot_id);
         if (!$success) {
             PlotMember::create($originalData->toArray());
             return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toast.plots.invalidate_plot_api_error'));
@@ -204,18 +192,12 @@ class Edit extends Component
         $this->showRemoveFridgeModal = true;
     }
 
-    public function destroyFridge(ApiService $apiService) {
+    public function destroyFridge(RedisService $redisService) {
         $originalData = $this->selectedFridge;
 
         $this->selectedFridge->delete();
 
-        [$status, $success] = $apiService->post("api/invalidate/fridge/{$this->selectedFridge->id}");
-
-        if ($status !== 202) {
-            Fridge::create($originalData->toArray());
-            return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toast.plots.invalidate_fridge_api_error'));
-        }
-
+        $success = $redisService->invalidate('INVALIDATE_FRIDGE', $this->selectedFridge->id);
         if (!$success) {
             Fridge::create($originalData->toArray());
             return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toast.plots.invalidate_fridge_api_error'));

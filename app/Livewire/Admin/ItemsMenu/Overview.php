@@ -3,10 +3,10 @@
 namespace App\Livewire\Admin\ItemsMenu;
 
 use App\Models\Item;
-use Livewire\Component;
 use App\Models\ItemCategory;
 use App\Models\ItemGroup;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
+use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 
@@ -50,7 +50,7 @@ class Overview extends Component
         $this->deleteCategoryModal = true;
     }
 
-    public function destroyCategory(ApiService $apiService) {
+    public function destroyCategory(RedisService $redisService) {
         if (!$this->selectedCategory) return;
 
         $selectedCategory = $this->selectedCategory;
@@ -66,8 +66,7 @@ class Overview extends Component
 
         $this->selectedCategory->delete();
 
-        [$status, $success] = $apiService->post("api/reload/items");
-
+        $success = $redisService->invalidate('RELOAD_ITEMS', 'NULL');
         if (!$success) {
             ItemCategory::create($selectedCategory->toArray());
             
@@ -80,7 +79,8 @@ class Overview extends Component
                 Item::insert($oldItems->toArray());
             }
 
-            return Toaster::error(__('admin.toast.itemsmenu.reload_items_api_error'));
+            Toaster::error(__('admin.toast.itemsmenu.reload_items_api_error'));
+            return;
         }
 
         $this->reset([
@@ -97,18 +97,18 @@ class Overview extends Component
         $this->deleteItemModal = true;
     }
 
-    public function destroyItem(ApiService $apiService) {
+    public function destroyItem(RedisService $redisService) {
         if (!$this->selectedItem) return;
 
         $selectedItem = $this->selectedItem;
 
         $this->selectedItem->delete();
-        
-        [$status, $success] = $apiService->post("api/reload/items");
+        $success = $redisService->invalidate('RELOAD_ITEMS', 'NULL');
 
         if (!$success) {
             Item::create($selectedItem->toArray());
-            return Toaster::error(__('admin.toast.itemsmenu.reload_items_api_error'));
+            Toaster::error(__('admin.toast.itemsmenu.reload_items_api_error'));
+            return;
         }
 
         $this->reset([

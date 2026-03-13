@@ -4,7 +4,7 @@ namespace App\Livewire\Admin\Companies;
 
 use App\Models\Player;
 use App\Models\Company;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 use Livewire\Component;
 
 class AddEmployee extends Component
@@ -30,7 +30,7 @@ class AddEmployee extends Component
         $this->players = Player::whereNotIn('uuid', array_filter(array_merge($employeesUuids, [$ownerUuid])))->get(['uuid', 'username']);
     }
 
-    public function addEmployee(ApiService $apiService) {
+    public function addEmployee(RedisService $redisService) {
         $data = $this->validate([
             'playerUuid' => 'required|exists:players,uuid',
             'role' => 'required|in:Employee,Manager',
@@ -47,24 +47,14 @@ class AddEmployee extends Component
             'role' => $data['role'],
         ]);
 
-        // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/company/{$this->company->id}");
-
-        // Immediate failure (request not accepted)
-        if ($status !== 202) {
-            // Rollback
-            $this->company->employees()->where('player_uuid', $data['playerUuid'])->delete();
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.companies.employee_assign_failed'));
-        }
-
-        // 3. Poll for result
+        // 2. Send invalidate request to the Minecraft servers
+        $success = $redisService->invalidate('INVALIDATE_COMPANY', (string) $this->company->id);
         if (!$success) {
-            // Rollback
             $this->company->employees()->where('player_uuid', $data['playerUuid'])->delete();
             return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.companies.employee_assign_failed'));
         }
 
-        // 4. Success
+        // 3. Success
         return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toast.companies.employee_assigned'));
     }
 

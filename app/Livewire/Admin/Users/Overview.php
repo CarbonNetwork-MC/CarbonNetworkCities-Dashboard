@@ -3,11 +3,11 @@
 namespace App\Livewire\Admin\Users;
 
 use App\Models\User;
+use App\Services\RedisService;
+use Illuminate\Support\Facades\Redirect;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
-use App\Services\PluginAPI\ApiService;
-use Illuminate\Support\Facades\Redirect;
 
 class Overview extends Component
 {
@@ -36,18 +36,18 @@ class Overview extends Component
         $this->unlinkModal = true;
     }
 
-    public function unlink(ApiService $apiService) {
+    public function unlink(RedisService $redisService) {
         if (!$this->selectedUser) return;
 
         $selectedUser = $this->selectedUser->load('player', 'accountLink');
 
         $this->selectedUser->accountLink()->delete();
 
-        [$status, $success] = $apiService->post("api/invalidate/player/{$selectedUser->player->uuid}");
-
+        $success= $redisService->invalidate('INVALIDATE_PLAYER', $selectedUser->player->uuid);
         if (!$success) {
             $this->selectedUser->accountLink()->save($selectedUser->accountLink());
-            return Toaster::error(__('admin.toast.account_unlink_api_error'));
+            Toaster::error(__('admin.toast.account_unlink_api_error'));
+            return;
         }
 
         $this->reset([

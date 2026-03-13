@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Admin\Languages;
 
-use Livewire\Component;
 use App\Models\Language;
-use Masmerise\Toaster\Toaster;
+use App\Services\RedisService;
 use Illuminate\Validation\Rule;
-use App\Services\PluginAPI\ApiService;
+use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 
 class Edit extends Component
 {
@@ -24,7 +24,7 @@ class Edit extends Component
         $this->headdbId = $this->language->headdb_id;
     }
 
-    public function updateLanguage(ApiService $apiService) {
+    public function updateLanguage(RedisService $redisService) {
         if (!$this->language) return;
 
         $language = $this->language;
@@ -54,15 +54,15 @@ class Edit extends Component
         $this->language->headdb_id = $data['headdbId'];
         $this->language->save();
 
-        [$status, $success] = $apiService->post("api/reload/languages");
-
+        $success = $redisService->invalidate('RELOAD_LANGUAGES', 'NULL');
         if (!$success) {
             $this->language->name = $language['name'];
             $this->language->short_code = $language['shortCode'];
             $this->language->code = $language['code'];
             $this->language->headdb_id = $language['headdbId'];
             $this->language->save();
-            return Toaster::error(__('admin.toast.reload_languages_api_error'));
+            Toaster::error(__('admin.toast.languages.reload_api_error'));
+            return;
         }
 
         return redirect()->route('admin.languages.render')->success(__('admin.toast.languages.updated'));

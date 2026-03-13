@@ -7,7 +7,7 @@ use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 use App\Models\CompanyBankaccount;
 use App\Models\PersonalBankaccount;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 
 class Overview extends Component
 {
@@ -42,23 +42,18 @@ class Overview extends Component
         $this->deleteCompanyBankAccountModal = true;
     }
 
-    public function destroyCompanyBankAccount(ApiService $apiService) {
+    public function destroyCompanyBankAccount(RedisService $redisService) {
         if (!$this->selectedCompanyBankAccount) return;
 
         $selectedCompanyBankAccount = $this->selectedCompanyBankAccount;
 
         $this->selectedCompanyBankAccount->delete();
 
-        [$status, $success] = $apiService->post("api/invalidate/company/{$selectedCompanyBankAccount->company_id}");
-
-        if ($status !== 202) {
-            CompanyBankaccount::create($selectedCompanyBankAccount->toArray());
-            return Toaster::error(__('admin.toast.bank_accounts.company.invalidate_bankaccount_api_error'));
-        }
-
+        $success = $redisService->invalidate('INVALIDATE_COMPANY', (string) $selectedCompanyBankAccount->company_id);
         if (!$success) {
             CompanyBankaccount::create($selectedCompanyBankAccount->toArray());
-            return Toaster::error(__('admin.toast.bank_accounts.company.invalidate_bankaccount_api_error'));
+            Toaster::error(__('admin.toast.bank_accounts.company.invalidate_bankaccount_api_error'));
+            return;
         }
 
         $this->reset([
@@ -75,23 +70,18 @@ class Overview extends Component
         $this->deletePersonalBankAccountModal = true;
     }
 
-    public function destroyPersonalBankAccount(ApiService $apiService) {
+    public function destroyPersonalBankAccount(RedisService $redisService) {
         if (!$this->selectedPersonalBankAccount) return;
 
         $selectedPersonalBankAccount = $this->selectedPersonalBankAccount;
 
         $this->selectedPersonalBankAccount->delete();
 
-        [$status, $success] = $apiService->post("api/invalidate/player/{$selectedPersonalBankAccount->player_uuid}");
-
-        if ($status !== 202) {
-            PersonalBankaccount::create($selectedPersonalBankAccount->toArray());
-            return Toaster::error(__('admin.toast.bank_accounts.personal.invalidate_bankaccount_api_error'));
-        }
-
+        $success = $redisService->invalidate('INVALIDATE_PLAYER', (string) $selectedPersonalBankAccount->player_uuid);
         if (!$success) {
             PersonalBankaccount::create($selectedPersonalBankAccount->toArray());
-            return Toaster::error(__('admin.toast.bank_accounts.personal.invalidate_bankaccount_api_error'));
+            Toaster::error(__('admin.toast.bank_accounts.personal.invalidate_bankaccount_api_error'));
+            return;
         }
 
         $this->reset([

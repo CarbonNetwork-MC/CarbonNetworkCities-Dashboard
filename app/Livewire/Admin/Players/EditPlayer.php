@@ -13,7 +13,7 @@ use App\Models\PlayerChatColor;
 use App\Models\PlayerPastUsername;
 use App\Models\PlayerPrefix;
 use App\Models\Plot;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -117,7 +117,7 @@ class EditPlayer extends Component
     }
 
     // ! Player
-    public function updatePlayer(ApiService $apiService) {
+    public function updatePlayer(RedisService $redisService) {
         // Store the original player for rollback in case of failure
         $originalPlayer = $this->player;
 
@@ -162,11 +162,12 @@ class EditPlayer extends Component
             return;
         }
 
-        // 3. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/player/{$originalPlayer->uuid}");
+        // 3. Send invalidate request to the Minecraft servers
+        $success = $redisService->invalidate('INVALIDATE_PLAYER', $originalPlayer->uuid);
         if (!$success) {
             $this->rollbackPlayer($originalPlayer);
-            return Toaster::error(__('admin.toast.players.update_failed'));
+            Toaster::error(__('admin.toast.players.update_failed'));
+            return;
         }
         
         // 4. Success
@@ -174,7 +175,7 @@ class EditPlayer extends Component
     }
 
     // ! Prefix
-    public function assignPrefix($id, ApiService $apiService) {
+    public function assignPrefix($id, RedisService $redisService) {
         // Store the current selected prefix and the original values for rollback in case of failure
         $originalSelectedPrefix = $this->player->prefixes()->where('selected', true)->first();
         $newSelectedPrefix = PlayerPrefix::find($id);
@@ -184,7 +185,7 @@ class EditPlayer extends Component
         $this->player->prefixes()->where('id', '!=', $newSelectedPrefix->id)->update(['selected' => false]);
 
         // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
+        $success = $redisService->invalidate('INVALIDATE_PLAYER', $this->player->uuid);
         if (!$success) {
             $this->rollbackPrefix($newSelectedPrefix, $originalSelectedPrefix);
             Toaster::error(__('admin.toast.players.prefix_assign_failed'));
@@ -202,7 +203,7 @@ class EditPlayer extends Component
         $this->showRemovePrefixModal = true;
     }
 
-    public function destroyPrefix(ApiService $apiService) {
+    public function destroyPrefix(RedisService $redisService) {
         // Store the original prefix for rollback in case of failure
         $originalPrefix = $this->prefixToRemove;
         $defaultPrefix = PlayerPrefix::where('player_uuid', $this->player->uuid)
@@ -221,7 +222,7 @@ class EditPlayer extends Component
         }
 
         // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
+        $success = $redisService->invalidate('INVALIDATE_PLAYER', $this->player->uuid);
         if (!$success) {
             $this->rollbackPrefix($originalPrefix, $defaultPrefix);
             Toaster::error(__('admin.toast.players.prefix_remove_failed'));
@@ -236,7 +237,7 @@ class EditPlayer extends Component
     }
 
     // ! Chat Colors
-    public function selectChatColor($id, $type, ApiService $apiService) {
+    public function selectChatColor($id, $type, RedisService $redisService) {
         // Store the current selected chat color and the original values for rollback in case of failure
         $originalSelectedChatColor = $this->player->chatColors()->where('selected', true)->where('type', $type)->first();
         $newSelectedChatColor = PlayerChatColor::find($id);
@@ -246,7 +247,7 @@ class EditPlayer extends Component
         $this->player->chatColors()->where('id', '!=', $newSelectedChatColor->id)->where('type', $type)->update(['selected' => false]);
 
         // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
+        $success = $redisService->invalidate('INVALIDATE_PLAYER', $this->player->uuid);
         if (!$success) {
             $this->rollbackChatColorSelect($newSelectedChatColor, $originalSelectedChatColor);
             Toaster::error(__('admin.toast.players.chat_color_select_failed'));
@@ -264,7 +265,7 @@ class EditPlayer extends Component
         $this->showRemoveChatColorModal = true;
     }
 
-    public function destroyColor(ApiService $apiService) {
+    public function destroyColor(RedisService $redisService) {
         // Store the original chat color for rollback in case of failure
         $originalChatColor = $this->chatColorToRemove;
 
@@ -299,10 +300,11 @@ class EditPlayer extends Component
         }
 
         // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
+        $success = $redisService->invalidate('INVALIDATE_PLAYER', $this->player->uuid);
         if (!$success) {
             $this->rollbackChatColor($originalChatColor, $defaultColor);
-            return Toaster::error(__('admin.toast.players.chat_color_remove_failed'));
+            Toaster::error(__('admin.toast.players.chat_color_remove_failed'));
+            return;
         }
 
         // 3. Success
@@ -318,7 +320,7 @@ class EditPlayer extends Component
         $this->showRemoveBankAccountModal = true;
     }
 
-    public function destroyBankAccount(ApiService $apiService) {
+    public function destroyBankAccount(RedisService $redisService) {
         // Store the original bank account for rollback in case of failure
         $originalBankAccount = $this->bankAccountToRemove;
 
@@ -326,7 +328,7 @@ class EditPlayer extends Component
         $this->bankAccountToRemove->delete();
 
         // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
+        $success = $redisService->invalidate('INVALIDATE_PLAYER', $this->player->uuid);
         if (!$success) {
             $this->rollbackBankAccount($originalBankAccount);
             Toaster::error(__('admin.toast.players.bank_account_remove_failed'));
@@ -346,7 +348,7 @@ class EditPlayer extends Component
         $this->showRemovePlotModal = true;
     }
 
-    public function unlinkPlot(ApiService $apiService) {
+    public function unlinkPlot(RedisService $redisService) {
         // Store the original plot for rollback in case of failure
         $originalPlot = $this->plotToRemove;
 
@@ -355,10 +357,11 @@ class EditPlayer extends Component
             ->update(['owner_uuid' => null]);
 
         // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/plot/{$this->plotToRemove->plot_id}");
+        $success = $redisService->invalidate('INVALIDATE_PLOT', $this->plotToRemove->plot_id);
         if (!$success) {
             $this->rollbackPlot($originalPlot);
-            return Toaster::error(__('admin.toast.players.plot_unlink_failed'));
+            Toaster::error(__('admin.toast.players.plot_unlink_failed'));
+            return;
         }
 
         // 3. Success
@@ -374,7 +377,7 @@ class EditPlayer extends Component
         $this->showRemoveCompanyModal = true;
     }
 
-    public function unlinkCompany(ApiService $apiService) {
+    public function unlinkCompany(RedisService $redisService) {
         // Store the original company for rollback in case of failure
         $originalCompany = $this->companyToRemove;
 
@@ -383,10 +386,11 @@ class EditPlayer extends Component
             ->update(['owner_uuid' => null]);
 
         // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/company/{$this->companyToRemove->id}");
+        $success = $redisService->invalidate('INVALIDATE_COMPANY', $this->companyToRemove->id);
         if (!$success) {
             $this->rollbackCompany($originalCompany);
-            return Toaster::error(__('admin.toast.players.company_unlink_failed'));
+            Toaster::error(__('admin.toast.players.company_unlink_failed'));
+            return;
         }
 
         // 3. Success
@@ -402,7 +406,7 @@ class EditPlayer extends Component
         $this->showRemovePastUsernameModal = true;
     }
 
-    public function destroyPastUsername(ApiService $apiService) {
+    public function destroyPastUsername(RedisService $redisService) {
         // Store the original past username for rollback in case of failure
         $originalPastUsername = $this->pastUsernameToRemove;
 
@@ -410,10 +414,11 @@ class EditPlayer extends Component
         $this->pastUsernameToRemove->delete();
 
         // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/player/{$this->player->uuid}");
+        $success = $redisService->invalidate('INVALIDATE_PLAYER', $this->player->uuid);
         if (!$success) {
             $this->rollbackPastUsername($originalPastUsername);
-            return Toaster::error(__('admin.toast.players.past_username_remove_failed'));
+            Toaster::error(__('admin.toast.players.past_username_remove_failed'));
+            return;
         }
 
         // 4. Success

@@ -3,11 +3,11 @@
 namespace App\Livewire\Admin\PinConsoles;
 
 use App\Models\Company;
-use App\Models\Country;
-use Livewire\Component;
-use App\Models\PinConsole;
 use App\Models\CompanyBankaccount;
-use App\Services\PluginAPI\ApiService;
+use App\Models\Country;
+use App\Models\PinConsole;
+use App\Services\RedisService;
+use Livewire\Component;
 
 class Edit extends Component
 {
@@ -57,7 +57,7 @@ class Edit extends Component
         }
     }
 
-    public function updatePinConsole(ApiService $apiService) {
+    public function updatePinConsole(RedisService $redisService) {
         if (!$this->pinConsole) return;
         
         $originalData = $this->pinConsole->toArray();
@@ -85,13 +85,7 @@ class Edit extends Component
         $this->pinConsole->is_active = $data['isActive'];
         $this->pinConsole->save();
 
-        [$status, $success] = $apiService->post("api/invalidate/pin-console/{$this->pinConsole->id}");
-
-        if ($status !== 202) {
-            $this->rollbackPinConsole($originalData);
-            return redirect()->route('admin.pin-consoles.edit', ['id' => $this->pinConsole->id])->error(__('admin.toast.pin_consoles.pin_console_update_failed'));
-        }
-
+        $success = $redisService->invalidate('INVALIDATE_PIN_CONSOLE', $this->pinConsole->id);
         if (!$success) {
             $this->rollbackPinConsole($originalData);
             return redirect()->route('admin.pin-consoles.edit', ['id' => $this->pinConsole->id])->error(__('admin.toast.pin_consoles.pin_console_update_failed'));

@@ -6,7 +6,7 @@ use Livewire\Component;
 use App\Models\CityRegion;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 
 class Overview extends Component
 {
@@ -31,23 +31,18 @@ class Overview extends Component
         $this->deleteCityRegionModal = true;
     }
 
-    public function destroyCityRegion(ApiService $apiService) {
+    public function destroyCityRegion(RedisService $redisService) {
         if (!$this->selectedCityRegion) return;
 
         $selectedCityRegion = $this->selectedCityRegion;
 
         $this->selectedCityRegion->delete();
 
-        [$status, $success] = $apiService->post("api/reload/regions");
-
-        if ($status !== 202) {
-            CityRegion::create($selectedCityRegion->toArray());
-            return Toaster::error(__('admin.toast.city_regions.reload_regions_api_error'));
-        }
-
+        $success = $redisService->invalidate('RELOAD_REGIONS', 'NULL');
         if (!$success) {
             CityRegion::create($selectedCityRegion->toArray());
-            return Toaster::error(__('admin.toast.city_regions.reload_regions_api_error'));
+            Toaster::error(__('admin.toast.city_regions.reload_regions_api_error'));
+            return;
         }
 
         $this->reset([

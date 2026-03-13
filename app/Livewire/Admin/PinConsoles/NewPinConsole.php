@@ -4,9 +4,9 @@ namespace App\Livewire\Admin\PinConsoles;
 
 use App\Models\Company;
 use App\Models\Country;
-use Livewire\Component;
+use App\Services\RedisService;
 use App\Models\CompanyBankaccount;
-use App\Services\PluginAPI\ApiService;
+use Livewire\Component;
 
 class NewPinConsole extends Component
 {
@@ -40,7 +40,7 @@ class NewPinConsole extends Component
         }
     }
 
-    public function createPinConsole(ApiService $apiService) {
+    public function createPinConsole(RedisService $redisService) {
         $data = $this->validate([
             'companyId' => ['required', 'integer'],
             'accountId' => ['required', 'integer'],
@@ -67,21 +67,13 @@ class NewPinConsole extends Component
         ]);
 
         // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/pin-console/{$pinConsole->id}");
-
-        // Immediate failure (request not accepted)
-        if ($status !== 202) {
-            $pinConsole->delete();
-            return redirect()->route('admin.pin-consoles.new')->error(__('admin.toast.pin_consoles.pin_console_create_failed'));
-        }
-
-        // 3. Poll for result
+        $success = $redisService->invalidate('INVALIDATE_PIN_CONSOLE', $pinConsole->id);
         if (!$success) {
             $pinConsole->delete();
             return redirect()->route('admin.pin-consoles.new')->error(__('admin.toast.pin_consoles.pin_console_create_failed'));
         }
 
-        // 4. Success
+        // 3. Success
         return redirect()->route('admin.pin-consoles.render')->success(__('admin.toast.pin_consoles.created'));
     }
 

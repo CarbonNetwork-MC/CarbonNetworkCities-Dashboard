@@ -4,7 +4,7 @@ namespace App\Livewire\Admin\Players;
 
 use App\Models\Company;
 use App\Models\Player;
-use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 use Livewire\Component;
 
 class AddCompany extends Component
@@ -21,7 +21,7 @@ class AddCompany extends Component
         $this->companies = Company::get(['id', 'name']);
     }
 
-    public function addCompany(ApiService $apiService) {
+    public function addCompany(RedisService $redisService) {
         $data = $this->validate([
             'companyId' => ['required', 'exists:companies,id'],
         ]);
@@ -35,8 +35,8 @@ class AddCompany extends Component
             'owner_uuid' => $this->player->uuid,
         ]);
 
-        // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/company/{$company->id}");
+        // 2. Send invalidate request to the Minecraft servers
+        $success = $redisService->invalidate('INVALIDATE_COMPANY', $company->id);
         if (!$success) {
             $this->rollbackCompany($company, $originalCompany);
             return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.company_add_failed'));
