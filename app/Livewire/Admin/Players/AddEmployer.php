@@ -6,6 +6,7 @@ use App\Models\Player;
 use App\Models\Company;
 use App\Services\PlayerPermissionService;
 use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 use Livewire\Component;
 
 class AddEmployer extends Component
@@ -33,7 +34,7 @@ class AddEmployer extends Component
         })->get(['id', 'name']);
     }
 
-    public function addEmployer(ApiService $apiService, PlayerPermissionService $playerPermission) {      
+    public function addEmployer(RedisService $redisService, PlayerPermissionService $playerPermission) {      
         $data = $this->validate([
             'companyId' => 'required|exists:companies,id',
             'role' => 'required|in:Employee,Manager',
@@ -50,7 +51,7 @@ class AddEmployer extends Component
         $playerPermission->syncWholesaleOrderPermission($this->player);
 
         // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/company/{$company->id}");
+        $success = $redisService->invalidate('INVALIDATE_COMPANY', $company->id);
         if (!$success) {
             $company->employees()->where('player_uuid', $this->player->uuid)->delete();
             $playerPermission->syncWholesaleOrderPermission($this->player);

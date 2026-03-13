@@ -14,6 +14,7 @@ use App\Models\PlayerChatColor;
 use App\Models\PlayerPastUsername;
 use App\Models\PlayerPrefix;
 use App\Models\Plot;
+use App\Services\PlayerPermissionService;
 use App\Services\RedisService;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -386,7 +387,7 @@ class EditPlayer extends Component
         $this->showRemoveCompanyModal = true;
     }
 
-    public function unlinkCompany(RedisService $redisService) {
+    public function unlinkCompany(RedisService $redisService, PlayerPermissionService $permissionService) {
         // Store the original company for rollback in case of failure
         $originalCompany = $this->companyToRemove;
 
@@ -416,7 +417,7 @@ class EditPlayer extends Component
         $this->showRemoveEmployeeAtModal = true;
     }
 
-    public function unlinkEmployeeAt(ApiService $apiService, PlayerPermissionService $permissionService) {
+    public function unlinkEmployeeAt(RedisService $redisService, PlayerPermissionService $permissionService) {
         // Store the original company for rollback in case of failure
         $originalCompany = $this->employeeAtToRemove;
         $employee = Employee::where('company_id', $this->employeeAtToRemove->id)->where('player_uuid', $this->player->uuid)->first();
@@ -427,9 +428,8 @@ class EditPlayer extends Component
         $permissionService->syncWholesaleOrderPermission($this->player);
 
         // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/company/{$this->employeeAtToRemove->id}");
+        $success = $redisService->invalidate('INVALIDATE_COMPANY', $this->employeeAtToRemove->id);
         if (!$success) {
-            // TODO: doesnt work when no one's online
             $this->rollbackEmployeeAt($originalCompany, $role);
             return Toaster::error(__('admin.toasts.players.employee_at_unlink_failed'));
         }

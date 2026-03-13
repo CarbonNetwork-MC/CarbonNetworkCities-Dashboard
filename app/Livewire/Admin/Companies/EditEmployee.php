@@ -6,6 +6,7 @@ use App\Models\Company;
 use App\Models\Player;
 use App\Services\PlayerPermissionService;
 use App\Services\PluginAPI\ApiService;
+use App\Services\RedisService;
 use Livewire\Component;
 
 class EditEmployee extends Component
@@ -29,7 +30,7 @@ class EditEmployee extends Component
         $this->role = $this->employee->role;
     }
 
-    public function updateEmployee(ApiService $apiService, PlayerPermissionService $permissionService) {
+    public function updateEmployee(RedisService $redisService, PlayerPermissionService $permissionService) {
         $originalRole = $this->employee->role;    
 
         $data = $this->validate([
@@ -42,18 +43,8 @@ class EditEmployee extends Component
         $permissionService->syncWholesaleOrderPermission($this->player);
 
         // 2. Send invalidate request to Velocity
-        [$status, $success] = $apiService->post("api/invalidate/company/{$this->company->id}");
-
-        // Immediate failure (request not accepted)
-        if ($status !== 202) {
-            // Rollback
-            $this->rollbackEmployee($originalRole);
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toasts.companies.employee_edit_failed'));
-        }
-
-        // 3. Poll for result
+        $success = $redisService->invalidate('INVALIDATE_COMPANY', $this->company->id);
         if (!$success) {
-            // Rollback
             $this->rollbackEmployee($originalRole);
             return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toasts.companies.employee_edit_failed'));
         }
