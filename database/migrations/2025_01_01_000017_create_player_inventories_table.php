@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('player_inventories', function (Blueprint $table) {
             $table->id();
             $table->char('player_uuid', 36);
-            $table->foreign('player_uuid')->references('uuid')->on('players')->onDelete('cascade');
             $table->json('data');
             $table->timestamps();
+
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreign('player_uuid')->references('uuid')->on('players')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

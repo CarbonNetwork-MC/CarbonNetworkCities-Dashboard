@@ -9,22 +9,40 @@ return [
     |
     */
 
+    // ? Public
     'dashboard' => 'Dashboard',
     'profile' => 'Profile',
 
-    // Management
+    // ? Company
+    'company' => [
+        'archive' => 'Archive',
+        'bank_accounts' => 'Bank Accounts',
+        'choose' => 'Choose Company',
+        'dashboard' => 'Dashboard',
+        'employees' => 'Employees',
+        'inventory' => 'Inventory',
+        'salaries' => 'Salaries',
+        'sales' => 'Sales',
+        'settings' => 'Settings',
+        'tips' => 'Tips',
+        'title' => 'Companies',
+        'wholesale_orders' => 'Wholesale Orders',
+    ],
+
+    // ? Management
     'management' => 'Management',
 
     'bank_accounts' => 'Bank Accounts',
+    'back_to_dashboard' => 'Back to Dashboard',
     'city_regions' => 'City Regions',
     'coc' => 'Chamber of Commerce',
     'companies' => 'Companies',
     'countries' => 'Countries',
-    'back_to_dashboard' => 'Back to Dashboard',
     'itemsmenu' => 'Items Menu',
     'languages' => 'Languages',
     'pin_consoles' => 'PIN Consoles',
     'players' => 'Players',
     'roles_perms' => 'Roles & Permissions',
     'users' => 'Users',
+    'wholesale_items' => 'Wholesale Items',
 ];

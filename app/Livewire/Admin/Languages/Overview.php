@@ -50,7 +50,7 @@ class Overview extends Component
             'deleteLanguageModal',
         ]);
 
-        Toaster::success(__('admin.toast.languages.deleted'));
+        Toaster::success(__('admin.toasts.languages.deleted'));
     }
     
     public function render()

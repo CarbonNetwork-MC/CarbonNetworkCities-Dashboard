@@ -59,7 +59,7 @@ class AddPinConsole extends Component
         $success = $redisService->invalidate('INVALIDATE_PIN_CONSOLE', (string) $pinConsole->id);
         if (!$success) {
             $pinConsole->delete();
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.companies.pin_console_add_failed'));
+            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toasts.companies.pin_console_add_failed'));
         }
 
         // 3. Success

@@ -52,7 +52,7 @@ class Overview extends Component
             'deletePlotModal',
         ]);
 
-        Toaster::success(__('admin.toast.plots.delete_success'));
+        Toaster::success(__('admin.toasts.plots.delete_success'));
     }
 
     public function render()

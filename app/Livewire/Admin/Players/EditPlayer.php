@@ -6,6 +6,7 @@ use App\Models\ChatColor;
 use App\Models\CityRegion;
 use App\Models\Company;
 use App\Models\Country;
+use App\Models\Employee;
 use App\Models\Language;
 use App\Models\PersonalBankaccount;
 use App\Models\Player;
@@ -50,6 +51,7 @@ class EditPlayer extends Component
     public $searchBankAccounts = '';
     public $searchPlots = '';
     public $searchCompanies = '';
+    public $searchEmployeeAt = '';
     public $searchPastUsernames = '';
 
     public $prefixesPerPage = 5;
@@ -57,6 +59,7 @@ class EditPlayer extends Component
     public $bankAccountsPerPage = 5;
     public $plotsPerPage = 5;
     public $companiesPerPage = 5;
+    public $employeeAtPerPage = 5;
     public $pastUsernamesPerPage = 5;
 
     public $prefixToRemove = null;
@@ -64,6 +67,7 @@ class EditPlayer extends Component
     public $bankAccountToRemove = null;
     public $plotToRemove = null;
     public $companyToRemove = null;
+    public $employeeAtToRemove = null;
     public $pastUsernameToRemove = null;
 
     public $showRemovePrefixModal = false;
@@ -71,6 +75,7 @@ class EditPlayer extends Component
     public $showRemoveBankAccountModal = false;
     public $showRemovePlotModal = false;
     public $showRemoveCompanyModal = false;
+    public $showRemoveEmployeeAtModal = false;
     public $showRemovePastUsernameModal = false;
 
     public function mount($uuid) {
@@ -109,6 +114,10 @@ class EditPlayer extends Component
 
         if ($key === 'searchCompanies') {
             $this->resetPage('companies');
+        }
+
+        if ($key === 'searchEmployeeAt') {
+            $this->resetPage('employeeAt');
         }
 
         if ($key === 'searchPastUsernames') {
@@ -158,7 +167,7 @@ class EditPlayer extends Component
             ]);
 
         if ($updated === 0) {
-            Toaster::error(__('admin.toast.players.playtime_conflict'));
+            Toaster::error(__('admin.toasts.players.playtime_conflict'));
             return;
         }
 
@@ -171,7 +180,7 @@ class EditPlayer extends Component
         }
         
         // 4. Success
-        Toaster::success(__('admin.toast.players.update_success'));
+        Toaster::success(__('admin.toasts.players.update_success'));
     }
 
     // ! Prefix
@@ -188,14 +197,14 @@ class EditPlayer extends Component
         $success = $redisService->invalidate('INVALIDATE_PLAYER', $this->player->uuid);
         if (!$success) {
             $this->rollbackPrefix($newSelectedPrefix, $originalSelectedPrefix);
-            Toaster::error(__('admin.toast.players.prefix_assign_failed'));
+            Toaster::error(__('admin.toasts.players.prefix_assign_failed'));
             return;
         }
 
         // 3. Success
         $this->resetPage('prefixes');
 
-        Toaster::success(__('admin.toast.players.prefix_assign_success'));
+        Toaster::success(__('admin.toasts.players.prefix_assign_success'));
     }
 
     public function removePrefix($id) {
@@ -210,7 +219,7 @@ class EditPlayer extends Component
                                     ->where('prefix', 'Citizen')->first();
 
         if ($this->prefixToRemove->id === $defaultPrefix->id) {
-            Toaster::error(__('admin.toast.players.cannot_remove_default_prefix'));
+            Toaster::error(__('admin.toasts.players.cannot_remove_default_prefix'));
             return;
         }
 
@@ -225,7 +234,7 @@ class EditPlayer extends Component
         $success = $redisService->invalidate('INVALIDATE_PLAYER', $this->player->uuid);
         if (!$success) {
             $this->rollbackPrefix($originalPrefix, $defaultPrefix);
-            Toaster::error(__('admin.toast.players.prefix_remove_failed'));
+            Toaster::error(__('admin.toasts.players.prefix_remove_failed'));
             return;
         }
 
@@ -233,7 +242,7 @@ class EditPlayer extends Component
         $this->showRemovePrefixModal = false;
         $this->prefixToRemove = null;
 
-        Toaster::success(__('admin.toast.players.prefix_remove_success'));
+        Toaster::success(__('admin.toasts.players.prefix_remove_success'));
     }
 
     // ! Chat Colors
@@ -250,14 +259,14 @@ class EditPlayer extends Component
         $success = $redisService->invalidate('INVALIDATE_PLAYER', $this->player->uuid);
         if (!$success) {
             $this->rollbackChatColorSelect($newSelectedChatColor, $originalSelectedChatColor);
-            Toaster::error(__('admin.toast.players.chat_color_select_failed'));
+            Toaster::error(__('admin.toasts.players.chat_color_select_failed'));
             return;
         }
 
         // 4. Success
         $this->resetPage('chatColors');
 
-        Toaster::success(__('admin.toast.players.chat_color_select_success'));
+        Toaster::success(__('admin.toasts.players.chat_color_select_success'));
     }
 
     public function removeChatColor($id) {
@@ -282,7 +291,7 @@ class EditPlayer extends Component
         ) {
             $this->showRemoveChatColorModal = false;
             $this->chatColorToRemove = null;
-            Toaster::error(__('admin.toast.players.cannot_remove_default_chat_color'));
+            Toaster::error(__('admin.toasts.players.cannot_remove_default_chat_color'));
             return;
         }
 
@@ -311,7 +320,7 @@ class EditPlayer extends Component
         $this->showRemoveChatColorModal = false;
         $this->chatColorToRemove = null;
 
-        Toaster::success(__('admin.toast.players.chat_color_remove_success'));
+        Toaster::success(__('admin.toasts.players.chat_color_remove_success'));
     }
 
     // ! Bank Accounts
@@ -331,7 +340,7 @@ class EditPlayer extends Component
         $success = $redisService->invalidate('INVALIDATE_PLAYER', $this->player->uuid);
         if (!$success) {
             $this->rollbackBankAccount($originalBankAccount);
-            Toaster::error(__('admin.toast.players.bank_account_remove_failed'));
+            Toaster::error(__('admin.toasts.players.bank_account_remove_failed'));
             return;
         }
 
@@ -339,7 +348,7 @@ class EditPlayer extends Component
         $this->showRemoveBankAccountModal = false;
         $this->bankAccountToRemove = null;
 
-        Toaster::success(__('admin.toast.players.bank_account_remove_success'));
+        Toaster::success(__('admin.toasts.players.bank_account_remove_success'));
     }
 
     // ! Plots
@@ -368,7 +377,7 @@ class EditPlayer extends Component
         $this->showRemovePlotModal = false;
         $this->plotToRemove = null;
 
-        Toaster::success(__('admin.toast.players.plot_unlink_success'));
+        Toaster::success(__('admin.toasts.players.plot_unlink_success'));
     }
 
     // ! Companies
@@ -384,6 +393,7 @@ class EditPlayer extends Component
         // 1. Optimistic unlink
         Company::where('id', $this->companyToRemove->id)->where('owner_uuid', $this->player->uuid)
             ->update(['owner_uuid' => null]);
+        $permissionService->syncWholesaleOrderPermission($this->player);
 
         // 2. Send invalidate request to Velocity
         $success = $redisService->invalidate('INVALIDATE_COMPANY', $this->companyToRemove->id);
@@ -397,7 +407,38 @@ class EditPlayer extends Component
         $this->showRemoveCompanyModal = false;
         $this->companyToRemove = null;
 
-        Toaster::success(__('admin.toast.players.company_unlink_success'));
+        Toaster::success(__('admin.toasts.players.company_unlink_success'));
+    }
+
+    // ! Employee At
+    public function removeEmployeeAt($id) {
+        $this->employeeAtToRemove = Company::find($id);
+        $this->showRemoveEmployeeAtModal = true;
+    }
+
+    public function unlinkEmployeeAt(ApiService $apiService, PlayerPermissionService $permissionService) {
+        // Store the original company for rollback in case of failure
+        $originalCompany = $this->employeeAtToRemove;
+        $employee = Employee::where('company_id', $this->employeeAtToRemove->id)->where('player_uuid', $this->player->uuid)->first();
+        $role = $employee->role;
+
+        // 1. Optimistic unlink
+        $employee->delete();
+        $permissionService->syncWholesaleOrderPermission($this->player);
+
+        // 2. Send invalidate request to Velocity
+        [$status, $success] = $apiService->post("api/invalidate/company/{$this->employeeAtToRemove->id}");
+        if (!$success) {
+            // TODO: doesnt work when no one's online
+            $this->rollbackEmployeeAt($originalCompany, $role);
+            return Toaster::error(__('admin.toasts.players.employee_at_unlink_failed'));
+        }
+
+        // 3. Success
+        $this->showRemoveEmployeeAtModal = false;
+        $this->employeeAtToRemove = null;
+
+        Toaster::success(__('admin.toasts.players.employee_at_unlink_success'));
     }
 
     // ! Past Usernames
@@ -425,7 +466,7 @@ class EditPlayer extends Component
         $this->showRemovePastUsernameModal = false;
         $this->pastUsernameToRemove = null;
 
-        Toaster::success(__('admin.toast.players.past_username_remove_success'));
+        Toaster::success(__('admin.toasts.players.past_username_remove_success'));
     }
 
     public function render()
@@ -440,6 +481,7 @@ class EditPlayer extends Component
             'bankAccounts' => $this->player->bankAccounts()->where('id', 'like', '%' . $this->searchBankAccounts . '%')->paginate($this->bankAccountsPerPage, ['*'], 'bankAccounts'),
             'plots' => $this->player->plots()->where('plot_id', 'like', '%' . $this->searchPlots . '%')->where('name', 'like', '%' . $this->searchPlots . '%')->paginate($this->plotsPerPage, ['*'], 'plots'),
             'companies' => $this->player->companies()->where('name', 'like', '%' . $this->searchCompanies . '%')->where('coc_number', 'like', '%' . $this->searchCompanies . '%')->paginate($this->companiesPerPage, ['*'], 'companies'),
+            'employeeAt' => $this->player->employers()->where('name', 'like', '%' . $this->searchEmployeeAt . '%')->where('coc_number', 'like', '%' . $this->searchEmployeeAt . '%')->paginate($this->employeeAtPerPage, ['*'], 'employeeAt'),
             'pastUsernames' => $this->player->pastUsernames()->where('username', 'like', '%' . $this->searchPastUsernames . '%')->paginate($this->pastUsernamesPerPage, ['*'], 'pastUsernames'),
         ]);
     }
@@ -515,6 +557,16 @@ class EditPlayer extends Component
     private function rollbackCompany($originalCompany) {
         Company::where('id', $originalCompany->id)->where('owner_uuid', null)
             ->update(['owner_uuid' => $this->player->uuid]);
+        app(PlayerPermissionService::class)->syncWholesaleOrderPermission($this->player);
+    }
+
+    private function rollbackEmployeeAt($originalCompany, $role) {
+        Employee::create([
+            'player_uuid' => $this->player->uuid,
+            'company_id' => $originalCompany->id,
+            'role' => $role,
+        ]);
+        app(PlayerPermissionService::class)->syncWholesaleOrderPermission($this->player);
     }
 
     private function rollbackPastUsername($originalPastUsername) {

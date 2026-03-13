@@ -55,7 +55,7 @@ class Overview extends Component
             'unlinkModal',
         ]);
 
-        Toaster::success(__('admin.toast.users.account_unlinked'));
+        Toaster::success(__('admin.toasts.users.account_unlinked'));
     }
 
     public function removeUser($id) {
@@ -76,7 +76,7 @@ class Overview extends Component
             'deleteUserModal',
         ]);
 
-        Toaster::success(__('admin.toast.users.deleted'));
+        Toaster::success(__('admin.toasts.users.deleted'));
     }
 
     public function render()

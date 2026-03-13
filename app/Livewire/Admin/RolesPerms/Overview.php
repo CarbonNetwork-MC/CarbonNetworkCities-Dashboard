@@ -51,7 +51,7 @@ class Overview extends Component
             'deletePermissionModal',
         ]);
 
-        Toaster::success(__('admin.toast.permissions.deleted'));
+        Toaster::success(__('admin.toasts.permissions.deleted'));
     }
 
     // ? Role Methods
@@ -70,7 +70,7 @@ class Overview extends Component
             'deleteRoleModal',
         ]);
 
-        Toaster::success(__('admin.toast.roles.deleted'));
+        Toaster::success(__('admin.toasts.roles.deleted'));
     }
 
     public function render()

@@ -43,6 +43,118 @@
                     icon="fi fi-rr-home"
                     :label="__('sidebar.dashboard')"
                 />
+
+                {{-- Company --}}
+                @if ($selectedCompany)
+                    <x-sidebar.nav-group :groupKey="'company'" wire:key="company" label="{{ __('sidebar.company.title') }}" icon="rr-building">
+                        {{-- Dashboard --}}
+                        <x-sidebar.nav-group-item
+                            href="{{ route('company.dashboard.render', ['companyId' => $selectedCompany->id]) }}"
+                            :active="request()->routeIs('company.dashboard.render')"
+                            wire:key="company-dashboard"
+                        >
+                            {{ __('sidebar.company.dashboard') }}
+                        </x-sidebar.nav-group-item>
+
+                        {{-- Sell Docs --}}
+                        <x-sidebar.nav-group-item
+                            href="{{ route('company.sales.render', ['companyId' => $selectedCompany->id]) }}"
+                            :active="request()->routeIs('company.sales.*')"
+                            wire:key="company-sales"
+                        >
+                            {{ __('sidebar.company.sales') }}
+                        </x-sidebar.nav-group-item>
+
+                        {{-- Tips --}}
+                        <x-sidebar.nav-group-item
+                            href="{{ route('company.tips.render', ['companyId' => $selectedCompany->id]) }}"
+                            :active="request()->routeIs('company.tips.*')"
+                            wire:key="company-tips"
+                        >
+                            {{ __('sidebar.company.tips') }}
+                        </x-sidebar.nav-group-item>
+
+                        {{-- Inventory --}}
+                        <x-sidebar.nav-group-item
+                            href="{{ route('company.stock.render', ['companyId' => $selectedCompany->id]) }}"
+                            :active="request()->routeIs('company.stock.*')"
+                            wire:key="company-stock"
+                        >
+                            {{ __('sidebar.company.inventory') }}
+                        </x-sidebar.nav-group-item>
+
+                        {{-- Employees --}}
+                        <x-sidebar.nav-group-item
+                            href="{{ route('company.employees.render', ['companyId' => $selectedCompany->id]) }}"
+                            :active="request()->routeIs('company.employees.*')"
+                            wire:key="company-employees"
+                        >
+                            {{ __('sidebar.company.employees') }}
+                        </x-sidebar.nav-group-item>
+
+                        {{-- Bank Accounts --}}
+                        @if ($isCompanyOwnerOrManager)
+                            <x-sidebar.nav-group-item
+                                href="{{ route('company.bank-accounts.render', ['companyId' => $selectedCompany->id]) }}"
+                                :active="request()->routeIs('company.bank-accounts.*') || request()->routeIs('company.bank-account.*')"
+                                wire:key="company-bank-accounts"
+                            >
+                                {{ __('sidebar.company.bank_accounts') }}
+                            </x-sidebar.nav-group-item>
+                        @endif
+
+                        {{-- Salaries --}}
+                        @if ($isCompanyOwnerOrManager)
+                            <x-sidebar.nav-group-item
+                                href="{{ route('company.salaries.render', ['companyId' => $selectedCompany->id]) }}"
+                                :active="request()->routeIs('company.salaries.*')"
+                                wire:key="company-salaries"
+                            >
+                                {{ __('sidebar.company.salaries') }}
+                            </x-sidebar.nav-group-item>
+                        @endif
+
+                        {{-- Wholesale Orders --}}
+                        @if ($isCompanyOwnerOrManager)
+                            <x-sidebar.nav-group-item
+                                href="{{ route('company.wholesale-orders.render', ['companyId' => $selectedCompany->id]) }}"
+                                :active="request()->routeIs('company.wholesale-orders.*')"
+                                wire:key="company-wholesale-orders"
+                            >
+                                {{ __('sidebar.company.wholesale_orders') }}
+                            </x-sidebar.nav-group-item>
+                        @endif
+
+                        {{-- Archive --}}
+                        @if ($isCompanyOwnerOrManager)
+                            <x-sidebar.nav-group-item
+                                href="{{ route('company.archive.render', ['companyId' => $selectedCompany->id]) }}"
+                                :active="request()->routeIs('company.archive.*')"
+                                wire:key="company-archive"
+                            >
+                                {{ __('sidebar.company.archive') }}
+                            </x-sidebar.nav-group-item>
+                        @endif
+
+                        {{-- Company Settings --}}
+                        @if ($isCompanyOwnerOrManager)
+                            <x-sidebar.nav-group-item
+                                href="{{ route('company.settings.render', ['companyId' => $selectedCompany->id]) }}"
+                                :active="request()->routeIs('company.settings.*')"
+                                wire:key="company-settings"
+                            >
+                                {{ __('sidebar.company.settings') }}
+                            </x-sidebar.nav-group-item>
+                        @endif
+                    </x-sidebar.nav-group>
+                @else
+                    <x-sidebar.nav-item
+                        :href="route('company.choose.render')"
+                        :active="request()->routeIs('company.choose.render')"
+                        icon="fi fi-rr-building"
+                        :label="__('sidebar.company.title')"
+                    />
+                @endif
             </nav>
         @endif
 
@@ -154,6 +266,14 @@
                     icon="fi fi-rr-users"
                     :label="__('sidebar.users')"
                 />
+
+                {{-- Wholesale Items --}}
+                <x-sidebar.nav-item
+                    :href="route('admin.wholesale-items.render')"
+                    :active="request()->routeIs('admin.wholesale-items.*')"
+                    icon="fi fi-rr-shelves"
+                    :label="__('sidebar.wholesale_items')"
+                />
             </nav>
         @endif
 
@@ -190,7 +310,7 @@
                     >
 
                         <!-- Avatar -->
-                        <img src="{{ Auth::user()->profile_photo_url
+                        <img src="{{ $userProfilePicture
                             ?? 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name ?? 'U') . '&background=16a34a&color=ffffff' }}"
                             alt="{{ Auth::user()->name ?? 'User' }}" class="h-8 w-8 rounded-xl object-cover" />
 

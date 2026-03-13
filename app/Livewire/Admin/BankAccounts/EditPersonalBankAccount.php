@@ -63,10 +63,10 @@ class EditPersonalBankAccount extends Component
 
         if (!$success) {
             $this->rollbackPersonalBankAccount($originalData);
-            return redirect()->route('admin.bank-accounts.personal.edit', ['id' => $this->account->id])->error(__('admin.toast.bank_accounts.personal.invalidate_bankaccount_api_error'));
+            return redirect()->route('admin.bank-accounts.personal.edit', ['id' => $this->account->id])->error(__('admin.toasts.bank_accounts.personal.invalidate_bankaccount_api_error'));
         }
 
-        return redirect()->route('admin.bank-accounts.render')->success(__('admin.toast.bank_account.personal.updated'));
+        return redirect()->route('admin.bank-accounts.render')->success(__('admin.toasts.bank_account.personal.updated'));
     }
     
     public function render()

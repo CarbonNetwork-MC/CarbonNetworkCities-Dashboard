@@ -24,7 +24,10 @@
         @if($disabled) disabled @endif
         {{ $attributes->class([
             'block w-full flex-1 rounded-base text-sm shadow-xs ' . $sizeClasses,
-            'bg-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-600',
+            'placeholder:text-gray-500 dark:placeholder:text-gray-600',
+            $disabled
+                ? 'bg-gray-300 cursor-not-allowed'
+                : 'bg-gray-100',
             $hasError
                 ? 'border border-red-500 focus:ring-red-500 focus:border-red-500'
                 : 'border border-default-medium focus:ring-brand focus:border-brand',
@@ -52,7 +55,10 @@
             @if($disabled) disabled @endif
             {{ $attributes->class([
                 'block w-full rounded-base text-sm shadow-xs ' . $sizeClasses,
-                'bg-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-600',
+                'placeholder:text-gray-500 dark:placeholder:text-gray-600',
+                $disabled
+                    ? 'bg-gray-300 cursor-not-allowed'
+                    : 'bg-gray-100',
                 $hasError
                     ? 'border border-red-500 focus:ring-red-500 focus:border-red-500'
                     : 'border border-default-medium focus:ring-brand focus:border-brand',

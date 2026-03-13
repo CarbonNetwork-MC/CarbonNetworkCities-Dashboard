@@ -29,7 +29,7 @@ class AddMember extends Component
         $player = Player::where('uuid', $data['playerUuid'])->first();
 
         if (!$player) {
-            return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toast.plots.player_not_found'));
+            return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toasts.plots.player_not_found'));
         }
 
         $this->plot->members()->create([
@@ -40,10 +40,10 @@ class AddMember extends Component
         $success = $redisService->invalidate('INVALIDATE_PLOT_' . $this->plot->plot_id);
         if (!$success) {
             $this->plot->members()->where('player_uuid', $data['playerUuid'])->delete();
-            return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toast.plots.invalidate_plot_api_error'));
+            return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toasts.plots.invalidate_plot_api_error'));
         }
 
-        return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->success(__('admin.toast.plots.member_added'));
+        return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->success(__('admin.toasts.plots.member_added'));
     }
 
     public function render()

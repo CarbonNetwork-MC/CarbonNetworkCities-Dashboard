@@ -112,7 +112,9 @@
                             {{ $item->internal_id }}
                         </div>
                     @empty
-
+                        <div class="col-span-2 text-center text-gray-500">
+                            {{ __('admin.labels.companies.no_items_in_group') }}
+                        </div>
                     @endforelse
                 </div>
             @endif
@@ -125,5 +127,5 @@
                 {{ __('general.buttons.add') }}
             </x-buttons.primary-button>
         </x-slot>
-    </x-modals.modal>"
+    </x-modals.modal>
 </div>

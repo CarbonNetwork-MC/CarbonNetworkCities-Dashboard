@@ -155,10 +155,10 @@ class Edit extends Component
         $success = $redisService->invalidate('INVALIDATE_PLOT', $this->plot->plot_id);
         if (!$success) {
             $this->rollbackPlot($originalData);
-            return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toast.plots.invalidate_plot_api_error'));
+            return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toasts.plots.invalidate_plot_api_error'));
         }
 
-        return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->success(__('admin.toast.plots.updated'));
+        return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->success(__('admin.toasts.plots.updated'));
     }
 
     // ! Members
@@ -175,7 +175,7 @@ class Edit extends Component
         $success = $redisService->invalidate('INVALIDATE_PLOT', $this->plot->plot_id);
         if (!$success) {
             PlotMember::create($originalData->toArray());
-            return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toast.plots.invalidate_plot_api_error'));
+            return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toasts.plots.invalidate_plot_api_error'));
         }
 
         $this->reset([
@@ -183,7 +183,7 @@ class Edit extends Component
             'showRemoveMemberModal',
         ]);
 
-        Toaster::success(__('admin.toast.plots.member_delete_success'));
+        Toaster::success(__('admin.toasts.plots.member_delete_success'));
     }
 
     // ! Fridges
@@ -200,7 +200,7 @@ class Edit extends Component
         $success = $redisService->invalidate('INVALIDATE_FRIDGE', $this->selectedFridge->id);
         if (!$success) {
             Fridge::create($originalData->toArray());
-            return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toast.plots.invalidate_fridge_api_error'));
+            return redirect()->route('admin.plots.edit', ['id' => $this->plot->id])->error(__('admin.toasts.plots.invalidate_fridge_api_error'));
         }
 
         $this->reset([
@@ -208,7 +208,7 @@ class Edit extends Component
             'showRemoveFridgeModal',
         ]);
 
-        Toaster::success(__('admin.toast.plots.fridge_delete_success'));
+        Toaster::success(__('admin.toasts.plots.fridge_delete_success'));
     }
 
     public function render()

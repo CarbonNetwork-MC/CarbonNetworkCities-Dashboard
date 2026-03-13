@@ -2,8 +2,9 @@
 
 namespace App\Livewire\Admin\Companies;
 
-use App\Models\Player;
 use App\Models\Company;
+use App\Models\Player;
+use App\Services\PlayerPermissionService;
 use App\Services\RedisService;
 use Livewire\Component;
 
@@ -37,7 +38,7 @@ class AddEmployee extends Component
         ]);
 
         if ($this->company->employees()->where('player_uuid', $data['playerUuid'])->exists()) {
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.companies.employee_already_assigned'));
+            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toasts.companies.employee_already_assigned'));
         }
 
         // 1. Create Employee
@@ -61,5 +62,12 @@ class AddEmployee extends Component
     public function render()
     {
         return view('livewire.admin.companies.add-employee');
+    }
+
+    private function rollbackEmployee($playerUuid) {
+        $this->company->employees()->where('player_uuid', $playerUuid)->delete();
+
+        $player = Player::where('uuid', $playerUuid)->first();
+        app(PlayerPermissionService::class)->syncWholesaleOrderPermission($player);
     }
 }

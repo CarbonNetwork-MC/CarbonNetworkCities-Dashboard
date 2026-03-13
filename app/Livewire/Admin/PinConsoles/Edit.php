@@ -88,10 +88,10 @@ class Edit extends Component
         $success = $redisService->invalidate('INVALIDATE_PIN_CONSOLE', $this->pinConsole->id);
         if (!$success) {
             $this->rollbackPinConsole($originalData);
-            return redirect()->route('admin.pin-consoles.edit', ['id' => $this->pinConsole->id])->error(__('admin.toast.pin_consoles.pin_console_update_failed'));
+            return redirect()->route('admin.pin-consoles.edit', ['id' => $this->pinConsole->id])->error(__('admin.toasts.pin_consoles.pin_console_update_failed'));
         }
 
-        return redirect()->route('admin.pin-consoles.render')->success(__('admin.toast.pin_consoles.updated'));
+        return redirect()->route('admin.pin-consoles.render')->success(__('admin.toasts.pin_consoles.updated'));
     }
 
     public function render()

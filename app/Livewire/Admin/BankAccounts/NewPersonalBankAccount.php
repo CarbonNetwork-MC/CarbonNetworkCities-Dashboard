@@ -44,7 +44,7 @@ class NewPersonalBankAccount extends Component
             return redirect()->route('admin.bank-accounts.personal.new')->error(__('admin.toast.bank_accounts.personal.invalidate_bankaccount_redis_error'));
         }
 
-        return redirect()->route('admin.bank-accounts.render')->success(__('admin.toast.bank_account.personal.created'));
+        return redirect()->route('admin.bank-accounts.render')->success(__('admin.toasts.bank_account.personal.created'));
     }
 
     public function render()

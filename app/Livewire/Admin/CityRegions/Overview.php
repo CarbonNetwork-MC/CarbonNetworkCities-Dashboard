@@ -50,7 +50,7 @@ class Overview extends Component
             'deleteCityRegionModal',
         ]);
 
-        Toaster::success(__('admin.toast.city_regions.deleted'));
+        Toaster::success(__('admin.toasts.city_regions.deleted'));
     }
     
     public function render()

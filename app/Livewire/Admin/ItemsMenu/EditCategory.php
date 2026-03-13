@@ -45,10 +45,10 @@ class EditCategory extends Component
             $this->category->name = $category['name'];
             $this->category->icon_material = $category['icon_material'];
             $this->category->save();
-            return redirect()->route('admin.itemsmenu.render')->error(__('admin.toast.itemsmenu.reload_items_api_error'));
+            return redirect()->route('admin.itemsmenu.render')->error(__('admin.toasts.itemsmenu.reload_items_api_error'));
         }
 
-        return redirect()->route('admin.itemsmenu.render')->success(__('admin.toast.itemsmenu.category_updated'));
+        return redirect()->route('admin.itemsmenu.render')->success(__('admin.toasts.itemsmenu.category_updated'));
     }
 
     public function render()

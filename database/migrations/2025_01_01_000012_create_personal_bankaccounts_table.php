@@ -14,11 +14,15 @@ return new class extends Migration
         Schema::create('personal_bankaccounts', function (Blueprint $table) {
             $table->id();
             $table->char('player_uuid', 36);
-            $table->foreign('player_uuid')->references('uuid')->on('players')->onDelete('cascade');
             $table->decimal('balance', 10, 2);
             $table->enum('type', ['checking', 'savings']);
             $table->string('currency', 3);
             $table->timestamps();
+            
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreign('player_uuid')->references('uuid')->on('players')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

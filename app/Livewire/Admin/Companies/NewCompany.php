@@ -44,7 +44,7 @@ class NewCompany extends Component
         $success = $redisService->invalidate('INVALIDATE_COMPANY', $company->id);
         if (!$success) {
             $company->delete();
-            return redirect()->route('admin.companies.new')->error(__('admin.toast.companies.create_failed'));
+            return redirect()->route('admin.companies.new')->error(__('admin.toasts.companies.create_failed'));
         }
 
         // 3. Success

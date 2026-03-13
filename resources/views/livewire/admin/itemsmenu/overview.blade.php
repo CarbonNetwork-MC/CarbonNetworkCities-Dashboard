@@ -73,7 +73,7 @@
     </x-containers.main>
 
     {{-- Items --}}
-    <x-containers.main class="mt-4" x-data="{open: false}">
+    <x-containers.main class="mt-4" x-data="{open: true}">
         <div class="flex justify-between">
             <div class="flex items-center gap-x-4">
                 <x-containers.title>{{ __('admin.titles.itemsmenu.items_overview') }}</x-containers.title>

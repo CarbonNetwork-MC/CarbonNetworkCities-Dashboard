@@ -69,7 +69,7 @@ class NewItem extends Component
             return;
         }
 
-        return redirect()->route('admin.itemsmenu.render')->success(__('admin.toast.itemsmenu.item_created'));
+        return redirect()->route('admin.itemsmenu.render')->success(__('admin.toasts.itemsmenu.item_created'));
     }
 
     public function render()

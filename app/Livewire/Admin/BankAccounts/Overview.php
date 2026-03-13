@@ -61,7 +61,7 @@ class Overview extends Component
             'deleteCompanyBankAccountModal',
         ]);
 
-        Toaster::success(__('admin.toast.bank_accounts.company.deleted'));
+        Toaster::success(__('admin.toasts.bank_accounts.company.deleted'));
     }
 
     // ? Personal Bankaccount Methods
@@ -89,7 +89,7 @@ class Overview extends Component
             'deletePersonalBankAccountModal',
         ]);
 
-        Toaster::success(__('admin.toast.bank_accounts.personal.deleted'));
+        Toaster::success(__('admin.toasts.bank_accounts.personal.deleted'));
     }
 
     public function render()

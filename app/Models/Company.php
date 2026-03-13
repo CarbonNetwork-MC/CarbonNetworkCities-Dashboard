@@ -11,6 +11,7 @@ class Company extends Model
     protected $fillable = [
         'name',
         'world_id',
+        'country_id',
         'coc_type',
         'coc_number',
         'owner_uuid',
@@ -23,7 +24,12 @@ class Company extends Model
 
     public function cocType(): HasOne
     {
-        return $this->hasOne(CocType::class, 'name', 'coc_type');
+        return $this->hasOne(CoCType::class, 'name', 'coc_type');
+    }
+
+    public function country(): HasOne
+    {
+        return $this->hasOne(Country::class, 'id', 'country_id');
     }
 
     public function bankAccounts(): HasMany
@@ -49,5 +55,40 @@ class Company extends Model
     public function items(): HasMany
     {
         return $this->hasMany(CompanyItem::class, 'company_id', 'id');
+    }
+
+    public function stock(): HasMany
+    {
+        return $this->hasMany(CompanyStock::class, 'company_id', 'id');
+    }
+
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(CompanyNotification::class, 'company_id', 'id');
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(WholesaleOrder::class, 'company_id', 'id');
+    }
+
+    public function sales(): HasMany
+    {
+        return $this->hasMany(CompanySale::class, 'company_id', 'id');
+    }
+
+    public function settings(): HasOne
+    {
+        return $this->hasOne(CompanySettings::class, 'company_id', 'id');
+    }
+
+    public function salaries(): HasMany
+    {
+        return $this->hasMany(EmployeeSalary::class, 'company_id', 'id');
+    }
+
+    public function tips(): HasMany
+    {
+        return $this->hasMany(CompanyTip::class, 'company_id', 'id');
     }
 }

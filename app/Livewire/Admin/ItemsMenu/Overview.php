@@ -88,7 +88,7 @@ class Overview extends Component
             'deleteCategoryModal',
         ]);
 
-        Toaster::success(__('admin.toast.itemsmenu.category_deleted'));
+        Toaster::success(__('admin.toasts.itemsmenu.category_deleted'));
     }
 
     // ? Item Methods
@@ -116,7 +116,7 @@ class Overview extends Component
             'deleteItemModal',
         ]);
 
-        Toaster::success(__('admin.toast.itemsmenu.item_deleted'));
+        Toaster::success(__('admin.toasts.itemsmenu.item_deleted'));
     }
 
     // ? Item Group Methods
@@ -135,7 +135,7 @@ class Overview extends Component
             'deleteItemGroupModal',
         ]);
 
-        Toaster::success(__('admin.toast.itemsmenu.item_group_deleted'));
+        Toaster::success(__('admin.toasts.itemsmenu.item_group_deleted'));
     }
 
     public function render()
@@ -145,6 +145,9 @@ class Overview extends Component
                 ->orderBy('created_at', 'desc')
                 ->paginate($this->categoriesPerPage, pageName: 'categoriesPage'),
             'items' => Item::where('name', 'like', '%' . $this->searchItem . '%')
+                ->orWhereHas('category', function ($q) {
+                    $q->where('name', 'like', '%' . $this->searchItem . '%');
+                })
                 ->orderBy('created_at', 'desc')
                 ->paginate($this->itemsPerPage, pageName: 'itemsPage'),
             'itemGroups' => ItemGroup::where('coc_type', 'like', '%' . $this->searchItem . '%')

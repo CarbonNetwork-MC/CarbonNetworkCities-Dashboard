@@ -56,7 +56,7 @@ class Overview extends Component
             // Force reload player in plugin to avoid inconsistencies
             $redisService->invalidate('INVALIDATE_PLAYER', $player->uuid);
 
-            Toaster::error(__('admin.toast.players.delete_failed'));
+            Toaster::error(__('admin.toasts.players.delete_failed'));
             return;
         }
 

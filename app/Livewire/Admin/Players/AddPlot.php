@@ -28,7 +28,7 @@ class AddPlot extends Component
 
         // Check if plot doesn't exist
         if (!$plot) {
-            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.plot_not_found'));
+            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toasts.players.plot_not_found'));
         }
 
         // 1. Optimistic update
@@ -40,11 +40,11 @@ class AddPlot extends Component
         $success = $redisService->invalidate('INVALIDATE_PLOT', $plot->plot_id);
         if (!$success) {
             $this->rollbackPlot($plot, $originalPlot);
-            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.plot_add_failed'));
+            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toasts.players.plot_add_failed'));
         }
 
         // 3. Success
-        return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->success(__('admin.toast.players.plot_add_success'));
+        return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->success(__('admin.toasts.players.plot_add_success'));
     }
 
     public function render()

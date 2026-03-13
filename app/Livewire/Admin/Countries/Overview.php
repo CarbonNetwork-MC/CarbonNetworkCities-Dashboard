@@ -51,7 +51,7 @@ class Overview extends Component
             'deleteCountryModal',
         ]);
 
-        Toaster::success(__('admin.toast.countries.deleted'));
+        Toaster::success(__('admin.toasts.countries.deleted'));
     }
     
     public function render()

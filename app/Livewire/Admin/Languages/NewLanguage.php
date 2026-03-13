@@ -37,7 +37,7 @@ class NewLanguage extends Component
             return;
         }
 
-        return redirect()->route('admin.languages.render')->success(__('admin.toast.languages.create'));
+        return redirect()->route('admin.languages.render')->success(__('admin.toasts.languages.create'));
     }
 
     public function render()

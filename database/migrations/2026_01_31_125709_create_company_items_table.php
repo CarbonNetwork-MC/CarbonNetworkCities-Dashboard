@@ -16,13 +16,15 @@ return new class extends Migration
             $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('item_id');
             $table->boolean('sellable')->default(true);
-            $table->float('price', 8, 2)->default(0);
-            $table->float('base_price', 8, 2)->default(0);
+            $table->decimal('price', 8, 2)->default(0);
+            $table->decimal('base_price', 8, 2)->default(0);
             $table->timestamps();
 
-            // Foreign key constraints
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('item_id')->references('id')->on('items')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

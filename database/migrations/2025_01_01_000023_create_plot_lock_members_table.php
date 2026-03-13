@@ -13,10 +13,14 @@ return new class extends Migration
     {
         Schema::create('plot_lock_members', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('plot_lock_id')->references('id')->on('plot_locks')->onDelete('cascade');
             $table->char('player_uuid', 36);
-            $table->foreign('player_uuid')->references('uuid')->on('players')->onDelete('cascade');
             $table->timestamps();
+
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreignId('plot_lock_id')->references('id')->on('plot_locks')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('player_uuid')->references('uuid')->on('players')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -29,6 +29,7 @@ return [
             'overview' => 'Company Overview',
             'pin_consoles' => 'PIN Consoles',
             'plots' => 'Plots',
+            'edit_employee' => 'Edit Employee',
         ],
 
         'languages' => [
@@ -66,6 +67,9 @@ return [
             'overview' => 'Players Overview',
             'unlink_company' => 'Unlink Company',
             'unlink_plot' => 'Unlink Plot',
+            'employee_at' => 'Employee At',
+            'unlink_employee_at' => 'Unlink Employee At',
+            'add_employer' => 'Add Employer',
         ],
 
         'roles' => [
@@ -152,6 +156,13 @@ return [
             'edit' => 'Edit Chamber of Commerce Type',
             'delete' => 'Delete Chamber of Commerce Type',
         ],
+
+        'wholesale_items' => [
+            'create'=> 'Create Wholesale Item',
+            'delete' => 'Delete Wholesale Item',
+            'edit' => 'Edit Wholesale Item',
+            'overview' => 'Wholesale Items Overview',
+        ]
     ],
 
     // Labels
@@ -178,6 +189,8 @@ return [
             'items_in_group' => 'Items in Group',
             'name' => 'Name',
             'no_owner_assigned' => 'No owner assigned',
+            'no_items_in_group' => 'No items in item group',
+            'notification_message' => 'Notification Message',
             'owner' => 'Owner',
             'pin_consoles' => 'PIN Consoles',
             'pin_console_account' => 'Account',
@@ -190,6 +203,7 @@ return [
             'plot_name' => 'Plot Name',
             'price' => 'Price',
             'sellable' => 'Sellable',
+            'stock' => 'Stock',
             'world_id' => 'World ID',
         ],
 
@@ -302,6 +316,12 @@ return [
             'name' => 'Name',
             'description' => 'Description',
         ],
+
+        'wholesale_items' => [
+            'item' => 'Item',
+            'price' => 'Price',
+            'max_amount' => 'Max Amount',
+        ]
     ],
 
     // Buttons
@@ -311,6 +331,7 @@ return [
         'companies' => [
             'add_bank_account' => 'Add Bank Account',
             'add_employee' => 'Add Employee',
+            'add_item' => 'Add Item',
             'add_items' => 'Add Items',
             'add_item_group' => 'Add Item Group',
             'add_pin_console' => 'Add PIN Console',
@@ -321,6 +342,8 @@ return [
             'remove_employee' => 'Remove Employee',
             'remove_pin_console' => 'Remove PIN Console',
             'remove_plot' => 'Remove Plot',
+            'send' => 'Send',
+            'send_notification' => 'Send Notification',
         ],
 
         'languages' => [
@@ -397,12 +420,15 @@ return [
             'delete_chat_color_confirmation' => 'Are you sure you want to delete the chat color <b>:color</b> from this player?',
             'delete_past_username_confirmation' => 'Are you sure you want to delete the past username <b>:username</b> from this player?',
             'delete_prefix_confirmation' => 'Are you sure you want to delete the prefix <b>:prefix</b> from this player?',
-            'unlink_company_confirmation' => 'Are you sure you want to unlink the company <b>:name</b> from this player?',
-            'unlink_plot_confirmation' => 'Are you sure you want to unlink the plot <b>:id</b> from this player?',
+            'employee_at_no_records' => 'No companies found where this player is an employee or manager.',
+            'no_players' => 'No players found.',
             'past_usernames_no_records' => 'No past usernames found for this player.',
             'players_no_records' => 'No players found.',
             'plots_no_records' => 'No plots found for this player.',
             'prefixes_no_records' => 'No prefixes found for this player.',
+            'unlink_company_confirmation' => 'Are you sure you want to unlink the company <b>:name</b> from this player?',
+            'unlink_plot_confirmation' => 'Are you sure you want to unlink the plot <b>:id</b> from this player?',
+            'unlink_employee_at_confirmation' => 'Are you sure you want to unlink this player from the company <b>:name</b>? They will no longer be an employee of the company.',
         ],
 
         'roles' => [
@@ -467,10 +493,15 @@ return [
             'no_records' => 'No Chamber of Commerce types found.',
             'delete_confirmation' => 'Are you sure you want to delete the Chamber of Commerce type <b>:name</b>? This action cannot be undone.',
         ],
+
+        'wholesale_items' => [
+            'no_records' => 'No wholesale items found.',
+            'delete_confirmation' => 'Are you sure you want to delete the wholesale item <b>:name</b>? This action cannot be undone.',
+        ]
     ],
 
     // Toasts
-    'toast' => [
+    'toasts' => [
         'api' => [
             'unauthorized_error' => 'Unauthorized access to the API. Please check the API key configuration.',
         ],
@@ -495,11 +526,14 @@ return [
             'bank_account_remove_failed' => 'Failed to remove bank account from company. Please try again.',
             'employee_assign_failed' => 'Failed to assign employee to company. Please try again.',
             'employee_remove_failed' => 'Failed to remove employee from company. Please try again.',
+            'employee_edit_failed' => 'Failed to edit employee role. Please try again.',
             'pin_console_remove_failed' => 'Failed to remove PIN console from company. Please try again.',
             'plot_remove_failed' => 'Failed to remove plot from company. Please try again.',
 
             'pin_console_added' => 'PIN console successfully added to company.',
             'pin_console_removed' => 'PIN console successfully removed from company.',
+
+            'notification_sent' => 'Notification sent to company successfully.',
         ],
 
         'languages' => [
@@ -548,6 +582,10 @@ return [
             'prefix_update_success' => 'Prefix updated successfully.',
             'update_failed' => 'Failed to update player. Please try again.',
             'update_success' => 'Player updated successfully.',
+            'employer_add_failed' => 'Failed to add employer. Please try again.',
+            'employer_add_success' => 'Employer added successfully.',
+            'employee_at_unlink_failed' => 'Failed to unlink employee from company. Please try again.',
+            'employee_at_unlink_success' => 'Employee unlinked from company successfully.',
         ],
 
         'roles' => [
@@ -564,10 +602,10 @@ return [
             'account_unlink_missing_player_error' => 'Missing player UUID.',
             'account_unlinked' => 'User account unlinked successfully.',
             'deleted' => 'User deleted successfully.',
-            'permission_assigned' => 'Permission assigned to user successfully.',
-            'permission_removed' => 'Permission removed from user successfully.',
-            'role_assigned' => 'Role assigned to user successfully.',
-            'role_removed' => 'Role removed from user successfully.',
+            'permission_assigned' => 'Permission successfully assigned to user.',
+            'permission_removed' => 'Permission successfully removed from user.',
+            'role_assigned' => 'Role successfully assigned to user.',
+            'role_removed' => 'Role successfully removed from user.',
             'updated' => 'User updated successfully.',
         ],
 
@@ -637,6 +675,12 @@ return [
             'updated' => 'Chamber of Commerce type updated successfully.',
             'deleted' => 'Chamber of Commerce type deleted successfully.',
         ],
+
+        'wholesale_items' => [
+            'created' => 'Wholesale item created successfully.',
+            'updated' => 'Wholesale item updated successfully.',
+            'deleted' => 'Wholesale item deleted successfully.',
+        ]
     ],
 
     // Placeholders
@@ -652,6 +696,13 @@ return [
         'roles' => [
             'role_name' => 'Moderator',
         ],
+    ],
+
+    // Notifications
+    'notifications' => [
+        'info' => 'Info',
+        'warning' => 'Warning',
+        'critical' => 'Critical',
     ]
 
 ];

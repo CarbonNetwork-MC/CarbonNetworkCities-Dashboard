@@ -49,7 +49,7 @@ class AddBankAccount extends Component
         $success = $redisService->invalidate('INVALIDATE_COMPANY', (string) $this->company->id);
         if (!$success) {
             $this->rollbackBankAccounts($bankAccount, $originalBankAccounts);
-            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toast.companies.bank_account_add_failed'));
+            return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->error(__('admin.toasts.companies.bank_account_add_failed'));
         }
 
         // 3. Success

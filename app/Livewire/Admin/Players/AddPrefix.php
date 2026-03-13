@@ -41,11 +41,11 @@ class AddPrefix extends Component
         $success = $redisService->invalidate('INVALIDATE_PLAYER', $this->player->uuid);
         if (!$success) {
             $this->rollbackPrefix($prefix, $originalSelectedPrefix);
-            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toast.players.prefix_add_failed'));
+            return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->error(__('admin.toasts.players.prefix_add_failed'));
         }
 
         // 4. Success
-        return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->success(__('admin.toast.players.prefix_add_success'));
+        return redirect()->route('admin.players.edit', ['uuid' => $this->player->uuid])->success(__('admin.toasts.players.prefix_add_success'));
     }
 
     public function render()

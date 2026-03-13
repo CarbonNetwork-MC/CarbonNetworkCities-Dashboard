@@ -55,14 +55,13 @@ class Edit extends Component
         $this->country->save();
 
         $success = $redisService->invalidate('RELOAD_COUNTRIES', 'NULL');
-
         if (!$success) {
             $this->rollbackCountry($originalData);
-            Toaster::error(__('admin.toast.countries.reload_countries_api_error'));
+            Toaster::error(__('admin.toasts.countries.reload_countries_api_error'));
             return;
         }
         
-        return redirect()->route('admin.countries.render')->success(__('admin.toast.countries.updated'));
+        return redirect()->route('admin.countries.render')->success(__('admin.toasts.countries.updated'));
     }
 
     public function render()

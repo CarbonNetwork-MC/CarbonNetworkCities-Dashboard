@@ -55,10 +55,10 @@ class NewCityRegion extends Component
         $success = $redisService->invalidate('RELOAD_REGIONS', 'NULL');
         if (!$success) {
             $cityRegion->delete();
-            return redirect()->route('admin.city-regions.new')->error(__('admin.toast.city_regions.reload_regions_api_error'));
+            return redirect()->route('admin.city-regions.new')->error(__('admin.toasts.city_regions.reload_regions_api_error'));
         }
 
-        return redirect()->route('admin.city-regions.render')->success(__('admin.toast.city_regions.created'));
+        return redirect()->route('admin.city-regions.render')->success(__('admin.toasts.city_regions.created'));
     }
 
     public function render()

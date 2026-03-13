@@ -35,4 +35,9 @@ class Item extends Model
     {
         return $this->belongsTo(User::class, 'user_uuid', 'uuid');
     }
+
+    public function wholesaleItem()
+    {
+        return $this->hasOne(WholesaleItem::class, 'item_id', 'id');
+    }
 }

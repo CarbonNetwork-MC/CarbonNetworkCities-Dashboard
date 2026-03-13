@@ -14,12 +14,16 @@ return new class extends Migration
         Schema::create('plot_members', function (Blueprint $table) {
             $table->id();
             $table->string('plot_id', 10);
-            $table->foreign('plot_id')->references('plot_id')->on('plots')->onDelete('cascade');
             $table->char('player_uuid', 36);
-            $table->foreign('player_uuid')->references('uuid')->on('players')->onDelete('cascade');
             $table->string('username', 16);
             $table->enum('role', ['owner', 'admin', 'member'])->default('member');
             $table->timestamps();
+
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreign('plot_id')->references('plot_id')->on('plots')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('player_uuid')->references('uuid')->on('players')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

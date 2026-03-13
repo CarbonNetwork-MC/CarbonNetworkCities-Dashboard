@@ -41,10 +41,10 @@ class NewCountry extends Component
 
         if (!$success) {
             $country->delete();
-            return redirect()->route('admin.countries.new')->error(__('admin.toast.countries.reload_countries_api_error'));
+            return redirect()->route('admin.countries.new')->error(__('admin.toasts.countries.reload_countries_api_error'));
         }
 
-        return redirect()->route('admin.countries.render')->success(__('admin.toast.countries.created'));
+        return redirect()->route('admin.countries.render')->success(__('admin.toasts.countries.created'));
     }
 
     public function render()

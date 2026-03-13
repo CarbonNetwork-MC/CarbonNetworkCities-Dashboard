@@ -34,6 +34,9 @@ class EditCompany extends Component
     public $searchPinConsoles = '';
     public $searchItems = '';
 
+    public $notificationMessage = '';
+    public $notificationLevel = 'info';
+
     public $employeesPerPage = 5;
     public $accountsPerPage = 5;
     public $plotsPerPage = 5;
@@ -51,6 +54,7 @@ class EditCompany extends Component
     public $removePlotModal = false;
     public $removePinConsoleModal = false;
     public $removeItemModal = false;
+    public $showSendNotificationModal = false;
 
     public $assignEmployeeModal = false;
     public $assignPlotModal = false;
@@ -62,7 +66,7 @@ class EditCompany extends Component
 
         $this->companyName = $this->company->name;
         $this->cocNumber = $this->company->coc_number;
-        $this->cocType = $this->company->coc_type;
+        $this->cocType = $this->company->coc_type_id;
         $this->worldId = $this->company->world_id;
         $this->selectedPlayer = $this->company->owner_uuid;
 
@@ -106,7 +110,7 @@ class EditCompany extends Component
         $data = $this->validate([
             'companyName'    => ['required', 'string', 'max:255'],
             'cocNumber'      => ['required', 'string', 'max:20'],
-            'cocType'        => ['required', 'string', 'exists:coc_types,id'],
+            'cocType'        => ['required', 'numeric', 'exists:coc_types,id'],
             'worldId'        => ['required', 'string', 'max:255'],
             'selectedPlayer' => ['nullable', 'string', 'exists:players,uuid'],
         ]);
@@ -114,7 +118,7 @@ class EditCompany extends Component
         // 2. Optimistic update
         $this->company->name = $this->companyName;
         $this->company->coc_number = $this->cocNumber;
-        $this->company->coc_type = $this->cocType;
+        $this->company->coc_type_id = $this->cocType;
         $this->company->world_id = $this->worldId;
         $this->company->owner_uuid = $this->selectedPlayer;
         $this->company->save();
@@ -123,12 +127,12 @@ class EditCompany extends Component
         $success = $redisService->invalidate('INVALIDATE_COMPANY', (string) $this->company->id);
         if (!$success) {
             $this->rollbackCompany($originalData);
-            Toaster::error(__('admin.toast.companies.update_failed'));
+            Toaster::error(__('admin.toasts.companies.update_failed'));
             return;
         }
 
         // 4. Success
-        Toaster::success(__('admin.toast.companies.updated'));
+        Toaster::success(__('admin.toasts.companies.updated'));
     }
 
     // Delete Employee
@@ -152,7 +156,7 @@ class EditCompany extends Component
         $success = $redisService->invalidate('INVALIDATE_COMPANY', $this->company->id);
         if (!$success) {
             $this->rollbackEmployee($employee);
-            Toaster::error(__('admin.toast.companies.employee_remove_failed'));
+            Toaster::error(__('admin.toasts.companies.employee_remove_failed'));
             return;
         }
 
@@ -214,7 +218,7 @@ class EditCompany extends Component
         $success = $redisService->invalidate('INVALIDATE_PLOT', $plotId);
         if (!$success) {
             $this->rollbackPlot($plot, $companyId);
-            Toaster::error(__('admin.toast.companies.plot_remove_failed'));
+            Toaster::error(__('admin.toasts.companies.plot_remove_failed'));
             return;
         }
 
@@ -261,7 +265,26 @@ class EditCompany extends Component
         $this->itemToRemove->delete();
 
         $this->removeItemModal = false;
-        Toaster::success(__('admin.toast.companies.item_removed'));
+        Toaster::success(__('admin.toasts.companies.item_removed'));
+    }
+
+    // Send Notification
+    public function sendNotification() {
+        $this->validate([
+            'notificationMessage' => ['required', 'string', 'max:255'],
+            'notificationLevel' => ['required', 'string', 'in:info,warning,critical'],
+        ]);
+
+        CompanyNotification::create([
+            'company_id' => $this->company->id,
+            'type' => 'custom',
+            'level' => $this->notificationLevel,
+            'message' => $this->notificationMessage,
+        ]);
+
+        $this->reset(['notificationMessage', 'notificationLevel', 'showSendNotificationModal']);
+
+        Toaster::success(__('admin.toasts.companies.notification_sent'));
     }
 
     public function render()
@@ -318,10 +341,23 @@ class EditCompany extends Component
         $this->company->world_id = $originalData['world_id'];
         $this->company->owner_uuid = $originalData['owner_uuid'];
         $this->company->save();
+
+        $previousOwner = Player::where('uuid', $originalData['owner_uuid'])->first();
+        if ($previousOwner) {
+            app(PlayerPermissionService::class)->syncWholesaleOrderPermission($previousOwner);
+        }
+
+        if ($this->selectedPlayer && $this->selectedPlayer !== $originalData['owner_uuid']) {
+            $owner = Player::where('uuid', $this->selectedPlayer)->first();
+            app(PlayerPermissionService::class)->syncWholesaleOrderPermission($owner);
+        }
     }
 
     private function rollbackEmployee($employee): void {
         $employee->save();
+
+        $player = Player::where('uuid', $employee->player_uuid)->first();
+        app(PlayerPermissionService::class)->syncWholesaleOrderPermission($player);
     }
 
     private function rollbackPlot(Plot $plot, int $companyId): void {

@@ -57,7 +57,7 @@
 
                 <!-- Close -->
                 <button @click="toast.dispose()"
-                    class="ms-auto flex items-center justify-center h-8 w-8 rounded hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary cursor-pointer"
+                    class="ms-auto flex items-center justify-center h-8 w-8 rounded hover:bg-gray-300 focus:ring-4 focus:ring-neutral-tertiary cursor-pointer"
                     aria-label="@lang('close')"
                 >
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">

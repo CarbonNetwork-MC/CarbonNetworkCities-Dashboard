@@ -14,12 +14,16 @@ return new class extends Migration
         Schema::create('account_links', function (Blueprint $table) {
             $table->id();
             $table->char('player_uuid', 36);
-            $table->foreign('player_uuid')->references('uuid')->on('players')->onDelete('cascade');
             $table->char('user_uuid', 36);
-            $table->foreign('user_uuid')->references('uuid')->on('users')->onDelete('cascade');
             $table->boolean('is_linked')->default(false);
             $table->timestamp('linked_at')->nullable();
             $table->timestamps();
+
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreign('player_uuid')->references('uuid')->on('players')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_uuid')->references('uuid')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

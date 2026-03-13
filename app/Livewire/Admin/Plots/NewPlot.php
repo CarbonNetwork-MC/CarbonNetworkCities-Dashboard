@@ -100,10 +100,10 @@ class NewPlot extends Component
         $success = $redisService->invalidate('INVALIDATE_PLOT', $this->plotId);
         if (!$success) {
             $plot->delete();
-            return redirect()->route('admin.plots.new')->error(__('admin.toast.plots.invalidate_plot_api_error'));
+            return redirect()->route('admin.plots.new')->error(__('admin.toasts.plots.invalidate_plot_api_error'));
         }
 
-        return redirect()->route('admin.plots.render')->success(__('admin.toast.plots.created'));
+        return redirect()->route('admin.plots.render')->success(__('admin.toasts.plots.created'));
     }
 
     public function render()

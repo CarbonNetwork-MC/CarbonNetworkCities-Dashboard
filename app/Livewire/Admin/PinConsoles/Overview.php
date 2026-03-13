@@ -50,7 +50,7 @@ class Overview extends Component
             'deletePinConsoleModal',
         ]);
 
-        Toaster::success(__('admin.toast.pin_consoles.deleted'));
+        Toaster::success(__('admin.toasts.pin_consoles.deleted'));
     }
 
     public function render()

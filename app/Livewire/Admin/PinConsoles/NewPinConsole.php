@@ -70,7 +70,7 @@ class NewPinConsole extends Component
         $success = $redisService->invalidate('INVALIDATE_PIN_CONSOLE', $pinConsole->id);
         if (!$success) {
             $pinConsole->delete();
-            return redirect()->route('admin.pin-consoles.new')->error(__('admin.toast.pin_consoles.pin_console_create_failed'));
+            return redirect()->route('admin.pin-consoles.new')->error(__('admin.toasts.pin_consoles.pin_console_create_failed'));
         }
 
         // 3. Success

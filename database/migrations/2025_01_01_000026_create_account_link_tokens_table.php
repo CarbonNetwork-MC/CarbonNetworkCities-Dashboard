@@ -14,12 +14,19 @@ return new class extends Migration
         Schema::create('account_link_tokens', function (Blueprint $table) {
             $table->id();
             $table->char('player_uuid', 36);
-            $table->foreign('player_uuid')->references('uuid')->on('players')->onDelete('cascade');
             $table->string('token', 64)->unique();
             $table->timestamp('expires_at');
             $table->timestamp('used_at')->nullable();
             $table->timestamps();
 
+            /* -------------------------------------------------------------
+            * Foreign keys
+            * ------------------------------------------------------------- */
+            $table->foreign('player_uuid')->references('uuid')->on('players')->onUpdate('cascade')->onDelete('cascade');
+
+            /* -------------------------------------------------------------
+            * Indexes
+            * ------------------------------------------------------------- */
             $table->index('player_uuid');
             $table->index('expires_at');
         });

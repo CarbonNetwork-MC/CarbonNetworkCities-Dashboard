@@ -42,10 +42,10 @@ return new class extends Migration
             /* -------------------------------------------------------------
             * Foreign keys
             * ------------------------------------------------------------- */
-            $table->foreign('from_company_id')->references('id')->on('company_bankaccounts')->onDelete('set null');
-            $table->foreign('to_company_id')->references('id')->on('company_bankaccounts')->onDelete('set null');
-            $table->foreign('from_personal_id')->references('id')->on('personal_bankaccounts')->onDelete('set null');
-            $table->foreign('to_personal_id')->references('id')->on('personal_bankaccounts')->onDelete('set null');
+            $table->foreign('from_company_id')->references('id')->on('company_bankaccounts')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('to_company_id')->references('id')->on('company_bankaccounts')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('from_personal_id')->references('id')->on('personal_bankaccounts')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('to_personal_id')->references('id')->on('personal_bankaccounts')->onUpdate('cascade')->onDelete('set null');
 
             /* -------------------------------------------------------------
             * Indexes for transaction lookup

@@ -68,6 +68,6 @@ class NewCompanyBankAccount extends Component
             $mainAccount->save();
         }
 
-        return redirect()->route('admin.bank-accounts.company.new')->error(__('admin.toast.bank_accounts.company.invalidate_bankaccount_api_error'));
+        return redirect()->route('admin.bank-accounts.company.new')->error(__('admin.toasts.bank_accounts.company.invalidate_bankaccount_api_error'));
     }   
 }

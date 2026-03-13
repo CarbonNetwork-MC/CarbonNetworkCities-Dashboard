@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Companies;
 
 use App\Models\Item;
 use App\Models\Company;
+use App\Models\CompanyStock;
 use App\Models\ItemGroup;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
@@ -15,10 +16,6 @@ class AddItems extends Component
     public $allItems;
     public $itemGroups;
 
-    public $selectedItem;
-    public $price;
-    public $basePrice;
-    public $sellable = false;
     public $selectedItemGroupId;
     public $selectedItemGroup;
 
@@ -48,7 +45,7 @@ class AddItems extends Component
         $data = $this->validate([
             'items.*.item_id' => ['required', 'distinct', 'exists:items,id'],
             'items.*.price' => ['nullable', 'numeric', 'min:0'],
-            'items.*.base_price' => ['required', 'numeric', 'min:0'],
+            'items.*.base_price' => ['required', 'numeric', 'min:0']
         ]);
 
         foreach ($this->items as $item) {
@@ -56,22 +53,28 @@ class AddItems extends Component
                 continue;
             }
 
-            $this->company->items()->create([
+            $item = $this->company->items()->create([
                 'company_id' => $this->company->id,
                 'item_id' => $item['item_id'],
                 'price' => $item['price'] ?? 0,
                 'base_price' => $item['base_price'] ?? 0,
                 'sellable' => $item['sellable'],
             ]);
+
+            $this->company->stock()->create([
+                'company_id' => $this->company->id,
+                'item_id' => $item->id,
+                'quantity' => 0,
+            ]);
         }
 
-        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toast.companies.item_added'));
+        return redirect()->route('admin.companies.edit', ['id' => $this->company->id])->success(__('admin.toasts.companies.item_added'));
     }
 
     public function addItemGroup() {
         if (!$this->selectedItemGroup) {
             $this->showAddItemGroupModal = false;
-            Toaster::error(__('admin.toast.companies.no_group_selected'));
+            Toaster::error(__('admin.toasts.companies.no_group_selected'));
             return;
         }
 
@@ -93,7 +96,7 @@ class AddItems extends Component
                 'item_id' => $item->id,
                 'price' => $item->pivot->price,
                 'base_price' => $item->pivot->base_price,
-                'sellable' => (bool) $item->pivot->sellable,
+                'sellable' => (bool) $item->pivot->sellable
             ];
             $this->items = array_values($this->items);
         }
@@ -132,7 +135,7 @@ class AddItems extends Component
             'item_id' => null,
             'price' => null,
             'base_price' => null,
-            'sellable' => false,
+            'sellable' => false
         ];
     }
 

@@ -30,7 +30,6 @@
             <div class="grid grid-cols-4 gap-x-4 gap-y-6">
                 {{-- UUID --}}
                 <div class="col-span-1">
-                    {{-- <x-forms.text-input label="{{ __('admin.labels.player_uuid') }}" wire:model="playerUuid" required /> --}}
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2.5">
                         {{ __('admin.labels.companies.owner') }}
                     </label>

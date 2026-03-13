@@ -34,7 +34,7 @@ class NewCategory extends Component
             return;
         }
 
-        return redirect()->route('admin.itemsmenu.render')->success(__('admin.toast.itemsmenu.category_created'));
+        return redirect()->route('admin.itemsmenu.render')->success(__('admin.toasts.itemsmenu.category_created'));
     }
 
     public function render()

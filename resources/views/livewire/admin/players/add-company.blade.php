@@ -16,8 +16,8 @@
                 'label' => __('admin.titles.players.edit'),
             ],
             [
-                'url'   => route('admin.players.add-prefix', ['uuid' => $player->uuid]),
-                'label' => __('admin.titles.players.add_prefix'),
+                'url'   => route('admin.players.add-company', ['uuid' => $player->uuid]),
+                'label' => __('admin.titles.players.add_company'),
             ],
         ]" />
     </x-slot>
