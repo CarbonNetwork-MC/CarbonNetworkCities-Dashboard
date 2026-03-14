@@ -38,7 +38,9 @@
                 </div>
             </x-containers.main>
         @empty
-
+            <div class="col-span-3 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                <p class="text-gray-600 text-center">{{ __('wholesale.messages.no_wholesalers_available') }}</p>
+            </div>
         @endforelse
     </div>
 </div>

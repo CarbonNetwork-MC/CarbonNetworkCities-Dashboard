@@ -10,8 +10,13 @@ class SelectWholesaler extends Component
     public $wholesalers;
 
     public function mount() {
-        // TODO: Only get the wholesalers where the user is an employee of (Unless they have the Superadmin role, then they can see all wholesalers)
-        $this->wholesalers = Wholesaler::with('country:id,name')->get(['id', 'name', 'country_id']);
+        if (auth()->user()->hasRole('Superadmin')) {
+            $this->wholesalers = Wholesaler::with('country:id,name')->get(['id', 'name', 'country_id']);
+        } else {
+            $this->wholesalers = Wholesaler::whereHas('employees', function ($query) {
+                $query->where('player_uuid', auth()->user()->player->uuid);
+            })->with('country:id,name')->get(['id', 'name', 'country_id']);
+        }
     }
 
     public function render()

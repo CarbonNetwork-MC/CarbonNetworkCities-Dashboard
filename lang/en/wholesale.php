@@ -61,6 +61,7 @@ return [
         'no_collected_orders' => 'There are currently no collected wholesale orders.',
         'no_completed_orders' => 'There are currently no completed wholesale orders.',
         'no_orders' => 'There are currently no wholesale orders.',
+        'no_wholesalers_available' => 'There are currently no wholesalers available to manage.',
         'select_wholesaler_description' => 'Please select the wholesaler you want to manage orders for.',
         'undo_collect_confirmation' => 'Are you sure you want to undo the collection of this order?',
     ],
