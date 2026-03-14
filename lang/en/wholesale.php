@@ -12,29 +12,34 @@ return [
     // Titles
     'titles' => [
         'choose_company' => 'Choose Company',
+        'collect_order' => 'Collect Order',
+        'companies' => 'Companies',
+        'complete_order' => 'Complete Order',
+        'completed_orders' => 'Completed Orders',
         'create_order' => 'Create Wholesale Order',
+        'customer' => 'Customer',
+        'delete_order' => 'Delete Order',
+        'order' => 'Order',
         'order_overview' => 'Order Overview',
-        'orders_overview' => 'Orders Overview',
         'order_summary' => 'Order Summary',
+        'orders_overview' => 'Orders Overview',
         'orders_to_collect' => 'Orders yet to collect',
         'orders_to_complete' => 'Orders yet to complete',
-        'completed_orders' => 'Completed Orders',
-        'order' => 'Order',
-        'customer' => 'Customer',
-        'collect_order' => 'Collect Order',
-        'complete_order' => 'Complete Order',
-        'delete_order' => 'Delete Order',
+        'start' => 'Wholesalers',
         'undo_collect_order' => 'Undo Collect Order',
+        'wholesalers' => 'Wholesalers',
     ],
 
     // Labels
     'labels' => [
         'amount' => 'Amount',
-        'total' => 'Total',
         'amount_of_items' => 'Amount of Items',
         'collected' => 'Collected',
         'collected_by' => 'Collected By',
         'completed_by' => 'Completed By',
+        'country' => 'Country',
+        'name' => 'Name',
+        'total' => 'Total',
     ],
 
     // Buttons
@@ -59,7 +64,8 @@ return [
 
     // Toasts
     'toasts' => [
-        'no_items' => 'This company has no items available for wholesale ordering.',
+        'no_items_company' => 'This company has no items available for wholesale ordering.',
+        'no_items_wholesaler' => 'The selected wholesaler has no items available for wholesale ordering.',
         'no_items_in_order' => 'Please add at least one item to the order before finishing.',
         'max_amount_exceeded' => 'The amount for :item exceeds the maximum allowed (:max).',
         'order_created' => 'Wholesale order created successfully.',
@@ -73,5 +79,11 @@ return [
     'notifications' => [
         'order_collected' => 'Your last order has been collected, and is ready to be picked up.',
         'order_completed' => 'Your last order has been completed, you can now add it to your inventory.'
+    ],
+
+    'stepper' => [
+        'step1' => 'Choose Company',
+        'step2' => 'Choose Wholesaler',
+        'step3' => 'Create Order',
     ]
 ];

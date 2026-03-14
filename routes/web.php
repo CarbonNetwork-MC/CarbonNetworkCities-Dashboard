@@ -103,7 +103,7 @@ use App\Livewire\Company\WholesaleOrders\OrderDetails;
 
 use App\Livewire\Profile\Overview as ProfileOverview;
 
-use App\Livewire\Wholesale\ChooseCompany as WholesaleChooseCompany;
+use App\Livewire\Wholesale\Start as WholesaleStart;
 use App\Livewire\Wholesale\CollectOrder;
 use App\Livewire\Wholesale\CompleteOrder;
 use App\Livewire\Wholesale\CreateOrder;
@@ -171,11 +171,13 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
   
     // ? Wholesale
     Route::middleware('permission:wholesale_order')->group(function() {
-        Route::get('/wholesale/choose-company', WholesaleChooseCompany::class)->name('wholesale.choose-company');
+        Route::get('/wholesale/start/{step}/{companyId?}', WholesaleStart::class)->name('wholesale.start');
         Route::get('/wholesale/{wholesalerId}/create-order/{companyId}', CreateOrder::class)->middleware('company_owner_or_manager')->name('wholesale.create-order');
     });
 
     Route::middleware('permission:manage_wholesale_orders')->group(function() {
+        // TODO: Route where a wholesaler employee has to choose which wholesaler they want to manage orders for (if they are an employee of multiple wholesalers)
+        // Route::get('/wholesale/manage', ::class)->name('wholesale.manage');
         Route::get('/wholesale/{wholesalerId}/order-overview', OrderOverview::class)->name('wholesale.order-overview');
         Route::get('/wholesale/{wholesalerId}/collect-order/{orderId}', CollectOrder::class)->name('wholesale.collect-order');
         Route::get('/wholesale/{wholesalerId}/complete-order/{orderId}', CompleteOrder::class)->name('wholesale.complete-order');

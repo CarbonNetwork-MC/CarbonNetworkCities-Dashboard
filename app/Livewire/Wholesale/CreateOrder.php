@@ -50,8 +50,11 @@ class CreateOrder extends Component
             })
             ->toArray();
 
+        if (count($this->company->items) === 0) {
+            return redirect()->route('wholesale.start', ['step' => 1])->error(__('wholesale.toasts.no_items_company'));
+        }
         if (count($this->orderItems) === 0) {
-            return redirect()->route('wholesale.choose-company')->error(__('wholesale.toasts.no_items'));
+            return redirect()->route('wholesale.start', ['step' => 1])->error(__('wholesale.toasts.no_items_wholesaler'));
         }
     }
 
@@ -64,7 +67,7 @@ class CreateOrder extends Component
         foreach ($this->orderItems as $index => $item) {
             if ($item['amount'] > $item['max_amount']) {
                 $this->orderItems[$index]['amount'] = $item['max_amount'];
-                Toaster::error('wholesale.toasts.max_amount_exceeded', ['item' => $item['name'], 'max' => $item['max_amount']]);
+                Toaster::error(__('wholesale.toasts.max_amount_exceeded', ['item' => $item['name'], 'max' => $item['max_amount']]));
                 return;
             }
         }
@@ -91,7 +94,7 @@ class CreateOrder extends Component
             'order_id' => $order->id,
         ]);
 
-        return redirect()->route('wholesale.choose-company')->success(__('wholesale.toasts.order_created'));
+        return redirect()->route('wholesale.start', ['step' => 1])->success(__('wholesale.toasts.order_created'));
     }
 
     public function increment($index)

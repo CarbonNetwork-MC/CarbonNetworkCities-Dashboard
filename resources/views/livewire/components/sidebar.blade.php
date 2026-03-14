@@ -160,8 +160,8 @@
                 <x-sidebar.nav-group :groupKey="'wholesaler'" wire:key="wholesaler" label="{{ __('sidebar.wholesaler.title') }}" icon="fi fi-rr-shelves">
                     {{-- Create Order --}}
                     <x-sidebar.nav-group-item
-                        href="{{ route('wholesale.choose-company') }}"
-                        :active="request()->routeIs('wholesale.choose-company') || request()->routeIs('wholesale.create-order.*')"
+                        href="{{ route('wholesale.start', ['step' => 1]) }}"
+                        :active="request()->routeIs('wholesale.start') || request()->routeIs('wholesale.create-order.*')"
                         wire:key="wholesaler-create-order"
                     >
                         {{ __('sidebar.wholesaler.create_order') }}

@@ -10,8 +10,8 @@
                 ],
                 [
                     'icon' => '',
-                    'url' => route('wholesale.choose-company'),
-                    'label' => __('wholesale.titles.choose_company'),
+                    'url' => route('wholesale.start', ['step' => 1]),
+                    'label' => __('wholesale.titles.start'),
                 ],
                 [
                     'icon' => '',
@@ -36,6 +36,33 @@
     </x-slot>
 
     <div class="flex items-center flex-col">
+        <x-containers.main class="grid grid-cols-1 gap-2 w-[50%]">
+            <ol class="w-full flex justify-center items-center text-sm font-medium text-center text-body sm:text-base">
+                <li class="flex items-center">
+                    <div class="flex items-center gap-x-2 text-blue-500">
+                        <i class="fi fi-rr-circle-1"></i>
+                        <span>{{ __('wholesale.stepper.step1') }}</span>
+                        <hr class="w-32 h-1 border-0 rounded-md hidden sm:block bg-blue-500">
+                    </div>
+                </li>
+                <li class="flex items-center ml-2">
+                    <div class="flex items-center gap-x-2 text-blue-500">
+                        <i class="fi fi-rr-circle-2"></i>
+                        <span>{{ __('wholesale.stepper.step2') }}</span>
+                        <hr class="w-32 h-1 border-0 rounded-md hidden sm:block bg-blue-500">
+                    </div>
+                </li>
+                <li class="flex items-center ml-2">
+                    <div class="flex items-center gap-x-2">
+                        <i class="fi fi-rr-circle-3"></i>
+                        <span>{{ __('wholesale.stepper.step3') }}</span>
+                    </div>
+                </li>
+            </ol>
+        </x-containers.main>
+    </div>
+
+    <div class="flex items-center flex-col mt-4">
         <x-containers.main class="grid grid-cols-1 gap-2 w-[50%]">
             <x-containers.title class="mb-2">
                 {{ __('wholesale.titles.order_overview') }}
@@ -114,7 +141,7 @@
                 </div>
 
                 <div class="col-span-1 flex items-center justify-center mt-5 mr-1.5">
-                    <x-buttons.secondary-button class="w-full" x-on:click="window.location='{{ route('wholesale.choose-company') }}'">
+                    <x-buttons.secondary-button class="w-full" x-on:click="window.location='{{ route('wholesale.start', ['step' => 1]) }}'">
                         {{ __('wholesale.buttons.cancel_order') }}
                     </x-buttons.secondary-button>
                 </div>
