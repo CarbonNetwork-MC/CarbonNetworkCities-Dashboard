@@ -162,6 +162,13 @@ return [
             'delete' => 'Delete Wholesale Item',
             'edit' => 'Edit Wholesale Item',
             'overview' => 'Wholesale Items Overview',
+        ],
+
+        'wholesalers' => [
+            'overview' => 'Wholesalers Overview',
+            'add' => 'Add Wholesaler',
+            'edit' => 'Edit Wholesaler',
+            'delete' => 'Delete Wholesaler',
         ]
     ],
 
@@ -321,6 +328,11 @@ return [
             'item' => 'Item',
             'price' => 'Price',
             'max_amount' => 'Max Amount',
+        ],
+
+        'wholesalers' => [
+            'country' => 'Country',
+            'name' => 'Name',
         ]
     ],
 

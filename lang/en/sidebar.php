@@ -51,5 +51,5 @@ return [
     'players' => 'Players',
     'roles_perms' => 'Roles & Permissions',
     'users' => 'Users',
-    'wholesale_items' => 'Wholesale Items',
+    'wholesalers' => 'Wholesalers',
 ];
