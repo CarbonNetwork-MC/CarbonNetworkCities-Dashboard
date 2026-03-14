@@ -28,7 +28,7 @@
                 ],
                 [
                     'icon' => '',
-                    'url' => route('wholesale.create-order', ['companyId' => $company->id]),
+                    'url' => route('wholesale.create-order', ['wholesalerId' => $wholesaler->id, 'companyId' => $company->id]),
                     'label' => __('wholesale.titles.create_order'),
                 ]
             ]" />
