@@ -47,11 +47,12 @@ return [
     // Buttons
     'buttons' => [
         'cancel_order' => 'Cancel Order',
-        'finish_order' => 'Finish Order',
-        'update_order' => 'Update Order',
         'collect_order' => 'Collect Order',
         'complete_order' => 'Complete Order',
+        'delete_order' => 'Delete Order',
+        'finish_order' => 'Finish Order',
         'undo_collect_order' => 'Undo Collect Order',
+        'update_order' => 'Update Order',
     ],
 
     // Messages

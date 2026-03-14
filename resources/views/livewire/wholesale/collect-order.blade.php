@@ -124,15 +124,24 @@
                     </div>
                 </div>
 
-                <div class="col-span-2 flex items-center justify-center mt-5">
+                <div class="col-span-2 grid grid-cols-3 gap-4 mt-5">
                     @if ($editOrder)
-                        <x-buttons.primary-button class="w-full" wire:click="updateOrder()">
+                        <x-buttons.primary-button class="col-span-3" wire:click="updateOrder()">
                             {{ __('wholesale.buttons.update_order') }}
                         </x-buttons.primary-button>
                     @else
-                        <x-buttons.tertiary-button class="w-full" wire:click="collectOrder()">
-                            {{ __('wholesale.buttons.collect_order') }}
-                        </x-buttons.tertiary-button>
+                        @if ($employee->role === 'employee')
+                            <x-buttons.tertiary-button class="col-span-3" wire:click="collectOrder()">
+                                {{ __('wholesale.buttons.collect_order') }}
+                            </x-buttons.tertiary-button>
+                        @else
+                            <x-buttons.tertiary-button class="col-span-2" wire:click="collectOrder()">
+                                {{ __('wholesale.buttons.collect_order') }}
+                            </x-buttons.tertiary-button>
+                            <x-buttons.danger-button class="col-span-1" wire:click="deleteOrder()">
+                                {{ __('wholesale.buttons.delete_order') }}
+                            </x-buttons.danger-button>
+                        @endif
                     @endif
                 </div>
             </div>

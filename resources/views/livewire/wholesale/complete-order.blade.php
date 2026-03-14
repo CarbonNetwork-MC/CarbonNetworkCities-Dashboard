@@ -28,7 +28,7 @@
                 </x-containers.title>
 
                 <div class="flex items-center gap-2">
-                    @if (auth()->user()->hasPermissionTo('delete_wholesale_orders'))
+                    @if ($employee->role !== 'employee')
                         <x-buttons.danger-button class="w-full" wire:click="removeOrder()">
                             {{ __('wholesale.titles.delete_order') }}
                         </x-buttons.danger-button>
