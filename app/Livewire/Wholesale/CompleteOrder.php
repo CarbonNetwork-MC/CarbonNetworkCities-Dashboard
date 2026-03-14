@@ -16,6 +16,7 @@ class CompleteOrder extends Component
     public $orderItems;
     public $players;
     
+    public $customer;
     public $customerUuid;
 
     public $deleteOrderModal = null;
@@ -47,6 +48,12 @@ class CompleteOrder extends Component
                 'uuid' => $player->uuid,
                 'username' => $player->username,
             ]);
+    }
+
+    public function updated($key, $value) {
+        if ($key === 'customerUuid') {
+            $this->customer = $this->players->firstWhere('uuid', $value)['username'] ?? null;
+        }
     }
 
     public function completeOrder() {

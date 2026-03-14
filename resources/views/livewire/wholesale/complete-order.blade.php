@@ -84,7 +84,7 @@
 
             <hr class="text-gray-400 dark:text-gray-600 mb-1.5">
 
-            <div class="grid grid-cols-2 gap-x-4">
+            <div class="grid grid-cols-2 gap-4">
                 <div class="col-span-1 flex items-center">
                     <div class="text-md font-medium text-gray-700 dark:text-white">
                         {{ __('wholesale.labels.total') }}
@@ -97,13 +97,38 @@
                     </div>
                 </div>
 
-                <div class="col-span-1 flex items-center justify-center mt-5">
+                <div class="col-span-2">
+                    <div class="col-span-1"
+                        x-data="{
+                            copied: false,
+                            copy() {
+                                const copyText = this.$refs.copyText.innerText;
+                                navigator.clipboard.writeText(copyText).then(() => {
+                                    this.copied = true;
+                                    setTimeout(() => this.copied = false, 2000);
+                                });
+                            }
+                        }"
+                    >
+                        <div class="flex flex-row-reverse items-center justify-between bg-gray-200 dark:bg-gray-900 rounded-md px-4 py-2">
+                            <button class="flex items-center gap-2 px-3 py-1.5 text-sm bg-gray-800 hover:bg-gray-700 text-white rounded-md transition cursor-pointer" @click="copy()">
+                                <i class="fi fi-rr-clone text-lg"></i>
+                            </button>
+
+                            <div class="text-md font-medium text-gray-700 dark:text-white" x-ref="copyText">
+                                /pin set {{ $customer ?? '' }} {{ $order->total == 0 ? '' : $order->total }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-span-1 flex items-center justify-center">
                     <x-buttons.secondary-button class="w-full" wire:click="undoCollect">
                         {{ __('wholesale.buttons.undo_collect_order') }}
                     </x-buttons.secondary-button>
                 </div>
 
-                <div class="col-span-1 flex items-center justify-center mt-5">
+                <div class="col-span-1 flex items-center justify-center">
                     <x-buttons.primary-button class="w-full" wire:click="completeOrder">
                         {{ __('wholesale.buttons.complete_order') }}
                     </x-buttons.primary-button>
