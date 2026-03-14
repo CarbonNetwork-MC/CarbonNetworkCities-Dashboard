@@ -20,16 +20,6 @@ class Start extends Component
         $this->selectedCompany = $companyId;
 
         $player = auth()->user()->player;
-        $amountOfCompanies = $player->amountOfCompanies();
-
-        if ($amountOfCompanies === 0) {
-            return redirect()->route('dashboard.render');
-        } else if ($amountOfCompanies === 1) {
-            $company = $player->companies()->first() 
-                ?? $player->managerAt()->first()->company;
-            return redirect()->route('wholesale.create-order', ['companyId' => $company->id]);
-        }
-
         $this->companies = $player->companies()->get()->merge($player->managerAt()->get());
         $this->wholesalers = Wholesaler::all();
     }

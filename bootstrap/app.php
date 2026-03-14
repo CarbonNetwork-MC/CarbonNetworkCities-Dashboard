@@ -3,6 +3,7 @@
 use App\Console\Commands\CleanupExpiredAccountLinkTokens;
 use App\Console\Commands\CleanupOldCompanyNotifications;
 use App\Http\Middleware\EnsureOnboardingComplete;
+use App\Http\Middleware\EnsureUserHasCompanies;
 use App\Http\Middleware\EnsureUserIsCompanyOwnerOrManager;
 use App\Http\Middleware\EnsureUserIsEmployeeOrOwner;
 use App\Http\Middleware\RedirectIfOnboarded;
@@ -38,6 +39,11 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'company_owner_or_manager' => EnsureUserIsCompanyOwnerOrManager::class,
+        ]);
+    })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias([
+            'has_companies' => EnsureUserHasCompanies::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

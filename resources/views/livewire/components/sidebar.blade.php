@@ -157,28 +157,30 @@
                 @endif
 
                 {{-- Wholesaler --}}
-                <x-sidebar.nav-group :groupKey="'wholesaler'" wire:key="wholesaler" label="{{ __('sidebar.wholesaler.title') }}" icon="fi fi-rr-shelves">
-                    {{-- Create Order --}}
-                    <x-sidebar.nav-group-item
-                        href="{{ route('wholesale.start', ['step' => 1]) }}"
-                        :active="request()->routeIs('wholesale.start') || request()->routeIs('wholesale.create-order.*')"
-                        wire:key="wholesaler-create-order"
-                    >
-                        {{ __('sidebar.wholesaler.create_order') }}
-                    </x-sidebar.nav-group-item>
-
-                    {{-- Orders Overview --}}
-                    @if ($user->can('manage_wholesale_orders'))
+                @if ($hasCompanies)
+                    <x-sidebar.nav-group :groupKey="'wholesaler'" wire:key="wholesaler" label="{{ __('sidebar.wholesaler.title') }}" icon="fi fi-rr-shelves">
+                        {{-- Public: create order --}}
                         <x-sidebar.nav-group-item
-                            href="{{ route('wholesale.manage') }}"
-                            :active="request()->routeIs('wholesale.manage') || request()->routeIs('wholesale.order-overview') || request()->routeIs('wholesale.collect-order.*') 
-                                || request()->routeIs('wholesale.complete-order.*')"
-                            wire:key="wholesaler-orders-overview"
+                            href="{{ route('wholesale.start', ['step' => 1]) }}"
+                            :active="request()->routeIs('wholesale.start') || request()->routeIs('wholesale.create-order.*')"
+                            wire:key="wholesaler-create-order"
                         >
-                            {{ __('sidebar.wholesaler.orders_overview') }}
+                            {{ __('sidebar.wholesaler.create_order') }}
                         </x-sidebar.nav-group-item>
-                    @endif
-                </x-sidebar.nav-group>
+
+                        {{-- Wholesaler employees: manage orders --}}
+                        @if ($user->can('manage_wholesale_orders'))
+                            <x-sidebar.nav-group-item
+                                href="{{ route('wholesale.manage') }}"
+                                :active="request()->routeIs('wholesale.manage') || request()->routeIs('wholesale.order-overview') || request()->routeIs('wholesale.collect-order.*') 
+                                    || request()->routeIs('wholesale.complete-order.*')"
+                                wire:key="wholesaler-orders-overview"
+                            >
+                                {{ __('sidebar.wholesaler.orders_overview') }}
+                            </x-sidebar.nav-group-item>
+                        @endif
+                    </x-sidebar.nav-group>
+                @endif
             </nav>
         @endif
 

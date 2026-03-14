@@ -171,7 +171,7 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
     });
   
     // ? Wholesale
-    Route::middleware('permission:wholesale_order')->group(function() {
+    Route::middleware('has_companies')->group(function() {
         Route::get('/wholesale/start/{step}/{companyId?}', WholesaleStart::class)->name('wholesale.start');
         Route::get('/wholesale/{wholesalerId}/create-order/{companyId}', CreateOrder::class)->middleware('company_owner_or_manager')->name('wholesale.create-order');
     });
