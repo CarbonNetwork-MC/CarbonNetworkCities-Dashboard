@@ -33,8 +33,7 @@ class OrderOverview extends Component
 
     public function render()
     {
-        return view('livewire.wholesale.order-overview', [
-            'orders' => WholesaleOrder::with(['company:id,name'])
+        $orders = WholesaleOrder::with(['company:id,name'])
                 ->where('wholesaler_id', $this->wholesaler->id)
                 ->where('collected', 0)
                 ->where('completed', 0)
@@ -44,8 +43,9 @@ class OrderOverview extends Component
                             $q->where('name', 'like', '%' . $this->searchOrders . '%');
                         });
                 })
-                ->paginate($this->ordersPerPage, pageName: 'ordersPage'),
-            'collectedOrders' => WholesaleOrder::with(['company:id,name', 'collectedBy:uuid,username'])
+                ->paginate($this->ordersPerPage, pageName: 'ordersPage');
+
+        $collectedOrders = WholesaleOrder::with(['company:id,name', 'collectedBy:uuid,username'])
                 ->where('wholesaler_id', $this->wholesaler->id)
                 ->where('collected', 1)
                 ->where('completed', 0)
@@ -59,8 +59,9 @@ class OrderOverview extends Component
                             ->orWhere('uuid', 'like', '%' . $this->searchCollectedOrders . '%');
                         });
                 })
-                ->paginate($this->collectedOrdersPerPage, pageName: 'collectedOrdersPage'),
-            'completedOrders' => WholesaleOrder::with(['company:id,name', 'customer:uuid,username', 'collectedBy:uuid,username', 'completedBy:uuid,username'])
+                ->paginate($this->collectedOrdersPerPage, pageName: 'collectedOrdersPage');
+
+        $completedOrders = WholesaleOrder::with(['company:id,name', 'customer:uuid,username', 'collectedBy:uuid,username', 'completedBy:uuid,username'])
                 ->where('wholesaler_id', $this->wholesaler->id)
                 ->where('collected', 1)
                 ->where('completed', 1)
@@ -70,7 +71,7 @@ class OrderOverview extends Component
                             $q->where('name', 'like', '%' . $this->searchCompletedOrders . '%');
                         })
                         ->orWhereHas('customer', function ($q) {
-                            $q->where('username', 'like', value: '%' . $this->searchCompletedOrders . '%')
+                            $q->where('username', 'like', '%' . $this->searchCompletedOrders . '%')
                             ->orWhere('uuid', 'like', '%' . $this->searchCompletedOrders . '%');
                         })
                         ->orWhereHas('collectedBy', function ($q) {
@@ -82,7 +83,12 @@ class OrderOverview extends Component
                             ->orWhere('uuid', 'like', '%' . $this->searchCompletedOrders . '%');
                         });
                 })
-                ->paginate($this->completedOrdersPerPage, pageName: 'completedOrdersPage'),
+                ->paginate($this->completedOrdersPerPage, pageName: 'completedOrdersPage');
+
+        return view('livewire.wholesale.order-overview', [
+            'orders' => $orders,
+            'collectedOrders' => $collectedOrders,
+            'completedOrders' => $completedOrders,
         ]);
     }
 }

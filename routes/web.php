@@ -80,6 +80,7 @@ use App\Livewire\Admin\Wholesale\Overview as WholesaleOverview;
 use App\Livewire\Admin\Wholesale\NewItem as NewWholesaleItem;
 use App\Livewire\Admin\Wholesale\EditItem as EditWholesaleItem;
 
+use App\Livewire\Company\ChooseCompany;
 use App\Livewire\Company\CompanyDashboard;
 use App\Livewire\Company\Archive\Overview as CompanyArchiveOverview;
 use App\Livewire\Company\Archive\Details as CompanyArchiveDetails;
@@ -97,17 +98,17 @@ use App\Livewire\Company\Sales\SalesOverview;
 use App\Livewire\Company\Settings\Overview as CompanySettingsOverview;
 use App\Livewire\Company\Tips\NewTip;
 use App\Livewire\Company\Tips\Overview as TipsOverview;
-use App\Livewire\Company\WholesaleOrders\ChooseCompany;
 use App\Livewire\Company\WholesaleOrders\WholesaleOrders;
 use App\Livewire\Company\WholesaleOrders\OrderDetails;
 
 use App\Livewire\Profile\Overview as ProfileOverview;
 
-use App\Livewire\Wholesale\Start as WholesaleStart;
 use App\Livewire\Wholesale\CollectOrder;
 use App\Livewire\Wholesale\CompleteOrder;
 use App\Livewire\Wholesale\CreateOrder;
 use App\Livewire\Wholesale\OrderOverview;
+use App\Livewire\Wholesale\SelectWholesaler;
+use App\Livewire\Wholesale\Start as WholesaleStart;
 
 use Illuminate\Support\Facades\Route;
 
@@ -176,8 +177,7 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
     });
 
     Route::middleware('permission:manage_wholesale_orders')->group(function() {
-        // TODO: Route where a wholesaler employee has to choose which wholesaler they want to manage orders for (if they are an employee of multiple wholesalers)
-        // Route::get('/wholesale/manage', ::class)->name('wholesale.manage');
+        Route::get('/wholesale/manage', SelectWholesaler::class)->name('wholesale.manage');
         Route::get('/wholesale/{wholesalerId}/order-overview', OrderOverview::class)->name('wholesale.order-overview');
         Route::get('/wholesale/{wholesalerId}/collect-order/{orderId}', CollectOrder::class)->name('wholesale.collect-order');
         Route::get('/wholesale/{wholesalerId}/complete-order/{orderId}', CompleteOrder::class)->name('wholesale.complete-order');

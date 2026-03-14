@@ -8,6 +8,10 @@
                 'label' => '',
             ],
             [
+                'url' => route('wholesale.manage'),
+                'label' => __('wholesale.titles.wholesalers'),
+            ],
+            [
                 'icon' => '',
                 'url' => route('wholesale.order-overview', ['wholesalerId' => $wholesaler->id]),
                 'label' => __('wholesale.titles.orders_overview'),

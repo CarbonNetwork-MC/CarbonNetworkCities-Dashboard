@@ -57,7 +57,6 @@
 
                     <div class="col-span-1 flex items-center justify-end">
                         <div class="text-md font-medium text-gray-700 dark:text-white">
-                            {{-- TODO: currency based on wholesale currency --}}
                             {{ $wholesaler->country->currency_symbol }}{{ number_format($item['total'], 2) }}
                         </div>
                     </div>

@@ -12,6 +12,7 @@ return [
     // Titles
     'titles' => [
         'choose_company' => 'Choose Company',
+        'choose_wholesaler' => 'Choose Wholesaler',
         'collect_order' => 'Collect Order',
         'companies' => 'Companies',
         'complete_order' => 'Complete Order',
@@ -25,6 +26,7 @@ return [
         'orders_overview' => 'Orders Overview',
         'orders_to_collect' => 'Orders yet to collect',
         'orders_to_complete' => 'Orders yet to complete',
+        'select_wholesaler' => 'Select Wholesaler',
         'start' => 'Wholesalers',
         'undo_collect_order' => 'Undo Collect Order',
         'wholesalers' => 'Wholesalers',
@@ -54,11 +56,12 @@ return [
 
     // Messages
     'messages' => [
-        'no_orders' => 'There are currently no wholesale orders.',
+        'delete_order_confirmation' => 'Are you sure you want to delete this order? This action cannot be undone.',
+        'editing_enabled' => 'Editing is enabled',
         'no_collected_orders' => 'There are currently no collected wholesale orders.',
         'no_completed_orders' => 'There are currently no completed wholesale orders.',
-        'editing_enabled' => 'Editing is enabled',
-        'delete_order_confirmation' => 'Are you sure you want to delete this order? This action cannot be undone.',
+        'no_orders' => 'There are currently no wholesale orders.',
+        'select_wholesaler_description' => 'Please select the wholesaler you want to manage orders for.',
         'undo_collect_confirmation' => 'Are you sure you want to undo the collection of this order?',
     ],
 

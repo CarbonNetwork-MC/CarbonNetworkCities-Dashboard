@@ -50,6 +50,10 @@ class CompleteOrder extends Component
     }
 
     public function completeOrder() {
+        $data = $this->validate([
+            'customerUuid' => 'required|exists:players,uuid',
+        ]);
+
         $this->order->completed = true;
         $this->order->completed_by = auth()->user()->player->uuid;
         $this->order->customer_uuid = $this->customerUuid;
@@ -65,7 +69,7 @@ class CompleteOrder extends Component
             'message' => __('wholesale.notifications.order_completed'),
         ]);
 
-        return redirect()->route('wholesale.order-overview')->success(__('wholesale.toasts.order_completed'));
+        return redirect()->route('wholesale.order-overview', ['wholesalerId' => $this->wholesaler->id])->success(__('wholesale.toasts.order_completed'));
     }
 
     public function removeOrder() {
@@ -75,7 +79,7 @@ class CompleteOrder extends Component
     public function destroyOrder() {
         $this->order->delete();
 
-        return redirect()->route('wholesale.order-overview')->success(__('wholesale.toasts.order_deleted'));
+        return redirect()->route('wholesale.order-overview', ['wholesalerId' => $this->wholesaler->id])->success(__('wholesale.toasts.order_deleted'));
     }
 
     public function undoCollect() {
@@ -93,7 +97,7 @@ class CompleteOrder extends Component
             ->where('type', 'order_collected')
             ->delete();
 
-        return redirect()->route('wholesale.order-overview')->success(__('wholesale.toasts.collect_order_undone'));
+        return redirect()->route('wholesale.order-overview', ['wholesalerId' => $this->wholesaler->id])->success(__('wholesale.toasts.collect_order_undone'));
     }
 
     public function render()
