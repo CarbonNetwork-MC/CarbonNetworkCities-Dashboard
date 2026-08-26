@@ -1,5 +1,9 @@
 <?php
 
+use Spatie\Permission\DefaultTeamResolver;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+
 return [
 
     'models' => [
@@ -13,7 +17,7 @@ return [
          * `Spatie\Permission\Contracts\Permission` contract.
          */
 
-        'permission' => \App\Models\Permission::class,
+        'permission' => Permission::class,
 
         /*
          * When using the "HasRoles" trait from this package, we need to know which
@@ -24,8 +28,21 @@ return [
          * `Spatie\Permission\Contracts\Role` contract.
          */
 
-        'role' => \App\Models\Role::class,
+        'role' => Role::class,
 
+        /*
+         * When using the "Teams" feature from this package, we need to know which
+         * Eloquent model should be used to retrieve your teams. Of course, it
+         * is often just the "Team" model but you may use whatever you like.
+         */
+        'team' => null,
+
+        /*
+         * When using the "HasModels" trait and passing raw IDs to syncModels,
+         * attachModels, or detachModels, this model class will be used to
+         * resolve those IDs. If null, defaults to the guard's model.
+         */
+        'default_model' => null,
     ],
 
     'table_names' => [
@@ -36,7 +53,7 @@ return [
          * default value but you may easily change it to any table you like.
          */
 
-        'roles' => 'panel_roles',
+        'roles' => 'roles',
 
         /*
          * When using the "HasPermissions" trait from this package, we need to know which
@@ -44,7 +61,7 @@ return [
          * default value but you may easily change it to any table you like.
          */
 
-        'permissions' => 'panel_permissions',
+        'permissions' => 'permissions',
 
         /*
          * When using the "HasPermissions" trait from this package, we need to know which
@@ -52,7 +69,7 @@ return [
          * basic default value but you may easily change it to any table you like.
          */
 
-        'model_has_permissions' => 'panel_model_has_permissions',
+        'model_has_permissions' => 'model_has_permissions',
 
         /*
          * When using the "HasRoles" trait from this package, we need to know which
@@ -60,7 +77,7 @@ return [
          * basic default value but you may easily change it to any table you like.
          */
 
-        'model_has_roles' => 'panel_model_has_roles',
+        'model_has_roles' => 'model_has_roles',
 
         /*
          * When using the "HasRoles" trait from this package, we need to know which
@@ -68,7 +85,7 @@ return [
          * basic default value but you may easily change it to any table you like.
          */
 
-        'role_has_permissions' => 'panel_role_has_permissions',
+        'role_has_permissions' => 'role_has_permissions',
     ],
 
     'column_names' => [
@@ -86,7 +103,7 @@ return [
          * that case, name this `model_uuid`.
          */
 
-        'model_morph_key' => 'model_uuid',
+        'model_morph_key' => 'model_id',
 
         /*
          * Change this if you want to use the teams feature and your related model's
@@ -112,10 +129,10 @@ return [
 
     /*
      * Events will fire when a role or permission is assigned/unassigned:
-     * \Spatie\Permission\Events\RoleAttached
-     * \Spatie\Permission\Events\RoleDetached
-     * \Spatie\Permission\Events\PermissionAttached
-     * \Spatie\Permission\Events\PermissionDetached
+     * \Spatie\Permission\Events\RoleAttachedEvent
+     * \Spatie\Permission\Events\RoleDetachedEvent
+     * \Spatie\Permission\Events\PermissionAttachedEvent
+     * \Spatie\Permission\Events\PermissionDetachedEvent
      *
      * To enable, set to true, and then create listeners to watch these events.
      */
@@ -136,7 +153,7 @@ return [
     /*
      * The class to use to resolve the permissions team id
      */
-    'team_resolver' => \Spatie\Permission\DefaultTeamResolver::class,
+    'team_resolver' => DefaultTeamResolver::class,
 
     /*
      * Passport Client Credentials Grant
@@ -183,7 +200,7 @@ return [
          * When permissions or roles are updated the cache is flushed automatically.
          */
 
-        'expiration_time' => \DateInterval::createFromDateString('24 hours'),
+        'expiration_time' => DateInterval::createFromDateString('24 hours'),
 
         /*
          * The cache key used to store all permissions.

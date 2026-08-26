@@ -1,1 +1,0 @@
-<hr class="my-2 border-t border-zinc-200 dark:border-zinc-800" />
