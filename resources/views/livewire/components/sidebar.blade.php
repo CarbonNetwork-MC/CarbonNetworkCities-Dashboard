@@ -295,10 +295,10 @@
 
                 {{-- Wholesale Items --}}
                 <x-sidebar.nav-item
-                    :href="route('admin.wholesale-items.render')"
-                    :active="request()->routeIs('admin.wholesale-items.*')"
+                    :href="route('admin.wholesalers.render')"
+                    :active="request()->routeIs('admin.wholesalers.*')"
                     icon="fi fi-rr-shelves"
-                    :label="__('sidebar.wholesale_items')"
+                    :label="__('sidebar.wholesalers')"
                 />
             </nav>
         @endif
@@ -464,7 +464,13 @@
                 openMobile() { this.isOpenMobile = true; },
                 closeMobile() { this.isOpenMobile = false; },
                 toggleGroup(key) {
-                    if (this.openGroups.has(key)) this.openGroups.delete(key); else this.openGroups.add(key);
+                    if (this.openGroups.has(key)) {
+                        this.openGroups.delete(key);
+                    } else {
+                        this.openGroups.clear();
+                        this.openGroups.add(key);
+                    }
+
                     localStorage.setItem(GROUPS_KEY, JSON.stringify(Array.from(this.openGroups)));
                 },
                 isGroupOpen(key) { return this.openGroups.has(key); },

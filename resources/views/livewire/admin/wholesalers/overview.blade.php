@@ -19,7 +19,7 @@
             <x-containers.title>{{ __('admin.titles.wholesalers.overview') }}</x-containers.title>
             <div class="flex items-center gap-x-4">
                 <x-forms.search-bar id="search" wire:model.live="search" class="w-full" />
-                <x-buttons.primary-button size="sm" href="{{-- route('admin.wholesalers.new') --}}">
+                <x-buttons.primary-button size="sm" href="{{ route('admin.wholesalers.new') }}">
                     {{ __('admin.titles.wholesalers.add') }}
                 </x-buttons.primary-button>
             </div>
@@ -40,7 +40,7 @@
                             <x-tables.table-data>{{ $wholesaler->country->name }}</x-tables.table-data>
                             <x-tables.table-data>{{ $wholesaler->name }}</x-tables.table-data>
                             <x-tables.table-actions>
-                                <x-tables.primary-action size="sm" href="{{-- route('admin.wholesalers.edit', $wholesaler->id) --}}">
+                                <x-tables.primary-action size="sm" href="{{ route('admin.wholesalers.edit', $wholesaler->id) }}">
                                     {{ __('general.buttons.edit') }}
                                 </x-tables.primary-action>
                                 <x-tables.danger-action size="sm" wire:click="confirmDelete({{ $wholesaler->id }})">

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('plot_locks', function (Blueprint $table) {
             $table->id();
-            $table->string('plot_id', 10);
+            $table->string('plot_id', 32);
             $table->integer('x');
             $table->integer('y');
             $table->integer('z');

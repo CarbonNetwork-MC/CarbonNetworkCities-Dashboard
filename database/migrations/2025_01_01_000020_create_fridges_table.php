@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('fridges', function (Blueprint $table) {
             $table->id();
             $table->string('world_id', 50);
-            $table->string('plot_id', 10);
+            $table->string('plot_id', 32);
             $table->enum('type', ['single', 'double']);
             $table->integer('min_x');
             $table->integer('min_y');
