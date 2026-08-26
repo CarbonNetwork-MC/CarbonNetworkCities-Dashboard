@@ -5,19 +5,28 @@ namespace App\Livewire\Wholesale;
 use App\Models\CompanyNotification;
 use App\Models\CompanyOrder;
 use App\Models\WholesaleOrder;
+use App\Models\Wholesaler;
+use App\Models\WholesalerEmployee;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
 class CollectOrder extends Component
 {
+    public $wholesaler;
     public $order;
+    public $employee;
+
     public $total;
     public $orderItems;
 
     public $editOrder = false;
 
-    public function mount($orderId) {
-        $this->order = WholesaleOrder::findOrFail($orderId);
+    public function mount($wholesalerId, $orderId) {
+        $this->wholesaler = Wholesaler::where('id', $wholesalerId)->firstOrFail();
+        $this->order = WholesaleOrder::where('id', $orderId)->firstOrFail();
+        $this->employee = WholesalerEmployee::where('wholesaler_id', $wholesalerId)
+            ->where('player_uuid', auth()->user()->player->uuid)
+            ->firstOrFail();
 
         $this->orderItems = $this->order->items()
             ->with(['item:id,name', 'item.wholesaleItem'])
@@ -79,7 +88,14 @@ class CollectOrder extends Component
             'message' => __('wholesale.notifications.order_collected'),
         ]);
 
-        return redirect()->route('wholesale.order-overview')->success(__('wholesale.toasts.order_collected'));
+        return redirect()->route('wholesale.order-overview', ['wholesalerId' => $this->wholesaler->id])->success(__('wholesale.toasts.order_collected'));
+    }
+
+    public function destroyOrder() {
+        CompanyNotification::where('order_id', $this->order->id)->delete();
+        $this->order->delete();
+
+        return redirect()->route('wholesale.order-overview', ['wholesalerId' => $this->wholesaler->id])->success(__('wholesale.toasts.order_deleted'));
     }
 
     public function increment($index)

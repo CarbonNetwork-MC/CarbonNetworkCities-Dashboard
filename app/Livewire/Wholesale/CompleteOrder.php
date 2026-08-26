@@ -5,21 +5,32 @@ namespace App\Livewire\Wholesale;
 use App\Models\CompanyNotification;
 use App\Models\CompanyOrder;
 use App\Models\WholesaleOrder;
+use App\Models\Wholesaler;
+use App\Models\WholesalerEmployee;
 use Livewire\Component;
 
 class CompleteOrder extends Component
 {
+    public $wholesaler;
     public $order;
+    public $employee;
+    
     public $orderItems;
     public $players;
     
+    public $customer;
     public $customerUuid;
 
     public $deleteOrderModal = null;
     public $undoCollectModal = null;
 
-    public function mount($orderId) {
-        $this->order = WholesaleOrder::findOrFail($orderId);
+    public function mount($wholesalerId, $orderId) {
+        $this->wholesaler = Wholesaler::where('id', $wholesalerId)->firstOrFail();
+        $this->order = WholesaleOrder::where('id', $orderId)->firstOrFail();
+        $this->employee = WholesalerEmployee::where('wholesaler_id', $wholesalerId)
+            ->where('player_uuid', auth()->user()->player->uuid)
+            ->firstOrFail();
+
         $this->orderItems = $this->order->items()
             ->with(['item:id,name', 'item.wholesaleItem'])
             ->get(['id', 'item_id', 'amount'])
@@ -44,7 +55,17 @@ class CompleteOrder extends Component
             ]);
     }
 
+    public function updated($key, $value) {
+        if ($key === 'customerUuid') {
+            $this->customer = $this->players->firstWhere('uuid', $value)['username'] ?? null;
+        }
+    }
+
     public function completeOrder() {
+        $data = $this->validate([
+            'customerUuid' => 'required|exists:players,uuid',
+        ]);
+
         $this->order->completed = true;
         $this->order->completed_by = auth()->user()->player->uuid;
         $this->order->customer_uuid = $this->customerUuid;
@@ -60,7 +81,7 @@ class CompleteOrder extends Component
             'message' => __('wholesale.notifications.order_completed'),
         ]);
 
-        return redirect()->route('wholesale.order-overview')->success(__('wholesale.toasts.order_completed'));
+        return redirect()->route('wholesale.order-overview', ['wholesalerId' => $this->wholesaler->id])->success(__('wholesale.toasts.order_completed'));
     }
 
     public function removeOrder() {
@@ -68,9 +89,10 @@ class CompleteOrder extends Component
     }
 
     public function destroyOrder() {
+        CompanyNotification::where('order_id', $this->order->id)->delete();
         $this->order->delete();
 
-        return redirect()->route('wholesale.order-overview')->success(__('wholesale.toasts.order_deleted'));
+        return redirect()->route('wholesale.order-overview', ['wholesalerId' => $this->wholesaler->id])->success(__('wholesale.toasts.order_deleted'));
     }
 
     public function undoCollect() {
@@ -88,7 +110,7 @@ class CompleteOrder extends Component
             ->where('type', 'order_collected')
             ->delete();
 
-        return redirect()->route('wholesale.order-overview')->success(__('wholesale.toasts.collect_order_undone'));
+        return redirect()->route('wholesale.order-overview', ['wholesalerId' => $this->wholesaler->id])->success(__('wholesale.toasts.collect_order_undone'));
     }
 
     public function render()

@@ -23,57 +23,57 @@ class RedisService {
             ->client()
             ->executeRaw([
                 'XADD',
-                'carbon:sync',
-                'MAXLEN', '~', '1000',
+                config('database.redis.default.stream', 'carbon-network'),
+                'MAXLEN', '~', '10000',
                 '*',
                 'type', $type,
                 'requestId', $requestId,
+                'server', 'web',
+                'timestamp', now()->toIso8601String(),
                 'entityId', $entityId,
             ]);
 
         return $requestId;
     }
 
-    private function waitForResults(string $requestId, int $expectedServers = 1): bool {
+    private function waitForResults(
+        string $requestId,
+        int $expectedServers = 1
+    ): bool {
         $servers = [];
         $timeout = 5;
         $start = microtime(true);
 
         while (microtime(true) - $start < $timeout) {
-
             $results = Redis::connection()
                 ->client()
                 ->executeRaw([
                     'XRANGE',
-                    'carbon:sync:results',
+                    config('database.redis.default.stream', 'carbon-network'),
                     '-',
                     '+',
                     'COUNT',
-                    20
+                    100,
                 ]);
 
             foreach ($results as $entry) {
-
                 $fields = $entry[1];
 
+                $data = [];
+
                 if (array_is_list($fields)) {
-
-                    $data = [];
-
                     for ($i = 0; $i < count($fields) - 1; $i += 2) {
-                        $key = $fields[$i];
-                        $value = $fields[$i + 1] ?? null;
-
-                        if ($key !== null) {
-                            $data[$key] = $value;
-                        }
+                        $data[$fields[$i]] = $fields[$i + 1] ?? null;
                     }
-
                 } else {
                     $data = $fields;
                 }
 
-                if (($data['requestId'] ?? null) !== $requestId) {
+                if (($data['type'] ?? null) !== 'RESULT') {
+                    continue;
+                }
+
+                if (($data['correlationId'] ?? null) !== $requestId) {
                     continue;
                 }
 
@@ -83,14 +83,7 @@ class RedisService {
                 $servers[$server] = $status;
 
                 if (count($servers) >= $expectedServers) {
-
-                    foreach ($servers as $status) {
-                        if ($status !== 'SUCCESS') {
-                            return false;
-                        }
-                    }
-
-                    return true;
+                    return !in_array('ERROR', $servers, true);
                 }
             }
 

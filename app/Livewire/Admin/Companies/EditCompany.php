@@ -3,10 +3,11 @@
 namespace App\Livewire\Admin\Companies;
 
 use App\Models\CoCType;
-use App\Models\CompanyItem;
-use App\Models\Plot;
-use App\Models\Player;
 use App\Models\Company;
+use App\Models\CompanyItem;
+use App\Models\CompanyNotification;
+use App\Models\Player;
+use App\Models\Plot;
 use App\Services\RedisService;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -344,12 +345,12 @@ class EditCompany extends Component
 
         $previousOwner = Player::where('uuid', $originalData['owner_uuid'])->first();
         if ($previousOwner) {
-            app(PlayerPermissionService::class)->syncWholesaleOrderPermission($previousOwner);
+            \App\Services\PlayerPermissionService::syncWholesaleOrderPermission($previousOwner);
         }
 
         if ($this->selectedPlayer && $this->selectedPlayer !== $originalData['owner_uuid']) {
             $owner = Player::where('uuid', $this->selectedPlayer)->first();
-            app(PlayerPermissionService::class)->syncWholesaleOrderPermission($owner);
+            \App\Services\PlayerPermissionService::syncWholesaleOrderPermission($owner);
         }
     }
 
@@ -357,7 +358,7 @@ class EditCompany extends Component
         $employee->save();
 
         $player = Player::where('uuid', $employee->player_uuid)->first();
-        app(PlayerPermissionService::class)->syncWholesaleOrderPermission($player);
+        \App\Services\PlayerPermissionService::syncWholesaleOrderPermission($player);
     }
 
     private function rollbackPlot(Plot $plot, int $companyId): void {

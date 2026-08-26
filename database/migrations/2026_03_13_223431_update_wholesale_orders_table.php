@@ -11,18 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('plot_locks', function (Blueprint $table) {
-            $table->id();
-            $table->string('plot_id', 32);
-            $table->integer('x');
-            $table->integer('y');
-            $table->integer('z');
-            $table->timestamps();
+        Schema::table('wholesale_orders', function (Blueprint $table) {
+            $table->unsignedBigInteger('wholesaler_id')->after('id')->nullable();
 
             /* -------------------------------------------------------------
             * Foreign keys
             * ------------------------------------------------------------- */
-            $table->foreign('plot_id')->references('plot_id')->on('plots')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('wholesaler_id')->references('id')->on('wholesalers')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -31,6 +26,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('plot_locks');
+        Schema::table('wholesale_items', function (Blueprint $table) {
+            $table->dropForeign(['wholesaler_id']);
+            $table->dropColumn('wholesaler_id');
+        });
     }
 };

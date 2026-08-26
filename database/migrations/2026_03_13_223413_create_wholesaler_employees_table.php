@@ -11,18 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('plot_members', function (Blueprint $table) {
+        Schema::create('wholesaler_employees', function (Blueprint $table) {
             $table->id();
-            $table->string('plot_id', 32);
+            $table->unsignedBigInteger('wholesaler_id');
             $table->char('player_uuid', 36);
-            $table->string('username', 16);
-            $table->enum('role', ['owner', 'admin', 'member'])->default('member');
+            $table->enum('role', ['employee', 'manager']);
             $table->timestamps();
 
             /* -------------------------------------------------------------
             * Foreign keys
             * ------------------------------------------------------------- */
-            $table->foreign('plot_id')->references('plot_id')->on('plots')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('wholesaler_id')->references('id')->on('wholesalers')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('player_uuid')->references('uuid')->on('players')->onUpdate('cascade')->onDelete('cascade');
         });
     }
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('plot_members');
+        Schema::dropIfExists('wholesaler_employees');
     }
 };

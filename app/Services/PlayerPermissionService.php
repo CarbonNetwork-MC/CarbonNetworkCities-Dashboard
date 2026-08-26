@@ -5,7 +5,7 @@ use App\Models\Player;
 
 class PlayerPermissionService
 {
-    public function syncWholesaleOrderPermission(Player $player): void {
+    public static function syncWholesaleOrderPermission(Player $player): void {
         $hasCompanies = $player->companies->count() > 0;
         $isManager = $player->managerAt->count() > 0;
         $hasPermission = $player->user->hasPermissionTo('wholesale_order');

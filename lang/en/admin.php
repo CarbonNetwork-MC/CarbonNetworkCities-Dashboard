@@ -162,6 +162,14 @@ return [
             'delete' => 'Delete Wholesale Item',
             'edit' => 'Edit Wholesale Item',
             'overview' => 'Wholesale Items Overview',
+        ],
+
+        'wholesalers' => [
+            'add' => 'Add Wholesaler',
+            'edit' => 'Edit Wholesaler',
+            'employees' => 'Employees',
+            'delete' => 'Delete Wholesaler',
+            'overview' => 'Wholesalers Overview',
         ]
     ],
 
@@ -321,6 +329,13 @@ return [
             'item' => 'Item',
             'price' => 'Price',
             'max_amount' => 'Max Amount',
+        ],
+
+        'wholesalers' => [
+            'country' => 'Country',
+            'name' => 'Name',
+            'player' => 'Player',
+            'role' => 'Role',
         ]
     ],
 
@@ -497,6 +512,10 @@ return [
         'wholesale_items' => [
             'no_records' => 'No wholesale items found.',
             'delete_confirmation' => 'Are you sure you want to delete the wholesale item <b>:name</b>? This action cannot be undone.',
+        ],
+
+        'wholesalers' => [
+            'no_employees' => 'No employees found for this wholesaler.',
         ]
     ],
 
@@ -680,6 +699,12 @@ return [
             'created' => 'Wholesale item created successfully.',
             'updated' => 'Wholesale item updated successfully.',
             'deleted' => 'Wholesale item deleted successfully.',
+        ],
+
+        'wholesalers' => [
+            'add_success' => 'Wholesaler added successfully.',
+            'update_success' => 'Wholesaler updated successfully.',
+            'delete_success' => 'Wholesaler deleted successfully.',
         ]
     ],
 

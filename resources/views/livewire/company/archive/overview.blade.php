@@ -64,7 +64,7 @@
                     @empty
                         <x-tables.table-row>
                             <x-tables.table-data colspan="6" class="text-center text-gray-500">
-                                {{ __('company.no_sales_for_week') }}
+                                {{ __('company.messages.no_sales_for_week') }}
                             </x-tables.table-data>
                         </x-tables.table-row>
                     @endforelse

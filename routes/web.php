@@ -2,22 +2,19 @@
 
 use App\Http\Controllers\AuthController;
 
-use App\Livewire\Dashboard;
-use App\Livewire\Onboarding\Onboarding;
-
-use App\Livewire\Admin\BankAccounts\Overview as BankAccountsOverview;
-use App\Livewire\Admin\BankAccounts\NewCompanyBankAccount;
-use App\Livewire\Admin\BankAccounts\NewPersonalBankAccount;
 use App\Livewire\Admin\BankAccounts\EditCompanyBankAccount;
 use App\Livewire\Admin\BankAccounts\EditPersonalBankAccount;
+use App\Livewire\Admin\BankAccounts\NewCompanyBankAccount;
+use App\Livewire\Admin\BankAccounts\NewPersonalBankAccount;
+use App\Livewire\Admin\BankAccounts\Overview as BankAccountsOverview;
 
-use App\Livewire\Admin\CityRegions\Overview as CityRegionsOverview;
-use App\Livewire\Admin\CityRegions\NewCityRegion;
 use App\Livewire\Admin\CityRegions\Edit as EditCityRegion;
+use App\Livewire\Admin\CityRegions\NewCityRegion;
+use App\Livewire\Admin\CityRegions\Overview as CityRegionsOverview;
 
-use App\Livewire\Admin\CoC\Overview as CoCOverview;
-use App\Livewire\Admin\CoC\NewCoCType;
 use App\Livewire\Admin\CoC\EditCoCType;
+use App\Livewire\Admin\CoC\NewCoCType;
+use App\Livewire\Admin\CoC\Overview as CoCOverview;
 
 use App\Livewire\Admin\Companies\AddBankAccount as AddCompanyBankAccount;
 use App\Livewire\Admin\Companies\AddEmployee;
@@ -30,9 +27,9 @@ use App\Livewire\Admin\Companies\EditItem as EditCompanyItem;
 use App\Livewire\Admin\Companies\NewCompany;
 use App\Livewire\Admin\Companies\Overview as CompaniesOverview;
 
-use App\Livewire\Admin\Countries\Overview as CountriesOverview;
-use App\Livewire\Admin\Countries\NewCountry;
 use App\Livewire\Admin\Countries\Edit as EditCountry;
+use App\Livewire\Admin\Countries\NewCountry;
+use App\Livewire\Admin\Countries\Overview as CountriesOverview;
 
 use App\Livewire\Admin\Dashboard\Dashboard as AdminDashboard;
 
@@ -44,13 +41,13 @@ use App\Livewire\Admin\ItemsMenu\NewItem;
 use App\Livewire\Admin\ItemsMenu\NewItemGroup;
 use App\Livewire\Admin\ItemsMenu\Overview as ItemsMenuOverview;
 
-use App\Livewire\Admin\Languages\Overview as LanguagesOverview;
 use App\Livewire\Admin\Languages\Edit as EditLanguage;
 use App\Livewire\Admin\Languages\NewLanguage;
+use App\Livewire\Admin\Languages\Overview as LanguagesOverview;
 
-use App\Livewire\Admin\PinConsoles\Overview as PinConsolesOverview;
-use App\Livewire\Admin\PinConsoles\NewPinConsole;
 use App\Livewire\Admin\PinConsoles\Edit as EditPinConsole;
+use App\Livewire\Admin\PinConsoles\NewPinConsole;
+use App\Livewire\Admin\PinConsoles\Overview as PinConsolesOverview;
 
 use App\Livewire\Admin\Players\AddBankAccount as AddPlayerBankAccount;
 use App\Livewire\Admin\Players\AddChatColor;
@@ -62,31 +59,37 @@ use App\Livewire\Admin\Players\EditPlayer;
 use App\Livewire\Admin\Players\EditPrefix;
 use App\Livewire\Admin\Players\Overview as PlayerOverview;
 
-use App\Livewire\Admin\Plots\Overview as PlotsOverview;
-use App\Livewire\Admin\Plots\NewPlot;
-use App\Livewire\Admin\Plots\Edit as EditPlot;
 use App\Livewire\Admin\Plots\AddMember;
+use App\Livewire\Admin\Plots\Edit as EditPlot;
+use App\Livewire\Admin\Plots\NewPlot;
+use App\Livewire\Admin\Plots\Overview as PlotsOverview;
 
-use App\Livewire\Admin\RolesPerms\NewRole;
+use App\Livewire\Admin\RolesPerms\EditPermission;
 use App\Livewire\Admin\RolesPerms\EditRole;
 use App\Livewire\Admin\RolesPerms\NewPermission;
-use App\Livewire\Admin\RolesPerms\EditPermission;
+use App\Livewire\Admin\RolesPerms\NewRole;
 use App\Livewire\Admin\RolesPerms\Overview as RolesPermsOverview;
 
 use App\Livewire\Admin\Users\EditUser;
 use App\Livewire\Admin\Users\Overview as UserOverview;
 
-use App\Livewire\Admin\Wholesale\Overview as WholesaleOverview;
-use App\Livewire\Admin\Wholesale\NewItem as NewWholesaleItem;
 use App\Livewire\Admin\Wholesale\EditItem as EditWholesaleItem;
+use App\Livewire\Admin\Wholesale\NewItem as NewWholesaleItem;
+use App\Livewire\Admin\Wholesale\Overview as WholesaleOverview;
 
-use App\Livewire\Company\CompanyDashboard;
-use App\Livewire\Company\Archive\Overview as CompanyArchiveOverview;
+use App\Livewire\Admin\Wholesalers\EditWholesaler;
+use App\Livewire\Admin\Wholesalers\NewWholesaler;
+use App\Livewire\Admin\Wholesalers\Overview as WholesalersOverview;
+
 use App\Livewire\Company\Archive\Details as CompanyArchiveDetails;
+use App\Livewire\Company\Archive\Overview as CompanyArchiveOverview;
+
+use App\Livewire\Company\ChooseCompany;
+use App\Livewire\Company\CompanyDashboard;
 use App\Livewire\Company\BankAccounts\BankaccountOverview;
 use App\Livewire\Company\BankAccounts\ChooseBankaccount;
-use App\Livewire\Company\Employees\Employees as CompanyEmployees;
 use App\Livewire\Company\Employees\EditEmployee;
+use App\Livewire\Company\Employees\Employees as CompanyEmployees;
 use App\Livewire\Company\Inventory\EditStock;
 use App\Livewire\Company\Inventory\StockOverview;
 use App\Livewire\Company\Inventory\UpdateStock;
@@ -97,17 +100,21 @@ use App\Livewire\Company\Sales\SalesOverview;
 use App\Livewire\Company\Settings\Overview as CompanySettingsOverview;
 use App\Livewire\Company\Tips\NewTip;
 use App\Livewire\Company\Tips\Overview as TipsOverview;
-use App\Livewire\Company\WholesaleOrders\ChooseCompany;
-use App\Livewire\Company\WholesaleOrders\WholesaleOrders;
 use App\Livewire\Company\WholesaleOrders\OrderDetails;
+use App\Livewire\Company\WholesaleOrders\WholesaleOrders;
+
+use App\Livewire\Dashboard;
+
+use App\Livewire\Onboarding\Onboarding;
 
 use App\Livewire\Profile\Overview as ProfileOverview;
 
-use App\Livewire\Wholesale\ChooseCompany as WholesaleChooseCompany;
 use App\Livewire\Wholesale\CollectOrder;
 use App\Livewire\Wholesale\CompleteOrder;
 use App\Livewire\Wholesale\CreateOrder;
 use App\Livewire\Wholesale\OrderOverview;
+use App\Livewire\Wholesale\SelectWholesaler;
+use App\Livewire\Wholesale\Start as WholesaleStart;
 
 use Illuminate\Support\Facades\Route;
 
@@ -170,15 +177,16 @@ Route::middleware(['auth', 'onboarding'])->group(function() {
     });
   
     // ? Wholesale
-    Route::middleware('permission:wholesale_order')->group(function() {
-        Route::get('/wholesale/choose-company', WholesaleChooseCompany::class)->name('wholesale.choose-company');
-        Route::get('/wholesale/create-order/{companyId}', CreateOrder::class)->middleware('company_owner_or_manager')->name('wholesale.create-order');
+    Route::middleware('has_companies')->group(function() {
+        Route::get('/wholesale/start/{step}/{companyId?}', WholesaleStart::class)->name('wholesale.start');
+        Route::get('/wholesale/{wholesalerId}/create-order/{companyId}', CreateOrder::class)->middleware('company_owner_or_manager')->name('wholesale.create-order');
     });
 
     Route::middleware('permission:manage_wholesale_orders')->group(function() {
-        Route::get('/wholesale/order-overview', OrderOverview::class)->name('wholesale.order-overview');
-        Route::get('/wholesale/collect-order/{orderId}', CollectOrder::class)->name('wholesale.collect-order');
-        Route::get('/wholesale/complete-order/{orderId}', CompleteOrder::class)->name('wholesale.complete-order');
+        Route::get('/wholesale/manage', SelectWholesaler::class)->name('wholesale.manage');
+        Route::get('/wholesale/{wholesalerId}/order-overview', OrderOverview::class)->name('wholesale.order-overview');
+        Route::get('/wholesale/{wholesalerId}/collect-order/{orderId}', CollectOrder::class)->name('wholesale.collect-order');
+        Route::get('/wholesale/{wholesalerId}/complete-order/{orderId}', CompleteOrder::class)->name('wholesale.complete-order');
     });
 });
 
@@ -276,4 +284,9 @@ Route::middleware(['auth', 'onboarding'])->prefix('admin')->middleware('role:Sup
     Route::get('/wholesale', WholesaleOverview::class)->name('admin.wholesale-items.render');
     Route::get('/wholesale/new', NewWholesaleItem::class)->name('admin.wholesale-items.new');
     Route::get('/wholesale/edit/{id}', EditWholesaleItem::class)->name('admin.wholesale-items.edit');
+
+    // ? Wholesalers
+    Route::get('/wholesalers', WholesalersOverview::class)->name('admin.wholesalers.render');
+    Route::get('/wholesalers/new', NewWholesaler::class)->name('admin.wholesalers.new');
+    Route::get('/wholesalers/edit/{wholesalerId}', EditWholesaler::class)->name('admin.wholesalers.edit');
 });

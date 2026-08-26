@@ -8,8 +8,12 @@
                 'label' => '',
             ],
             [
+                'url' => route('wholesale.manage'),
+                'label' => __('wholesale.titles.wholesalers'),
+            ],
+            [
                 'icon' => '',
-                'url' => route('wholesale.order-overview'),
+                'url' => route('wholesale.order-overview', ['wholesalerId' => $wholesaler->id]),
                 'label' => __('wholesale.titles.orders_overview'),
             ]
         ]" />
@@ -46,8 +50,7 @@
                             <x-tables.table-data>{{ $order->company->id }}</x-tables.table-data>
                             <x-tables.table-data>{{ $order->company->name }}</x-tables.table-data>
                             <x-tables.table-data>
-                                {{-- TODO: currency based on wholesale currency --}}
-                                {{ Number::currency($order->total) }}
+                                {{ $wholesaler->country->currency_symbol }}{{ number_format($order->total, 2) }}
                             </x-tables.table-data>
                             <x-tables.table-data>{{ $order->amountOfItems() }}</x-tables.table-data>
                         </x-tables.table-row>
@@ -109,8 +112,7 @@
                             <x-tables.table-data>{{ $order->company->id }}</x-tables.table-data>
                             <x-tables.table-data>{{ $order->company->name }}</x-tables.table-data>
                             <x-tables.table-data>
-                                {{-- TODO: currency based on wholesale currency --}}
-                                {{ Number::currency($order->total) }}
+                                {{ $wholesaler->country->currency_symbol }}{{ number_format($order->total, 2) }}
                             </x-tables.table-data>
                             <x-tables.table-data>{{ $order->amountOfItems() }}</x-tables.table-data>
                             <x-tables.table-data>{{ $order->collectedBy->username ?? '-' }}</x-tables.table-data>
@@ -175,8 +177,7 @@
                             <x-tables.table-data>{{ $order->company->id }}</x-tables.table-data>
                             <x-tables.table-data>{{ $order->company->name }}</x-tables.table-data>
                             <x-tables.table-data>
-                                {{-- TODO: currency based on wholesale currency --}}
-                                {{ Number::currency($order->total) }}
+                                {{ $wholesaler->country->currency_symbol }}{{ number_format($order->total, 2) }}
                             </x-tables.table-data>
                             <x-tables.table-data>{{ $order->amountOfItems() }}</x-tables.table-data>
                             <x-tables.table-data>{{ $order->collectedBy->username ?? '-' }}</x-tables.table-data>

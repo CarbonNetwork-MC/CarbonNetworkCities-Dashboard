@@ -45,7 +45,7 @@
                 />
 
                 {{-- Company --}}
-                @if ($selectedCompany)
+                @if (isset($selectedCompany))
                     <x-sidebar.nav-group :groupKey="'company'" wire:key="company" label="{{ __('sidebar.company.title') }}" icon="rr-building">
                         {{-- Dashboard --}}
                         <x-sidebar.nav-group-item
@@ -154,6 +154,32 @@
                         icon="fi fi-rr-building"
                         :label="__('sidebar.company.title')"
                     />
+                @endif
+
+                {{-- Wholesaler --}}
+                @if ($hasCompanies)
+                    <x-sidebar.nav-group :groupKey="'wholesaler'" wire:key="wholesaler" label="{{ __('sidebar.wholesaler.title') }}" icon="fi fi-rr-shelves">
+                        {{-- Public: create order --}}
+                        <x-sidebar.nav-group-item
+                            href="{{ route('wholesale.start', ['step' => 1]) }}"
+                            :active="request()->routeIs('wholesale.start') || request()->routeIs('wholesale.create-order.*')"
+                            wire:key="wholesaler-create-order"
+                        >
+                            {{ __('sidebar.wholesaler.create_order') }}
+                        </x-sidebar.nav-group-item>
+
+                        {{-- Wholesaler employees: manage orders --}}
+                        @if ($user->can('manage_wholesale_orders'))
+                            <x-sidebar.nav-group-item
+                                href="{{ route('wholesale.manage') }}"
+                                :active="request()->routeIs('wholesale.manage') || request()->routeIs('wholesale.order-overview') || request()->routeIs('wholesale.collect-order.*') 
+                                    || request()->routeIs('wholesale.complete-order.*')"
+                                wire:key="wholesaler-orders-overview"
+                            >
+                                {{ __('sidebar.wholesaler.orders_overview') }}
+                            </x-sidebar.nav-group-item>
+                        @endif
+                    </x-sidebar.nav-group>
                 @endif
             </nav>
         @endif
@@ -269,10 +295,10 @@
 
                 {{-- Wholesale Items --}}
                 <x-sidebar.nav-item
-                    :href="route('admin.wholesale-items.render')"
-                    :active="request()->routeIs('admin.wholesale-items.*')"
+                    :href="route('admin.wholesalers.render')"
+                    :active="request()->routeIs('admin.wholesalers.*')"
                     icon="fi fi-rr-shelves"
-                    :label="__('sidebar.wholesale_items')"
+                    :label="__('sidebar.wholesalers')"
                 />
             </nav>
         @endif
@@ -438,7 +464,13 @@
                 openMobile() { this.isOpenMobile = true; },
                 closeMobile() { this.isOpenMobile = false; },
                 toggleGroup(key) {
-                    if (this.openGroups.has(key)) this.openGroups.delete(key); else this.openGroups.add(key);
+                    if (this.openGroups.has(key)) {
+                        this.openGroups.delete(key);
+                    } else {
+                        this.openGroups.clear();
+                        this.openGroups.add(key);
+                    }
+
                     localStorage.setItem(GROUPS_KEY, JSON.stringify(Array.from(this.openGroups)));
                 },
                 isGroupOpen(key) { return this.openGroups.has(key); },

@@ -131,6 +131,7 @@ return [
         'no_order_items' => 'No items found for this order.',
         'no_salaries_for_week' => 'No salaries found for this week.',
         'no_sales' => 'No sales found.',
+        'no_sales_for_week' => 'No sales found for this week.',
         'no_sales_yet' => 'No sales yet.',
         'no_tips' => 'No tips found.',
         'no_transactions' => 'No transactions found.',
