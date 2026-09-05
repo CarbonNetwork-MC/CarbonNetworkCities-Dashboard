@@ -84,4 +84,11 @@ class User extends Authenticatable
             ? Storage::url($profilePhotoPath)
             : 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=' . $backgroundColor . '&color=' . $textColor;
     }
+
+    /**
+     * Get the selected locale for the user, or the default app locale if not set.
+     * 
+     * @return 
+     */
+    // public function selectedLanguage():
 }
