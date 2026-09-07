@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CountriesSeeder::class,
             LanguagesSeeder::class,
+            PlayerSeeder::class,
+            ChatColorsSeeder::class,
         ]);
 
         // User::factory(10)->create();
