@@ -13,6 +13,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property int $id
@@ -42,7 +43,7 @@ use Illuminate\Support\Str;
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * Get the attributes that should be cast.
@@ -71,8 +72,6 @@ class User extends Authenticatable
 
     /**
      * Get the user's profile photo URL, or a default avatar if not set.
-     * 
-     * @return string
      */
     public function profilePhotoUrl(): string
     {
@@ -82,13 +81,13 @@ class User extends Authenticatable
 
         return $profilePhotoPath
             ? Storage::url($profilePhotoPath)
-            : 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=' . $backgroundColor . '&color=' . $textColor;
+            : 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&background='.$backgroundColor.'&color='.$textColor;
     }
 
     /**
      * Get the selected locale for the user, or the default app locale if not set.
-     * 
-     * @return 
+     *
+     * @return
      */
     // public function selectedLanguage():
 }

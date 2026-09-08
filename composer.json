@@ -12,6 +12,7 @@
         "php": "^8.3",
         "drpshtiwan/livewire-async-select": "^3.3",
         "laravel/framework": "^13.17",
+        "laravel/sanctum": "^4.3",
         "laravel/tinker": "^3.0",
         "livewire/blaze": "^1.0",
         "livewire/livewire": "^4.1",
