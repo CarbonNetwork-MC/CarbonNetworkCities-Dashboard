@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('player_chat_colors', function (Blueprint $table) {
             $table->id();
-            $table->char('player_uuid', 36)->unique();
+            $table->char('player_uuid', 36);
             $table->unsignedBigInteger('color_id');
             $table->enum('type', ['chat', 'prefix', 'level', 'name']);
             $table->boolean('selected')->default(false);
