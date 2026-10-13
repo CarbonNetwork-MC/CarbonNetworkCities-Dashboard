@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             LanguagesSeeder::class,
             PlayerSeeder::class,
             ChatColorsSeeder::class,
+            OnboardingStatesSeeder::class,
         ]);
 
         // User::factory(10)->create();

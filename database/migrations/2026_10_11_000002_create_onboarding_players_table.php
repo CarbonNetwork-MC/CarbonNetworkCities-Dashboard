@@ -11,11 +11,12 @@ return new class extends Migration
         Schema::create('onboarding_players', function (Blueprint $table) {
             $table->uuid('player_uuid')->primary();
             $table->string('username', 16);
-            $table->string('state', 32)->index();
+            $table->string('state', 64)->index();
             $table->unsignedBigInteger('language_id')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
             $table->timestamps();
 
+            $table->foreign('state')->references('state')->on('onboarding_states')->cascadeOnUpdate()->restrictOnDelete();
             $table->foreign('language_id')->references('id')->on('languages')->cascadeOnUpdate()->restrictOnDelete();
             $table->foreign('country_id')->references('id')->on('countries')->cascadeOnUpdate()->restrictOnDelete();
         });
