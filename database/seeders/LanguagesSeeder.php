@@ -3,12 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Language;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LanguagesSeeder extends Seeder
 {
-    private const array LANGUAGES = [
+    public const array LANGUAGES = [
         [
             'name' => 'English',
             'iso' => 'en',
@@ -20,7 +19,7 @@ class LanguagesSeeder extends Seeder
             'iso' => 'nl',
             'locale' => 'nl_NL',
             'headdb_id' => 17422,
-        ]
+        ],
     ];
 
     /**
@@ -31,12 +30,12 @@ class LanguagesSeeder extends Seeder
         foreach (self::LANGUAGES as $language) {
             Language::query()->updateOrCreate(
                 [
-                    'iso' => $language['iso']
+                    'iso' => $language['iso'],
                 ],
                 [
                     'name' => $language['name'],
                     'locale' => $language['locale'],
-                    'headdb_id' => $language['headdb_id']
+                    'headdb_id' => $language['headdb_id'],
                 ]
             );
         }

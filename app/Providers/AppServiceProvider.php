@@ -27,8 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->configureDefaults();
 
-        Blaze::optimize()
-            ->in(resource_path('views'));
+        Blaze::optimize()->in(resource_path('views/components'));
 
         Gate::before(function ($user, $ability) {
             return $user->hasRole('Superadmin')

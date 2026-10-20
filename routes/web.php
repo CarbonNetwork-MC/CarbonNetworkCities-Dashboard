@@ -4,3 +4,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
 Route::view('/login', 'login')->name('login');
+
+Route::livewire('/health', 'pages::health');

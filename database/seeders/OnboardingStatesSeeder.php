@@ -3,12 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\OnboardingState;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class OnboardingStatesSeeder extends Seeder
 {
-    private const array STATES = [
+    public const array STATES = [
         [
             'state' => 'SELECTING_LANGUAGE',
         ],
