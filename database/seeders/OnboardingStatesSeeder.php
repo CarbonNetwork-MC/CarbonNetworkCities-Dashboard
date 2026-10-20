@@ -22,6 +22,12 @@ class OnboardingStatesSeeder extends Seeder
             'state' => 'CONFIRMING_SELECTIONS',
         ],
         [
+            'state' => 'TUTORIAL_PLOTS',
+        ],
+        [
+            'state' => 'TUTORIAL_ELEVATORS',
+        ],
+        [
             'state' => 'TUTORIAL_ATM',
         ],
         [

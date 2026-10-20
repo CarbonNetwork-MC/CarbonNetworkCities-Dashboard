@@ -16,19 +16,37 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'language_id',
     'last_region_id',
     'last_login',
-    'last_logout'
+    'last_logout',
 ])]
 class Player extends Model
 {
-    public function country(): BelongsTo {
+    /** @return BelongsTo<Country, $this> */
+    public function country(): BelongsTo
+    {
         return $this->belongsTo(Country::class, 'country_id');
     }
-    
-    public function language(): BelongsTo {
+
+    /** @return BelongsTo<Language, $this> */
+    public function language(): BelongsTo
+    {
         return $this->belongsTo(Language::class, 'language_id');
     }
 
-    public function pastUsernames(): HasMany {
+    /** @return HasMany<PlayerPastUsername, $this> */
+    public function pastUsernames(): HasMany
+    {
         return $this->hasMany(PlayerPastUsername::class, 'player_uuid');
+    }
+
+    /** @return HasMany<PersonalBankAccount, $this> */
+    public function personalBankAccounts(): HasMany
+    {
+        return $this->hasMany(PersonalBankAccount::class, 'player_uuid', 'uuid');
+    }
+
+    /** @return HasMany<PlayerGrant, $this> */
+    public function grants(): HasMany
+    {
+        return $this->hasMany(PlayerGrant::class, 'player_uuid', 'uuid');
     }
 }
