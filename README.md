@@ -14,8 +14,9 @@ The Cities data model includes:
 - an idempotent `bank_transactions` ledger with an explicit
   `opening_balance` type;
 - `item_categories` and `items`, with immutable unique identifiers,
-  configurable Bukkit materials, JSON data, and optional player or dashboard
-  creator provenance; and
+  configurable Bukkit materials, an enabled state, a definition version,
+  type-specific JSON data, and optional player or dashboard creator provenance;
+  and
 - reusable `player_grants`, uniquely identified per player by their
   idempotency key and indexed for unclaimed-grant lookup.
 

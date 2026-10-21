@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'category_id',
     'display_name',
     'material',
+    'enabled',
+    'definition_version',
     'data',
     'created_by_player_uuid',
     'created_by_user_uuid',
@@ -26,7 +28,11 @@ class Item extends Model
      */
     protected function casts(): array
     {
-        return ['data' => 'array'];
+        return [
+            'enabled' => 'boolean',
+            'definition_version' => 'integer',
+            'data' => 'array',
+        ];
     }
 
     /**

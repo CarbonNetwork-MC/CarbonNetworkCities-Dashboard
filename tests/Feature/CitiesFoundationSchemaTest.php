@@ -34,7 +34,8 @@ it('creates the C5 tables and required columns', function () {
             'created_by_player_uuid', 'created_by_user_uuid', 'created_at', 'updated_at',
         ]))->toBeTrue()
         ->and(Schema::hasColumns('items', [
-            'id', 'internal_id', 'category_id', 'display_name', 'material', 'data',
+            'id', 'internal_id', 'category_id', 'display_name', 'material',
+            'enabled', 'definition_version', 'data',
             'created_by_player_uuid', 'created_by_user_uuid', 'created_at', 'updated_at',
         ]))->toBeTrue()
         ->and(Schema::hasColumns('player_grants', [
@@ -92,12 +93,16 @@ it('seeds immutable starter item definitions with non-expiring food', function (
     $creditCard = Item::query()->where('internal_id', 'carbonnetwork:credit_card')->firstOrFail();
 
     expect($food->material)->toBe('COOKED_BEEF')
+        ->and($food->enabled)->toBeTrue()
+        ->and($food->definition_version)->toBe(1)
         ->and($food->data)->toMatchArray([
             'food' => ['expiration_enabled' => false],
         ])
         ->and($creditCard->data)->toMatchArray([
             'account_reference' => 'personal_bank_account_id',
-        ]);
+        ])
+        ->and($creditCard->enabled)->toBeTrue()
+        ->and($creditCard->definition_version)->toBe(1);
 
     $food->internal_id = 'carbonnetwork:renamed_food';
     expect(fn () => $food->save())->toThrow(LogicException::class);

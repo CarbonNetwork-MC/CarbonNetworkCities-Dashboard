@@ -22,6 +22,8 @@ class ItemCatalogSeeder extends Seeder
         Item::query()->updateOrCreate(
             ['internal_id' => 'carbonnetwork:credit_card'],
             [
+                'definition_version' => 1,
+                'enabled' => true,
                 'category_id' => $utilityCategory->getKey(),
                 'display_name' => 'Credit Card',
                 'material' => 'PAPER',
@@ -33,6 +35,8 @@ class ItemCatalogSeeder extends Seeder
         Item::query()->updateOrCreate(
             ['internal_id' => 'carbonnetwork:starter_food'],
             [
+                'definition_version' => 1,
+                'enabled' => true,
                 'category_id' => $foodCategory->getKey(),
                 'display_name' => 'Starter Food',
                 'material' => 'COOKED_BEEF',
