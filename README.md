@@ -20,6 +20,10 @@ The Cities data model includes:
 - reusable `player_grants`, uniquely identified per player by their
   idempotency key and indexed for unclaimed-grant lookup.
 
+`player_inventories` stores one versioned inventory envelope per player. Its
+`revision` column is used for optimistic locking so a stale server cannot
+overwrite a newer complete inventory snapshot.
+
 The approved starter contract is configured in `config/cities.php`: one EUR
 checking account with an opening balance of `5000.00`, one credit card bound to
 the immutable personal-bank-account ID, and 32 `COOKED_BEEF` starter-food

@@ -8,6 +8,7 @@ use App\Models\Item;
 use App\Models\ItemCategory;
 use App\Models\Player;
 use App\Models\PlayerGrant;
+use App\Models\PlayerInventory;
 use Database\Seeders\ItemCatalogSeeder;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Schema;
@@ -41,7 +42,36 @@ it('creates the C5 tables and required columns', function () {
         ->and(Schema::hasColumns('player_grants', [
             'id', 'player_uuid', 'grant_type', 'item_id', 'quantity', 'data',
             'idempotency_key', 'claimed_at', 'created_at', 'updated_at',
+        ]))->toBeTrue()
+        ->and(Schema::hasColumns('player_inventories', [
+            'uuid', 'payload_version', 'revision', 'data', 'created_at', 'updated_at',
         ]))->toBeTrue();
+});
+
+it('stores a versioned inventory and rejects a stale revision update', function () {
+    $player = createSchemaTestPlayer();
+    $inventory = PlayerInventory::query()->create([
+        'uuid' => $player->uuid,
+        'payload_version' => 1,
+        'revision' => 1,
+        'data' => ['version' => 1, 'sections' => [
+            'storage' => [], 'armor' => [], 'offhand' => [],
+        ]],
+    ]);
+
+    $updated = PlayerInventory::query()
+        ->where('uuid', $player->uuid)
+        ->where('revision', 1)
+        ->update(['revision' => 2, 'data' => $inventory->data]);
+    $staleUpdate = PlayerInventory::query()
+        ->where('uuid', $player->uuid)
+        ->where('revision', 1)
+        ->update(['revision' => 3, 'data' => $inventory->data]);
+
+    expect($updated)->toBe(1)
+        ->and($staleUpdate)->toBe(0)
+        ->and($player->inventory()->firstOrFail()->revision)->toBe(2)
+        ->and($inventory->player->uuid)->toBe($player->uuid);
 });
 
 it('allows multiple checking and savings accounts for one player', function () {
