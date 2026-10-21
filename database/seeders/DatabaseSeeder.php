@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            GameClockSeeder::class,
             CountriesSeeder::class,
             LanguagesSeeder::class,
             UserSeeder::class,

@@ -26,3 +26,11 @@ items. Starter food explicitly has expiration disabled, so it will remain
 outside the future food-decay system. C5 seeds the reusable catalog definitions
 only; the transactional creation of player-specific accounts, ledger entries,
 and grants is integrated with final onboarding in C8.
+
+## Shared game clock
+
+The singleton `game_clock` row is the authoritative definition used by every
+Cities server. It stores paired real-time and game-time anchors, a decimal time
+scale, an IANA time-zone identifier, and a monotonically increasing version.
+Servers derive the current Cities time locally; the row is updated only when an
+administrator changes the definition, not as time passes.
