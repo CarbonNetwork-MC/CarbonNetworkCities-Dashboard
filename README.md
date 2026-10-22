@@ -27,8 +27,9 @@ overwrite a newer complete inventory snapshot.
 The approved starter contract is configured in `config/cities.php`: one EUR
 checking account with an opening balance of `5000.00`, one credit card bound to
 the immutable personal-bank-account ID, and 32 `COOKED_BEEF` starter-food
-items. Starter food explicitly has expiration disabled, so it will remain
-outside the future food-decay system. C5 seeds the reusable catalog definitions
+items. Starter food has a Cities-time shelf life with normal, refrigerated, and
+frozen decay rates. Its optional spoiled replacement is the reusable
+`carbonnetwork:spoiled_food` catalog item. C5 seeds the reusable catalog definitions
 only; the transactional creation of player-specific accounts, ledger entries,
 and grants is integrated with final onboarding in C8.
 

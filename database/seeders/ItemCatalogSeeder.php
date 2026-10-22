@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Item;
 use App\Models\ItemCategory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ItemCatalogSeeder extends Seeder
 {
@@ -25,10 +26,23 @@ class ItemCatalogSeeder extends Seeder
                 'definition_version' => 1,
                 'enabled' => true,
                 'category_id' => $utilityCategory->getKey(),
-                'display_name' => 'Credit Card',
+                'display_name' => '<yellow>Credit Card',
                 'material' => 'PAPER',
                 'data' => [
                     'account_reference' => 'personal_bank_account_id',
+                ],
+            ]
+        );
+        $spoiledFood = Item::query()->updateOrCreate(
+            ['internal_id' => 'carbonnetwork:spoiled_food'],
+            [
+                'definition_version' => 1,
+                'enabled' => true,
+                'category_id' => $foodCategory->getKey(),
+                'display_name' => '<red><bold>Spoiled Food',
+                'material' => 'ROTTEN_FLESH',
+                'data' => [
+                    'lore' => ['<red>This food has spoiled.'],
                 ],
             ]
         );
@@ -38,11 +52,34 @@ class ItemCatalogSeeder extends Seeder
                 'definition_version' => 1,
                 'enabled' => true,
                 'category_id' => $foodCategory->getKey(),
-                'display_name' => 'Starter Food',
+                'display_name' => '<green>Starter Food',
                 'material' => 'COOKED_BEEF',
                 'data' => [
                     'food' => [
-                        'expiration_enabled' => false,
+                        'shelf_life_seconds' => 86400,
+                        'normal_decay_rate' => 1.0,
+                        'refrigerated_decay_rate' => 0.25,
+                        'frozen_decay_rate' => 0.05,
+                        'spoiled_item_definition_id' => $spoiledFood->getKey(),
+                    ],
+                ],
+            ]
+        );
+        Item::query()->updateOrCreate(
+            ['internal_id' => 'carbonnetwork:test_food'],
+            [
+                'definition_version' => 1,
+                'enabled' => true,
+                'category_id' => $foodCategory->getKey(),
+                'display_name' => '<green>Test Food',
+                'material' => 'GOLDEN_APPLE',
+                'data' => [
+                    'food' => [
+                        'shelf_life_seconds' => 30,
+                        'normal_decay_rate' => 1.0,
+                        'refrigerated_decay_rate' => 0.25,
+                        'frozen_decay_rate' => 0.05,
+                        'spoiled_item_definition_id' => $spoiledFood->getKey(),
                     ],
                 ],
             ]

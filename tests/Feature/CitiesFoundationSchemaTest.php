@@ -116,18 +116,27 @@ it('stores an idempotent opening balance ledger entry', function () {
     ]))->toThrow(QueryException::class);
 });
 
-it('seeds immutable starter item definitions with non-expiring food', function () {
+it('seeds immutable starter item definitions with validated food decay properties', function () {
     $this->seed(ItemCatalogSeeder::class);
 
     $food = Item::query()->where('internal_id', 'carbonnetwork:starter_food')->firstOrFail();
     $creditCard = Item::query()->where('internal_id', 'carbonnetwork:credit_card')->firstOrFail();
+    $spoiledFood = Item::query()->where('internal_id', 'carbonnetwork:spoiled_food')->firstOrFail();
 
     expect($food->material)->toBe('COOKED_BEEF')
         ->and($food->enabled)->toBeTrue()
         ->and($food->definition_version)->toBe(1)
         ->and($food->data)->toMatchArray([
-            'food' => ['expiration_enabled' => false],
+            'food' => [
+                'shelf_life_seconds' => 86400,
+                'normal_decay_rate' => 1.0,
+                'refrigerated_decay_rate' => 0.25,
+                'frozen_decay_rate' => 0.05,
+                'spoiled_item_definition_id' => $spoiledFood->getKey(),
+            ],
         ])
+        ->and($spoiledFood->material)->toBe('ROTTEN_FLESH')
+        ->and($spoiledFood->enabled)->toBeTrue()
         ->and($creditCard->data)->toMatchArray([
             'account_reference' => 'personal_bank_account_id',
         ])
