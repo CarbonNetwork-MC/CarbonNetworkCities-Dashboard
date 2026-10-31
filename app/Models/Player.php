@@ -56,4 +56,10 @@ class Player extends Model
     {
         return $this->hasOne(PlayerInventory::class, 'uuid', 'uuid');
     }
+
+    /** @return HasMany<Fridge, $this> */
+    public function fridges(): HasMany
+    {
+        return $this->hasMany(Fridge::class, 'owner_player_uuid', 'uuid');
+    }
 }

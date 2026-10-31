@@ -24,6 +24,18 @@ The Cities data model includes:
 `revision` column is used for optimistic locking so a stale server cannot
 overwrite a newer complete inventory snapshot.
 
+`fridges` is the persistent cold-storage registry. It records a refrigerator,
+freezer, or combined appliance independently of its decorative blocks, with
+location, optional player or plot ownership, inventory format, optimistic
+revision, and per-instance `refrigerator_rows` and `freezer_rows`. Both row
+counts must be interpreted as Minecraft inventory rows (1–6); defaults are six
+for refrigerators and three for freezers. These values describe total menu
+height; the plugin reserves the final row for controls and persists item slots
+from the preceding rows only. `fridge_items` stores opaque,
+slot-addressed Paper item payloads per compartment. The dashboard does not
+inspect those payloads. `fridge_interaction_anchors` reserves one or more
+persisted hitbox locations for the C7G interaction-entity lifecycle.
+
 The approved starter contract is configured in `config/cities.php`: one EUR
 checking account with an opening balance of `5000.00`, one credit card bound to
 the immutable personal-bank-account ID, and 32 `COOKED_BEEF` starter-food
