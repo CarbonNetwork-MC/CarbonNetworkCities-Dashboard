@@ -21,6 +21,12 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 ])]
 class Player extends Model
 {
+    protected $primaryKey = 'uuid';
+
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
     /** @return BelongsTo<Country, $this> */
     public function country(): BelongsTo
     {
@@ -61,5 +67,17 @@ class Player extends Model
     public function fridges(): HasMany
     {
         return $this->hasMany(Fridge::class, 'owner_player_uuid', 'uuid');
+    }
+
+    /** @return HasMany<PlayerPrefix, $this> */
+    public function prefixes(): HasMany
+    {
+        return $this->hasMany(PlayerPrefix::class, 'player_uuid', 'uuid');
+    }
+
+    /** @return HasMany<PlayerChatColor, $this> */
+    public function chatColors(): HasMany
+    {
+        return $this->hasMany(PlayerChatColor::class, 'player_uuid', 'uuid');
     }
 }

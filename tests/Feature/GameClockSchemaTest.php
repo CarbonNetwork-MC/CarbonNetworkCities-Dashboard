@@ -1,9 +1,14 @@
 <?php
 
 use App\Models\GameClock;
+use Database\Seeders\GameClockSeeder;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+
+beforeEach(function () {
+    $this->seed(GameClockSeeder::class);
+});
 
 it('creates the authoritative singleton game clock definition', function () {
     expect(Schema::hasColumns('game_clock', [

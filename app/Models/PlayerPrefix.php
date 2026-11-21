@@ -13,7 +13,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 ])]
 class PlayerPrefix extends Model
 {
-    public function player(): BelongsTo {
+    protected function casts(): array
+    {
+        return ['selected' => 'boolean'];
+    }
+
+    public function player(): BelongsTo
+    {
         return $this->belongsTo(Player::class, 'player_uuid', 'uuid');
     }
 }

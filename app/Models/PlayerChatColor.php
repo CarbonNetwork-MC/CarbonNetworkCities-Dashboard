@@ -10,15 +10,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'player_uuid',
     'color_id',
     'type',
-    'selected'
+    'selected',
 ])]
 class PlayerChatColor extends Model
 {
-    public function color(): BelongsTo {
+    protected function casts(): array
+    {
+        return ['selected' => 'boolean'];
+    }
+
+    public function color(): BelongsTo
+    {
         return $this->belongsTo(ChatColor::class, 'color_id');
     }
 
-    public function player(): BelongsTo {
+    public function player(): BelongsTo
+    {
         return $this->belongsTo(Player::class, 'player_uuid', 'uuid');
     }
 }
